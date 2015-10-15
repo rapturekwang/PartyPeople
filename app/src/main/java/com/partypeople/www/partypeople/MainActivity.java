@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
 
         tabs.removeAllTabs();
+        String[] tabTitle = getResources().getStringArray(R.array.tab_name);
         for (int i = 0; i < Constant.NUM_OF_TAB; i++) {
-            tabs.addTab(tabs.newTab().setText("Tab" + i));
+            tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
     }
 }

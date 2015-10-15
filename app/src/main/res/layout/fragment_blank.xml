@@ -5,11 +5,9 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/text_name"
-        android:layout_gravity="center" />
+        android:id="@+id/listView"
+        android:layout_gravity="left|center_vertical" />
 </FrameLayout>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">PartyPeople</string>
+
+    <string-array name="tab_name">
+        <item>맞춤모임</item>
+        <item>인기순</item>
+        <item>시작일순</item>
+    </string-array>
+
+
 </resources>
