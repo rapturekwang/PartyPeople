@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PartyPeople</string>
+    <string name="app_name">Party People</string>
 
     <string-array name="tab_name">
         <item>맞춤모임</item>

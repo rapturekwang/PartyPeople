@@ -3,10 +3,13 @@ package com.partypeople.www.partypeople.display;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
@@ -55,6 +58,13 @@ public class MainTabLayoutFragment extends Fragment {
         mAdapter = new MainTabFragmentAdapter();
         listView.setAdapter(mAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "pushed party number : " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         initData();
 
         return view;
@@ -68,9 +78,9 @@ public class MainTabLayoutFragment extends Fragment {
             d.partyImg = getResources().getDrawable(R.drawable.demo_img);
             d.location = "서울시 서초구";
             d.price = "$25";
-            d.progressText = "50% 모금됨";
-            d.dueDate = "7일 남음";
             d.progress = 50;
+            d.progressText = d.progress+"% 모금됨";
+            d.dueDate = "7일 남음";
             mAdapter.add(d);
         }
     }

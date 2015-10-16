@@ -2,11 +2,13 @@ package com.partypeople.www.partypeople.display;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
@@ -42,6 +44,12 @@ public class PartyItemView extends RelativeLayout {
         dueDateView = (TextView)findViewById(R.id.text_duedate);
         bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+//        partyImgView.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     public void setItemData(PartyItemData data) {
@@ -56,6 +64,7 @@ public class PartyItemView extends RelativeLayout {
         progressView.setText(data.progressText);
         dueDateView.setText(data.dueDate);
         progressBar.setProgress(data.progress);
+        bookMarkView.setClickable(false);
         //bookMarkView.setChecked(data.bookMark);
     }
 }

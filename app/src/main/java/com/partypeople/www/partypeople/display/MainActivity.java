@@ -2,13 +2,20 @@ package com.partypeople.www.partypeople.display;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.utils.Constant;
 import com.partypeople.www.partypeople.adapter.MainTabLayoutAdapter;
@@ -29,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         mDrawer = (DrawerLayout)findViewById(R.id.drawer);
 
@@ -44,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < Constant.NUM_OF_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
+    }
+
+    EditText keywordView;
+    ShareActionProvider mActionProvider;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        MenuItem item = menu.findItem(R.id.search);
+
+        View view = MenuItemCompat.getActionView(item);
+        keywordView = (EditText)view.findViewById(R.id.edit_keyword);
+        Button btn = (Button)view.findViewById(R.id.btn_search);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keyword = keywordView.getText().toString();
+                Toast.makeText(MainActivity.this, "Keyword : " + keyword, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        //doShareAction();
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
