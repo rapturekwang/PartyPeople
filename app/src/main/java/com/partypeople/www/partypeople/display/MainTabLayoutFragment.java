@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.display;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -62,6 +63,8 @@ public class MainTabLayoutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "pushed party number : " + position, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                startActivity(i);
             }
         });
 
