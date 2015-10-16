@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople;
+package com.partypeople.www.partypeople.data;
 
 import android.graphics.drawable.Drawable;
 
@@ -12,6 +12,7 @@ public class PartyItemData {
     public String date;
     public String location;
     public String price;
-    public String progress;
+    public String progressText;
     public String dueDate;
+    public int progress;
 }

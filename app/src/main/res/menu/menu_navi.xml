@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none"
+        android:id="@+id/home">
+        <item android:id="@+id/navi_menu1"
+            android:title="홈"
+            android:icon="@android:drawable/ic_input_add"
+            android:orderInCategory="100" />
+    </group>
+    <group android:checkableBehavior="none"
+        android:id="@+id/my_group">
+        <item android:id="@+id/navi_menu2"
+            android:title="내가 만든 모임"
+            android:icon="@android:drawable/ic_input_delete"
+            android:orderInCategory="101" />
+    </group>
+    <group android:checkableBehavior="none"
+        android:id="@+id/your_group">
+        <item android:id="@+id/navi_menu3"
+            android:title="참여한 모임"
+            android:icon="@android:drawable/ic_input_get"
+            android:orderInCategory="102" />
+    </group>
+    <group android:checkableBehavior="none"
+        android:id="@+id/make_group">
+        <item android:id="@+id/navi_menu4"
+            android:title="모임 만들기"
+            android:icon="@android:drawable/ic_input_add"
+            android:orderInCategory="103" />
+    </group>
+    <group android:checkableBehavior="none"
+        android:id="@+id/setting">
+        <item android:id="@+id/navi_menu5"
+            android:title="설정"
+            android:icon="@android:drawable/ic_input_delete"
+            android:orderInCategory="104" />
+    </group>
+
+</menu>

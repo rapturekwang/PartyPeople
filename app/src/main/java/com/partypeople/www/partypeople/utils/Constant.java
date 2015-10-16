@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople;
+package com.partypeople.www.partypeople.utils;
 
 /**
  * Created by Tacademy on 2015-10-14.

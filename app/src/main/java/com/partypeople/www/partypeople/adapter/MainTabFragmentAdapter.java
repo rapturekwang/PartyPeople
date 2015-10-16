@@ -1,10 +1,11 @@
-package com.partypeople.www.partypeople;
+package com.partypeople.www.partypeople.adapter;
 
-import android.support.v7.internal.view.menu.MenuView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+
+import com.partypeople.www.partypeople.data.PartyItemData;
+import com.partypeople.www.partypeople.view.PartyItemView;
 
 import java.util.ArrayList;
 import java.util.List;
