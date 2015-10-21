@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.partypeople.www.partypeople.utils.Constant;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.display.MainTabLayoutFragment;
 
 /**
@@ -23,7 +23,7 @@ public class MainTabLayoutAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return Constant.NUM_OF_TAB;
+        return Constants.NUM_OF_TAB;
     }
 
     @Override

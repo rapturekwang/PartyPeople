@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.partypeople.www.partypeople.utils.Constant;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabLayoutAdapter;
 import com.partypeople.www.partypeople.R;
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.removeAllTabs();
         String[] tabTitle = getResources().getStringArray(R.array.tab_name);
-        for (int i = 0; i < Constant.NUM_OF_TAB; i++) {
+        for (int i = 0; i < Constants.NUM_OF_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
     }
