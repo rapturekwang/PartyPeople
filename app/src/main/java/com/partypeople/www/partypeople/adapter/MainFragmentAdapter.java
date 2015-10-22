@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2015-10-15.
  */
-public class MainTabFragmentAdapter extends BaseAdapter {
+public class MainFragmentAdapter extends BaseAdapter {
     List<PartyItemData> items = new ArrayList<PartyItemData>();
 
     public void add(PartyItemData item) {

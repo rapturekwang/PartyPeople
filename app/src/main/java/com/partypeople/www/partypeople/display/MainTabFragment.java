@@ -4,7 +4,6 @@ package com.partypeople.www.partypeople.display;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,31 +13,31 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.adapter.MainTabFragmentAdapter;
+import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainTabLayoutFragment#newInstance} factory method to
+ * Use the {@link MainTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainTabLayoutFragment extends Fragment {
+public class MainTabFragment extends Fragment {
 
     private static final String ARG_NAME = "name";
     private String mName;
     ListView listView;
-    MainTabFragmentAdapter mAdapter;
+    MainFragmentAdapter mAdapter;
 
 
-    public static MainTabLayoutFragment newInstance(String name) {
-        MainTabLayoutFragment fragment = new MainTabLayoutFragment();
+    public static MainTabFragment newInstance(String name) {
+        MainTabFragment fragment = new MainTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_NAME, name);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public MainTabLayoutFragment() {
+    public MainTabFragment() {
         // Required empty public constructor
     }
 
@@ -56,7 +55,7 @@ public class MainTabLayoutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
         //((TextView)view.findViewById(R.id.text_name)).setText(mName);
         listView = (ListView)view.findViewById(R.id.listView);
-        mAdapter = new MainTabFragmentAdapter();
+        mAdapter = new MainFragmentAdapter();
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

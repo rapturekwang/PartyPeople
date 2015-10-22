@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.adapter.MainTabLayoutAdapter;
+import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabs = (TabLayout) findViewById(R.id.tabs);
         pager = (ViewPager)findViewById(R.id.pager);
-        MainTabLayoutAdapter adpater = new MainTabLayoutAdapter(getSupportFragmentManager());
+        MainTabAdapter adpater = new MainTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 
         tabs.setupWithViewPager(pager);

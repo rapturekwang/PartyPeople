@@ -67,4 +67,8 @@ public class PartyItemView extends RelativeLayout {
         bookMarkView.setClickable(false);
         //bookMarkView.setChecked(data.bookMark);
     }
+
+    public void setVisible(int visible) {
+        partyImgView.setVisibility(visible);
+    }
 }

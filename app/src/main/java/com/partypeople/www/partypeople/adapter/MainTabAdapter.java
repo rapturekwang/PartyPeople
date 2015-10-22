@@ -5,20 +5,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.display.MainTabLayoutFragment;
+import com.partypeople.www.partypeople.display.MainTabFragment;
 
 /**
  * Created by dongja94 on 2015-10-14.
  */
-public class MainTabLayoutAdapter extends FragmentPagerAdapter {
+public class MainTabAdapter extends FragmentPagerAdapter {
 
-    public MainTabLayoutAdapter(FragmentManager fm) {
+    public MainTabAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return MainTabLayoutFragment.newInstance("Item : " + position);
+        return MainTabFragment.newInstance("Item : " + position);
     }
 
     @Override
