@@ -9,7 +9,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.partypeople.www.partypeople.display.PartyDetailActivity">
 
@@ -18,30 +17,100 @@
         android:layout_height="200dp"
         android:id="@+id/image_party_detail"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:src="@drawable/demo_img" />
 
-    <com.partypeople.www.partypeople.display.PartyItemView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/custom_detail"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Come to house party!"
+        android:id="@+id/text_title_detail"
         android:layout_below="@+id/image_party_detail"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/text_des"
-        android:layout_below="@+id/custom_detail"
+        android:text="5월 7일 / 19:00 ~ 21:00"
+        android:id="@+id/text_date_detail"
+        android:layout_below="@+id/text_title_detail"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="서울시 서초구"
+        android:id="@+id/text_location_detail"
+        android:layout_below="@+id/text_title_detail"
+        android:layout_alignEnd="@+id/text_des" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="250,000"
+        android:id="@+id/text_price1_detail"
+        android:layout_below="@+id/text_date_detail"
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="500,000"
+        android:id="@+id/text_price2_detail"
+        android:layout_below="@+id/text_location_detail"
+        android:layout_alignEnd="@+id/text_des"
+        android:paddingTop="20dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_detail"
+        android:layout_below="@+id/text_price1_detail"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/text_des" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="51% 모금됨"
+        android:id="@+id/text_progress_detail"
+        android:layout_below="@+id/progressBar_detail"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="34일 남음"
+        android:id="@+id/text_duedate_detail"
+        android:layout_below="@+id/progressBar_detail"
+        android:layout_alignEnd="@+id/text_des" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/text_des"
+        android:layout_below="@+id/text_progress_detail"
+        android:layout_alignParentStart="true"
+        android:paddingTop="10dp"
+        android:text="태산이 높다 하되 하늘 아래 뫼이로다. 오르고 또 오르면 못 오를 리 없건마는 사람이 제 아니 오르고 뫼만 높다 하더라 이런들 어떠하고 저런들 어떠하리 만수산 드렁칡이 얽혀진들 어떠하리 우리도 이같이 얽어져 백년까지 누리리라" />
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/tabs"
         android:layout_below="@+id/text_des"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp" />
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"

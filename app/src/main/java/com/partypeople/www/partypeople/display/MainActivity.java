@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        MenuItem item = menu.findItem(R.id.search);
+        MenuItem item = menu.findItem(R.id.search_text);
 
         View view = MenuItemCompat.getActionView(item);
         keywordView = (EditText)view.findViewById(R.id.edit_keyword);
@@ -70,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String keyword = keywordView.getText().toString();
                 Toast.makeText(MainActivity.this, "Keyword : " + keyword, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        item = menu.findItem(R.id.search_detail);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 

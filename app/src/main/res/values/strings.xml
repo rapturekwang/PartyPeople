@@ -2,10 +2,18 @@
     <string name="app_name">Party People</string>
 
     <string-array name="tab_name">
-        <item>맞춤모임</item>
         <item>인기순</item>
-        <item>시작일순</item>
+        <item>맞춤모임</item>
     </string-array>
+
+    <string-array name="detail_tab_name">
+        <item>세부 정보</item>
+        <item>리워드 내용</item>
+        <item>Q<![CDATA["&"]]>A / 후기</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
