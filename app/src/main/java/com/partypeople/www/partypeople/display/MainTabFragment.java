@@ -61,7 +61,6 @@ public class MainTabFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "pushed party number : " + position, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getActivity(), PartyDetailActivity.class);
                 startActivity(i);
             }

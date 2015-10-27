@@ -1,5 +1,7 @@
 package com.partypeople.www.partypeople.display;
 
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -21,11 +23,15 @@ import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.jar.Manifest;
+
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener{
 
     TabLayout tabs;
     ViewPager pager;
     DrawerLayout mDrawer;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,28 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < Constants.NUM_OF_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
+
+        navigationView = (NavigationView)findViewById(R.id.navi);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        switch(menuItem.getItemId()) {
+            case R.id.home :
+            case R.id.theme :
+            case R.id.party :
+                Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.make_party :
+                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.guide :
+            case R.id.setting :
+                Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     EditText keywordView;

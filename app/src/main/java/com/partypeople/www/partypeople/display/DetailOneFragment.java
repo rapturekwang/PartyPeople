@@ -1,15 +1,22 @@
 package com.partypeople.www.partypeople.display;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
-
-import org.w3c.dom.Text;
+import com.skp.Tmap.TMapMarkerItem;
+import com.skp.Tmap.TMapView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +29,8 @@ import org.w3c.dom.Text;
 public class DetailOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
+    TMapView mapView;
+    LocationManager mLM;
 
     public static DetailOneFragment newInstance(String name) {
         DetailOneFragment fragment = new DetailOneFragment();
@@ -50,6 +59,11 @@ public class DetailOneFragment extends Fragment {
 
         initData();
 
+        mapView = (TMapView)view.findViewById(R.id.view_map);
+        new RegisterTask().execute();
+
+        mLM = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+
         return view;
     }
 
@@ -66,5 +80,72 @@ public class DetailOneFragment extends Fragment {
 //            d.dueDate = "7일 남음";
 //            mAdapter.add(d);
 //        }
+    }
+
+    boolean isInitialized = false;
+
+    class RegisterTask extends AsyncTask<String,Void,Boolean> {
+        @Override
+        protected Boolean doInBackground(String... params) {
+            mapView.setSKPMapApiKey("8d709b60-6811-3e70-9e0b-e2cb992de402");
+            mapView.setLanguage(TMapView.LANGUAGE_KOREAN);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            isInitialized = true;
+            setupMap();
+        }
+    }
+
+    Location cacheLocation;
+    LocationListener mListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (isInitialized) {
+                moveMap(location.getLatitude(), location.getLongitude());
+                setMyLocation(location.getLatitude(), location.getLongitude());
+            } else {
+                cacheLocation = location;
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onProviderDisabled(String provider) {}
+    };
+
+    private void moveMap(double lat, double lng) {
+        mapView.setCenterPoint(lng, lat);
+        mapView.setZoomLevel(17);
+    }
+
+    private void setMyLocation(double lat, double lng) {
+        mapView.setLocationPoint(lng, lat);
+        Bitmap bm = ((BitmapDrawable)getResources().getDrawable(R.drawable.my_icon)).getBitmap();
+        mapView.setIcon(bm);
+        mapView.setIconVisibility(true);
+    }
+
+    private void setupMap() {
+        if (cacheLocation != null) {
+            moveMap(cacheLocation.getLatitude(), cacheLocation.getLongitude());
+            setMyLocation(cacheLocation.getLatitude(), cacheLocation.getLongitude());
+            cacheLocation = null;
+        }
+
+        mapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+            @Override
+            public void onCalloutRightButton(TMapMarkerItem tMapMarkerItem) {
+                Toast.makeText(getContext(), "Marker Click", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

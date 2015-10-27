@@ -8,7 +8,7 @@
 
     <string-array name="detail_tab_name">
         <item>세부 정보</item>
-        <item>리워드 내용</item>
+        <item>포함 사항</item>
         <item>Q<![CDATA["&"]]>A / 후기</item>
     </string-array>
 
