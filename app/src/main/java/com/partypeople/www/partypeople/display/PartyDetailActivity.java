@@ -29,7 +29,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_party_detail);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
-        pager = (ViewPager)findViewById(R.id.pager_tab);
+        pager = (ViewPager)findViewById(R.id.pager);
         DetailTabAdapter adpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 
