@@ -1,7 +1,9 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -36,6 +38,15 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -65,12 +76,18 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch(menuItem.getItemId()) {
             case R.id.home :
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
             case R.id.theme :
-            case R.id.party :
                 Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.party :
+                startActivity(new Intent(MainActivity.this, UserActivity.class));
+                break;
             case R.id.make_party :
-                Intent intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
+                intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
                 startActivity(intent);
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
