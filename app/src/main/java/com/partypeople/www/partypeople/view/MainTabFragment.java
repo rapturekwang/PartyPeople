@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.display;
+package com.partypeople.www.partypeople.view;
 
 
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;

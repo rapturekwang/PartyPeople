@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.display;
+package com.partypeople.www.partypeople.view;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

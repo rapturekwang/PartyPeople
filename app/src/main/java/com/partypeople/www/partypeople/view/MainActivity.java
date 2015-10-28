@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.display;
+package com.partypeople.www.partypeople.view;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -22,8 +22,6 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
-
-import java.util.jar.Manifest;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener{

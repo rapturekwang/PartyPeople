@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.display;
+package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
