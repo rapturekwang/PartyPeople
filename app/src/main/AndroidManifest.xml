@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".display.MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoTitle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".display.PartyDetailActivity"
+            android:name=".activity.PartyDetailActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".display.MakePartyActivity" >
+        <activity
+            android:name=".activity.MakePartyOneActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity
+            android:name=".activity.MakePartyTwoActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.MakePartyThreeActivity"
+            android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>
 

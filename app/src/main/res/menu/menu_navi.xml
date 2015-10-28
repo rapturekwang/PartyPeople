@@ -2,43 +2,43 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="none"
-        android:id="@+id/home">
-        <item android:id="@+id/navi_menu1"
+        android:id="@+id/navi_menu1">
+        <item android:id="@+id/home"
             android:title="홈"
             android:icon="@android:drawable/ic_input_add"
             android:orderInCategory="100" />
     </group>
     <group android:checkableBehavior="none"
-        android:id="@+id/theme">
-        <item android:id="@+id/navi_menu2"
+        android:id="@+id/navi_menu2">
+        <item android:id="@+id/theme"
             android:title="나의 테마"
             android:icon="@android:drawable/ic_input_delete"
             android:orderInCategory="101" />
     </group>
     <group android:checkableBehavior="none"
-        android:id="@+id/party">
-        <item android:id="@+id/navi_menu3"
+        android:id="@+id/navi_menu3">
+        <item android:id="@+id/party"
             android:title="나의 모임"
             android:icon="@android:drawable/ic_input_get"
             android:orderInCategory="102" />
     </group>
     <group android:checkableBehavior="none"
-        android:id="@+id/make_party">
-        <item android:id="@+id/navi_menu4"
+        android:id="@+id/navi_menu4">
+        <item android:id="@+id/make_party"
             android:title="모임 만들기"
             android:icon="@android:drawable/ic_input_add"
             android:orderInCategory="103" />
     </group>
     <group android:checkableBehavior="none"
-        android:id="@+id/guide">
-        <item android:id="@+id/navi_menu5"
+        android:id="@+id/navi_menu5">
+        <item android:id="@+id/guide"
             android:title="이용방법"
             android:icon="@android:drawable/ic_input_delete"
             android:orderInCategory="104" />
     </group>
     <group android:checkableBehavior="none"
-        android:id="@+id/setting">
-        <item android:id="@+id/navi_menu6"
+        android:id="@+id/navi_menu6">
+        <item android:id="@+id/setting"
             android:title="설정"
             android:icon="@android:drawable/ic_input_get"
             android:orderInCategory="105" />

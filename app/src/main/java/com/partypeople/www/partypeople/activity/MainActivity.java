@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.view;
+package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -70,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements
                 Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.make_party :
-                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
+                Intent intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
                 startActivity(intent);
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.guide :
             case R.id.setting :

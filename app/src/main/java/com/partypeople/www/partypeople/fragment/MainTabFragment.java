@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.view;
+package com.partypeople.www.partypeople.fragment;
 
 
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 
 
 /**

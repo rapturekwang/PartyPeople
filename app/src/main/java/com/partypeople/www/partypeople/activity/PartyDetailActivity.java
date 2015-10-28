@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.view;
+package com.partypeople.www.partypeople.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.view.PartyItemView;
 
 public class PartyDetailActivity extends AppCompatActivity {
 

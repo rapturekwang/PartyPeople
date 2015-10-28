@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.partypeople.www.partypeople.display.MakePartyActivity">
+    tools:context="com.partypeople.www.partypeople.activity.MakePartyTwoActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view"
+        android:id="@+id/toolbar"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -16,10 +16,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="모임 설명"
+            android:text="모임 모금 방식"
             android:layout_gravity="center"
             android:textColor="#ffffff"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:id="@+id/text" />
 
     </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:id="@+id/container">
+
+        <com.partypeople.www.partypeople.view.MakePartyTwoView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 </RelativeLayout>

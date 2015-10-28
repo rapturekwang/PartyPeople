@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.partypeople.www.partypeople.display.DetailOneFragment;
-import com.partypeople.www.partypeople.display.DetailThreeFragment;
-import com.partypeople.www.partypeople.display.DetailTwoFragment;
+import com.partypeople.www.partypeople.fragment.DetailOneFragment;
+import com.partypeople.www.partypeople.fragment.DetailThreeFragment;
+import com.partypeople.www.partypeople.fragment.DetailTwoFragment;
 import com.partypeople.www.partypeople.utils.Constants;
 
 import java.util.ArrayList;

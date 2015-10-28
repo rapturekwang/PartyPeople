@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.view;
+package com.partypeople.www.partypeople.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,24 +11,24 @@ import com.partypeople.www.partypeople.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DetailThreeFragment.OnFragmentInteractionListener} interface
+ * {@link DetailTwoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DetailThreeFragment#newInstance} factory method to
+ * Use the {@link DetailTwoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetailThreeFragment extends Fragment {
+public class DetailTwoFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
 
-    public static DetailThreeFragment newInstance(String name) {
-        DetailThreeFragment fragment = new DetailThreeFragment();
+    public static DetailTwoFragment newInstance(String name) {
+        DetailTwoFragment fragment = new DetailTwoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_NAME, name);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public DetailThreeFragment() {
+    public DetailTwoFragment() {
         // Required empty public constructor
     }
 
@@ -43,7 +43,7 @@ public class DetailThreeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_three, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_two, container, false);
 
         initData();
 

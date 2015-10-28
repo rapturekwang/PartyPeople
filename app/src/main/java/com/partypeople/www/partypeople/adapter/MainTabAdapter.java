@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.display.MainTabFragment;
+import com.partypeople.www.partypeople.fragment.MainTabFragment;
 
 /**
  * Created by dongja94 on 2015-10-14.
