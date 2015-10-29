@@ -15,4 +15,5 @@ public class PartyItemData {
     public String progressText;
     public String dueDate;
     public int progress;
+    public String currentState;
 }

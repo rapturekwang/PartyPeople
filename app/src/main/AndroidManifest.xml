@@ -37,8 +37,11 @@
             android:name=".activity.MakePartyThreeActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.UserActivity"
-            android:theme="@style/AppTheme.NoTitle">
+        <activity
+            android:name=".activity.UserActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.ThemeActivity" >
         </activity>
     </application>
 

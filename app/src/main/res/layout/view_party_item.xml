@@ -11,26 +11,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:focusable="false"
-        android:clickable="false"/>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chbox_bookmark"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:checked="false"
         android:clickable="false"
-        android:focusable="false"
-        />
+        android:text="Come to house party!" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_date"
-        android:layout_below="@+id/chbox_bookmark"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/text_item_title"
         android:focusable="false"
         android:clickable="false"/>
 
@@ -39,8 +29,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_location"
-        android:layout_below="@+id/chbox_bookmark"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/text_item_title"
         android:focusable="false"
         android:clickable="false"/>
 
@@ -51,7 +41,8 @@
         android:layout_below="@+id/text_date"
         android:layout_alignParentStart="true"
         android:focusable="false"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:src="@drawable/demo_img" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +52,19 @@
         android:layout_below="@+id/image_party"
         android:layout_alignParentStart="true"
         android:focusable="false"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:text="25,000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/text_current_state"
+        android:layout_below="@+id/image_party"
+        android:layout_toRightOf="@+id/text_price"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +74,7 @@
         android:layout_below="@+id/image_party"
         android:layout_centerHorizontal="true"
         android:focusable="false"
-        android:clickable="false"/>
+        android:clickable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,7 +84,8 @@
         android:layout_below="@+id/image_party"
         android:layout_alignEnd="@+id/text_location"
         android:focusable="false"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:text="60일 남음" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -94,4 +98,5 @@
         android:maxHeight="20dip"
         android:focusable="false"
         android:clickable="false"/>
+
 </RelativeLayout>

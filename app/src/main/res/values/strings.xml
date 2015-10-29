@@ -12,6 +12,12 @@
         <item>Q<![CDATA["&"]]>A / 후기</item>
     </string-array>
 
+    <string-array name="user_page_tab_name">
+        <item>개최한 모임</item>
+        <item>참여 모임</item>
+        <item>관심 모임</item>
+    </string-array>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

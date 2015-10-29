@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.party :
                 startActivity(new Intent(MainActivity.this, UserActivity.class));
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.make_party :
                 intent = new Intent(MainActivity.this, MakePartyOneActivity.class);

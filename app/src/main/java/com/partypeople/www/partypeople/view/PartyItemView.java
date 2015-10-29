@@ -25,7 +25,7 @@ public class PartyItemView extends RelativeLayout {
         init();
     }
 
-    TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
+    TextView titleView, dateView, locationView, priceView, progressView, dueDateView, currentStateView;
     ImageView partyImgView;
     CheckBox bookMarkView;
     ProgressBar progressBar;
@@ -40,8 +40,9 @@ public class PartyItemView extends RelativeLayout {
         priceView = (TextView)findViewById(R.id.text_price);
         progressView = (TextView)findViewById(R.id.text_progress);
         dueDateView = (TextView)findViewById(R.id.text_duedate);
-        bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
+        //bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        currentStateView = (TextView)findViewById(R.id.text_current_state);
 //        partyImgView.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -62,7 +63,8 @@ public class PartyItemView extends RelativeLayout {
         progressView.setText(data.progressText);
         dueDateView.setText(data.dueDate);
         progressBar.setProgress(data.progress);
-        bookMarkView.setClickable(false);
+        //bookMarkView.setClickable(false);
+        currentStateView.setText(data.currentState);
         //bookMarkView.setChecked(data.bookMark);
     }
 
