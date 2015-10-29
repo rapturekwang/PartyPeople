@@ -9,9 +9,8 @@
         app:actionLayout="@layout/menu_search_layout" />
 
     <item android:id="@+id/search_detail"
-        android:title="Detail"
+        android:title="Detail Search"
         android:orderInCategory="101"
         android:icon="@android:drawable/ic_search_category_default"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionLayout="@layout/menu_search_layout" />
+        app:showAsAction="ifRoom" />
 </menu>

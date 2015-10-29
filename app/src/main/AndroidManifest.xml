@@ -26,22 +26,15 @@
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
         <activity
-            android:name=".activity.MakePartyOneActivity"
-            android:theme="@style/AppTheme.NoTitle" >
-        </activity>
-        <activity
-            android:name=".activity.MakePartyTwoActivity"
-            android:theme="@style/AppTheme.NoTitle" >
-        </activity>
-        <activity
-            android:name=".activity.MakePartyThreeActivity"
+            android:name=".activity.MakePartyActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
         <activity
             android:name=".activity.UserActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.ThemeActivity" >
+        <activity android:name=".activity.ThemeActivity"
+            android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>
 

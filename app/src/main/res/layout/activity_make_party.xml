@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.partypeople.www.partypeople.activity.MakePartyTwoActivity">
+    tools:context="com.partypeople.www.partypeople.activity.MakePartyActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="wrap_content"
@@ -18,11 +18,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="모임 모금 방식"
+            android:text="모임"
             android:layout_gravity="center"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:id="@+id/text" />
+            android:id="@+id/text_title" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -32,12 +32,6 @@
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true"
         android:id="@+id/container">
-
-        <com.partypeople.www.partypeople.view.MakePartyTwoView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/view"
-            android:layout_gravity="center" />
     </FrameLayout>
 
 </RelativeLayout>

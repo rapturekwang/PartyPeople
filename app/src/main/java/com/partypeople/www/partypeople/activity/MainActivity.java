@@ -3,7 +3,6 @@ package com.partypeople.www.partypeople.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
+                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,14 +80,15 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
             case R.id.theme :
-                Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ThemeActivity.class));
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.party :
                 startActivity(new Intent(MainActivity.this, UserActivity.class));
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.make_party :
-                intent = new Intent(MainActivity.this, MakePartyOneActivity.class);
+                intent = new Intent(MainActivity.this, MakePartyActivity.class);
                 startActivity(intent);
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
