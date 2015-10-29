@@ -1,11 +1,14 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.database.Cursor;
+import android.provider.MediaStore;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +17,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.view.GridItemView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ThemeActivity extends AppCompatActivity {
 
@@ -40,33 +47,34 @@ public class ThemeActivity extends AppCompatActivity {
         gridView = (GridView)findViewById(R.id.gridView);
         mAdapter = new gridAdapter();
         gridView.setAdapter(mAdapter);
-        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-        gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+    }
 
-            }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar_theme, menu);
 
+        MenuItem item = menu.findItem(R.id.select);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            public boolean onMenuItemClick(MenuItem item) {
+                SparseBooleanArray array = gridView.getCheckedItemPositions();
+                List<String> pathList = new ArrayList<String>();
+                for (int index = 0; index < array.size(); index++) {
+                    int position = array.keyAt(index);
+                    if(array.get(position)) {
+                        String s = "" + (position+1);
+                        pathList.add(s);
+                    }
+                }
+
+                Toast.makeText(ThemeActivity.this, "테마 : " + pathList, Toast.LENGTH_SHORT).show();
+                finish();
                 return false;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-
             }
         });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
