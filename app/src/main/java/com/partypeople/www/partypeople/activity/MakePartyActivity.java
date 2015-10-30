@@ -65,4 +65,11 @@ public class MakePartyActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        currentFragment--;
+        titleView.setText(stringList[currentFragment]);
+        super.onBackPressed();
+    }
 }

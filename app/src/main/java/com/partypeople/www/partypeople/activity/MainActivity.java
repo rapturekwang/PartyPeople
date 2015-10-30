@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,19 +27,21 @@ import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
 
 public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener {
 
     TabLayout tabs;
     ViewPager pager;
     DrawerLayout mDrawer;
     NavigationView navigationView;
+    ActionBarDrawerToggle mDrawerToggle;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +56,17 @@ public class MainActivity extends AppCompatActivity implements
         actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, R.drawable.ic_drawer,
+                R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                fab.setTranslationX(slideOffset * 200);
+            }
+        };
+
         mDrawer = (DrawerLayout)findViewById(R.id.drawer);
+        mDrawer.setDrawerListener(mDrawerToggle);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
         pager = (ViewPager)findViewById(R.id.pager);
@@ -93,8 +107,12 @@ public class MainActivity extends AppCompatActivity implements
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.guide :
-            case R.id.setting :
                 Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setting :
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                mDrawer.closeDrawer(GravityCompat.START);
+                break;
         }
         return false;
     }
