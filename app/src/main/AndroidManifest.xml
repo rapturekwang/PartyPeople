@@ -15,11 +15,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoTitle" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.PartyDetailActivity"
@@ -41,8 +36,17 @@
             android:name=".activity.SettingActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.SearchActivity"
-            android:theme="@style/AppTheme.NoTitle">
+        <activity
+            android:name=".activity.SearchActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
