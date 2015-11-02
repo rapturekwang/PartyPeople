@@ -2,6 +2,7 @@
     <string name="app_name">Party People</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="facebook_app_id">1124532390893340</string>
 
     <string-array name="tab_name">
         <item>인기순</item>
