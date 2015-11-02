@@ -40,13 +40,20 @@
             android:name=".activity.SearchActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoTitle.FullScreen">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen">
+        </activity>
+        <activity android:name=".activity.IntroActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen">
         </activity>
     </application>
 

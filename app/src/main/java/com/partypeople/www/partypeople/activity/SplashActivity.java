@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, IntroActivity.class));
                 finish();
             }
         }, Constants.SPLASH_TIME_OUT);
