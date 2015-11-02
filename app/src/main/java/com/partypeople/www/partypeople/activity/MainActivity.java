@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -140,7 +139,8 @@ public class MainActivity extends AppCompatActivity implements
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 return false;
             }
         });

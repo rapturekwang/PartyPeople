@@ -37,7 +37,11 @@
             android:name=".activity.ThemeActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.SettingActivity"
+        <activity
+            android:name=".activity.SettingActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.SearchActivity"
             android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>
