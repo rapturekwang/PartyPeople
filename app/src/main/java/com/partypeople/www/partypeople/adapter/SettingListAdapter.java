@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Tacademy on 2015-11-03.
  */
 public class SettingListAdapter extends BaseAdapter {
-    public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 설정",
+    public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 변경",
             "이용약관", "개인정보 취급방침", "자주 하는 질문", "버전정보",
             "로그아웃", "회원탈퇴", "rapturekwang@gmali.com", "" };
     public static final String[] VERSION = new String[] { null, null,

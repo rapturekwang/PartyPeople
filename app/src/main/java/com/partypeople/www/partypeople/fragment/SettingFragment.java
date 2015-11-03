@@ -1,6 +1,10 @@
 package com.partypeople.www.partypeople.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,9 +26,6 @@ public class SettingFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String name;
 
-//    public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 설정",
-//            "이용약관", "개인정보 취급방침", "자주 하는 질문", "버전정보",
-//            "로그아웃", "회원탈퇴", "rapturekwang@gmali.com", "" };
     ListView listView;
     SettingListAdapter mAdapter;
 
@@ -59,10 +60,46 @@ public class SettingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SettingActivity activity = (SettingActivity)getActivity();
-                if(position<5)
+                if(position<5) {
                     activity.changeFragment(position);
-                else {
-                    Toast.makeText(getContext(), "pushed : " + position, Toast.LENGTH_SHORT).show();
+                } else if(position == 6) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.setMessage("정말로 로그아웃 하시겠습니까?");
+                    builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), "로그아웃", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.create().show();
+                } else if(position == 7) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.setMessage("정말로 회원탈퇴를 진행 하시겠습니까? 회원탈퇴시 회원님의 모든 기록이 삭제되며, 다시 복구할 수 없습니다");
+                    builder.setPositiveButton("회원탈퇴", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), "회원탈퇴", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.create().show();
+                } else if(position == 8) {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:rapturekwang@gmail.com"));
+
+                    startActivity(intent);
                 }
             }
         });
