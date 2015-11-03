@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.SettingActivity;
+import com.partypeople.www.partypeople.adapter.SettingListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,11 +22,11 @@ public class SettingFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String name;
 
-    public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 설정",
-            "이용약관", "개인정보 취급방침", "자주 하는 질문", "버전정보",
-            "로그아웃", "회원탈퇴", "rapturekwang@gmali.com", "" };
+//    public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 설정",
+//            "이용약관", "개인정보 취급방침", "자주 하는 질문", "버전정보",
+//            "로그아웃", "회원탈퇴", "rapturekwang@gmali.com", "" };
     ListView listView;
-    ArrayAdapter<String> mAdapter;
+    SettingListAdapter mAdapter;
 
     public static SettingFragment newInstance(String name) {
         SettingFragment fragment = new SettingFragment();
@@ -66,8 +67,9 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        mAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, SETTING_MENUS);
+        mAdapter = new SettingListAdapter();
         listView.setAdapter(mAdapter);
+
         return view;
     }
 

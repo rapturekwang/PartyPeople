@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.SettingListAdapter;
 import com.partypeople.www.partypeople.fragment.ChangePasswordFragment;
 import com.partypeople.www.partypeople.fragment.FAQFragment;
 import com.partypeople.www.partypeople.fragment.PushAlarmFragment;
@@ -81,7 +82,7 @@ public class SettingActivity extends AppCompatActivity {
                 .replace(R.id.container, fragmentList[num])
                 .addToBackStack(null)
                 .commit();
-        titleView.setText(SettingFragment.SETTING_MENUS[num]);
+        titleView.setText(SettingListAdapter.SETTING_MENUS[num]);
         actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
     }
 }
