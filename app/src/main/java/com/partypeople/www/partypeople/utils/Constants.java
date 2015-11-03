@@ -9,4 +9,8 @@ public class Constants {
     public static final int NUM_OF_USER_PAGE_TAB = 3;
 
     public static final int SPLASH_TIME_OUT = 1000;
+
+    public static final int STACK_ADD = 1;
+    public static final int STACK_REPLACE = 2;
+    public static final int STACK_POP = 3;
 }

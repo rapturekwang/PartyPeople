@@ -1,9 +1,9 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.facebook.AccessToken;
@@ -13,18 +13,26 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.fragment.FindPasswordFragment;
+import com.partypeople.www.partypeople.fragment.LoginFragment;
+import com.partypeople.www.partypeople.fragment.LoginMainFragment;
+import com.partypeople.www.partypeople.fragment.SignupFragment;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.Constants;
 
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    Fragment[] list = {LoginMainFragment.newInstance(""),
+            SignupFragment.newInstance(""),
+            LoginFragment.newInstance(""),
+            FindPasswordFragment.newInstance("")};
     CallbackManager callbackManager = CallbackManager.Factory.create();
     Button btn;
 
     LoginManager mLoginManager = LoginManager.getInstance();
-    AccessToken token;// = AccessToken.getCurrentAccessToken();
-    //AccessTokenTracker tracker;
+    AccessToken token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Button btn = (Button)findViewById(R.id.btn_skip);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+        initFragment();
     }
-
-    public static final int MODE_NONE = -1;
-    public static final int MODE_PROFILE = 1;
-    public static final int MODE_POST = 2;
-    int mode = MODE_NONE;
 
     private void login(List<String> permissions) {
         login(permissions, true);
@@ -62,13 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-//                if (mode == MODE_PROFILE) {
-//                    getProfile();
-//                    mode = MODE_NONE;
-//                } else if (mode == MODE_POST) {
-//                    postMessage();
-//                    mode = MODE_NONE;
-//                }
                 token = AccessToken.getCurrentAccessToken();
                 PropertyManager.getInstance().setFacebookId(token.getUserId());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -92,61 +81,32 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    private void getProfile() {
-//        AccessToken token = AccessToken.getCurrentAccessToken();
-//        GraphRequest request = new GraphRequest(token, "/me", null, HttpMethod.GET, new GraphRequest.Callback() {
-//            @Override
-//            public void onCompleted(GraphResponse response) {
-//                JSONObject object = response.getJSONObject();
-//                if (object == null) {
-//                    String message = response.getError().getErrorMessage();
-//                    Toast.makeText(LoginActivity.this, "error : " + message, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "profile : " + object.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//        request.executeAsync();
-//    }
+    private void initFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, list[0]).commit();
+    }
 
-//    private void postMessage() {
-//        String message = "facebook test message";
-//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//        String graphPath = "/me/feed";
-//        Bundle parameters = new Bundle();
-//        parameters.putString("message",message);
-//        parameters.putString("link", "http://developers.facebook.com/docs/android");
-//        parameters.putString("picture", "https://raw.github.com/fbsamples/.../iossdk_logo.png");
-//        parameters.putString("name", "Hello Facebook");
-//        parameters.putString("description", "The 'Hello Facebook' sample  showcases simple …");
-//        GraphRequest request = new GraphRequest(accessToken, graphPath, parameters, HttpMethod.POST,
-//                new GraphRequest.Callback() {
-//                    @Override
-//                    public void onCompleted(GraphResponse response) {
-//                        JSONObject data = response.getJSONObject();
-//                        String id = (data == null)?null:data.optString("id");
-//                        if (id == null) {
-//                            Toast.makeText(LoginActivity.this, "error : " + response.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "post object id : " + id, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//        request.executeAsync();
-//    }
+    public void goToFragment(int stack_status) {
+        goToFragment(-1, stack_status);
+    }
 
-//    private void setLabel() {
-//        if (!isLogin()) {
-//            btnLogin.setText("login");
-//        } else {
-//            btnLogin.setText("logout");
-//        }
-//    }
-
-//    private boolean isLogin() {
-//        AccessToken token = AccessToken.getCurrentAccessToken();
-//        return token==null?false:true;
-//    }
+    public void goToFragment(int num, int stack_status) {
+        if(stack_status == Constants.STACK_ADD) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, list[num])
+                    .addToBackStack(null).commit();
+        } else if(stack_status == Constants.STACK_REPLACE) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, list[num]).commit();
+        } else if(stack_status == Constants.STACK_POP) {
+            getSupportFragmentManager().popBackStack();
+            if(num != -1) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, list[num])
+                        .addToBackStack(null).commit();
+            }
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
