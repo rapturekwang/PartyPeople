@@ -11,7 +11,67 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="login with facebook"
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_facebook"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/btn_skip" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="건너뛰기"
+        android:id="@+id/btn_skip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@null" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView14"
+        android:layout_below="@+id/btn_skip"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/my_icon" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login with kakao"
+        android:id="@+id/btn_kakao"
+        android:layout_below="@+id/btn_facebook"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/btn_facebook" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_kakao"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:id="@+id/btn_signup"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:id="@+id/btn_login"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="회원가입을 하면 파티피플의 서비스 약관, 개인정보 보호정책, 참여자 환불정책 이용약관에 동의하게 됩니다."
+        android:id="@+id/textView30"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_horizontal" />
 </RelativeLayout>

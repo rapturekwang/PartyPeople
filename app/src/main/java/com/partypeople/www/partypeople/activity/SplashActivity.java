@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,21 +27,6 @@ import com.partypeople.www.partypeople.utils.Constants;
 
 public class SplashActivity extends AppCompatActivity {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
-//
-//        new Handler().postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                startActivity(new Intent(SplashActivity.this, IntroActivity.class));
-//                finish();
-//            }
-//        }, Constants.SPLASH_TIME_OUT);
-//    }
-//}
     Handler mHandler = new Handler(Looper.getMainLooper());
     CallbackManager callbackManager = CallbackManager.Factory.create();
     LoginManager mLoginManager = LoginManager.getInstance();
@@ -84,7 +70,8 @@ public class SplashActivity extends AppCompatActivity {
             mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-
+                    Toast.makeText(SplashActivity.this, "login success", Toast.LENGTH_SHORT).show();
+                    //goMainActivity();
                 }
 
                 @Override
@@ -94,19 +81,21 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(FacebookException error) {
-                    Toast.makeText(SplashActivity.this, "facebook login fail...",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashActivity.this, "facebook login fail...", Toast.LENGTH_SHORT).show();
                     goLoginActivity();
                 }
             });
 
             mLoginManager.logInWithReadPermissions(this, null);
+            //goMainActivity();
+
         } else {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     goLoginActivity();
                 }
-            }, 1000);
+            }, Constants.SPLASH_TIME_OUT);
         }
     }
 

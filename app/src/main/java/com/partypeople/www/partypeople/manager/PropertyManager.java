@@ -32,6 +32,10 @@ public class PropertyManager {
         mEditor.commit();
     }
 
+    public void deleteId() {
+        mEditor.remove(FIELD_FACEBOOK_ID);
+    }
+
     public String getFaceBookId() {
         return mPrefs.getString(FIELD_FACEBOOK_ID, "");
     }
