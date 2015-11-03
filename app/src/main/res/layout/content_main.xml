@@ -60,8 +60,8 @@
             android:layout_below="@+id/textView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            app:headerLayout="@layout/view_navigation_header"
-            app:menu="@menu/menu_navi"/>
+            app:menu="@menu/menu_navi" />
+        <!--app:headerLayout="@layout/view_navigation_header"-->
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

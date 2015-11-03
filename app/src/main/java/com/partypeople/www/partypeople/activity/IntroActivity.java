@@ -9,11 +9,13 @@ import android.widget.Button;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.IntroPagerAdapter;
+import com.partypeople.www.partypeople.utils.Constants;
 
 public class IntroActivity extends AppCompatActivity {
 
     ViewPager pager;
     IntroPagerAdapter mAdapter;
+    int mStartFrom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +24,24 @@ public class IntroActivity extends AppCompatActivity {
         mAdapter = new IntroPagerAdapter();
         pager.setAdapter(mAdapter);
 
+        Intent intent = getIntent();
+        mStartFrom = intent.getExtras().getInt("startFrom");
+
         Button btn = (Button)findViewById(R.id.btn_skip);
+        if(mStartFrom == Constants.START_FROM_SPLASH) {
+            btn.setText("건너뛰기");
+        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
+            btn.setText("메인으로");
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-                finish();
+                if(mStartFrom == Constants.START_FROM_SPLASH) {
+                    startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                    finish();
+                } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
+                    finish();
+                }
             }
         });
     }

@@ -119,7 +119,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goLoginActivity() {
-        startActivity(new Intent(this, IntroActivity.class));
+        Intent intent = new Intent(SplashActivity.this, IntroActivity.class);
+        intent.putExtra("startFrom", Constants.START_FROM_SPLASH);
+        startActivity(intent);
         finish();
     }
 

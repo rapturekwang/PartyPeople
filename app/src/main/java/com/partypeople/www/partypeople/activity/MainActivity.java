@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.utils.Constants;
@@ -82,6 +83,15 @@ public class MainActivity extends AppCompatActivity implements
 
         navigationView = (NavigationView)findViewById(R.id.navi);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.inflateHeaderView(R.layout.view_navigation_header);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserActivity.class));
+                mDrawer.closeDrawer(GravityCompat.START);
+            }
+        });
     }
 
     @Override
@@ -101,12 +111,14 @@ public class MainActivity extends AppCompatActivity implements
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.make_party :
-                intent = new Intent(MainActivity.this, MakePartyActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, MakePartyActivity.class));
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.guide :
-                Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, IntroActivity.class);
+                intent.putExtra("startFrom", Constants.START_FROM_NAVIGATION);
+                startActivity(intent);
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.setting :
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));
