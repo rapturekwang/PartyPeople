@@ -1,20 +1,16 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.database.Cursor;
-import android.provider.MediaStore;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -39,7 +35,7 @@ public class ThemeActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         actionBar.setDisplayShowTitleEnabled(false);
 
         mDrawer = (DrawerLayout)findViewById(R.id.drawer);
@@ -48,6 +44,17 @@ public class ThemeActivity extends AppCompatActivity {
         mAdapter = new gridAdapter();
         gridView.setAdapter(mAdapter);
         gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0) {
+                    for(int i = 1; i<mAdapter.getCount(); i++) {
+                        gridView.setItemChecked(i, gridView.isItemChecked(0));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -80,30 +87,19 @@ public class ThemeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            mDrawer.openDrawer(GravityCompat.START);
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
-            mDrawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     public class gridAdapter extends BaseAdapter{
         private String[] GRID_DATA = new String[] {
+                "올~ㅋ",
                 "테마1",
                 "테마2",
                 "테마3",
                 "테마4",
-                "테마5",
-                "테마6",
-                "테마7",
-                "테마8"
+                "테마5"
         };
 
         @Override
