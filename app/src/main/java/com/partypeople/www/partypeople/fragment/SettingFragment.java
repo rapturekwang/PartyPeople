@@ -98,7 +98,6 @@ public class SettingFragment extends Fragment {
                     builder.create().show();
                 } else if(position == 8) {
                     Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:rapturekwang@gmail.com"));
-
                     startActivity(intent);
                 }
             }
