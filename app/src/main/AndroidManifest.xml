@@ -7,12 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".utils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".utils.MyApplication" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoTitle" >
@@ -28,10 +28,10 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--<provider-->
-            <!--android:name="com.facebook.FacebookContentProvider"-->
-            <!--android:authorities="com.facebook.app.FacebookContentProvider1234"-->
-            <!--android:exported="true" />-->
+        <!-- <provider -->
+        <!-- android:name="com.facebook.FacebookContentProvider" -->
+        <!-- android:authorities="com.facebook.app.FacebookContentProvider1234" -->
+        <!-- android:exported="true" /> -->
 
         <activity
             android:name=".activity.PartyDetailActivity"
@@ -39,10 +39,6 @@
         </activity>
         <activity
             android:name=".activity.MakePartyActivity"
-            android:theme="@style/AppTheme.NoTitle" >
-        </activity>
-        <activity
-            android:name=".activity.UserActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
         <activity
@@ -66,11 +62,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoTitle.FullScreen">
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen" >
         </activity>
-        <activity android:name=".activity.IntroActivity"
-            android:theme="@style/AppTheme.NoTitle.FullScreen">
+        <activity
+            android:name=".activity.IntroActivity"
+            android:theme="@style/AppTheme.NoTitle.FullScreen" >
+        </activity>
+        <activity android:name=".activity.UserActivity"
+            android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>
 
