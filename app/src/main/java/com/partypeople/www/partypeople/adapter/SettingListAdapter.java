@@ -19,7 +19,7 @@ import java.util.List;
 public class SettingListAdapter extends BaseAdapter {
     public static final String[] SETTING_MENUS = new String[] { "푸쉬알림", "비밀번호 변경",
             "이용약관", "개인정보 취급방침", "자주 하는 질문", "버전정보",
-            "로그아웃", "회원탈퇴", "rapturekwang@gmali.com", "" };
+            "로그아웃", "회원탈퇴", "rapturekwang@gmali.com" };
     public static final String[] VERSION = new String[] { null, null,
             null, null, null, Constants.VERSION,
             null, null, null };
@@ -28,7 +28,7 @@ public class SettingListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return SETTING_MENUS.length-1;
+        return SETTING_MENUS.length;
     }
 
     @Override

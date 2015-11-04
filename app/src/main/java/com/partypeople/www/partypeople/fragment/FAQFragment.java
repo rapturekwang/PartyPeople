@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.FAQAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +18,8 @@ import com.partypeople.www.partypeople.R;
 public class FAQFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String name;
+    ExpandableListView listView;
+    FAQAdapter mAdapter;
 
     public static FAQFragment newInstance(String name) {
         FAQFragment fragment = new FAQFragment();
@@ -44,6 +48,12 @@ public class FAQFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
+
+        listView = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        mAdapter = new FAQAdapter();
+        listView.setAdapter(mAdapter);
+        int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        listView.setIndicatorBounds(width-50, width);
 
         return view;
     }
