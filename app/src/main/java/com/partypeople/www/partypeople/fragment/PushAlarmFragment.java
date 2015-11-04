@@ -63,9 +63,9 @@ public class PushAlarmFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "푸쉬알림이 저장되었습니다.", Toast.LENGTH_SHORT).show();
                 SettingActivity activity = (SettingActivity)getActivity();
                 activity.onBackPressed();
-                Toast.makeText(getContext(), "푸쉬알림이 저장되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
