@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.setting :
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));
-                mDrawer.closeDrawer(GravityCompat.START);
                 break;
         }
         return false;
