@@ -14,7 +14,7 @@
             android:id="@+id/image_make_party"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/demo_img" />
+            android:src="@drawable/default_camera" />
 
         <TextView
             android:layout_width="wrap_content"

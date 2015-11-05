@@ -79,6 +79,8 @@ public class MakePartyOneFragment extends Fragment {
                 photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
                 photoPickerIntent.putExtra("outputFormat",
                         Bitmap.CompressFormat.JPEG.toString());
+                photoPickerIntent.putExtra("aspectX", imageView.getWidth());
+                photoPickerIntent.putExtra("aspectY", imageView.getHeight());
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
             }
         });
