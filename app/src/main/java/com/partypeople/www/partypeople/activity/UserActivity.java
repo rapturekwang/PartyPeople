@@ -27,7 +27,7 @@ public class UserActivity extends AppCompatActivity {
         for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
             bundle = new Bundle();
             bundle.putInt("index", i);
-            tabHost.addTab(tabHost.newTabSpec("tab"+i).setIndicator(tabTitle[i]), UserFragment.class, bundle);
+            tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabTitle[i]), UserFragment.class, bundle);
         }
     }
 

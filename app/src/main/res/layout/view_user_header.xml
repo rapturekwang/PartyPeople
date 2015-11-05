@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="메시지 함"
-        android:id="@+id/textView22"
+        android:id="@+id/text_btn_message"
         android:layout_below="@+id/textView21"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff" />
@@ -67,8 +67,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="팔로잉 | 팔로워"
-        android:id="@+id/textView23"
-        android:layout_below="@+id/textView22"
+        android:id="@+id/text_btn_follow"
+        android:layout_below="@+id/text_btn_message"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff" />
 </RelativeLayout>

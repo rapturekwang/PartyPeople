@@ -28,13 +28,12 @@ public class ItemTabWidget extends FrameLayout {
         tabHost.setup();
         String[] tabTitle = getResources().getStringArray(R.array.user_page_tab_name);
         for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
-            tabHost.addTab(tabHost.newTabSpec("tab" + i).setIndicator(tabTitle[i]).setContent(R.id.tab1));
+            tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabTitle[i]).setContent(R.id.tab1));
         }
         tabHost.setOnTabChangedListener(new OnTabChangeListener() {
-
             @Override
             public void onTabChanged(String tabId) {
-                String tag = "tabx";
+                String tag = Constants.TAB_IDS[currentIndex];
                 if (!tag.equals(tabId) && mListener != null) {
                     mListener.onTabChanged(tabId);
                 }

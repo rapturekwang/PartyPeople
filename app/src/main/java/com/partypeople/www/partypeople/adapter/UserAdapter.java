@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
@@ -98,6 +99,20 @@ public class UserAdapter extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(mContext, "modify", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    TextView textBtn = (TextView)convertView.findViewById(R.id.text_btn_message);
+                    textBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(mContext, "메시지 함", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    textBtn = (TextView)convertView.findViewById(R.id.text_btn_follow);
+                    textBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(mContext, "팔로우 팔로워", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

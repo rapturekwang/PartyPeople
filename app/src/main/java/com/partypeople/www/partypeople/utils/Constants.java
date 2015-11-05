@@ -18,4 +18,6 @@ public class Constants {
     public static final int START_FROM_NAVIGATION = 2;
 
     public static final String VERSION = "0.1";
+
+    public static final String[] TAB_IDS = {"tab1", "tab2" , "tab3" };
 }
