@@ -12,13 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.utils.Constants;
 
 import java.io.File;
 
@@ -27,6 +31,8 @@ import java.io.File;
  */
 public class MakePartyOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
+    //Spinner spinner;
+    ArrayAdapter<String> mYearAdapter, mMonthAdapter, mDayAdapter, mNoonAdapter, mHourAdapter, mMinuteAdapter;
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -93,6 +99,8 @@ public class MakePartyOneFragment extends Fragment {
                 activity.nextFragment();
             }
         });
+
+        setDateSpinner(view);
 //        nameView = (TextView)v.findViewById(R.id.text_name);
 //        nameView.setText(name);
         return view;
@@ -101,9 +109,7 @@ public class MakePartyOneFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("test", "test");
         if (requestCode == REQUEST_CODE_CROP && resultCode == getActivity().RESULT_OK) {
-            Log.d("test", "test123");
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             imageView.setImageBitmap(bm);
         }
@@ -120,6 +126,132 @@ public class MakePartyOneFragment extends Fragment {
         super.onSaveInstanceState(outState);
         if (mSavedFile != null) {
             outState.putString("filename", mSavedFile.getAbsolutePath());
+        }
+    }
+
+    private void setDateSpinner(View view) {
+        Spinner spinner = (Spinner)view.findViewById(R.id.spinner_year);
+        mYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mYearAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_month);
+        mMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mMonthAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_day);
+        mDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mDayAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_noon);
+        mNoonAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mNoonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mNoonAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_hour);
+        mHourAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mHourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mHourAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_minute);
+        mMinuteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mMinuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mMinuteAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        mYearAdapter.add("년");
+        int num = 2015;
+        for (int i = num;i<num+ Constants.MAX_YEAR; i++) {
+            mYearAdapter.add(""+i);
+        }
+        mMonthAdapter.add("월");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_MONTH; i++) {
+            mMonthAdapter.add(""+i);
+        }
+        mDayAdapter.add("일");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
+            mDayAdapter.add(""+i);
+        }
+        mNoonAdapter.add("오전");
+        mNoonAdapter.add("오후");
+        mHourAdapter.add("시");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_HOUR; i++) {
+            mHourAdapter.add(""+i);
+        }
+        mMinuteAdapter.add("분");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_MINUTE; i++) {
+            mMinuteAdapter.add(""+i);
         }
     }
 }

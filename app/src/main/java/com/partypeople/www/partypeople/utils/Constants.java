@@ -21,4 +21,11 @@ public class Constants {
     public static final String VERSION = "0.1";
 
     public static final String[] TAB_IDS = {"tab1", "tab2" , "tab3" };
+
+    public static final int MAX_YEAR = 5;
+    public static final int NUM_OF_MONTH = 12;
+    public static final int NUM_OF_DAY = 30;
+    public static final int NUM_OF_HOUR = 12;
+    public static final int NUM_OF_MINUTE = 60;
+
 }
