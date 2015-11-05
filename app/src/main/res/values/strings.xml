@@ -21,6 +21,11 @@
         <item>관심 모임</item>
     </string-array>
 
+    <string-array name="follow_page_tab_name">
+        <item>팔로잉</item>
+        <item>팔로워</item>
+    </string-array>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

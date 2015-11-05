@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements
 
         tabs.removeAllTabs();
         String[] tabTitle = getResources().getStringArray(R.array.tab_name);
-        for (int i = 0; i < Constants.NUM_OF_TAB; i++) {
+        for (int i = 0; i < Constants.NUM_OF_MAIN_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
 

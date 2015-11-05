@@ -23,7 +23,7 @@ public class MainTabAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return Constants.NUM_OF_TAB;
+        return Constants.NUM_OF_MAIN_TAB;
     }
 
     @Override

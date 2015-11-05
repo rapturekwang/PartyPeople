@@ -1,6 +1,8 @@
 package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.FollowActivity;
+import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
@@ -105,14 +109,14 @@ public class UserAdapter extends BaseAdapter {
                     textBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(mContext, "메시지 함", Toast.LENGTH_SHORT).show();
+                            mContext.startActivity(new Intent(mContext, MessageActivity.class));
                         }
                     });
                     textBtn = (TextView)convertView.findViewById(R.id.text_btn_follow);
                     textBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(mContext, "팔로우 팔로워", Toast.LENGTH_SHORT).show();
+                            mContext.startActivity(new Intent(mContext, FollowActivity.class));
                         }
                     });
                 }
