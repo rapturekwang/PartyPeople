@@ -16,6 +16,7 @@ public class Area implements JSONParsing{
 //    public List<String> upperDistName;
     //List<String> middleDistName;
     public String upperDistName;
+    public String middleDistName;
 
     @Override
     public void parsing(JSONObject jobject) throws JSONException {
@@ -26,6 +27,7 @@ public class Area implements JSONParsing{
 //            upperDistName.add(jupperdistname.toString());
 //        }
         upperDistName = jobject.getString("upperDistName");
+        middleDistName = jobject.getString("middleDistName");
 //        middleDistName = new ArrayList<String>();
 //        array = jobject.getJSONArray("middleDistName");
 //        for(int i = 0; i<array.length(); i++) {

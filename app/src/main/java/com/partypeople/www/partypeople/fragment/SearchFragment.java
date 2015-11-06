@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -17,6 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.activity.SearchActivity;
+import com.partypeople.www.partypeople.location.Area;
 import com.partypeople.www.partypeople.location.LocalAreaInfo;
 import com.partypeople.www.partypeople.location.LocationAdapter;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -74,29 +76,26 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        btn =(Button)view.findViewById(R.id.btn_get);
-        btn.setOnClickListener(new View.OnClickListener() {
+        setDateSpinner(view);
+
+        mCityAdapter.add("시/도");
+        NetworkManager.getInstance().getLocalInfo(getContext(), 1, new NetworkManager.OnResultListener<LocalAreaInfo>() {
             @Override
-            public void onClick(View v) {
-                NetworkManager.getInstance().useGetMethod(getContext(), 1, new NetworkManager.OnResultListener<LocalAreaInfo>() {
-                    @Override
-                    public void onSuccess(LocalAreaInfo result) {
-//                        Toast.makeText(getContext(), "result : " + result.toString(), Toast.LENGTH_SHORT).show();
-//                        for(String s : result.areas.area) {
-//                            mCityAdapter.add(s);
-//                            Log.d("SearchFragment", s);
-//                        }
+            public void onSuccess(LocalAreaInfo result) {
+                for (Area s : result.areas.area) {
+                    if (s.middleDistName.equals("")) {
+                        mCityAdapter.add(s.upperDistName);
+                    } else {
+                        break;
                     }
+                }
+            }
 
-                    @Override
-                    public void onFail(int code) {
+            @Override
+            public void onFail(int code) {
 
-                    }
-                });
             }
         });
-
-        setDateSpinner(view);
 
         return view;
     }
@@ -106,17 +105,17 @@ public class SearchFragment extends Fragment {
         mCityAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mCityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mCityAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), mCityAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_gu);
         mGuAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
@@ -133,12 +132,6 @@ public class SearchFragment extends Fragment {
 //
 //            }
 //        });
-
-//        mCityAdapter.add("시/도");
-//        int num = 2015;
-//        for (int i = num;i<num+ Constants.NUM_OF_CITY; i++) {
-//            mCityAdapter.add(""+i);
-//        }
 
         mGuAdapter.add("군/구");
         int num = 1;
