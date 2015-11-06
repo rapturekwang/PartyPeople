@@ -1,11 +1,15 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
@@ -38,6 +42,21 @@ public class PartyDetailActivity extends AppCompatActivity {
         for (int i = 0; i < Constants.NUM_OF_DETAIL_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
+        
+        Button btn = (Button)findViewById(R.id.btn_parti);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(PartyDetailActivity.this, "함께하기", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ImageView img_btn = (ImageView)findViewById(R.id.img_btn_share);
+        img_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(PartyDetailActivity.this, "공유하기", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 //        imageView = (ImageView)findViewById(R.id.image_party_detail);
 //        itemView = (PartyItemView)findViewById(R.id.custom_detail);
