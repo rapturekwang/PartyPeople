@@ -56,8 +56,6 @@ public class MakePartyThreeFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                MakePartyActivity activity = (MakePartyActivity)getActivity();
-//                activity.nextFragment();
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setIcon(android.R.drawable.ic_dialog_alert);
                 builder.setMessage("정말로 만드시겠습니까?");
