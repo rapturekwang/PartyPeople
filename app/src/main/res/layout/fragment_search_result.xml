@@ -11,37 +11,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:background="#b4b4b4">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="경기도 성남시"
             android:id="@+id/textView27"
-            android:layout_margin="10dp" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="테마"
             android:id="@+id/textView28"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="30dp" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/imageView12"
-            android:src="@drawable/my_icon" />
+            android:src="@drawable/profile_img"
+            android:layout_margin="5dp" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/imageView13"
-            android:src="@drawable/my_icon" />
+            android:src="@drawable/profile_img"
+            android:layout_margin="5dp" />
     </LinearLayout>
 
     <TextView
@@ -59,6 +62,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:layout_below="@+id/text_result"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>

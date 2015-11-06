@@ -1,103 +1,104 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.partypeople.www.partypeople.fragment.SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="지역"
-        android:id="@+id/textView25"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="20dp" />
-
-    <Spinner
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner2"
-        android:layout_below="@+id/textView25"
-        android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner3"
-        android:layout_alignTop="@+id/spinner2"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="테마"
-        android:id="@+id/textView26"
-        android:layout_below="@+id/spinner2"
-        android:layout_alignParentStart="true"
-        android:layout_margin="20dp" />
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView26"
-        android:layout_alignParentStart="true"
-        android:gravity="center_horizontal">
+        android:layout_height="500dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView5"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="지역"
+            android:id="@+id/textView25"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView6"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView25"
+            android:layout_alignParentStart="true"
+            android:id="@+id/linearLayout5">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView8"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_city"
+                android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView9"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_gu"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView10"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="테마"
+            android:id="@+id/textView26"
+            android:layout_below="@+id/linearLayout5"
+            android:layout_alignParentStart="true" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView11"
-            android:src="@drawable/my_icon"
-            android:background="#A0AFFF"
-            android:layout_margin="1dp" />
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView26"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView5"
+                android:src="@drawable/profile_img"
+                android:layout_margin="5dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView6"
+                android:src="@drawable/profile_img"
+                android:layout_margin="5dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView8"
+                android:src="@drawable/profile_img"
+                android:layout_margin="5dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView10"
+                android:src="@drawable/profile_img"
+                android:layout_margin="5dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView11"
+                android:src="@drawable/profile_img"
+                android:layout_margin="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="결과보기"
         android:id="@+id/btn_next"

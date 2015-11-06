@@ -28,4 +28,6 @@ public class Constants {
     public static final int NUM_OF_HOUR = 12;
     public static final int NUM_OF_MINUTE = 60;
 
+    public static final int NUM_OF_CITY = 20;
+    public static final int NUM_OF_GU = 10;
 }

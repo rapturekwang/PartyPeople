@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.fragment.SearchFragment;
@@ -36,11 +37,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        Log.d("text", "first");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, list[0]).commit();
-        textView = (TextView)findViewById(R.id.text_title);
-        textView.setText("모임 찾기");
     }
 
     public void nextFragment() {
@@ -56,8 +54,14 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        currentFragment--;
+        super.onBackPressed();
     }
 }

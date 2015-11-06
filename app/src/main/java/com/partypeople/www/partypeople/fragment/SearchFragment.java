@@ -5,12 +5,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.activity.SearchActivity;
+import com.partypeople.www.partypeople.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +25,7 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String name;
 
+    ArrayAdapter<String> mCityAdapter, mGuAdapter;
 
     public static SearchFragment newInstance(String name) {
         SearchFragment fragment = new SearchFragment();
@@ -54,12 +59,58 @@ public class SearchFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity activity = (SearchActivity)getActivity();
+                SearchActivity activity = (SearchActivity) getActivity();
                 activity.nextFragment();
             }
         });
-//        nameView = (TextView)v.findViewById(R.id.text_name);
-//        nameView.setText(name);
+
+        setDateSpinner(view);
+
         return view;
+    }
+
+    private void setDateSpinner(View view) {
+        Spinner spinner = (Spinner)view.findViewById(R.id.spinner_city);
+        mCityAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mCityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mCityAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_gu);
+        mGuAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mGuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mGuAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        mCityAdapter.add("시/도");
+        int num = 2015;
+        for (int i = num;i<num+ Constants.NUM_OF_CITY; i++) {
+            mCityAdapter.add(""+i);
+        }
+        mGuAdapter.add("군/구");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_GU; i++) {
+            mGuAdapter.add(""+i);
+        }
     }
 }
