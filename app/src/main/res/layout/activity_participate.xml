@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.partypeople.www.partypeople.activity.PartyDetailActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:background="#696969" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="참여하기"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/toolbar"
+            android:id="@+id/relativeLayout1"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="포함 사항 - 리워드 선택"
+                android:id="@+id/textView7"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="결제 예정 금액"
+                android:id="@+id/textView35"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="30,000 원"
+                android:id="@+id/textView36"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:id="@+id/relativeLayout2"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="참가자 확인"
+                android:id="@+id/textView37"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="이름"
+                android:id="@+id/textView38"
+                android:layout_below="@+id/textView37"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText12"
+                android:layout_alignTop="@+id/textView38"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/textView38" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="전화번호"
+                android:id="@+id/textView39"
+                android:layout_below="@+id/editText12"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText13"
+                android:layout_below="@+id/editText12"
+                android:layout_alignEnd="@+id/editText12"
+                android:layout_toEndOf="@+id/textView39" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="이메일"
+                android:id="@+id/textView40"
+                android:layout_below="@+id/editText13"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText14"
+                android:layout_below="@+id/editText13"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/textView40" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="참가 한마디"
+                android:id="@+id/textView41"
+                android:layout_below="@+id/editText14"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText15"
+                android:layout_below="@+id/textView41"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:hint="너무너무 기대되요!! 밤새도록 놀아야지!" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="결제 정보"
+                android:id="@+id/textView42"
+                android:layout_below="@+id/editText15"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="카드 번호"
+                android:id="@+id/textView43"
+                android:layout_below="@+id/textView42"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText16"
+                android:layout_below="@+id/textView43"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="유효 기간"
+                android:id="@+id/textView44"
+                android:layout_below="@+id/editText16"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText17"
+                android:layout_below="@+id/textView44"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="월"
+                android:id="@+id/textView45"
+                android:layout_alignTop="@+id/editText17"
+                android:layout_toEndOf="@+id/editText17" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText18"
+                android:layout_alignTop="@+id/textView45"
+                android:layout_toEndOf="@+id/textView45"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="년"
+                android:id="@+id/textView46"
+                android:layout_alignTop="@+id/editText18"
+                android:layout_toEndOf="@+id/editText18" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아래 사항에 동의하며 결제합니다"
+                android:id="@+id/checkBox"
+                android:layout_below="@+id/editText17"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="본 결제는 목표금액 달성할 경우에만 마감일 (2015. 11. 04) 이후 최종 결제가 진행됩니다."
+                android:id="@+id/textView47"
+                android:layout_below="@+id/checkBox"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="달성하지 못 할 경우에는 어떠한 결제도 진행되지 않습니다"
+                android:id="@+id/textView48"
+                android:layout_below="@+id/textView47"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="서비스 이용 약관"
+                android:id="@+id/textView49"
+                android:layout_below="@+id/textView48"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="개인정보 이용 동의"
+                android:id="@+id/textView50"
+                android:layout_below="@+id/textView49"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="결제 예약 하기"
+            android:id="@+id/btn_pay"
+            android:layout_gravity="center"
+            android:layout_below="@+id/relativeLayout2"
+            android:background="#696969"
+            android:textColor="#ffffff" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

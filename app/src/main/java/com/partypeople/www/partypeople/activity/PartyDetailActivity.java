@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -47,7 +48,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PartyDetailActivity.this, "함께하기", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(PartyDetailActivity.this, ParticipateActivity.class));
             }
         });
         ImageView img_btn = (ImageView)findViewById(R.id.img_btn_share);
@@ -57,10 +58,6 @@ public class PartyDetailActivity extends AppCompatActivity {
                 Toast.makeText(PartyDetailActivity.this, "공유하기", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        imageView = (ImageView)findViewById(R.id.image_party_detail);
-//        itemView = (PartyItemView)findViewById(R.id.custom_detail);
-//        desView = (TextView)findViewById(R.id.text_des);
 
         initData();
     }
