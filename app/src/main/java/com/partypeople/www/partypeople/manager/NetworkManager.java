@@ -94,9 +94,15 @@ public class NetworkManager {
 
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
 
-    public void getLocalInfo(Context context, int param1, final OnResultListener<LocalAreaInfo> listener) {
+    public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
         RequestParams params = new RequestParams();
         params.put("version", param1);
+        if(param2 != null) {
+            params.put("searchFlag", param2);
+        }
+        if(param2.equals("M")) {
+            params.put("areaLLCode", param3);
+        }
 
         Header[] headers = new Header[2];
         headers[0] = new BasicHeader("Accept", "application/json");
@@ -112,6 +118,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "Success");
+                Log.d("NetworkManager", responseString);
                 LocalInfoResult result = gson.fromJson(responseString, LocalInfoResult.class);
                 listener.onSuccess(result.localAreaInfo);
             }

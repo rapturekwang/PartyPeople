@@ -24,6 +24,9 @@ import com.partypeople.www.partypeople.location.LocationAdapter;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -33,6 +36,7 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String name;
 
+    List<Area> areaList = new ArrayList<Area>();
     ArrayAdapter<String> mCityAdapter, mGuAdapter;
 
     SwipeRefreshLayout refreshLayout;
@@ -79,15 +83,13 @@ public class SearchFragment extends Fragment {
         setDateSpinner(view);
 
         mCityAdapter.add("시/도");
-        NetworkManager.getInstance().getLocalInfo(getContext(), 1, new NetworkManager.OnResultListener<LocalAreaInfo>() {
+        mGuAdapter.add("군/구");
+        NetworkManager.getInstance().getLocalInfo(getContext(), 1, "L", 0, new NetworkManager.OnResultListener<LocalAreaInfo>() {
             @Override
             public void onSuccess(LocalAreaInfo result) {
                 for (Area s : result.areas.area) {
-                    if (s.middleDistName.equals("")) {
-                        mCityAdapter.add(s.upperDistName);
-                    } else {
-                        break;
-                    }
+                    mCityAdapter.add(s.upperDistName);
+                    areaList.add(s);
                 }
             }
 
@@ -108,7 +110,28 @@ public class SearchFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), mCityAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                Area area;
+                mGuAdapter.clear();
+                mGuAdapter.add("군/구");
+                for(int i=0; i<areaList.size(); i++) {
+                    area = areaList.get(i);
+                    if(area.upperDistName.equals(mCityAdapter.getItem(position))){
+                        NetworkManager.getInstance().getLocalInfo(getContext(), 1, "M", area.upperDistCode, new NetworkManager.OnResultListener<LocalAreaInfo>() {
+                            @Override
+                            public void onSuccess(LocalAreaInfo result) {
+                                for (Area s : result.areas.area) {
+                                    if(!s.middleDistName.equals(""))
+                                        mGuAdapter.add(s.middleDistName);
+                                }
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+                    }
+                }
             }
 
             @Override
@@ -133,10 +156,5 @@ public class SearchFragment extends Fragment {
 //            }
 //        });
 
-        mGuAdapter.add("군/구");
-        int num = 1;
-        for (int i = num; i<num+Constants.NUM_OF_GU; i++) {
-            mGuAdapter.add(""+i);
-        }
     }
 }
