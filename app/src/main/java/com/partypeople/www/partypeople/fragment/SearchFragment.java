@@ -3,7 +3,6 @@ package com.partypeople.www.partypeople.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.activity.SearchActivity;
 import com.partypeople.www.partypeople.location.Area;
 import com.partypeople.www.partypeople.location.LocalAreaInfo;
-import com.partypeople.www.partypeople.location.LocationAdapter;
 import com.partypeople.www.partypeople.manager.NetworkManager;
-import com.partypeople.www.partypeople.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +36,6 @@ public class SearchFragment extends Fragment {
 
     SwipeRefreshLayout refreshLayout;
     PullToRefreshListView refreshView;
-    LocationAdapter mAdapter;
 
     public static SearchFragment newInstance(String name) {
         SearchFragment fragment = new SearchFragment();
