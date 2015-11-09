@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -63,6 +65,18 @@ public class MakePartyThreeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+                        NetworkManager.getInstance().postPartys(getContext(), new NetworkManager.OnResultListener<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+
                         getActivity().finish();
                     }
                 });

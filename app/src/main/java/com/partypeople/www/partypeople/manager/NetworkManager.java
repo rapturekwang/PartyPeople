@@ -11,6 +11,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PayMethod;
 import com.partypeople.www.partypeople.location.LocalAreaInfo;
 import com.partypeople.www.partypeople.location.LocalInfoResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
@@ -111,18 +112,34 @@ public class NetworkManager {
 
     public void postPartys(Context context, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
-        params.put("name", "test");
-        params.put("location", "test");
+        params.put("name", "강남 프라이빗 파티");
+        params.put("date", "2015-11-03T02:11:11.000Z");
+        params.put("location", "강남구 역삼동");
+        params.put("info", "파리투나잇 상세 정보");
+        params.put("private", false);
+        params.put("password", "1234");
+        params.put("expect_pay", "20000");
+        params.put("bank", "국민");
+        params.put("account", 123456789);
+        params.put("active", true);
+        params.put("theme", "");
+//        List<PayMethod> pay_method= new ArrayList<PayMethod>();
+//        PayMethod p = new PayMethod();
+//        p.add("맥주1병", 12000);
+//        pay_method.add(p);
+//        params.put("pay_method", pay_method);
 
         client.post(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
+                Log.d("NetworkManager", "onSuccess");
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode);
+                Log.d("NetworkManager", "onFail");
             }
 
         });
@@ -166,7 +183,6 @@ public class NetworkManager {
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "Success : " + responseString);
                 Party[] result = gson.fromJson(responseString, Party[].class);
-                //Log.d("NetworkManager", result[0].name);
                 listener.onSuccess(result);
             }
         });
