@@ -70,8 +70,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_GET_PARTYS = "http://61.100.5.61:3000/api/v1/partys";
-    public static final String URL_POST_PARTY = "http://61.100.5.61:3000/api/v1/partys";
+    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/partys";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
 
     public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
@@ -110,7 +109,7 @@ public class NetworkManager {
         params.put("name", "test");
         params.put("location", "test");
 
-        client.post(context, URL_POST_PARTY, params, new TextHttpResponseHandler() {
+        client.post(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
@@ -151,7 +150,7 @@ public class NetworkManager {
     public void getPartys(Context context, final OnResultListener<LocalAreaInfo> listener) {
         RequestParams params = new RequestParams();
 
-        client.get(context, URL_GET_PARTYS, params, new TextHttpResponseHandler() {
+        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "Fail");

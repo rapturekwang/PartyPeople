@@ -14,6 +14,9 @@ import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
+import com.partypeople.www.partypeople.location.Area;
+import com.partypeople.www.partypeople.location.LocalAreaInfo;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 
 /**
@@ -72,6 +75,20 @@ public class MainTabFragment extends Fragment {
     }
 
     private void initData() {
+        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<LocalAreaInfo>() {
+            @Override
+            public void onSuccess(LocalAreaInfo result) {
+//                for (Area s : result.areas.area) {
+//                    mCityAdapter.add(s.upperDistName);
+//                    areaList.add(s);
+//                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
         for (int i = 0; i < 5 ; i++) {
             PartyItemData d = new PartyItemData();
             d.title = "Come to House Party!";
