@@ -21,8 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.partypeople.www.partypeople.location.Area;
-import com.partypeople.www.partypeople.location.LocalAreaInfo;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
@@ -66,18 +64,6 @@ public class MainActivity extends AppCompatActivity implements
                 fab.setTranslationX(slideOffset * 200);
             }
         };
-
-        NetworkManager.getInstance().getPartys(this, new NetworkManager.OnResultListener<LocalAreaInfo>() {
-            @Override
-            public void onSuccess(LocalAreaInfo result) {
-
-            }
-
-            @Override
-            public void onFail(int code) {
-
-            }
-        });
 
         mDrawer = (DrawerLayout)findViewById(R.id.drawer);
         mDrawer.setDrawerListener(mDrawerToggle);
@@ -164,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 return false;
             }

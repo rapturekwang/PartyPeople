@@ -77,6 +77,22 @@ public class LoginMainFragment extends Fragment {
             }
         });
 
+        btn = (Button)view.findViewById(R.id.btn_facebook);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.login(null);
+            }
+        });
+
+        btn = (Button)view.findViewById(R.id.btn_kakao);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return view;
     }
 }

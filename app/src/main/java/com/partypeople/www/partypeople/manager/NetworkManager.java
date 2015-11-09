@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -17,52 +16,11 @@ import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by dongja94 on 2015-10-28.
  */
-//public class NetworkManager {
-//    private static NetworkManager instance;
-//    public static NetworkManager getInstance() {
-//        if (instance == null) {
-//            instance = new NetworkManager();
-//        }
-//        return instance;
-//    }
-//    private NetworkManager() {
-//
-//    }
-//
-//    public interface OnResultListener<T> {
-//        public void onSuccess(T result);
-//        public void onFail(int code);
-//    }
-//
-//    Handler mHandler = new Handler(Looper.getMainLooper());
-//    public void loginFacebookToken(Context context, String accessToken, final OnResultListener<String> listener) {
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                listener.onSuccess("NOTREGISTER");
-//            }
-//        }, 1000);
-//    }
-//
-//    public void signupFacebook(Context context, String message, final OnResultListener<String> listener) {
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                listener.onSuccess("OK");
-//            }
-//        }, 1000);
-//    }
-//
-//}
-
 public class NetworkManager {
     Gson gson;
     private static NetworkManager instance;
@@ -72,6 +30,26 @@ public class NetworkManager {
         }
         return instance;
     }
+
+    Handler mHandler = new Handler(Looper.getMainLooper());
+    public void loginFacebookToken(Context context, String accessToken, final OnResultListener<String> listener) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.onSuccess("OK");
+            }
+        }, 1000);
+    }
+
+    public void signupFacebook(Context context, String message, final OnResultListener<String> listener) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.onSuccess("OK");
+            }
+        }, 1000);
+    }
+
 
     AsyncHttpClient client;
     public static final int NETWORK_TIMEOUT = 30000;

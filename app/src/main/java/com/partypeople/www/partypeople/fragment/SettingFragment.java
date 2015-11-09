@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.SettingActivity;
 import com.partypeople.www.partypeople.adapter.SettingListAdapter;
@@ -70,6 +71,7 @@ public class SettingFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Toast.makeText(getContext(), "로그아웃", Toast.LENGTH_SHORT).show();
+                            LoginManager.getInstance().logOut();
                         }
                     });
                     builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
