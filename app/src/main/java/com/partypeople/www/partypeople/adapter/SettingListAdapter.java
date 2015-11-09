@@ -5,9 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.view.PartyItemView;
 import com.partypeople.www.partypeople.view.SettingItemView;
 
 import java.util.ArrayList;

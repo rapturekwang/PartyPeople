@@ -17,7 +17,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.FollowActivity;
 import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
-import com.partypeople.www.partypeople.data.PartyItemData;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
 import com.partypeople.www.partypeople.view.PartyItemView;
 
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class UserAdapter extends BaseAdapter {
 
-    ArrayList<PartyItemData> items = new ArrayList<PartyItemData>();
+    ArrayList<Party> items = new ArrayList<Party>();
     Context mContext;
     private static final int VIEW_TYPE_COUNT = 3;
     private static final int SUMMARY_VIEW = 0;
@@ -42,7 +42,7 @@ public class UserAdapter extends BaseAdapter {
         mTabListener = listener;
     }
 
-    public void add(PartyItemData data) {
+    public void add(Party data) {
         items.add(data);
         notifyDataSetChanged();
     }

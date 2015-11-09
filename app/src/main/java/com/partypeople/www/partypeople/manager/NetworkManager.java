@@ -10,8 +10,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.partypeople.www.partypeople.data.Partys;
-import com.partypeople.www.partypeople.data.PartysResult;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.location.LocalAreaInfo;
 import com.partypeople.www.partypeople.location.LocalInfoResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
@@ -28,7 +27,7 @@ import java.util.List;
  */
 public class NetworkManager {
     Gson gson;
-    List<Partys> partysList = new ArrayList<Partys>();
+    List<Party> partysList = new ArrayList<Party>();
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -153,7 +152,7 @@ public class NetworkManager {
 //        }
 //    }
 
-    public void getPartys(Context context, final OnResultListener<List<Partys>> listener) {
+    public void getPartys(Context context, final OnResultListener<Party[]> listener) {
         RequestParams params = new RequestParams();
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
@@ -165,10 +164,10 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "Success");
-                Log.d("NetworkManager", responseString);
-                PartysResult result = gson.fromJson(responseString, PartysResult.class);
-                listener.onSuccess(result.partysList);
+                Log.d("NetworkManager", "Success : " + responseString);
+                Party[] result = gson.fromJson(responseString, Party[].class);
+                //Log.d("NetworkManager", result[0].name);
+                listener.onSuccess(result);
             }
         });
     }

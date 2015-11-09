@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.partypeople.www.partypeople.data.PartyItemData;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.R;
 
 /**
@@ -29,7 +29,7 @@ public class PartyItemView extends RelativeLayout {
     ImageView partyImgView;
     CheckBox bookMarkView;
     ProgressBar progressBar;
-    PartyItemData mData;
+    Party mData;
 
     private void init() {
         inflate(getContext(), R.layout.view_party_item, this);
@@ -51,20 +51,20 @@ public class PartyItemView extends RelativeLayout {
 //        });
     }
 
-    public void setItemData(PartyItemData data) {
+    public void setItemData(Party data) {
         mData = data;
-        if(data.partyImg != null){
-            partyImgView.setImageDrawable(data.partyImg);
-        }
-        titleView.setText(data.title);
+//        if(data.partyImg != null){
+//            partyImgView.setImageDrawable(data.partyImg);
+//        }
+        titleView.setText(data.name);
         dateView.setText(data.date);
         locationView.setText(data.location);
-        priceView.setText(data.price);
-        progressView.setText(data.progressText);
-        dueDateView.setText(data.dueDate);
-        progressBar.setProgress(data.progress);
+        priceView.setText(""+data.expect_pay);
+//        progressView.setText(data.progressText);
+//        dueDateView.setText(data.dueDate);
+//        progressBar.setProgress(data.progress);
         //bookMarkView.setClickable(false);
-        currentStateView.setText(data.currentState);
+//        currentStateView.setText(data.currentState);
         //bookMarkView.setChecked(data.bookMark);
     }
 

@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.partypeople.www.partypeople.data.PartyItemData;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.view.PartyItemView;
 
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ import java.util.List;
  * Created by Tacademy on 2015-10-15.
  */
 public class MainFragmentAdapter extends BaseAdapter {
-    List<PartyItemData> items = new ArrayList<PartyItemData>();
+    List<Party> items = new ArrayList<Party>();
 
-    public void add(PartyItemData item) {
+    public void add(Party item) {
         items.add(item);
         notifyDataSetChanged();
     }

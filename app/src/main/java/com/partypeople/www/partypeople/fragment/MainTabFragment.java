@@ -10,17 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.partypeople.www.partypeople.data.PartyItemData;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
-import com.partypeople.www.partypeople.data.Partys;
-import com.partypeople.www.partypeople.data.PartysResult;
-import com.partypeople.www.partypeople.location.Area;
-import com.partypeople.www.partypeople.location.LocalAreaInfo;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
-
-import java.util.List;
 
 
 /**
@@ -79,23 +73,11 @@ public class MainTabFragment extends Fragment {
     }
 
     private void initData() {
-        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<List<Partys>>() {
+        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<Party[]>() {
             @Override
-            public void onSuccess(List<Partys> result) {
-                for (int i=0 ;i<result.size(); i++) {
-//                    mCityAdapter.add(s.upperDistName);
-//                    areaList.add(s);
-                    Partys p = result.get(i);
-                    PartyItemData d = new PartyItemData();
-                    d.title = p.name;
-                    d.date = p.date;
-                    //d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-                    d.location = p.location;
-                    d.price = p.expect_pay;
-                    //d.progress = 50;
-                    //d.progressText = d.progress+"% 모금됨";
-                    //d.dueDate = "7일 남음";
-                    mAdapter.add(d);
+            public void onSuccess(Party[] result) {
+                for (int i=0 ;i<result.length; i++) {
+                    mAdapter.add(result[i]);
                 }
             }
 
@@ -104,17 +86,17 @@ public class MainTabFragment extends Fragment {
 
             }
         });
-        for (int i = 0; i < 5 ; i++) {
-            PartyItemData d = new PartyItemData();
-            d.title = "Come to House Party!";
-            d.date = "5월 7일 / 19:00-21:30";
-            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-            d.location = "서울시 서초구";
-            //d.price = "$25";
-            d.progress = 50;
-            d.progressText = d.progress+"% 모금됨";
-            d.dueDate = "7일 남음";
-            mAdapter.add(d);
-        }
+//        for (int i = 0; i < 5 ; i++) {
+//            PartyItemData d = new PartyItemData();
+//            d.title = "Come to House Party!";
+//            d.date = "5월 7일 / 19:00-21:30";
+//            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
+//            d.location = "서울시 서초구";
+//            d.price = "$25";
+//            d.progress = 50;
+//            d.progressText = d.progress+"% 모금됨";
+//            d.dueDate = "7일 남음";
+//            mAdapter.add(d);
+//        }
     }
 }

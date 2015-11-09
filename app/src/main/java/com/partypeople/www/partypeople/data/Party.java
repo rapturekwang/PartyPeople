@@ -9,7 +9,7 @@ import org.json.JSONObject;
 /**
  * Created by kwang on 15. 11. 8..
  */
-public class Partys implements JSONParsing {
+public class Party implements JSONParsing {
     public String _id;
     public String name;
     public String photo;
@@ -22,10 +22,10 @@ public class Partys implements JSONParsing {
     public String password;
     public int expect_pay;
     public String bank;
-    public String account;
+    public int account;
     public boolean active;
     public int __v;
-    public String pay_method;
+//    public String pay_method;
     public String created_at;
 
     @Override
@@ -41,10 +41,10 @@ public class Partys implements JSONParsing {
         password = jobject.getString("password");
         expect_pay = jobject.getInt("expect_pay");
         bank = jobject.getString("bank");
-        account = jobject.getString("account");
+        account = jobject.getInt("account");
         active = jobject.getBoolean("active");
         __v = jobject.getInt("__v");
-        pay_method = jobject.getString("pay_method");
+//        pay_method = jobject.getString("pay_method");
         created_at = jobject.getString("created_at");
     }
 }
