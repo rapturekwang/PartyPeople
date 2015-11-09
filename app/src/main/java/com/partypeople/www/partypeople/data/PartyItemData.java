@@ -11,7 +11,7 @@ public class PartyItemData {
     public Boolean bookMark;
     public String date;
     public String location;
-    public String price;
+    public int price;
     public String progressText;
     public String dueDate;
     public int progress;
