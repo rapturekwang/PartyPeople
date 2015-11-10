@@ -63,6 +63,18 @@ public class MainFragmentAdapter extends BaseAdapter {
         public void setVisible(int visible) {
             partyImgView.setVisibility(visible);
         }
+
+        private void init(View view) {
+            partyImgView = (ImageView)view.findViewById(R.id.image_party);
+            titleView = (TextView)view.findViewById(R.id.text_item_title);
+            dateView = (TextView)view.findViewById(R.id.text_date);
+            locationView = (TextView)view.findViewById(R.id.text_location);
+            priceView = (TextView)view.findViewById(R.id.text_price);
+            progressView = (TextView)view.findViewById(R.id.text_progress);
+            dueDateView = (TextView)view.findViewById(R.id.text_duedate);
+            bookMarkView = (CheckBox)view.findViewById(R.id.chbox_bookmark);
+            progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
+        }
     }
 
     public void add(Party item) {
@@ -92,15 +104,7 @@ public class MainFragmentAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.view_party_item, null);
             holder = new ViewHolder();
-            holder.partyImgView = (ImageView)convertView.findViewById(R.id.image_party);
-            holder.titleView = (TextView)convertView.findViewById(R.id.text_item_title);
-            holder.dateView = (TextView)convertView.findViewById(R.id.text_date);
-            holder.locationView = (TextView)convertView.findViewById(R.id.text_location);
-            holder.priceView = (TextView)convertView.findViewById(R.id.text_price);
-            holder.progressView = (TextView)convertView.findViewById(R.id.text_progress);
-            holder.dueDateView = (TextView)convertView.findViewById(R.id.text_duedate);
-            holder.bookMarkView = (CheckBox)convertView.findViewById(R.id.chbox_bookmark);
-            holder.progressBar = (ProgressBar)convertView.findViewById(R.id.progressBar);
+            holder.init(convertView);
 
             holder.bookMarkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -128,17 +132,7 @@ public class MainFragmentAdapter extends BaseAdapter {
         }
         holder.bookMarkView.setTag(position);
 
-        holder.titleView.setText(items.get(position).name);
-        holder.bookMarkView.setChecked(items.get(position).bookmark);
-        holder.partyImgView.setImageResource(R.drawable.demo_img);
-        holder.locationView.setText(items.get(position).location);
-        holder.priceView.setText(items.get(position).expect_pay + "원");
-        holder.progressView.setText("50%");
-        holder.progressBar.setProgress(50);
-        if(items.get(position).date != null) {
-            holder.dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), items.get(position).date) + "일 남음");
-            holder.dateView.setText(dateUtil.changeToViewFormat(items.get(position).date));
-        }
+        holder.setItemData(items.get(position));
 
         return convertView;
     }
