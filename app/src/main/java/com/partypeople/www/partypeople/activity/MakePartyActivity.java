@@ -64,7 +64,6 @@ public class MakePartyActivity extends AppCompatActivity {
         } else {
             finish();
         }
-        Toast.makeText(MakePartyActivity.this, "current Frag :" + currentFragment, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -73,7 +72,6 @@ public class MakePartyActivity extends AppCompatActivity {
             currentFragment--;
         }
         titleView.setText(stringList[currentFragment]);
-        Toast.makeText(MakePartyActivity.this, "current Frag :" + currentFragment, Toast.LENGTH_SHORT).show();
         super.onBackPressed();
     }
 }

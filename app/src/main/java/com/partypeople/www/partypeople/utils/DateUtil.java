@@ -53,4 +53,10 @@ public class DateUtil {
         int day = (int)(diff / (24 * 60 * 60 * 1000));
         return day;
     }
+
+    public String changeToViewFormat(String date) {
+        long d = changeStringToLong(date);
+        String result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
+        return result;
+    }
 }
