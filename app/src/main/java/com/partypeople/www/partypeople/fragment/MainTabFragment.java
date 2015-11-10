@@ -18,6 +18,9 @@ import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +29,7 @@ import com.partypeople.www.partypeople.utils.DateUtil;
  */
 public class MainTabFragment extends Fragment {
 
+    List<Party> partyList = new ArrayList<Party>();
     private static final String ARG_NAME = "name";
     private String mName;
     ListView listView;
@@ -58,8 +62,9 @@ public class MainTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
         //((TextView)view.findViewById(R.id.text_name)).setText(mName);
         listView = (ListView)view.findViewById(R.id.listView);
-        mAdapter = new MainFragmentAdapter();
+        mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,6 +76,18 @@ public class MainTabFragment extends Fragment {
 
         initData();
 
+//        NetworkManager.getInstance().putPartys(getContext(), id, "date", DateUtil.getInstance().getCurrentDate(), new NetworkManager.OnResultListener<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//
+//            }
+//
+//            @Override
+//            public void onFail(int code) {
+//
+//            }
+//        });
+
         return view;
     }
 
@@ -79,8 +96,10 @@ public class MainTabFragment extends Fragment {
             @Override
             public void onSuccess(Party[] result) {
                 for (int i = 0; i < result.length; i++) {
+                    partyList.add(result[i]);
                     mAdapter.add(result[i]);
                 }
+                id = result[0]._id;
             }
 
             @Override

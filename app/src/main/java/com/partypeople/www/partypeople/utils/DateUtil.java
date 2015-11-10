@@ -35,6 +35,8 @@ public class DateUtil {
     }
 
     public long changeStringToLong(String input) {
+        if(input == null)
+            return 0;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = null;
         try {
@@ -47,6 +49,8 @@ public class DateUtil {
     }
 
     public int getDiffDay(String firstDay, String secondDay) {
+        if(firstDay == null || secondDay == null)
+            return 0;
         long first = changeStringToLong(firstDay);
         long second = changeStringToLong(secondDay);
         long diff = second - first;
@@ -55,6 +59,8 @@ public class DateUtil {
     }
 
     public String changeToViewFormat(String date) {
+        if(date == null)
+            return null;
         long d = changeStringToLong(date);
         String result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
         return result;

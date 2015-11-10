@@ -61,7 +61,7 @@ public class SearchResultFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listView);
 
         listView = (ListView)view.findViewById(R.id.listView);
-        mAdapter = new MainFragmentAdapter();
+        mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

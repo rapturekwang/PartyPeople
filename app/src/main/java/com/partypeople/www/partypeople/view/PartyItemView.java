@@ -18,8 +18,11 @@ import com.partypeople.www.partypeople.utils.DateUtil;
  */
 public class PartyItemView extends RelativeLayout {
     DateUtil dateUtil = DateUtil.getInstance();
+    Context mContext;
+
     public PartyItemView(Context context) {
         super(context);
+        mContext = context;
         init();
     }
 
@@ -43,7 +46,7 @@ public class PartyItemView extends RelativeLayout {
         priceView = (TextView)findViewById(R.id.text_price);
         progressView = (TextView)findViewById(R.id.text_progress);
         dueDateView = (TextView)findViewById(R.id.text_duedate);
-        //bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
+        bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
     }
 
@@ -56,11 +59,11 @@ public class PartyItemView extends RelativeLayout {
             dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.date) + "일 남음");
         }
         locationView.setText(data.location);
-        priceView.setText(data.expect_pay+"원");
+        priceView.setText(data.expect_pay + "원");
 //        progressView.setText(data.progressText);
         progressBar.setProgress(50);
         //bookMarkView.setClickable(false);
-        //bookMarkView.setChecked(data.bookMark);
+        bookMarkView.setChecked(data.bookmark);
     }
 
     public void setVisible(int visible) {

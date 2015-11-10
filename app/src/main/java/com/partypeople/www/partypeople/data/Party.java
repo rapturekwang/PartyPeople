@@ -15,6 +15,8 @@ import java.util.List;
  * Created by kwang on 15. 11. 8..
  */
 public class Party implements JSONParsing{
+    public boolean bookmark;
+
     public String _id;
     public String name;
     public String photo;
@@ -29,6 +31,15 @@ public class Party implements JSONParsing{
     public String bank;
     public int account;
     public boolean active;
+
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
+    }
+
     public int __v;
     public List<PayMethod> pay_method;
     public String created_at;
