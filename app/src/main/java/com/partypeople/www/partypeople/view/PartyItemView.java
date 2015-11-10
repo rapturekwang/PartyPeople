@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 /**
  * Created by Tacademy on 2015-10-15.
  */
 public class PartyItemView extends RelativeLayout {
+    DateUtil dateUtil = DateUtil.getInstance();
     public PartyItemView(Context context) {
         super(context);
         init();
@@ -42,25 +45,19 @@ public class PartyItemView extends RelativeLayout {
         dueDateView = (TextView)findViewById(R.id.text_duedate);
         //bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-//        partyImgView.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     public void setItemData(Party data) {
         mData = data;
-//        if(data.partyImg != null){
-//            partyImgView.setImageDrawable(data.partyImg);
-//        }
+
         titleView.setText(data.name);
-        dateView.setText(data.date);
+        if(data.date != null) {
+            dateView.setText(dateUtil.changeToViewFormat(data.date));
+            dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.date) + "일 남음");
+        }
         locationView.setText(data.location);
         priceView.setText(data.expect_pay+"원");
 //        progressView.setText(data.progressText);
-//        dueDateView.setText(data.dueDate);
         progressBar.setProgress(50);
         //bookMarkView.setClickable(false);
         //bookMarkView.setChecked(data.bookMark);

@@ -30,7 +30,7 @@ public class MainTabFragment extends Fragment {
     private String mName;
     ListView listView;
     MainFragmentAdapter mAdapter;
-
+    String id;
 
     public static MainTabFragment newInstance(String name) {
         MainTabFragment fragment = new MainTabFragment();
@@ -50,10 +50,6 @@ public class MainTabFragment extends Fragment {
         if (getArguments() != null) {
             mName = getArguments().getString(ARG_NAME);
         }
-//        Log.d("MainTabFragment", DateUtil.getInstance().getCurrentDate());
-//        long temp = DateUtil.getInstance().changeStringToLong("2015-11-03T02:11:11");
-//        DateUtil d = DateUtil.getInstance();
-//        Log.d("MainTabFragment", ""+d.getDiffDay("2015-11-03T02:11:11", d.getCurrentDate()));
     }
 
     @Override
@@ -82,7 +78,7 @@ public class MainTabFragment extends Fragment {
         NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<Party[]>() {
             @Override
             public void onSuccess(Party[] result) {
-                for (int i=0 ;i<result.length; i++) {
+                for (int i = 0; i < result.length; i++) {
                     mAdapter.add(result[i]);
                 }
             }
@@ -92,5 +88,18 @@ public class MainTabFragment extends Fragment {
 
             }
         });
+
+//        for (int i = 0; i < 5 ; i++) {
+//            Party d = new Party();
+//            d.name = "Come to House Party!";
+//            d.date = "2015-12-04T02:11:11";
+//            //d.partyImg = getResources().getDrawable(R.drawable.demo_img);
+//            d.location = "서울시 서초구";
+//            d.expect_pay = 25000;
+//            //d.progress = 50;
+//            //d.progressText = d.progress+"% 모금됨";
+//            //d.dueDate = "7일 남음";
+//            mAdapter.add(d);
+//        }
     }
 }

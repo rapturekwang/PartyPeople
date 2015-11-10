@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +22,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -92,6 +95,22 @@ public class MainActivity extends AppCompatActivity implements
                 mDrawer.closeDrawer(GravityCompat.START);
             }
         });
+
+//        Party party = new Party();
+//        party.setAccount(122157015);
+//        party.setDate(DateUtil.getInstance().getCurrentDate());
+//        Log.d("MainActivity", party.getJsonString());
+//        NetworkManager.getInstance().postJson(this, party.getJsonString(), new NetworkManager.OnResultListener<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//
+//            }
+//
+//            @Override
+//            public void onFail(int code) {
+//
+//            }
+//        });
     }
 
     @Override

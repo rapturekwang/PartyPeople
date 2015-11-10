@@ -114,7 +114,7 @@ public class NetworkManager {
     public void postPartys(Context context, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
         params.put("name", "강남 프라이빗 파티");
-        params.put("date", "2015-11-03T02:11:11.000Z");
+        params.put("date", "2015-11-03T02:11:11");
         params.put("location", "강남구 역삼동");
         params.put("info", "파리투나잇 상세 정보");
         params.put("private", false);
@@ -146,7 +146,7 @@ public class NetworkManager {
         });
     }
 
-    public void PostJson(final Context context, String jsonString, final OnResultListener<String> listener) {
+    public void postJson(final Context context, String jsonString, final OnResultListener<String> listener) {
         Header[] headers = null;
         try {
             client.post(context, URL_PARTYS, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
@@ -159,6 +159,7 @@ public class NetworkManager {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.d("NetworkManager", "onFail");
                     listener.onFail(statusCode);
                 }
 
@@ -187,4 +188,29 @@ public class NetworkManager {
             }
         });
     }
+
+//    public void deletePartys(Context context, String param1, final OnResultListener<String> listener ) {
+//        RequestParams params = new RequestParams();
+//        params.put("_id", param1);
+////        List<PayMethod> pay_method= new ArrayList<PayMethod>();
+////        PayMethod p = new PayMethod();
+////        p.add("맥주1병", 12000);
+////        pay_method.add(p);
+////        params.put("pay_method", pay_method);
+//
+//        client.delete(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                listener.onSuccess(responseString);
+//                Log.d("NetworkManager", "onSuccess");
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                listener.onFail(statusCode);
+//                Log.d("NetworkManager", "onFail");
+//            }
+//
+//        });
+//    }
 }

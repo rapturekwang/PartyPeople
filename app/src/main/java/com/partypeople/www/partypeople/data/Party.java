@@ -7,13 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kwang on 15. 11. 8..
  */
-public class Party implements JSONParsing {
+public class Party implements JSONParsing{
     public String _id;
     public String name;
     public String photo;
@@ -31,6 +32,134 @@ public class Party implements JSONParsing {
     public int __v;
     public List<PayMethod> pay_method;
     public String created_at;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isPrivated() {
+        return privated;
+    }
+
+    public void setPrivated(boolean privated) {
+        this.privated = privated;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getExpect_pay() {
+        return expect_pay;
+    }
+
+    public void setExpect_pay(int expect_pay) {
+        this.expect_pay = expect_pay;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public int getAccount() {
+        return account;
+    }
+
+    public void setAccount(int account) {
+        this.account = account;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int get__v() {
+        return __v;
+    }
+
+    public void set__v(int __v) {
+        this.__v = __v;
+    }
+
+    public List<PayMethod> getPay_method() {
+        return pay_method;
+    }
+
+    public void setPay_method(List<PayMethod> pay_method) {
+        this.pay_method = pay_method;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     @Override
     public void parsing(JSONObject jobject) throws JSONException {
@@ -58,5 +187,28 @@ public class Party implements JSONParsing {
             pay_method.add(s);
         }
         created_at = jobject.getString("created_at");
+    }
+
+    public String getJsonString() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("name", getName());
+            jsonObject.accumulate("photo", getPhoto());
+            jsonObject.accumulate("theme", getTheme());
+            jsonObject.accumulate("date", getDate());
+            jsonObject.accumulate("location", getLocation());
+            jsonObject.accumulate("description", getDescription());
+            jsonObject.accumulate("private", isPrivated());
+            jsonObject.accumulate("password", getPassword());
+            jsonObject.accumulate("expect_pay", getExpect_pay());
+            jsonObject.accumulate("bank", getBank());
+            jsonObject.accumulate("account", getAccount());
+            jsonObject.accumulate("active", isActive());
+            jsonObject.accumulate("pay_method", getPay_method());
+            jsonObject.accumulate("created_at", getCreated_at());
+        } catch (Exception e) {
+
+        }
+        return jsonObject.toString();
     }
 }
