@@ -11,15 +11,16 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.PayMethod;
-import com.partypeople.www.partypeople.location.LocalAreaInfo;
-import com.partypeople.www.partypeople.location.LocalInfoResult;
+import com.partypeople.www.partypeople.data.LocalAreaInfo;
+import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,29 +146,28 @@ public class NetworkManager {
         });
     }
 
-//    public void usePostJson(final Context context, String jsonString, final OnResultListener<String> listener) {
-//        Header[] headers = null;
-//        try {
-//            client.post(context, URL_POST_PARTY, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
-//
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                    listener.onSuccess(responseString);
-//                    Log.d("응답o", "statusCOde = " + statusCode + " respnseString = " + responseString);
-//                    Toast.makeText(context, "응답o : " + responseString, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                    listener.onFail(statusCode);
-//                }
-//
-//            });
-//
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void PostJson(final Context context, String jsonString, final OnResultListener<String> listener) {
+        Header[] headers = null;
+        try {
+            client.post(context, URL_PARTYS, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    Log.d("NetworkManager", "Success : " + responseString);
+                    listener.onSuccess(responseString);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    listener.onFail(statusCode);
+                }
+
+            });
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void getPartys(Context context, final OnResultListener<Party[]> listener) {
         RequestParams params = new RequestParams();

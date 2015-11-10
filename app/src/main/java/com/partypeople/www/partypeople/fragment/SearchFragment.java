@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.SearchActivity;
-import com.partypeople.www.partypeople.location.Area;
-import com.partypeople.www.partypeople.location.LocalAreaInfo;
+import com.partypeople.www.partypeople.data.Area;
+import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
 import java.util.ArrayList;

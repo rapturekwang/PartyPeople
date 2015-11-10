@@ -4,6 +4,7 @@ package com.partypeople.www.partypeople.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 
 /**
@@ -48,6 +50,10 @@ public class MainTabFragment extends Fragment {
         if (getArguments() != null) {
             mName = getArguments().getString(ARG_NAME);
         }
+//        Log.d("MainTabFragment", DateUtil.getInstance().getCurrentDate());
+//        long temp = DateUtil.getInstance().changeStringToLong("2015-11-03T02:11:11");
+//        DateUtil d = DateUtil.getInstance();
+//        Log.d("MainTabFragment", ""+d.getDiffDay("2015-11-03T02:11:11", d.getCurrentDate()));
     }
 
     @Override
@@ -86,17 +92,5 @@ public class MainTabFragment extends Fragment {
 
             }
         });
-//        for (int i = 0; i < 5 ; i++) {
-//            PartyItemData d = new PartyItemData();
-//            d.title = "Come to House Party!";
-//            d.date = "5월 7일 / 19:00-21:30";
-//            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-//            d.location = "서울시 서초구";
-//            d.price = "$25";
-//            d.progress = 50;
-//            d.progressText = d.progress+"% 모금됨";
-//            d.dueDate = "7일 남음";
-//            mAdapter.add(d);
-//        }
     }
 }

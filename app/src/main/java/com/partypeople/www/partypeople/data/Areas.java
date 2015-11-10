@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.location;
+package com.partypeople.www.partypeople.data;
 
 import com.partypeople.www.partypeople.utils.JSONParsing;
 

@@ -25,7 +25,7 @@ public class PartyItemView extends RelativeLayout {
         init();
     }
 
-    TextView titleView, dateView, locationView, priceView, progressView, dueDateView, currentStateView;
+    TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
     ImageView partyImgView;
     CheckBox bookMarkView;
     ProgressBar progressBar;
@@ -42,7 +42,6 @@ public class PartyItemView extends RelativeLayout {
         dueDateView = (TextView)findViewById(R.id.text_duedate);
         //bookMarkView = (CheckBox)findViewById(R.id.chbox_bookmark);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        currentStateView = (TextView)findViewById(R.id.text_current_state);
 //        partyImgView.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -59,12 +58,11 @@ public class PartyItemView extends RelativeLayout {
         titleView.setText(data.name);
         dateView.setText(data.date);
         locationView.setText(data.location);
-        priceView.setText(""+data.expect_pay);
+        priceView.setText(data.expect_pay+"원");
 //        progressView.setText(data.progressText);
 //        dueDateView.setText(data.dueDate);
-//        progressBar.setProgress(data.progress);
+        progressBar.setProgress(50);
         //bookMarkView.setClickable(false);
-//        currentStateView.setText(data.currentState);
         //bookMarkView.setChecked(data.bookMark);
     }
 
