@@ -189,22 +189,22 @@ public class NetworkManager {
         });
     }
 
-    public void putPartys(Context context, String param1,String key, String param2, final OnResultListener<String> listener ) {
+    public void putPartys(Context context, String param1, String key, String param2, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
-        params.put("_id", param1);
         params.put(key, param2);
+        Log.d("NetworkManager", "id : " + param1 + "key : " + key + "value : " + param2);
 
-        client.put(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+        client.put(context, URL_PARTYS+"/"+param1, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
-                Log.d("NetworkManager", "onSuccess");
+                Log.d("NetworkManager", "onSuccess put");
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode);
-                Log.d("NetworkManager", "onFail");
+                Log.d("NetworkManager", "onFail put : " + statusCode + responseString);
             }
 
         });

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
@@ -59,7 +60,7 @@ public class MainTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_blank, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
         //((TextView)view.findViewById(R.id.text_name)).setText(mName);
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new MainFragmentAdapter(getContext());
@@ -78,18 +79,6 @@ public class MainTabFragment extends Fragment {
 
         initData();
 
-//        NetworkManager.getInstance().putPartys(getContext(), id, "date", DateUtil.getInstance().getCurrentDate(), new NetworkManager.OnResultListener<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//
-//            }
-//
-//            @Override
-//            public void onFail(int code) {
-//
-//            }
-//        });
-
         return view;
     }
 
@@ -102,6 +91,7 @@ public class MainTabFragment extends Fragment {
                     mAdapter.add(result[i]);
                 }
                 id = result[0]._id;
+                Log.d("MainTabFragment", id);
             }
 
             @Override

@@ -19,7 +19,6 @@ import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
-import com.partypeople.www.partypeople.view.PartyItemView;
 import com.partypeople.www.partypeople.view.UserPagePartyItemView;
 
 import java.util.ArrayList;
