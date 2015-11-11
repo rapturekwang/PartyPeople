@@ -148,84 +148,15 @@
                 android:layout_alignParentEnd="true"
                 android:hint="너무너무 기대되요!! 밤새도록 놀아야지!" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="결제 정보"
-                android:id="@+id/textView42"
-                android:layout_below="@+id/editText15"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="카드 번호"
-                android:id="@+id/textView43"
-                android:layout_below="@+id/textView42"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText16"
-                android:layout_below="@+id/textView43"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="유효 기간"
-                android:id="@+id/textView44"
-                android:layout_below="@+id/editText16"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText17"
-                android:layout_below="@+id/textView44"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="월"
-                android:id="@+id/textView45"
-                android:layout_alignTop="@+id/editText17"
-                android:layout_toEndOf="@+id/editText17" />
-
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText18"
-                android:layout_alignTop="@+id/textView45"
-                android:layout_toEndOf="@+id/textView45"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="년"
-                android:id="@+id/textView46"
-                android:layout_alignTop="@+id/editText18"
-                android:layout_toEndOf="@+id/editText18" />
-
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아래 사항에 동의하며 결제합니다"
                 android:id="@+id/checkBox"
-                android:layout_below="@+id/editText17"
                 android:layout_alignParentStart="true"
                 android:checked="false"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/editText15" />
 
             <TextView
                 android:layout_width="wrap_content"

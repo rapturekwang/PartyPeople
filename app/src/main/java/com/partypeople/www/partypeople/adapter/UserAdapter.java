@@ -20,6 +20,7 @@ import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
 import com.partypeople.www.partypeople.view.PartyItemView;
+import com.partypeople.www.partypeople.view.UserPagePartyItemView;
 
 import java.util.ArrayList;
 
@@ -130,14 +131,13 @@ public class UserAdapter extends BaseAdapter {
                 itw.setCurrentTab(currentIndex);
                 return itw;
             default:
-                PartyItemView view = (PartyItemView)convertView;
+                UserPagePartyItemView view = (UserPagePartyItemView)convertView;
                 if (view == null) {
-                    view = new PartyItemView(parent.getContext());
+                    view = new UserPagePartyItemView(parent.getContext());
                 } else {
-                    view = (PartyItemView)convertView;
+                    view = (UserPagePartyItemView)convertView;
                 }
                 view.setItemData(items.get(position-2));
-                view.setVisible(View.GONE);
 
                 return view;
         }
