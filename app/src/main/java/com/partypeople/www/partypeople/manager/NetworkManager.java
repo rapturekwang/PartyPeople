@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.manager;
 
 import android.content.Context;
+import android.media.session.MediaSession;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
@@ -30,6 +32,7 @@ import java.util.List;
 public class NetworkManager {
     Gson gson;
     List<Party> partysList = new ArrayList<Party>();
+    MediaSession.Token token;
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -78,6 +81,7 @@ public class NetworkManager {
     }
 
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/partys";
+    public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
 
     public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
@@ -112,22 +116,6 @@ public class NetworkManager {
 
     public void postPartys(Context context, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
-//        params.put("name", "강남 프라이빗 파티");
-//        params.put("date", "2015-11-03T02:11:11");
-//        params.put("location", "강남구 역삼동");
-//        params.put("info", "파리투나잇 상세 정보");
-//        params.put("private", false);
-//        params.put("password", "1234");
-//        params.put("expect_pay", "20000");
-//        params.put("bank", "국민");
-//        params.put("account", 123456789);
-//        params.put("active", true);
-//        params.put("theme", "");
-//        List<PayMethod> pay_method= new ArrayList<PayMethod>();
-//        PayMethod p = new PayMethod();
-//        p.add("맥주1병", 12000);
-//        pay_method.add(p);
-//        params.put("pay_method", pay_method);
 
         client.post(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
@@ -193,7 +181,7 @@ public class NetworkManager {
         params.put(key, param2);
         Log.d("NetworkManager", "id : " + param1 + "key : " + key + "value : " + param2);
 
-        client.put(context, URL_PARTYS+"/"+param1, params, new TextHttpResponseHandler() {
+        client.put(context, URL_PARTYS + "/" + param1, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
@@ -213,7 +201,7 @@ public class NetworkManager {
         Header[] headers = null;
         RequestParams params = new RequestParams();
 
-        client.delete(context, URL_PARTYS+"/"+param1, headers, new TextHttpResponseHandler() {
+        client.delete(context, URL_PARTYS + "/" + param1, headers, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
@@ -226,6 +214,47 @@ public class NetworkManager {
                 Log.d("NetworkManager", "delete Fail: " + statusCode + responseString);
             }
 
+        });
+    }
+
+    public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<String> listener ) {
+        RequestParams params = new RequestParams();
+        params.put("email", param1);
+        params.put("password", param2);
+        params.put("name", param3);
+
+        client.post(context, URL_USERS, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "post user Success" + headers.toString() + responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+            }
+
+        });
+    }
+
+    public void getUser(Context context, final OnResultListener<User[]> listener) {
+        RequestParams params = new RequestParams();
+
+        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                User[] result = gson.fromJson(responseString, User[].class);
+                listener.onSuccess(result);
+            }
         });
     }
 }

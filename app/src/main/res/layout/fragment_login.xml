@@ -34,7 +34,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText7"
+        android:id="@+id/edit_email"
         android:layout_gravity="center_horizontal"
         android:background="#FFFFFF"
         android:hint="이메일 주소"
@@ -46,7 +46,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText8"
+        android:id="@+id/edit_password"
+        android:inputType="textPassword"
+        android:ems="10"
         android:background="#FFFFFF"
         android:hint="비밀번호"
         android:padding="16dp"

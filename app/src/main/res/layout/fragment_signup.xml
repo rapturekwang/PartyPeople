@@ -34,7 +34,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText7"
+        android:id="@+id/edit_email"
+        android:singleLine="true"
         android:layout_gravity="center_horizontal"
         android:background="#FFFFFF"
         android:hint="이메일 주소"
@@ -46,7 +47,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText8"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/edit_password"
         android:background="#FFFFFF"
         android:hint="비밀번호"
         android:padding="16dp"
@@ -56,7 +59,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText9"
+        android:id="@+id/edit_name"
+        android:singleLine="true"
         android:background="#FFFFFF"
         android:hint="이름"
         android:padding="16dp"
@@ -73,7 +77,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
         android:background="#696969"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:enabled="false" />
 
     <Button
         android:layout_width="wrap_content"
