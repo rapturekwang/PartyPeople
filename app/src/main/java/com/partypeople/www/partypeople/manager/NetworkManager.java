@@ -97,14 +97,13 @@ public class NetworkManager {
         client.get(context, LOCATION_INFO, headers, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "Fail");
+                Log.d("NetworkManager", "get local info Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "Success");
-                Log.d("NetworkManager", responseString);
+                Log.d("NetworkManager", "get local info Success" + responseString);
                 LocalInfoResult result = gson.fromJson(responseString, LocalInfoResult.class);
                 listener.onSuccess(result.localAreaInfo);
             }
@@ -113,17 +112,17 @@ public class NetworkManager {
 
     public void postPartys(Context context, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
-        params.put("name", "강남 프라이빗 파티");
-        params.put("date", "2015-11-03T02:11:11");
-        params.put("location", "강남구 역삼동");
-        params.put("info", "파리투나잇 상세 정보");
-        params.put("private", false);
-        params.put("password", "1234");
-        params.put("expect_pay", "20000");
-        params.put("bank", "국민");
-        params.put("account", 123456789);
-        params.put("active", true);
-        params.put("theme", "");
+//        params.put("name", "강남 프라이빗 파티");
+//        params.put("date", "2015-11-03T02:11:11");
+//        params.put("location", "강남구 역삼동");
+//        params.put("info", "파리투나잇 상세 정보");
+//        params.put("private", false);
+//        params.put("password", "1234");
+//        params.put("expect_pay", "20000");
+//        params.put("bank", "국민");
+//        params.put("account", 123456789);
+//        params.put("active", true);
+//        params.put("theme", "");
 //        List<PayMethod> pay_method= new ArrayList<PayMethod>();
 //        PayMethod p = new PayMethod();
 //        p.add("맥주1병", 12000);
@@ -134,13 +133,13 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
-                Log.d("NetworkManager", "onSuccess");
+                Log.d("NetworkManager", "post Success");
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode);
-                Log.d("NetworkManager", "onFail");
+                Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
             }
 
         });
@@ -153,13 +152,13 @@ public class NetworkManager {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                    Log.d("NetworkManager", "Success : " + responseString);
+                    Log.d("NetworkManager", "post Success");
                     listener.onSuccess(responseString);
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Log.d("NetworkManager", "onFail");
+                    Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
                     listener.onFail(statusCode);
                 }
 
@@ -176,13 +175,13 @@ public class NetworkManager {
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "Fail");
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "Success : " + responseString);
+                Log.d("NetworkManager", "get Success " + responseString);
                 Party[] result = gson.fromJson(responseString, Party[].class);
                 listener.onSuccess(result);
             }
@@ -198,40 +197,35 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
-                Log.d("NetworkManager", "onSuccess put");
+                Log.d("NetworkManager", "put Success");
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode);
-                Log.d("NetworkManager", "onFail put : " + statusCode + responseString);
+                Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
             }
 
         });
     }
 
-//    public void deletePartys(Context context, String param1, final OnResultListener<String> listener ) {
-//        RequestParams params = new RequestParams();
-//        params.put("_id", param1);
-////        List<PayMethod> pay_method= new ArrayList<PayMethod>();
-////        PayMethod p = new PayMethod();
-////        p.add("맥주1병", 12000);
-////        pay_method.add(p);
-////        params.put("pay_method", pay_method);
-//
-//        client.delete(context, URL_PARTYS, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-//                listener.onSuccess(responseString);
-//                Log.d("NetworkManager", "onSuccess");
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-//                listener.onFail(statusCode);
-//                Log.d("NetworkManager", "onFail");
-//            }
-//
-//        });
-//    }
+    public void deletePartys(Context context, String param1, final OnResultListener<String> listener ) {
+        Header[] headers = null;
+        RequestParams params = new RequestParams();
+
+        client.delete(context, URL_PARTYS+"/"+param1, headers, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "delete Success");
+            }
+
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "delete Fail: " + statusCode + responseString);
+            }
+
+        });
+    }
 }
