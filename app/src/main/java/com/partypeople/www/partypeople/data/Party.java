@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by kwang on 15. 11. 8..
  */
-public class Party implements JSONParsing{
+public class Party implements JSONParsing, Serializable{
     public boolean bookmark;
 
     public String _id;

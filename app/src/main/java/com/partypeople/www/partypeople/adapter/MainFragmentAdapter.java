@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.utils.DateUtil;
-import com.partypeople.www.partypeople.view.PartyItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +47,8 @@ public class MainFragmentAdapter extends BaseAdapter {
             mData = data;
 
             titleView.setText(data.name);
-            if(data.date != null) {
-                dateView.setText(dateUtil.changeToViewFormat(data.date));
-                dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.date) + "일 남음");
-            }
+            dateView.setText(dateUtil.changeToViewFormat(data.date));
+            dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.date) + "일 남음");
             locationView.setText(data.location);
             priceView.setText(data.expect_pay + "원");
 //        progressView.setText(data.progressText);

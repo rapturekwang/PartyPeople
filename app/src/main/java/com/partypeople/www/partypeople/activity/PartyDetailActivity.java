@@ -6,25 +6,28 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.view.PartyItemView;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 public class PartyDetailActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    PartyItemView itemView;
-    TextView desView;
-
     TabLayout tabs;
     ViewPager pager;
+    TextView titilView, dateView, locationView, priceView, totalPriceView, progressView, duedateView, descriptionView;
+    ImageView imageView;
+    ProgressBar progressBar;
+    DateUtil dateUtil = DateUtil.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +62,36 @@ public class PartyDetailActivity extends AppCompatActivity {
             }
         });
 
+        initView();
         initData();
     }
 
     private void initData() {
-//        imageView.setImageResource(R.drawable.demo_img);
-//        PartyItemData data = new PartyItemData();
-//        data.title = "Come to House Party!";
-//        data.date = "5월 7일 / 19:00-21:30";
-//        data.partyImg = null;
-//        data.location = "서울시 서초구";
-//        data.price = "$25";
-//        data.progress = 50;
-//        data.progressText = data.progress+"% 모금됨";
-//        data.dueDate = "7일 남음";
-//        itemView.setVisible(View.GONE);
-//        itemView.setItemData(data);
-//        desView.setText("테스트 문자입니다. 가나다라마바사아자차카파타하 abcdefghijklmnopqrstuvwxyz 1234567890");
+        Intent intent = getIntent();
+        Party party = (Party)intent.getSerializableExtra("party");
+
+        titilView.setText(party.name);
+        dateView.setText(dateUtil.changeToViewFormat(party.date));
+        locationView.setText(party.location);
+        priceView.setText(party.expect_pay+"원");
+        //totalPriceView.setText();
+        progressView.setText("50%");
+        progressBar.setProgress(50);
+        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.date) + "일 남음");
+        descriptionView.setText(party.description);
+//        imageView
+    }
+
+    private void initView() {
+        titilView = (TextView)findViewById(R.id.text_title);
+        dateView = (TextView)findViewById(R.id.text_date);
+        locationView = (TextView)findViewById(R.id.text_location);
+        priceView = (TextView)findViewById(R.id.text_price);
+        totalPriceView = (TextView)findViewById(R.id.text_total_price);
+        progressView = (TextView)findViewById(R.id.text_progress);
+        duedateView = (TextView)findViewById(R.id.text_duedate);
+        descriptionView = (TextView)findViewById(R.id.text_des);
+        imageView = (ImageView)findViewById(R.id.image_party);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
     }
 }

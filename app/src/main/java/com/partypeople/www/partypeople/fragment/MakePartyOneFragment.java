@@ -8,17 +8,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
@@ -74,7 +71,7 @@ public class MakePartyOneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_party_one, container, false);
 
-        imageView = (ImageView)view.findViewById(R.id.image_make_party);
+        imageView = (ImageView)view.findViewById(R.id.image_party);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

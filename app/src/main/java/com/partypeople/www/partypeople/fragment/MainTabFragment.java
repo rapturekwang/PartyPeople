@@ -70,6 +70,8 @@ public class MainTabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                Party party = partyList.get(position);
+                i.putExtra("party", party);
                 startActivity(i);
             }
         });
