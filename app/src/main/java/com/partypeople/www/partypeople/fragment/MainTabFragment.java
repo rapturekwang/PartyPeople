@@ -65,7 +65,6 @@ public class MainTabFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,8 +89,6 @@ public class MainTabFragment extends Fragment {
                     partyList.add(result[i]);
                     mAdapter.add(result[i]);
                 }
-                id = result[0]._id;
-                Log.d("MainTabFragment", id);
             }
 
             @Override

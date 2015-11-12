@@ -8,20 +8,32 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.view.GridItemView;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -36,6 +48,9 @@ public class MakePartyOneFragment extends Fragment {
     File mSavedFile;
     public static final int REQUEST_CODE_CROP = 0;
     ImageView imageView;
+    GridView gridView;
+    gridAdapter mAdapter;
+    String year = "2015", month;
 
     public static MakePartyOneFragment newInstance(String name) {
         MakePartyOneFragment fragment = new MakePartyOneFragment();
@@ -97,6 +112,40 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
+        btn = (Button)view.findViewById(R.id.btn_find_address);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "주소 검색", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        gridView = (GridView)view.findViewById(R.id.gridView);
+        mAdapter = new gridAdapter();
+        gridView.setAdapter(mAdapter);
+        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
+
+        final EditText editText = (EditText)view.findViewById(R.id.edit_party_password);
+        editText.setEnabled(false);
+
+        SwitchCompat switchCompat = (SwitchCompat)view.findViewById(R.id.switch_compat);
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editText.setEnabled(true);
+                } else {
+                    editText.setEnabled(false);
+                }
+            }
+        });
+
         setDateSpinner(view);
 //        nameView = (TextView)v.findViewById(R.id.text_name);
 //        nameView.setText(name);
@@ -131,100 +180,82 @@ public class MakePartyOneFragment extends Fragment {
         mYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mYearAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                year = (String)parent.getItemAtPosition(position);
+                if(year.equals("년")) {
+                    mDayAdapter.clear();
+                    mDayAdapter.add("일");
+                }
+                if(year != null && month != null && !year.equals("년") && !month.equals("월")) {
+                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
+                    int num = 1;
+                    mDayAdapter.clear();
+                    mDayAdapter.add("일");
+                    for (int i = num; i<num+DayOfMonth; i++) {
+                        mDayAdapter.add(""+i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_month);
         mMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mMonthAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                month = (String)parent.getItemAtPosition(position);
+                if(month.equals("월")) {
+                    mDayAdapter.clear();
+                    mDayAdapter.add("일");
+                }
+                if(year != null && month != null && !year.equals("년") && !month.equals("월")) {
+                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
+                    int num = 1;
+                    mDayAdapter.clear();
+                    mDayAdapter.add("일");
+                    for (int i = num; i<num+DayOfMonth; i++) {
+                        mDayAdapter.add(""+i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_day);
         mDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mDayAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_noon);
         mNoonAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mNoonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mNoonAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_hour);
         mHourAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mHourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mHourAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
         spinner = (Spinner)view.findViewById(R.id.spinner_minute);
         mMinuteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mMinuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mMinuteAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
         mYearAdapter.add("년");
-        int num = 2015;
+        int num = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = num;i<num+ Constants.MAX_YEAR; i++) {
             mYearAdapter.add(""+i);
         }
@@ -234,10 +265,10 @@ public class MakePartyOneFragment extends Fragment {
             mMonthAdapter.add(""+i);
         }
         mDayAdapter.add("일");
-        num = 1;
-        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
-            mDayAdapter.add(""+i);
-        }
+//        num = 1;
+//        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
+//            mDayAdapter.add(""+i);
+//        }
         mNoonAdapter.add("오전");
         mNoonAdapter.add("오후");
         mHourAdapter.add("시");
@@ -246,9 +277,49 @@ public class MakePartyOneFragment extends Fragment {
             mHourAdapter.add(""+i);
         }
         mMinuteAdapter.add("분");
-        num = 1;
+        num = 0;
         for (int i = num; i<num+Constants.NUM_OF_MINUTE; i++) {
             mMinuteAdapter.add(""+i);
+        }
+    }
+
+    public class gridAdapter extends BaseAdapter {
+        private String[] GRID_DATA = new String[] {
+                "테마1",
+                "테마2",
+                "테마3",
+                "테마4",
+                "테마5"
+        };
+
+        @Override
+        public int getCount() {
+            return GRID_DATA.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return GRID_DATA[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            GridItemView view;
+            if (convertView == null) {
+                view =  new GridItemView(parent.getContext());
+            } else {
+                view = (GridItemView) convertView;
+            }
+            view.setGridItem(GRID_DATA[position]);
+
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
+
+            return view;
         }
     }
 }

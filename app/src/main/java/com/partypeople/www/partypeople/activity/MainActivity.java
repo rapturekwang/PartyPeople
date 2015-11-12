@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
             case R.id.theme :
-                startActivity(new Intent(MainActivity.this, ThemeActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.party :

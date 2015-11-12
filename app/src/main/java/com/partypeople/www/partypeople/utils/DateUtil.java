@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.utils;
 
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,5 +65,20 @@ public class DateUtil {
         long d = changeStringToLong(date);
         String result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
         return result;
+    }
+
+    public int getDayOfMonth(String year, String month) {
+        Date date = new Date();
+//        String yearAndmonth = year + month;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
+        try {
+            date = formatter.parse(year + month);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 }
