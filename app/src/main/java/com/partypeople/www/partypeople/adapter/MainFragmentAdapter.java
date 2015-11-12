@@ -37,7 +37,6 @@ public class MainFragmentAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
-        ImageView partyImgView;
         CheckBox bookMarkView;
         ProgressBar progressBar;
         Party mData;
@@ -57,12 +56,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             bookMarkView.setChecked(data.bookmark);
         }
 
-        public void setVisible(int visible) {
-            partyImgView.setVisibility(visible);
-        }
-
         private void init(View view) {
-            partyImgView = (ImageView)view.findViewById(R.id.image_party);
             titleView = (TextView)view.findViewById(R.id.text_item_title);
             dateView = (TextView)view.findViewById(R.id.text_date);
             locationView = (TextView)view.findViewById(R.id.text_location);
@@ -114,7 +108,6 @@ public class MainFragmentAdapter extends BaseAdapter {
             holder.setItemData(items.get(position));
 
             convertView.setTag(holder);
-            convertView.setTag(R.id.image_party, holder.partyImgView);
             convertView.setTag(R.id.text_item_title, holder.titleView);
             convertView.setTag(R.id.text_date, holder.dateView);
             convertView.setTag(R.id.text_location, holder.locationView);

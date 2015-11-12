@@ -4,13 +4,8 @@
     <item android:id="@+id/search_text"
         android:title="Text"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_menu_share"
+        android:icon="@android:drawable/ic_search_category_default"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionLayout="@layout/menu_search_layout" />
 
-    <item android:id="@+id/search_detail"
-        android:title="Detail Search"
-        android:orderInCategory="101"
-        android:icon="@android:drawable/ic_search_category_default"
-        app:showAsAction="ifRoom" />
 </menu>

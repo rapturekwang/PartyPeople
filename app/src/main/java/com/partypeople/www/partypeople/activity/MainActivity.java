@@ -165,15 +165,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        item = menu.findItem(R.id.search_detail);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                return false;
-            }
-        });
-
         mActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         //doShareAction();
 
