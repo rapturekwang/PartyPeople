@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        actionBar.setHomeAsUpIndicator(R.drawable.drawer);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, R.drawable.ic_drawer,
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, R.drawable.drawer,
                 R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {

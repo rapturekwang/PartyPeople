@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:paddingTop="30dp">
+    android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -9,73 +8,90 @@
         android:id="@+id/imageView3"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/abc_btn_radio_to_on_mtrl_000" />
+        android:src="@drawable/img_cocktailicon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
         android:id="@+id/text_item_title"
         android:text="Come to house party!"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imageView3" />
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_toEndOf="@+id/imageView3"
+        android:gravity="center"
+        android:layout_marginLeft="5dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView9"
-        android:src="@drawable/abc_btn_radio_to_on_mtrl_015"
-        android:layout_alignTop="@+id/text_date"
-        android:layout_alignParentStart="true" />
+        android:src="@drawable/img_clock"
+        android:layout_marginLeft="27dp"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_date"
         android:text="5월 7일 / 19:00 - 21:30"
-        android:layout_below="@+id/text_item_title"
-        android:layout_toEndOf="@+id/imageView9" />
+        android:layout_marginLeft="5dp"
+        android:textSize="14sp"
+        android:layout_alignBottom="@+id/imageView9"
+        android:layout_alignTop="@+id/imageView9"
+        android:layout_toEndOf="@+id/imageView9"
+        android:gravity="center" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView15"
         android:layout_alignTop="@+id/text_date"
-        android:layout_toStartOf="@+id/text_location"
-        android:src="@drawable/com_facebook_tooltip_black_xout"
-        android:layout_above="@+id/frameLayout" />
+        android:layout_alignParentStart="true"
+        android:src="@drawable/img_address"
+        android:layout_above="@+id/frameLayout"
+        android:layout_marginLeft="226dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_location"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/text_item_title"
-        android:text="서울시 서초구" />
+        android:text="서울시 서초구"
+        android:textSize="14dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignTop="@+id/imageView15"
+        android:layout_alignBottom="@+id/imageView15"
+        android:layout_toEndOf="@+id/imageView15"
+        android:gravity="center" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_below="@+id/text_date"
-        android:layout_alignParentStart="true"
         android:id="@+id/frameLayout"
-        android:background="@drawable/demo_img">
+        android:background="@drawable/demo_img2"
+        android:layout_below="@+id/imageView9"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp">
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/chbox_bookmark"
+            android:button="@drawable/bookmark_selector"
             android:checked="false"
             android:focusable="false"
             android:layout_below="@+id/imageView9"
             android:layout_alignParentStart="true"
-            android:layout_margin="10dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_gravity="center_horizontal|bottom"
             android:background="#8c000000">
 
@@ -87,17 +103,21 @@
                 android:text="25,000"
                 android:layout_above="@+id/progressBar"
                 android:layout_alignParentStart="true"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:layout_marginTop="9dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/text_progress"
-                android:text="50%"
-                android:layout_above="@+id/progressBar"
+                android:text="50% 모금됨"
+                android:layout_alignTop="@+id/text_price"
                 android:layout_centerHorizontal="true"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,22 +125,38 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/text_duedate"
                 android:text="60일 남음"
-                android:layout_above="@+id/progressBar"
+                android:layout_alignTop="@+id/text_price"
                 android:layout_alignParentEnd="true"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp" />
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="8dp"
                 android:id="@+id/progressBar"
-                android:minHeight="20dip"
-                android:maxHeight="20dip"
+                android:maxHeight="10dp"
                 android:progress="50"
                 android:indeterminate="false"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:progressDrawable="@drawable/progress_bar"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="130"
+            android:id="@+id/textView42"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="50dp" />
     </FrameLayout>
 
 </RelativeLayout>

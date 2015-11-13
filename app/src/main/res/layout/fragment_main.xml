@@ -9,5 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_gravity="left|center_vertical"
+        android:dividerHeight="16dp"
+        android:divider="@color/backgroundGray"/>
 </FrameLayout>

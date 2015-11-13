@@ -79,5 +79,17 @@ public class UserFragment extends Fragment {
 
             }
         });
+//        for (int i = 0; i < 5 ; i++) {
+//            Party d = new Party();
+//            d.name = "Come to House Party!";
+//            d.date = "2015-12-04T02:11:11";
+//            //d.partyImg = getResources().getDrawable(R.drawable.demo_img);
+//            d.location = "서울시 서초구";
+//            d.expect_pay = 25000;
+//            //d.progress = 50;
+//            //d.progressText = d.progress+"% 모금됨";
+//            //d.dueDate = "7일 남음";
+//            mAdapter.add(d);
+//        }
     }
 }

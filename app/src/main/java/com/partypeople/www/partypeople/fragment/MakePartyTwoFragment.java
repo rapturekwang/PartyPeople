@@ -1,7 +1,9 @@
 package com.partypeople.www.partypeople.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.adapter.MainTabAdapter;
+import com.partypeople.www.partypeople.adapter.MakePartyTwoTabAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
 
 /**
@@ -23,7 +27,8 @@ public class MakePartyTwoFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String name;
-
+    TabLayout tabs;
+    ViewPager pager;
 
     public static MakePartyTwoFragment newInstance(String name) {
         MakePartyTwoFragment fragment = new MakePartyTwoFragment();
@@ -61,6 +66,19 @@ public class MakePartyTwoFragment extends Fragment {
                 activity.nextFragment();
             }
         });
+
+        tabs = (TabLayout)view.findViewById(R.id.tabs);
+        pager = (ViewPager)view.findViewById(R.id.pager);
+        MakePartyTwoTabAdapter adpater = new MakePartyTwoTabAdapter(getChildFragmentManager());
+        pager.setAdapter(adpater);
+
+        tabs.setupWithViewPager(pager);
+
+        tabs.removeAllTabs();
+        String[] tabTitle = getResources().getStringArray(R.array.party_two_tab_name);
+        for (int i = 0; i < Constants.NUM_OF_PARTY_TWO_TAB; i++) {
+            tabs.addTab(tabs.newTab().setText(tabTitle[i]));
+        }
 
         setDateSpinner(view);
 

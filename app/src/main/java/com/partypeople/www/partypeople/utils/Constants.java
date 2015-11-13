@@ -8,6 +8,7 @@ public class Constants {
     public static final int NUM_OF_DETAIL_TAB = 3;
     public static final int NUM_OF_USER_PAGE_TAB = 3;
     public static final int NUM_OF_FOLLOW_PAGE_TAB = 2;
+    public static final int NUM_OF_PARTY_TWO_TAB = 3;
 
     public static final int SPLASH_TIME_OUT = 1000;
 

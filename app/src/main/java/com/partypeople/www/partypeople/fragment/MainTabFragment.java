@@ -107,6 +107,7 @@ public class MainTabFragment extends Fragment {
 //            //d.progress = 50;
 //            //d.progressText = d.progress+"% 모금됨";
 //            //d.dueDate = "7일 남음";
+//            partyList.add(d);
 //            mAdapter.add(d);
 //        }
     }

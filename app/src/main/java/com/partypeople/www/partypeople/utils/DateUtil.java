@@ -63,7 +63,7 @@ public class DateUtil {
         if(date == null)
             return null;
         long d = changeStringToLong(date);
-        String result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
+        String result = DateFormat.format("MM월 dd일 / HH:mm - HH:mm", d).toString();
         return result;
     }
 

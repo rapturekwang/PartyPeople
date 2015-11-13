@@ -14,7 +14,7 @@
             android:id="@+id/image_party"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/demo_img" />
+            android:src="@drawable/demo_img2" />
 
         <RelativeLayout
             android:layout_width="match_parent"

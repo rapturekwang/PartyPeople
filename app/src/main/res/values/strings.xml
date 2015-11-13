@@ -10,6 +10,12 @@
         <item>최신모임</item>
     </string-array>
 
+    <string-array name="party_two_tab_name">
+        <item>고정금액</item>
+        <item>최소금액</item>
+        <item>리워드별 설정</item>
+    </string-array>
+
     <string-array name="detail_tab_name">
         <item>세부 정보</item>
         <item>포함 사항</item>

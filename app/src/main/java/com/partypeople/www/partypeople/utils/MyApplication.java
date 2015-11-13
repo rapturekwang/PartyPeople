@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.FacebookSdk;
+import com.partypeople.www.partypeople.manager.FontManager;
 
 /**
  * Created by dongja94 on 2015-10-27.
@@ -15,6 +16,7 @@ public class MyApplication extends Application {
         super.onCreate();
         mContext = this;
         FacebookSdk.sdkInitialize(this);
+        FontManager.setDefaultFont(this, "DEFAULT", "Roboto-Regular.ttf");
     }
 
     public static Context getContext() {
