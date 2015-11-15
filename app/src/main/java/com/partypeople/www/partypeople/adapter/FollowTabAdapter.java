@@ -4,21 +4,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.fragment.FollowTabFragment;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
+import com.partypeople.www.partypeople.utils.Constants;
 
 /**
- * Created by dongja94 on 2015-10-14.
+ * Created by kwang on 15. 11. 15..
  */
-public class MainTabAdapter extends FragmentPagerAdapter {
+public class FollowTabAdapter extends FragmentPagerAdapter {
 
-    public MainTabAdapter(FragmentManager fm) {
+    public FollowTabAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return MainTabFragment.newInstance(position);
+        return FollowTabFragment.newInstance(position);
     }
 
     @Override

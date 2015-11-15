@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="checked">#2F4F4F</color>
     <color name="unchecked">#778899</color>
-    <color name="mainColor">#8215bb</color>
+    <color name="toolbarColor">#8215bb</color>
     <color name="backgroundGray">#f5f5f5</color>
     <color name="tabFocused">#6f0397</color>
     <color name="tabUnfocused">#a4a4a4</color>

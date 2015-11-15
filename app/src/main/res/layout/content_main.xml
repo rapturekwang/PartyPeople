@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
-            android:background="@color/mainColor" >
+            android:background="@color/toolbarColor" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -29,17 +29,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabs"
-            android:background="@drawable/menu"
             app:tabBackground="@color/backgroundGray"
             app:tabTextAppearance="@style/MainTabText"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabIndicatorColor="@null"
-            app:tabTextColor="@color/tabUnfocused" />
+            app:tabTextColor="@color/tabUnfocused"
+            app:tabSelectedTextColor="@color/tabFocused"/>
 
         <android.support.v4.view.ViewPager
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/pager"
             android:layout_gravity="center_horizontal" />

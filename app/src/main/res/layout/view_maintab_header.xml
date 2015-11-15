@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#696969">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView4"
+        android:src="@drawable/img_address"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="경기도 성남시"
+        android:id="@+id/text_location"
+        android:gravity="center"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="테마"
+        android:id="@+id/textView45"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="40dp"
+        android:gravity="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/image_theme1"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/img_cycle"
+        android:layout_marginLeft="20dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/image_theme2"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/img_cycle"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/image_theme3"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/img_cycle"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/image_theme4"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/img_cycle"/>
+</LinearLayout>

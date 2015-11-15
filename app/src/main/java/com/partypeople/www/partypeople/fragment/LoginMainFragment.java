@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.LoginActivity;
@@ -90,6 +91,22 @@ public class LoginMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        TextView textBtn = (TextView)view.findViewById(R.id.text_link1);
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "서비스 이용약관", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        textBtn = (TextView)view.findViewById(R.id.text_link2);
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "개인정보 보호정책", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -9,15 +9,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login with facebook"
-        android:id="@+id/btn_facebook"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/btn_skip" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="건너뛰기"
         android:id="@+id/btn_skip"
         android:background="@null"
@@ -32,6 +23,15 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/my_icon"
         android:layout_above="@+id/btn_facebook" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login with facebook"
+        android:id="@+id/btn_facebook"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/btn_skip" />
 
     <Button
         android:layout_width="wrap_content"
@@ -66,13 +66,51 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="회원가입을 하면 PartyPeople의"
+        android:id="@+id/textView30"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/text_link1"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="회원가입을 하면 파티피플의 서비스 약관, 개인정보 보호정책, 참여자 환불정책 이용약관에 동의하게 됩니다."
-        android:id="@+id/textView30"
+        android:text="서비스 이용약관"
+        android:id="@+id/text_link1"
+        android:layout_above="@+id/textView46"
+        android:layout_toStartOf="@+id/textView44"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=" 및"
+        android:id="@+id/textView44"
+        android:layout_above="@+id/textView46"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=" 개인정보보호정책"
+        android:id="@+id/text_link2"
+        android:layout_above="@+id/textView46"
+        android:layout_toEndOf="@+id/textView44"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="에 동의하게 됩니다"
+        android:id="@+id/textView46"
+        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center_horizontal" />
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

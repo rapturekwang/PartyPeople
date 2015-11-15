@@ -5,19 +5,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.SettingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChangePasswordFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ChangePasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ChangePasswordFragment extends Fragment {
     private static final String ARG_NAME = "name";
@@ -50,6 +46,16 @@ public class ChangePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_change_password, container, false);
+
+        Button btn = (Button)view.findViewById(R.id.btn_save);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "비밀번호가 변경 되었습니다.", Toast.LENGTH_SHORT).show();
+                SettingActivity activity = (SettingActivity)getActivity();
+                activity.onBackPressed();
+            }
+        });
 
         return view;
     }

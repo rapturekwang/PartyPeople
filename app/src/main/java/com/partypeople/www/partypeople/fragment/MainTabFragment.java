@@ -18,6 +18,7 @@ import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +32,16 @@ import java.util.List;
 public class MainTabFragment extends Fragment {
 
     List<Party> partyList = new ArrayList<Party>();
-    private static final String ARG_NAME = "name";
-    private String mName;
+    private static final String ARG_INDEX = "index";
+    private int index;
     ListView listView;
     MainFragmentAdapter mAdapter;
     String id;
 
-    public static MainTabFragment newInstance(String name) {
+    public static MainTabFragment newInstance(int index) {
         MainTabFragment fragment = new MainTabFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_NAME, name);
+        args.putInt(ARG_INDEX, index);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +54,7 @@ public class MainTabFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mName = getArguments().getString(ARG_NAME);
+            index = getArguments().getInt(ARG_INDEX);
         }
     }
 
@@ -76,7 +77,19 @@ public class MainTabFragment extends Fragment {
             }
         });
 
-        initData();
+        switch (getArguments().getInt(ARG_INDEX)) {
+            case 0:
+                initData();
+                break;
+            case 1:
+                MainTabHeaderView header = new MainTabHeaderView(getContext());
+                listView.addHeaderView(header);
+                initData();
+                break;
+            case 2:
+                initData();
+                break;
+        }
 
         return view;
     }
@@ -93,22 +106,16 @@ public class MainTabFragment extends Fragment {
 
             @Override
             public void onFail(int code) {
-
+                for (int i = 0; i < 5 ; i++) {
+                    Party d = new Party();
+                    d.name = "Come to House Party!";
+                    d.date = "2015-12-04T02:11:11";
+                    d.location = "서울시 서초구";
+                    d.expect_pay = 25000;
+                    partyList.add(d);
+                    mAdapter.add(d);
+                }
             }
         });
-
-//        for (int i = 0; i < 5 ; i++) {
-//            Party d = new Party();
-//            d.name = "Come to House Party!";
-//            d.date = "2015-12-04T02:11:11";
-//            //d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-//            d.location = "서울시 서초구";
-//            d.expect_pay = 25000;
-//            //d.progress = 50;
-//            //d.progressText = d.progress+"% 모금됨";
-//            //d.dueDate = "7일 남음";
-//            partyList.add(d);
-//            mAdapter.add(d);
-//        }
     }
 }

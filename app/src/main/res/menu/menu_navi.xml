@@ -11,7 +11,7 @@
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu2">
         <item android:id="@+id/theme"
-            android:title="나의 테마"
+            android:title="맞춤모임설정"
             android:icon="@android:drawable/ic_input_delete"
             android:orderInCategory="101" />
     </group>
