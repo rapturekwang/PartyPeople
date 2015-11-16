@@ -45,7 +45,7 @@ public class ThemeItemView extends FrameLayout implements Checkable{
     TextView textView;
 
     private void init() {
-        inflate(getContext(), R.layout.view_message_item, this);
+        inflate(getContext(), R.layout.view_theme_item, this);
         textView = (TextView)findViewById(R.id.text_theme);
     }
 

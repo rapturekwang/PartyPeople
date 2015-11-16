@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.view.FollowItemView;
+import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.view.MessageItemView;
 
 /**
@@ -44,16 +44,18 @@ public class MessageTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_message_tab, container, false);
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new MessageListAdapter();
         listView.setAdapter(mAdapter);
 
+        final MessageActivity activity = (MessageActivity)getActivity();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "pushed : " + position, Toast.LENGTH_SHORT).show();
+                activity.nextFragment();
             }
         });
 
