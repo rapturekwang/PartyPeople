@@ -1,11 +1,9 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +13,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
-import com.partypeople.www.partypeople.fragment.MakePartyOneFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
-import com.partypeople.www.partypeople.view.GridItemView;
-
-import org.w3c.dom.Text;
+import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,11 +180,11 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            GridItemView view;
+            ThemeItemView view;
             if (convertView == null) {
-                view =  new GridItemView(parent.getContext());
+                view =  new ThemeItemView(parent.getContext());
             } else {
-                view = (GridItemView) convertView;
+                view = (ThemeItemView) convertView;
             }
             view.setGridItem(GRID_DATA[position]);
 

@@ -8,24 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.view.FollowItemView;
-
+import com.partypeople.www.partypeople.view.MessageItemView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowTabFragment extends Fragment {
+public class MessageTabFragment extends Fragment {
     private static final String ARG_INDEX = "index";
     private int index;
-    private GridView gridView;
-    gridAdapter mAdapter;
+    ListView listView;
+    MessageListAdapter mAdapter;
     String id;
 
-    public static FollowTabFragment newInstance(int index) {
-        FollowTabFragment fragment = new FollowTabFragment();
+    public static MessageTabFragment newInstance(int index) {
+        MessageTabFragment fragment = new MessageTabFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_INDEX, index);
         fragment.setArguments(args);
@@ -43,22 +44,23 @@ public class FollowTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_follow, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
 
-        gridView = (GridView)view.findViewById(R.id.gridView);
-        mAdapter = new gridAdapter();
-        gridView.setAdapter(mAdapter);
+        listView = (ListView)view.findViewById(R.id.listView);
+        mAdapter = new MessageListAdapter();
+        listView.setAdapter(mAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "pushed : " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
 
-    public class gridAdapter extends BaseAdapter {
+    public class MessageListAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -77,13 +79,13 @@ public class FollowTabFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            FollowItemView view;
+            MessageItemView view;
             if (convertView == null) {
-                view =  new FollowItemView(parent.getContext());
+                view =  new MessageItemView(parent.getContext());
             } else {
-                view = (FollowItemView) convertView;
+                view = (MessageItemView) convertView;
             }
-            view.setItemData("정광희", "서울시 관악구", "개최수/참여수", "");
+            view.setItemData("정광희", "10시간 전", "메시지 내용 한줄만...", "");
 
             return view;
         }

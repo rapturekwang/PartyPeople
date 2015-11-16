@@ -2,29 +2,24 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 
 /**
  * Created by kwang on 15. 10. 9..
  */
-public class GridItemView extends FrameLayout implements Checkable{
+public class ThemeItemView extends FrameLayout implements Checkable{
     boolean isCheck = false;
 
-    public GridItemView(Context context) {
+    public ThemeItemView(Context context) {
         super(context);
         init();
     }
 
-    public GridItemView(Context context, AttributeSet attrs) {
+    public ThemeItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -50,7 +45,7 @@ public class GridItemView extends FrameLayout implements Checkable{
     TextView textView;
 
     private void init() {
-        inflate(getContext(), R.layout.view_grid_item, this);
+        inflate(getContext(), R.layout.view_message_item, this);
         textView = (TextView)findViewById(R.id.text_theme);
     }
 

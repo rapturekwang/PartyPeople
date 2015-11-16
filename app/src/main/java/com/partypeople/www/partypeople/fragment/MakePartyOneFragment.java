@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +28,10 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
-import com.partypeople.www.partypeople.view.GridItemView;
+import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -309,11 +307,11 @@ public class MakePartyOneFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            GridItemView view;
+            ThemeItemView view;
             if (convertView == null) {
-                view =  new GridItemView(parent.getContext());
+                view =  new ThemeItemView(parent.getContext());
             } else {
-                view = (GridItemView) convertView;
+                view = (ThemeItemView) convertView;
             }
             view.setGridItem(GRID_DATA[position]);
 
