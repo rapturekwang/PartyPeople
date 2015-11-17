@@ -226,7 +226,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:checked="false"
                 android:button="@drawable/heart_selector"
-                android:layout_marginRight="16dp" />
+                android:padding="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -234,7 +234,7 @@
                 android:id="@+id/img_btn_share"
                 android:layout_gravity="left|center_vertical"
                 android:src="@drawable/detail_share"
-                android:layout_marginLeft="16dp" />
+                android:padding="16dp" />
         </FrameLayout>
 
     </RelativeLayout>

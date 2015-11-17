@@ -20,7 +20,9 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.Validate;
 
@@ -33,6 +35,7 @@ public class SignupFragment extends Fragment {
     Validate validate = Validate.getInstance();
     EditText email, password, idName;
     Button signup, login;
+    PropertyManager propertyManager = PropertyManager.getInstance();
 
     public static SignupFragment newInstance(String name) {
         SignupFragment fragment = new SignupFragment();
@@ -137,9 +140,14 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                NetworkManager.getInstance().postUser(getContext(), email.getText().toString(), password.getText().toString(), idName.getText().toString(), new NetworkManager.OnResultListener<String>() {
+                NetworkManager.getInstance().postUser(getContext(), email.getText().toString(), password.getText().toString(), idName.getText().toString(), new NetworkManager.OnResultListener<User>() {
                     @Override
-                    public void onSuccess(String result) {
+                    public void onSuccess(User result) {
+                        //Log.d("SignupFragment", "email:" + result.data.email + "id:" + result.data.id + "token:" + result.token);
+                        propertyManager.setToken(result.token);
+                        propertyManager.setEmail(result.data.email);
+                        propertyManager.setId(result.data.id);
+                        propertyManager.setUser(result);
                         startActivity(new Intent(getContext(), MainActivity.class));
                         getActivity().finish();
                     }

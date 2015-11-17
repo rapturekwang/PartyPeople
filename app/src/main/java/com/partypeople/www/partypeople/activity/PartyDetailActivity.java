@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
@@ -51,7 +52,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PartyDetailActivity.this, ParticipateActivity.class));
+                if(PropertyManager.getInstance().isLogin()) {
+                    startActivity(new Intent(PartyDetailActivity.this, ParticipateActivity.class));
+                } else {
+                    Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         ImageView img_btn = (ImageView)findViewById(R.id.img_btn_share);

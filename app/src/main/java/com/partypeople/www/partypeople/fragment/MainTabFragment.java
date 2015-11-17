@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
@@ -34,6 +36,7 @@ public class MainTabFragment extends Fragment {
     List<Party> partyList = new ArrayList<Party>();
     private static final String ARG_INDEX = "index";
     private int index;
+    TextView warningView;
     ListView listView;
     MainFragmentAdapter mAdapter;
     String id;
@@ -66,6 +69,7 @@ public class MainTabFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
+        warningView = (TextView)view.findViewById(R.id.text_warning);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,14 +84,21 @@ public class MainTabFragment extends Fragment {
         switch (getArguments().getInt(ARG_INDEX)) {
             case 0:
                 initData();
+                warningView.setVisibility(View.GONE);
                 break;
             case 1:
-                MainTabHeaderView header = new MainTabHeaderView(getContext());
-                listView.addHeaderView(header);
-                initData();
+                if(PropertyManager.getInstance().isLogin()) {
+                    MainTabHeaderView header = new MainTabHeaderView(getContext());
+                    listView.addHeaderView(header);
+                    initData();
+                } else {
+                    warningView.setVisibility(View.VISIBLE);
+                    warningView.setText("로그인이 필요한 서비스 입니다");
+                }
                 break;
             case 2:
                 initData();
+                warningView.setVisibility(View.GONE);
                 break;
         }
 

@@ -33,70 +33,79 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        final String id = PropertyManager.getInstance().getFaceBookId();
-        if (!TextUtils.isEmpty(id)) {
-            // facebook login
-            mTokenTracker = new AccessTokenTracker() {
-                @Override
-                protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                    Log.d("SplashActivity", "Token changed");
-                    AccessToken token = AccessToken.getCurrentAccessToken();
-                    if (token != null) {
-                        Log.d("SplashActivity", "Token is not null");
-                        if (token.getUserId().equals(id)) {
-                            Log.d("SplashActivity", "Token user id is same as before");
-                            NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(), new NetworkManager.OnResultListener<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                    if (result.equals("OK")) {
-                                        goMainActivity();
-                                    }
-                                }
-
-                                @Override
-                                public void onFail(int code) {
-
-                                }
-                            });
-                        } else {
-                            Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
-                            mLoginManager.logOut();
-                            goLoginActivity();
-                        }
-                    }
-                }
-            };
-            mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-//                    Toast.makeText(SplashActivity.this, "login success", Toast.LENGTH_SHORT).show();
-//                    Log.d("SplashActivity", "onSuccess()");
-//                    goMainActivity();
-                }
-
-                @Override
-                public void onCancel() {
-//                    Log.d("SplashActivity", "onCancel()");
-//                    goMainActivity();
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    Toast.makeText(SplashActivity.this, "facebook login fail...", Toast.LENGTH_SHORT).show();
-                    goLoginActivity();
-                }
-            });
-
-            Log.d("SplashActivity", "loginWithReadPermissions");
-            mLoginManager.logInWithReadPermissions(this, null);
-
-        } else {
+        if(PropertyManager.getInstance().isLogin()) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    goLoginActivity();
+                    goMainActivity();
                 }
             }, Constants.SPLASH_TIME_OUT);
+        } else {
+            final String id = PropertyManager.getInstance().getFaceBookId();
+            if (!TextUtils.isEmpty(id)) {
+                // facebook login
+                mTokenTracker = new AccessTokenTracker() {
+                    @Override
+                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                        Log.d("SplashActivity", "Token changed");
+                        AccessToken token = AccessToken.getCurrentAccessToken();
+                        if (token != null) {
+                            Log.d("SplashActivity", "Token is not null");
+                            if (token.getUserId().equals(id)) {
+                                Log.d("SplashActivity", "Token user id is same as before");
+                                NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(), new NetworkManager.OnResultListener<String>() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        if (result.equals("OK")) {
+                                            goMainActivity();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
+                                mLoginManager.logOut();
+                                goLoginActivity();
+                            }
+                        }
+                    }
+                };
+                mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+//                    Toast.makeText(SplashActivity.this, "login success", Toast.LENGTH_SHORT).show();
+//                    Log.d("SplashActivity", "onSuccess()");
+//                    goMainActivity();
+                    }
+
+                    @Override
+                    public void onCancel() {
+//                    Log.d("SplashActivity", "onCancel()");
+//                    goMainActivity();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(SplashActivity.this, "facebook login fail...", Toast.LENGTH_SHORT).show();
+                        goLoginActivity();
+                    }
+                });
+
+                Log.d("SplashActivity", "loginWithReadPermissions");
+                mLoginManager.logInWithReadPermissions(this, null);
+
+            } else {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        goLoginActivity();
+                    }
+                }, Constants.SPLASH_TIME_OUT);
+            }
         }
     }
 

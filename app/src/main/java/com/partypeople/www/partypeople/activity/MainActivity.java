@@ -21,10 +21,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
     NavigationView navigationView;
     ActionBarDrawerToggle mDrawerToggle;
     FloatingActionButton fab;
+    PropertyManager propertyManager = PropertyManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,12 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
-                startActivity(intent);
+                if(propertyManager.isLogin()) {
+                    Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -92,26 +99,41 @@ public class MainActivity extends AppCompatActivity implements
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UserActivity.class));
-                mDrawer.closeDrawer(GravityCompat.START);
+                if(propertyManager.isLogin()) {
+                    startActivity(new Intent(MainActivity.this, UserActivity.class));
+                    mDrawer.closeDrawer(GravityCompat.START);
+                }
             }
         });
 
-//        Party party = new Party();
-//        party.setAccount(122157015);
-//        party.setDate(DateUtil.getInstance().getCurrentDate());
-//        Log.d("MainActivity", party.getJsonString());
-//        NetworkManager.getInstance().postJson(this, party.getJsonString(), new NetworkManager.OnResultListener<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//
-//            }
-//
-//            @Override
-//            public void onFail(int code) {
-//
-//            }
-//        });
+        Button btn = (Button)header.findViewById(R.id.btn_login);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView name = (TextView)header.findViewById(R.id.text_user_name);
+        TextView email = (TextView)header.findViewById(R.id.text_user_email);
+
+        if(!propertyManager.isLogin()) {
+            navigationView.getMenu().getItem(1).setEnabled(false);
+            navigationView.getMenu().getItem(2).setEnabled(false);
+            navigationView.getMenu().getItem(3).setEnabled(false);
+            navigationView.getMenu().getItem(5).setEnabled(false);
+            btn.setVisibility(View.VISIBLE);
+            name.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+        } else {
+            navigationView.getMenu().getItem(1).setEnabled(true);
+            navigationView.getMenu().getItem(2).setEnabled(true);
+            navigationView.getMenu().getItem(3).setEnabled(true);
+            navigationView.getMenu().getItem(5).setEnabled(true);
+            btn.setVisibility(View.GONE);
+            name.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

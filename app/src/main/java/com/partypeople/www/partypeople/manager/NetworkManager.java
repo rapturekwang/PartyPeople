@@ -11,6 +11,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -82,6 +83,8 @@ public class NetworkManager {
 
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/partys";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
+    public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
+    public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
 
     public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
@@ -217,7 +220,7 @@ public class NetworkManager {
         });
     }
 
-    public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<String> listener ) {
+    public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<User> listener ) {
         RequestParams params = new RequestParams();
         params.put("email", param1);
         params.put("password", param2);
@@ -226,8 +229,9 @@ public class NetworkManager {
         client.post(context, URL_USERS, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "post user Success" + headers.toString() + responseString);
+                Log.d("NetworkManager", "post user Success" + responseString);
+                User result = gson.fromJson(responseString, User.class);
+                listener.onSuccess(result);
             }
 
             @Override
@@ -255,6 +259,52 @@ public class NetworkManager {
                 User[] result = gson.fromJson(responseString, User[].class);
                 listener.onSuccess(result);
             }
+        });
+    }
+
+    public void authUser(Context context, String jsonString, final OnResultListener<User> listener ) {
+        Header[] headers = null;
+
+        try {
+            client.post(context, URL_AUTH, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    Log.d("NetworkManager", "auth Success" + responseString);
+                    User result = gson.fromJson(responseString, User.class);
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    listener.onFail(statusCode);
+                    Log.d("NetworkManager", "auth Fail: " + statusCode + responseString);
+                }
+
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getMyId(Context context, String token, final OnResultListener<Data> listener ) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + token);
+
+        client.get(context, URL_GET_ID, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get id Success" + responseString);
+                Data result = gson.fromJson(responseString, Data.class);
+                listener.onSuccess(result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "get id Fail: " + statusCode + responseString);
+            }
+
         });
     }
 }

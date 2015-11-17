@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.activity.SettingActivity;
 import com.partypeople.www.partypeople.adapter.SettingListAdapter;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,8 +72,11 @@ public class SettingFragment extends Fragment {
                     builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), "로그아웃", Toast.LENGTH_SHORT).show();
-                            LoginManager.getInstance().logOut();
+                            Toast.makeText(getContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
+                            PropertyManager.getInstance().logout();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
                     });
                     builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {

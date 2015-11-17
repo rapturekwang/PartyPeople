@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +20,20 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
+import com.partypeople.www.partypeople.data.Data;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.Validate;
+
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
+    PropertyManager propertyManager = PropertyManager.getInstance();
     private static final String ARG_NAME = "name";
     private String name;
     Validate validate = Validate.getInstance();
@@ -126,8 +134,37 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                startActivity(new Intent(getContext(), MainActivity.class));
-                getActivity().finish();
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    Log.d("LoginFragment", email.getText().toString() + ":" + password.getText().toString());
+                    jsonObject.accumulate("password", password.getText().toString());
+                    jsonObject.accumulate("email", email.getText().toString());
+                } catch (Exception e) {}
+                NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(final User result1) {
+                        NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<Data>() {
+                            @Override
+                            public void onSuccess(Data result2) {
+                                propertyManager.setToken(result1.token);
+                                propertyManager.setEmail(result2.email);
+                                propertyManager.setId(result2.id);
+                                startActivity(new Intent(getContext(), MainActivity.class));
+                                getActivity().finish();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "로그인에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
