@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     <RelativeLayout
@@ -8,13 +9,164 @@
         android:layout_height="match_parent"
         tools:context="com.partypeople.www.partypeople.activity.PartyDetailActivity">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="477dp"
-            android:id="@+id/image_party"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/demo_img2" />
+            android:id="@+id/relativeLayout">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/img_pager"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/demo_img3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView20"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/arrow_left"
+                android:layout_marginLeft="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView21"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/arrow_right"
+                android:layout_marginRight="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView17"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/detail_cocktail"
+                android:layout_marginTop="327dp"
+                android:layout_marginLeft="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Come to house party!"
+                android:id="@+id/text_title"
+                android:textColor="#ffffff"
+                android:layout_alignTop="@+id/imageView17"
+                android:layout_toEndOf="@+id/imageView17"
+                android:layout_marginLeft="7dp"
+                android:textSize="21sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView18"
+                android:layout_below="@+id/imageView17"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/detail_clock"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5월 7일 / 19:00 ~ 21:00"
+                android:id="@+id/text_date"
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:layout_alignTop="@+id/imageView18"
+                android:layout_toEndOf="@+id/imageView18"
+                android:layout_marginLeft="7dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView19"
+                android:layout_alignTop="@+id/text_date"
+                android:layout_toStartOf="@+id/text_location"
+                android:src="@drawable/detail_location"
+                android:layout_marginRight="7dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울시 서초구"
+                android:id="@+id/text_location"
+                android:layout_alignTop="@+id/text_date"
+                android:layout_alignParentEnd="true"
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:layout_marginRight="16dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:background="#8c000000"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="250,000"
+                    android:id="@+id/text_price"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:layout_above="@+id/progressBar"
+                    android:layout_alignStart="@+id/progressBar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500,000"
+                    android:id="@+id/text_total_price"
+                    android:textColor="#ffffff"
+                    android:layout_marginRight="16dp"
+                    android:textSize="15dp"
+                    android:layout_alignBottom="@+id/text_price"
+                    android:layout_alignParentEnd="true" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:id="@+id/progressBar"
+                    android:layout_alignParentStart="true"
+                    android:indeterminate="false"
+                    android:progress="50"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:progressDrawable="@drawable/progress_bar"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="51% 모금됨"
+                    android:id="@+id/text_progress"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_alignStart="@+id/progressBar"
+                    android:layout_marginTop="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="34일 남음"
+                    android:id="@+id/text_duedate"
+                    android:layout_alignTop="@+id/text_progress"
+                    android:layout_alignEnd="@+id/text_total_price"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -23,116 +175,28 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:checked="false"
-            android:button="@drawable/bookmark_selector"
+            android:button="@null"
+            android:background="@drawable/detail_bookmark_selector"
             android:layout_marginTop="13dp"
-            android:layout_marginRight="16dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/image_party"
-            android:layout_alignParentStart="true"
-            android:id="@+id/relativeLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Come to house party!"
-                android:id="@+id/text_title"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="5월 7일 / 19:00 ~ 21:00"
-                android:id="@+id/text_date"
-                android:layout_below="@+id/text_title"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="서울시 서초구"
-                android:id="@+id/text_location"
-                android:layout_below="@+id/text_title"
-                android:layout_alignEnd="@+id/text_des" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="250,000"
-                android:id="@+id/text_price"
-                android:layout_below="@+id/text_date"
-                android:layout_alignParentStart="true"
-                android:paddingTop="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="500,000"
-                android:id="@+id/text_total_price"
-                android:layout_below="@+id/text_location"
-                android:layout_alignEnd="@+id/text_des"
-                android:paddingTop="20dp" />
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:layout_below="@+id/text_price"
-                android:layout_alignParentStart="true"
-                android:layout_alignEnd="@+id/text_des"
-                android:indeterminate="false" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="51% 모금됨"
-                android:id="@+id/text_progress"
-                android:layout_below="@+id/progressBar"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="34일 남음"
-                android:id="@+id/text_duedate"
-                android:layout_below="@+id/progressBar"
-                android:layout_alignEnd="@+id/text_des" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/text_des"
-                android:layout_below="@+id/text_progress"
-                android:layout_alignParentStart="true"
-                android:paddingTop="10dp"
-                android:text="태산이 높다 하되 하늘 아래 뫼이로다. 오르고 또 오르면 못 오를 리 없건마는 사람이 제 아니 오르고 뫼만 높다 하더라 이런들 어떠하고 저런들 어떠하리 만수산 드렁칡이 얽혀진들 어떠하리 우리도 이같이 얽어져 백년까지 누리리라" />
-
-        </RelativeLayout>
+            android:layout_marginRight="16dp"
+            android:text="120"
+            android:paddingStart="32dp" />
 
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:id="@+id/tabs"
-            android:paddingTop="20dp"
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentStart="true"
-            android:fillViewport="false" />
+            app:tabTextAppearance="@style/TabText"
+            app:tabMaxWidth="0dp"
+            app:tabIndicatorColor="@null"
+            app:tabTextColor="@color/tabUnfocused"
+            app:tabSelectedTextColor="@color/tabFocused" />
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="1000dp"
             android:id="@+id/pager"
             android:layout_below="@+id/tabs"
             android:layout_alignParentStart="true" />
@@ -147,12 +211,13 @@
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="함께하기"
+                android:layout_height="53dp"
+                android:text="참여하기"
                 android:id="@+id/btn_parti"
                 android:layout_gravity="center"
-                android:background="#696969"
-                android:textColor="#ffffff" />
+                android:background="@color/mainColor"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -160,15 +225,16 @@
                 android:id="@+id/chbox_bookmark"
                 android:layout_gravity="right|center_vertical"
                 android:checked="false"
-                android:layout_margin="5dp" />
+                android:button="@drawable/heart_selector"
+                android:layout_marginRight="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/img_btn_share"
                 android:layout_gravity="left|center_vertical"
-                android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
-                android:layout_margin="5dp" />
+                android:src="@drawable/detail_share"
+                android:layout_marginLeft="16dp" />
         </FrameLayout>
 
     </RelativeLayout>

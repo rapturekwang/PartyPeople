@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tabs"
             app:tabBackground="@color/backgroundGray"
-            app:tabTextAppearance="@style/MainTabText"
+            app:tabTextAppearance="@style/TabText"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"

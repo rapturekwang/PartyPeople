@@ -9,22 +9,21 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DetailOneFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DetailOneFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class DetailOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
@@ -56,7 +55,19 @@ public class DetailOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_one, container, false);
+        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.root_layout);
 
+
+//        ViewTreeObserver observer = linearLayout.getViewTreeObserver();
+//        observer.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Log.d("DetailOne", Integer.toString(linearLayout.getHeight()));
+//                linearLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                PartyDetailActivity activity = (PartyDetailActivity)getActivity();
+////                activity.setPagerHeight(linearLayout.getHeight());
+//            }
+//        });
         initData();
 
         mapView = (TMapView)view.findViewById(R.id.view_map);

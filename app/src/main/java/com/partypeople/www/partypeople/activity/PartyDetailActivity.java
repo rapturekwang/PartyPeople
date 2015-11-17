@@ -78,7 +78,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         progressView.setText("50%");
         progressBar.setProgress(50);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.date) + "일 남음");
-        descriptionView.setText(party.description);
+//        descriptionView.setText(party.description);
 //        imageView
     }
 
@@ -90,7 +90,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         totalPriceView = (TextView)findViewById(R.id.text_total_price);
         progressView = (TextView)findViewById(R.id.text_progress);
         duedateView = (TextView)findViewById(R.id.text_duedate);
-        descriptionView = (TextView)findViewById(R.id.text_des);
+        //descriptionView = (TextView)findViewById(R.id.text_des);
         imageView = (ImageView)findViewById(R.id.image_party);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
     }
