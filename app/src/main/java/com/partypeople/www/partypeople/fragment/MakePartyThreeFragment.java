@@ -64,11 +64,10 @@ public class MakePartyThreeFragment extends Fragment {
                 builder.setPositiveButton("만들기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
                         NetworkManager.getInstance().postPartys(getContext(), new NetworkManager.OnResultListener<String>() {
                             @Override
                             public void onSuccess(String result) {
-
+                                Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

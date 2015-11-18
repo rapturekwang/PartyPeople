@@ -149,8 +149,9 @@ public class LoginFragment extends Fragment {
                                 result2.token = result1.token;
                                 propertyManager.setUser(result2);
 
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                getActivity().finish();
+                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
 
                             @Override

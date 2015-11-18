@@ -17,7 +17,7 @@
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu3">
-        <item android:id="@+id/party"
+        <item android:id="@+id/user"
             android:title="나의 모임"
             android:icon="@android:drawable/ic_input_get"
             android:orderInCategory="102" />

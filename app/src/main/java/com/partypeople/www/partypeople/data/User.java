@@ -13,6 +13,6 @@ public class User implements Serializable{
     public String photo;
     public String created_at;
     public boolean email_validated;
-    public Group group;
+    //public Group group;
     public Data data;
 }

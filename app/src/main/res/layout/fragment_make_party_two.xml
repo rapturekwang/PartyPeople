@@ -89,15 +89,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp" />
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView17"
-                android:layout_alignParentStart="true"
-                android:id="@+id/radioGroup">
-
-            </RadioGroup>
-
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,10 +96,10 @@
                 app:tabMaxWidth="0dp"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
-                android:layout_below="@+id/radioGroup"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView17" />
 
-            <android.support.v4.view.ViewPager
+            <com.partypeople.www.partypeople.view.WithoutSwipeViewPager
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pager"

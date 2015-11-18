@@ -8,14 +8,14 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView2"
+        android:id="@+id/listView"
         android:layout_gravity="left|top" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Test"
-        android:id="@+id/textView18"
-        android:layout_gravity="center" />
+        android:text="추가"
+        android:id="@+id/btn_add"
+        android:layout_gravity="right|bottom" />
+
 </FrameLayout>

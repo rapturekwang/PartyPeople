@@ -79,7 +79,11 @@
             android:name=".activity.FollowActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.ParticipateActivity"
+        <activity
+            android:name=".activity.ParticipateActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.EditProfileActivity"
             android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>

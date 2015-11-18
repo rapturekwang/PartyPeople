@@ -37,7 +37,9 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(mStartFrom == Constants.START_FROM_SPLASH) {
-                    startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                    Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
+                    intent.putExtra("startfrom", Constants.START_FROM_INTRO);
+                    startActivity(intent);
                     finish();
                 } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
                     finish();

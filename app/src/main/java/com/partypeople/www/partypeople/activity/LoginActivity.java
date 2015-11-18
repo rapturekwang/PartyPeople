@@ -26,6 +26,8 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    int mStartfrom;
+    Intent intent;
     Fragment[] list = {LoginMainFragment.newInstance(""),
             SignupFragment.newInstance(""),
             LoginFragment.newInstance(""),
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mStartfrom = getIntent().getExtras().getInt("startfrom");
         initFragment();
     }
 
@@ -105,5 +108,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public int getStartfrom() {
+        Log.d("LoginActivity", ""+mStartfrom);
+        return mStartfrom;
     }
 }

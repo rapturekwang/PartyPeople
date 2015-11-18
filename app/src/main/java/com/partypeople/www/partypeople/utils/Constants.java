@@ -19,6 +19,8 @@ public class Constants {
 
     public static final int START_FROM_SPLASH = 1;
     public static final int START_FROM_NAVIGATION = 2;
+    public static final int START_FROM_INTRO = 3;
+    public static final int START_FROM_MAIN = 4;
 
     public static final String VERSION = "0.1";
 

@@ -146,8 +146,9 @@ public class SignupFragment extends Fragment {
                         //Log.d("SignupFragment", "email:" + result.data.email + "id:" + result.data.id + "token:" + result.token);
                         propertyManager.setUser(result);
 
-                        startActivity(new Intent(getContext(), MainActivity.class));
-                        getActivity().finish();
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
 
                     @Override

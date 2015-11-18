@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.EditProfileActivity;
 import com.partypeople.www.partypeople.activity.FollowActivity;
 import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
 import com.partypeople.www.partypeople.view.UserPagePartyItemView;
@@ -39,6 +42,9 @@ public class UserAdapter extends BaseAdapter {
         mContext = context;
         currentIndex = index;
         mTabListener = listener;
+
+        User user = ((UserActivity)mContext).getUser();
+        Log.d("UserAdapter", user.data.name);
     }
 
     public void add(Party data) {
@@ -101,7 +107,8 @@ public class UserAdapter extends BaseAdapter {
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(mContext, "modify", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, "modify", Toast.LENGTH_SHORT).show();
+                            mContext.startActivity(new Intent(mContext, EditProfileActivity.class));
                         }
                     });
                     TextView textBtn = (TextView)convertView.findViewById(R.id.text_btn_message);
@@ -118,11 +125,12 @@ public class UserAdapter extends BaseAdapter {
                             mContext.startActivity(new Intent(mContext, FollowActivity.class));
                         }
                     });
+
                     TextView textView = (TextView)convertView.findViewById(R.id.text_name);
                     textView.setText(PropertyManager.getInstance().getUser().data.name);
 
-//                    textView = (TextView)convertView.findViewById(R.id.text_email);
-//                    textView.setText(PropertyManager.getInstance().getUser().data.email);
+                    textView = (TextView)convertView.findViewById(R.id.text_email);
+                    textView.setText(PropertyManager.getInstance().getUser().data.email);
                 }
                 return convertView;
             case 1:

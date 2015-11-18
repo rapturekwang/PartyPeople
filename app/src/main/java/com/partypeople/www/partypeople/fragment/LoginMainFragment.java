@@ -61,6 +61,9 @@ public class LoginMainFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        if(activity.getStartfrom()==Constants.START_FROM_MAIN) {
+            btn.setVisibility(View.INVISIBLE);
+        }
 
         btn = (Button)view.findViewById(R.id.btn_signup);
         btn.setOnClickListener(new View.OnClickListener() {

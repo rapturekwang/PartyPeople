@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,11 +8,13 @@ import android.view.View;
 import android.widget.TabWidget;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.fragment.UserFragment;
 import com.partypeople.www.partypeople.utils.Constants;
 
 public class UserActivity extends AppCompatActivity {
 
+    Intent intent;
     FragmentTabHost tabHost;
     TabWidget tabWidget;
     @Override
@@ -29,6 +32,8 @@ public class UserActivity extends AppCompatActivity {
             bundle.putInt("index", i);
             tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabTitle[i]), UserFragment.class, bundle);
         }
+
+        intent = getIntent();
     }
 
     public void setTabCurrent(String tag) {
@@ -43,4 +48,8 @@ public class UserActivity extends AppCompatActivity {
         }
     }
 
+    public User getUser() {
+        User user = (User)intent.getSerializableExtra("user");
+        return user;
+    }
 }

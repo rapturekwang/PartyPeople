@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 if(propertyManager.isLogin()) {
-                    startActivity(new Intent(MainActivity.this, UserActivity.class));
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    intent.putExtra("user", propertyManager.getUser());
+                    startActivity(intent);
                     mDrawer.closeDrawer(GravityCompat.START);
                 }
             }
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("startfrom", Constants.START_FROM_MAIN);
                 startActivity(intent);
             }
         });
@@ -153,8 +156,10 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.theme :
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 break;
-            case R.id.party :
-                startActivity(new Intent(MainActivity.this, UserActivity.class));
+            case R.id.user :
+                intent = new Intent(MainActivity.this, UserActivity.class);
+                intent.putExtra("user", propertyManager.getUser());
+                startActivity(intent);
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.make_party :

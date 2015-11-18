@@ -19,7 +19,7 @@ public class MakePartyTwoTabAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return MakePartyChildFragment.newInstance("Item : " + position);
+        return MakePartyChildFragment.newInstance(position);
     }
 
     @Override

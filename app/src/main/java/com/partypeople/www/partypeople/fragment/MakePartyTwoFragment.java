@@ -17,6 +17,7 @@ import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.adapter.MakePartyTwoTabAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.view.WithoutSwipeViewPager;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -28,7 +29,7 @@ public class MakePartyTwoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String name;
     TabLayout tabs;
-    ViewPager pager;
+    WithoutSwipeViewPager pager;
 
     public static MakePartyTwoFragment newInstance(String name) {
         MakePartyTwoFragment fragment = new MakePartyTwoFragment();
@@ -68,7 +69,7 @@ public class MakePartyTwoFragment extends Fragment {
         });
 
         tabs = (TabLayout)view.findViewById(R.id.tabs);
-        pager = (ViewPager)view.findViewById(R.id.pager);
+        pager = (WithoutSwipeViewPager)view.findViewById(R.id.pager);
         MakePartyTwoTabAdapter adpater = new MakePartyTwoTabAdapter(getChildFragmentManager());
         pager.setAdapter(adpater);
 
