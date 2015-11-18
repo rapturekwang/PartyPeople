@@ -2,12 +2,10 @@ package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -18,6 +16,7 @@ import com.partypeople.www.partypeople.activity.FollowActivity;
 import com.partypeople.www.partypeople.activity.MessageActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
 import com.partypeople.www.partypeople.view.UserPagePartyItemView;
 
@@ -119,6 +118,11 @@ public class UserAdapter extends BaseAdapter {
                             mContext.startActivity(new Intent(mContext, FollowActivity.class));
                         }
                     });
+                    TextView textView = (TextView)convertView.findViewById(R.id.text_name);
+                    textView.setText(PropertyManager.getInstance().getUser().data.name);
+
+//                    textView = (TextView)convertView.findViewById(R.id.text_email);
+//                    textView.setText(PropertyManager.getInstance().getUser().data.email);
                 }
                 return convertView;
             case 1:

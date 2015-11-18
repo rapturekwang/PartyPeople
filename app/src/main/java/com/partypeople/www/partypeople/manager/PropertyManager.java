@@ -56,18 +56,25 @@ public class PropertyManager {
         mEditor.commit();
     }
 
-//    public String getToken() {
-//        String token = mPrefs.getString(FIELD_TOKEN, "");
-//        return token;
-//    }
+    public String getToken() {
+        String token = mPrefs.getString(FIELD_TOKEN, "");
+        return token;
+    }
 
     public void setEmail(String email) {
         mEditor.putString(FIELD_EMAIL, email);
         mEditor.commit();
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setUser(User user) {
         this.user = user;
+        setToken(user.token);
+        setId(user.data.id);
+        setEmail(user.data.email);
     }
 
     public boolean isLogin() {

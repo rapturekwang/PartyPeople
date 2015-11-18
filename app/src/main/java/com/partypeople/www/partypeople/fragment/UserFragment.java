@@ -1,24 +1,32 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost.OnTabChangeListener;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserFragment extends Fragment {
 
+    List<Party> partyList = new ArrayList<Party>();
     ListView listView;
     int index;
 
@@ -54,6 +62,17 @@ public class UserFragment extends Fragment {
         });
         listView.setAdapter(mAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                Party party = partyList.get(position-2);
+                i.putExtra("party", party);
+                Log.d("UserFragment", "pushed : " + (position-2));
+                startActivity(i);
+            }
+        });
+
         initData();
         return v;
     }
@@ -70,6 +89,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onSuccess(Party[] result) {
                 for (int i=0 ;i<result.length; i++) {
+                    partyList.add(result[i]);
                     mAdapter.add(result[i]);
                 }
             }

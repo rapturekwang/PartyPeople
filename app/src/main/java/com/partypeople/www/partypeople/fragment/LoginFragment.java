@@ -143,12 +143,12 @@ public class LoginFragment extends Fragment {
                 NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result1) {
-                        NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<Data>() {
+                        NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<User>() {
                             @Override
-                            public void onSuccess(Data result2) {
-                                propertyManager.setToken(result1.token);
-                                propertyManager.setEmail(result2.email);
-                                propertyManager.setId(result2.id);
+                            public void onSuccess(User result2) {
+                                result2.token = result1.token;
+                                propertyManager.setUser(result2);
+
                                 startActivity(new Intent(getContext(), MainActivity.class));
                                 getActivity().finish();
                             }

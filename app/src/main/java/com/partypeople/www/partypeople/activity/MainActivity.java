@@ -24,7 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -35,6 +37,7 @@ import com.partypeople.www.partypeople.utils.DateUtil;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
+    User user;
     TabLayout tabs;
     ViewPager pager;
     DrawerLayout mDrawer;
@@ -133,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements
             btn.setVisibility(View.GONE);
             name.setVisibility(View.VISIBLE);
             email.setVisibility(View.VISIBLE);
+
+            name.setText(propertyManager.getUser().data.name);
+            email.setText(propertyManager.getUser().data.email);
         }
     }
 
@@ -146,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.theme :
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.party :
                 startActivity(new Intent(MainActivity.this, UserActivity.class));

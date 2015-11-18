@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/view"
         android:layout_below="@+id/toggleButton"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:checked="true" />
 
 </LinearLayout>

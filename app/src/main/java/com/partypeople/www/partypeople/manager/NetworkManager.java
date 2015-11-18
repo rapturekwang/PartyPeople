@@ -286,7 +286,7 @@ public class NetworkManager {
         }
     }
 
-    public void getMyId(Context context, String token, final OnResultListener<Data> listener ) {
+    public void getMyId(Context context, String token, final OnResultListener<User> listener ) {
         RequestParams params = new RequestParams();
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + token);
@@ -295,7 +295,8 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get id Success" + responseString);
-                Data result = gson.fromJson(responseString, Data.class);
+                User result = gson.fromJson(responseString, User.class);
+                Log.d("NetworkManager", "" + result.data.name + result.data.email);
                 listener.onSuccess(result);
             }
 

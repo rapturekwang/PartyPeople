@@ -144,10 +144,8 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onSuccess(User result) {
                         //Log.d("SignupFragment", "email:" + result.data.email + "id:" + result.data.id + "token:" + result.token);
-                        propertyManager.setToken(result.token);
-                        propertyManager.setEmail(result.data.email);
-                        propertyManager.setId(result.data.id);
                         propertyManager.setUser(result);
+
                         startActivity(new Intent(getContext(), MainActivity.class));
                         getActivity().finish();
                     }

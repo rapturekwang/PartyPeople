@@ -17,6 +17,8 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.Data;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -34,6 +36,19 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         if(PropertyManager.getInstance().isLogin()) {
+            NetworkManager.getInstance().getMyId(this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<User>() {
+                @Override
+                public void onSuccess(User result) {
+                    User user = result;
+                    user.token = PropertyManager.getInstance().getToken();
+                    PropertyManager.getInstance().setUser(user);
+                }
+
+                @Override
+                public void onFail(int code) {
+                    Toast.makeText(SplashActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                }
+            });
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
