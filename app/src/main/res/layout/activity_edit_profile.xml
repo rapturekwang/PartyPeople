@@ -28,10 +28,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/imageView26"
-        android:layout_below="@+id/toolbar"
+        android:src="@drawable/profile_img"
+        android:layout_above="@+id/text_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/profile_img" />
+        android:layout_marginBottom="43dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -48,13 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/text_email"
+        android:id="@+id/text_phone"
         android:layout_below="@+id/text_name"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="32dp"
-        android:hint="이메일" />
+        android:hint="전화번호"
+        android:layout_alignParentStart="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="지역"
         android:id="@+id/textView25"
-        android:layout_below="@+id/text_email"
+        android:layout_below="@+id/text_phone"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp" />
@@ -87,6 +88,16 @@
             android:id="@+id/spinner_gu"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="저장하기"
+        android:id="@+id/btn_save"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#696969"
+        android:textColor="#ffffff" />
 
 
 </RelativeLayout>

@@ -1,62 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="#696969">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebebe"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:background="#e0e0e0">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/imageView4"
-        android:src="@drawable/img_address"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView4"
+            android:src="@drawable/custom_party_map"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerVertical="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="경기도 성남시"
-        android:id="@+id/text_location"
-        android:gravity="center"
-        android:layout_marginLeft="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="경기도 성남시"
+            android:id="@+id/text_location"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textColor="#575757"
+            android:layout_alignParentTop="false"
+            android:layout_toEndOf="@+id/imageView4"
+            android:layout_centerVertical="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="테마"
-        android:id="@+id/textView45"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="40dp"
-        android:gravity="center" />
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/image_theme1"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_cycle"
+            android:layout_alignParentTop="false"
+            android:layout_toStartOf="@+id/image_theme2"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/image_theme1"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/img_cycle"
-        android:layout_marginLeft="20dp" />
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/image_theme2"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_cycle"
+            android:layout_alignParentTop="false"
+            android:layout_toStartOf="@+id/image_theme3"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/image_theme2"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/img_cycle"/>
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/image_theme3"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_cycle"
+            android:layout_alignParentTop="false"
+            android:layout_toStartOf="@+id/image_theme4"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/image_theme3"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/img_cycle"/>
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/image_theme4"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_cycle"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="16dp"
+            android:layout_centerVertical="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/image_theme4"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/img_cycle"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebebe"/>
 </LinearLayout>

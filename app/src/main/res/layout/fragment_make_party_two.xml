@@ -11,7 +11,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
             <TextView
@@ -89,23 +89,69 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp" />
 
-            <android.support.design.widget.TabLayout
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tabs"
-                app:tabMaxWidth="0dp"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
+                android:layout_below="@+id/textView17"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView17" />
+                android:orientation="horizontal"
+                android:id="@+id/radioGroup">
 
-            <com.partypeople.www.partypeople.view.WithoutSwipeViewPager
-                android:layout_width="wrap_content"
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:text="고정금액"
+                    android:id="@+id/radioButton"
+                    android:checked="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:text="최소금액"
+                    android:id="@+id/radioButton2"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="16dp"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:text="리워드별"
+                    android:id="@+id/radioButton3"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="16dp"/>
+            </RadioGroup>
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pager"
-                android:layout_gravity="center_horizontal"
-                android:layout_below="@+id/tabs"
-                android:layout_alignParentStart="true" />
+                android:layout_below="@+id/radioGroup"
+                android:layout_alignParentStart="true"
+                android:id="@+id/container"></FrameLayout>
+
+            <!--<android.support.design.widget.TabLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/tabs"-->
+                <!--app:tabMaxWidth="0dp"-->
+                <!--app:tabGravity="fill"-->
+                <!--app:tabMode="fixed"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_below="@+id/textView17" />-->
+
+            <!--<com.partypeople.www.partypeople.view.WithoutSwipeViewPager-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/pager"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_below="@+id/tabs"-->
+                <!--android:layout_alignParentStart="true" />-->
 
         </RelativeLayout>
 

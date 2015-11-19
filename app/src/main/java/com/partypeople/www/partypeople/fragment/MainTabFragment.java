@@ -90,7 +90,10 @@ public class MainTabFragment extends Fragment {
                 if(PropertyManager.getInstance().isLogin()) {
                     MainTabHeaderView header = new MainTabHeaderView(getContext());
                     listView.addHeaderView(header);
+                    List<String> themeList = new ArrayList<String>();
+                    Log.d("MainTabFragment", PropertyManager.getInstance().getTheme());
                     initData();
+                    warningView.setVisibility(View.GONE);
                 } else {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("로그인이 필요한 서비스 입니다");

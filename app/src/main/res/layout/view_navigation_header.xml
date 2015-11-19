@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="#e5e5e5" >
+    android:layout_height="148dp"
+    android:background="@drawable/bg" >
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_alignParentTop="false"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/circle"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:src="@drawable/profile_img" />
+        android:layout_marginTop="38dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,9 +21,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="정광희"
         android:id="@+id/text_user_name"
-        android:layout_above="@+id/text_user_email"
-        android:layout_alignStart="@+id/text_user_email"
-        android:textSize="13sp" />
+        android:textSize="14sp"
+        android:layout_alignTop="@+id/imageView27"
+        android:layout_toEndOf="@+id/imageView27"
+        android:layout_marginLeft="5dp"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,19 +33,77 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="facebook/rapturekwang"
         android:id="@+id/text_user_email"
-        android:layout_alignParentTop="false"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:textSize="13sp" />
+        android:textSize="14sp"
+        android:layout_alignTop="@+id/imageView29"
+        android:layout_alignStart="@+id/textView18"
+        android:textColor="#ffffff" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView27"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/header_human"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="36dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView28"
+        android:layout_below="@+id/imageView27"
+        android:layout_alignStart="@+id/imageView27"
+        android:src="@drawable/navi_map"
+        android:layout_marginTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서울시 서초구"
+        android:id="@+id/textView18"
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/imageView28"
+        android:layout_alignStart="@+id/text_user_name" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView29"
+        android:layout_below="@+id/imageView28"
+        android:layout_alignStart="@+id/imageView28"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/navi_email" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView30"
+        android:layout_below="@+id/imageView29"
+        android:layout_alignStart="@+id/imageView29"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/navi_message" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="25"
+        android:id="@+id/textView21"
+        android:layout_alignTop="@+id/imageView30"
+        android:layout_alignStart="@+id/text_user_email"
+        android:textSize="14sp"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그인하기"
         android:id="@+id/btn_login"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:background="@null"
         android:layout_alignTop="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginTop="10dp" />
 </RelativeLayout>

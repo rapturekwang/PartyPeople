@@ -40,6 +40,7 @@ public class MakePartyOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
     //Spinner spinner;
     ArrayAdapter<String> mYearAdapter, mMonthAdapter, mDayAdapter, mNoonAdapter, mHourAdapter, mMinuteAdapter;
+    ArrayAdapter<String> mEYearAdapter, mEMonthAdapter, mEDayAdapter, mENoonAdapter, mEHourAdapter, mEMinuteAdapter;
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -49,6 +50,7 @@ public class MakePartyOneFragment extends Fragment {
     GridView gridView;
     gridAdapter mAdapter;
     String year = "2015", month;
+    String eYear = "2015", eMonth;
 
     public static MakePartyOneFragment newInstance(String name) {
         MakePartyOneFragment fragment = new MakePartyOneFragment();
@@ -278,6 +280,113 @@ public class MakePartyOneFragment extends Fragment {
         num = 0;
         for (int i = num; i<num+Constants.NUM_OF_MINUTE; i++) {
             mMinuteAdapter.add(""+i);
+        }
+
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_year_end);
+        mEYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mEYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mEYearAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                eYear = (String)parent.getItemAtPosition(position);
+                if(eYear.equals("년")) {
+                    mEDayAdapter.clear();
+                    mEDayAdapter.add("일");
+                }
+                if(eYear != null && eMonth != null && !eYear.equals("년") && !eMonth.equals("월")) {
+                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(eYear, eMonth);
+                    int num = 1;
+                    mEDayAdapter.clear();
+                    mEDayAdapter.add("일");
+                    for (int i = num; i<num+DayOfMonth; i++) {
+                        mEDayAdapter.add(""+i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_month_end);
+        mEMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mEMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mEMonthAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                eMonth = (String)parent.getItemAtPosition(position);
+                if(eMonth.equals("월")) {
+                    mEDayAdapter.clear();
+                    mEDayAdapter.add("일");
+                }
+                if(eYear != null && eMonth != null && !eYear.equals("년") && !eMonth.equals("월")) {
+                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(eYear, eMonth);
+                    int num = 1;
+                    mEDayAdapter.clear();
+                    mEDayAdapter.add("일");
+                    for (int i = num; i<num+DayOfMonth; i++) {
+                        mEDayAdapter.add(""+i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_day_end);
+        mEDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mEDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mEDayAdapter);
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_noon_end);
+        mENoonAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mENoonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mENoonAdapter);
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_hour_end);
+        mEHourAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mEHourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mEHourAdapter);
+
+        spinner = (Spinner)view.findViewById(R.id.spinner_minute_end);
+        mEMinuteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        mEMinuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mEMinuteAdapter);
+
+        mEYearAdapter.add("년");
+        num = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = num;i<num+ Constants.MAX_YEAR; i++) {
+            mEYearAdapter.add(""+i);
+        }
+        mEMonthAdapter.add("월");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_MONTH; i++) {
+            mEMonthAdapter.add(""+i);
+        }
+        mEDayAdapter.add("일");
+//        num = 1;
+//        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
+//            mDayAdapter.add(""+i);
+//        }
+        mENoonAdapter.add("오전");
+        mENoonAdapter.add("오후");
+        mEHourAdapter.add("시");
+        num = 1;
+        for (int i = num; i<num+Constants.NUM_OF_HOUR; i++) {
+            mEHourAdapter.add(""+i);
+        }
+        mEMinuteAdapter.add("분");
+        num = 0;
+        for (int i = num; i<num+Constants.NUM_OF_MINUTE; i++) {
+            mEMinuteAdapter.add(""+i);
         }
     }
 

@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.EditProfileActivity;
@@ -129,7 +128,7 @@ public class UserAdapter extends BaseAdapter {
                     TextView textView = (TextView)convertView.findViewById(R.id.text_name);
                     textView.setText(PropertyManager.getInstance().getUser().data.name);
 
-                    textView = (TextView)convertView.findViewById(R.id.text_email);
+                    textView = (TextView)convertView.findViewById(R.id.text_phone);
                     textView.setText(PropertyManager.getInstance().getUser().data.email);
                 }
                 return convertView;

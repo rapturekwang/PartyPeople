@@ -18,6 +18,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.popup.SharePopupWindow;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
@@ -64,6 +65,9 @@ public class PartyDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(PartyDetailActivity.this, "공유하기", Toast.LENGTH_SHORT).show();
+                SharePopupWindow popup = new SharePopupWindow(PartyDetailActivity.this);
+                popup.setOutsideTouchable(true);
+                popup.showAsDropDown(v);
             }
         });
 

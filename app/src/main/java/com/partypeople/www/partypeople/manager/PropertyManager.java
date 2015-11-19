@@ -7,6 +7,8 @@ import android.util.Log;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
+import java.util.List;
+
 /**
  * Created by dongja94 on 2015-10-28.
  */
@@ -32,6 +34,8 @@ public class PropertyManager {
     private static final String FIELD_ID = "id";
     private static final String FIELD_TOKEN = "token";
     private static final String FIELD_EMAIL = "email";
+    private static final String FIELD_LOCATION = "location";
+    private static final String FIELD_THEME = "navi_theme";
 
     public void setFacebookId(String id) {
         mEditor.putString(FIELD_FACEBOOK_ID, id);
@@ -77,6 +81,24 @@ public class PropertyManager {
         setEmail(user.data.email);
     }
 
+    public void setLocation(String location) {
+        mEditor.putString(FIELD_LOCATION, location);
+        mEditor.commit();
+    }
+
+    public String getLocation() {
+        return mPrefs.getString(FIELD_LOCATION, "");
+    }
+
+    public void setTheme(String theme) {
+        mEditor.putString(FIELD_THEME, theme);
+        mEditor.commit();
+    }
+
+    public String getTheme() {
+        return mPrefs.getString(FIELD_THEME, "");
+    }
+
     public boolean isLogin() {
         Log.d("PropertyManager", "test");
         String token;
@@ -88,5 +110,16 @@ public class PropertyManager {
     public void logout() {
         mEditor.clear();
         mEditor.commit();
+    }
+
+    private static final String REG_ID = "regToken";
+
+    public void setRegistrationToken(String regId) {
+        mEditor.putString(REG_ID, regId);
+        mEditor.commit();
+    }
+
+    public String getRegistrationToken() {
+        return mPrefs.getString(REG_ID, "");
     }
 }

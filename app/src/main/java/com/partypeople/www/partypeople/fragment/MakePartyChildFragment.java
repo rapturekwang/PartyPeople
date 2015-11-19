@@ -7,19 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.adapter.MakePartyChildAdapter;
+import com.partypeople.www.partypeople.view.RewordItemView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MakePartyChildFragment extends Fragment {
-    ListView listView;
-    MakePartyChildAdapter mAdapter;
+    LinearLayout linearLayout;
 
+    //List<RewordItemView> listReword = new ArrayList<RewordItemView>();
     private static final String ARG_NAME = "index";
     private int mIndex;
 
@@ -37,6 +40,7 @@ public class MakePartyChildFragment extends Fragment {
         if (getArguments() != null) {
             mIndex = getArguments().getInt(ARG_NAME);
         }
+        //listReword.add(new RewordItemView(getContext()));
     }
 
     public MakePartyChildFragment() {
@@ -48,15 +52,21 @@ public class MakePartyChildFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_make_party_child, container, false);
 
-        listView = (ListView)view.findViewById(R.id.listView);
-        mAdapter = new MakePartyChildAdapter(getContext());
-        listView.setAdapter(mAdapter);
+        linearLayout = (LinearLayout)view.findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+        linearLayout.addView(new RewordItemView(getContext()));
+//        for(int i=0; i<listReword.size(); i++) {
+//            linearLayout.addView(listReword.get(i));
+//        }
 
         Button btn = (Button)view.findViewById(R.id.btn_add);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+                RewordItemView rewordItemView = new RewordItemView(getContext());
+                linearLayout.addView(rewordItemView);
+//                listReword.add(rewordItemView);
             }
         });
 

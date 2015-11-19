@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.PayMethod;
 
 /**
  * Created by Tacademy on 2015-11-18.
@@ -52,9 +53,9 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         numberView = (TextView)findViewById(R.id.number);
     }
 
-    public void setItemData(String price, String reword, int num) {
-        priceView.setText(price);
-        rewordView.setText(reword);
+    public void setItemData(PayMethod payMethod, int num) {
+        priceView.setText(payMethod.price);
+        rewordView.setText(payMethod.title);
         numberView.setText(num);
     }
 

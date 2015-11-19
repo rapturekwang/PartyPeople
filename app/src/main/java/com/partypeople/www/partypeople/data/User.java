@@ -15,4 +15,5 @@ public class User implements Serializable{
     public boolean email_validated;
     //public Group group;
     public Data data;
+    public String location;
 }

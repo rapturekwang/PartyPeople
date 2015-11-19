@@ -5,42 +5,42 @@
         android:id="@+id/navi_menu1">
         <item android:id="@+id/home"
             android:title="홈"
-            android:icon="@android:drawable/ic_input_add"
+            android:icon="@drawable/navi_home"
             android:orderInCategory="100" />
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu2">
         <item android:id="@+id/theme"
             android:title="맞춤모임설정"
-            android:icon="@android:drawable/ic_input_delete"
+            android:icon="@drawable/navi_theme"
             android:orderInCategory="101" />
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu3">
         <item android:id="@+id/user"
             android:title="나의 모임"
-            android:icon="@android:drawable/ic_input_get"
+            android:icon="@drawable/navi_human"
             android:orderInCategory="102" />
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu4">
         <item android:id="@+id/make_party"
             android:title="모임 만들기"
-            android:icon="@android:drawable/ic_input_add"
+            android:icon="@drawable/navi_add"
             android:orderInCategory="103" />
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu5">
         <item android:id="@+id/guide"
             android:title="이용방법"
-            android:icon="@android:drawable/ic_input_delete"
+            android:icon="@drawable/navi_question"
             android:orderInCategory="104" />
     </group>
     <group android:checkableBehavior="none"
         android:id="@+id/navi_menu6">
         <item android:id="@+id/setting"
             android:title="설정"
-            android:icon="@android:drawable/ic_input_get"
+            android:icon="@drawable/navi_cogwheel"
             android:orderInCategory="105" />
     </group>
 

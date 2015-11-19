@@ -177,7 +177,7 @@ public class Party implements JSONParsing, Serializable{
         _id = jobject.getString("_id");
         name = jobject.getString("name");
         photo = jobject.getString("photo");
-        theme = jobject.getString("theme");
+        theme = jobject.getString("navi_theme");
         date = jobject.getString("date");
         location = jobject.getString("location");
         description = jobject.getString("description");

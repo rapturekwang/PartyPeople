@@ -1,9 +1,12 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayAdapter<String> mCityAdapter, mGuAdapter;
     GridView gridView;
     gridAdapter mAdapter;
+    PropertyManager propertyManager = PropertyManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,22 @@ public class SearchActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SearchActivity.this, "결과보기", Toast.LENGTH_SHORT).show();
+                SparseBooleanArray array = gridView.getCheckedItemPositions();
+                List<String> pathList = new ArrayList<String>();
+                for (int index = 0; index < array.size(); index++) {
+                    int position = array.keyAt(index);
+                    if(array.get(position)) {
+                        String s = "" + (position+1);
+                        pathList.add(s);
+                    }
+                }
+                propertyManager.setTheme(pathList.toString());
+//                propertyManager.setLocation(pathList);
+
+                Toast.makeText(SearchActivity.this, "테마 : " + pathList + "지역 : " + propertyManager.getLocation(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
@@ -106,6 +126,9 @@ public class SearchActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position != 0) {
+                    propertyManager.setLocation(mCityAdapter.getItem(position));
+                }
                 Area area;
                 mGuAdapter.clear();
                 mGuAdapter.add("군/구");
@@ -140,17 +163,19 @@ public class SearchActivity extends AppCompatActivity {
         mGuAdapter = new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_spinner_item);
         mGuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mGuAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position != 0) {
+                    propertyManager.setLocation(propertyManager.getLocation() + " " + mGuAdapter.getItem(position));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
