@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <EditText
         android:id="@+id/edit_keyword"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:minWidth="300dp" />
+        android:background="@drawable/round_corner"
+        android:gravity="right"
+        android:paddingRight="40dp"
+        android:singleLine="true"
+        android:minWidth="300dp"
+        android:layout_marginRight="8dp" />
 
     <ImageView
         android:id="@+id/btn_search"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
         android:textColor="#ffffff"
         android:singleLine="true"
-        android:src="@drawable/search" />
-</LinearLayout>
+        android:src="@drawable/magnifying"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="17dp" />
+</FrameLayout>
