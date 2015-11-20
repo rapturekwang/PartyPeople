@@ -204,7 +204,7 @@
         <FrameLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:layout_below="@+id/pager"
             android:layout_centerHorizontal="true">
 
@@ -226,7 +226,9 @@
                 android:layout_gravity="right|center_vertical"
                 android:checked="false"
                 android:button="@drawable/heart_selector"
-                android:padding="16dp" />
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -234,7 +236,8 @@
                 android:id="@+id/img_btn_share"
                 android:layout_gravity="left|center_vertical"
                 android:src="@drawable/detail_share"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:nestedScrollingEnabled="false" />
         </FrameLayout>
 
     </RelativeLayout>

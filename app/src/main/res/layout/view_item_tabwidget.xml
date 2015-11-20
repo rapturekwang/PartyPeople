@@ -12,8 +12,8 @@
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF" >
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_rectangle" >
         </TabWidget>
 
         <FrameLayout

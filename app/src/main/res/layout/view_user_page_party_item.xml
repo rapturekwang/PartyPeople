@@ -1,89 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp"
+    android:background="#ffffff">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="84dp"
+        android:id="@+id/image_party"
+        android:src="@drawable/demo_img2"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView31"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/image_party"
+        android:src="@drawable/user_culture"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="11dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Come to House Party!"
+        android:id="@+id/text_title"
+        android:layout_alignTop="@+id/imageView31"
+        android:layout_toEndOf="@+id/image_party"
+        android:layout_marginLeft="38dp"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView32"
+        android:layout_below="@+id/imageView31"
+        android:layout_toEndOf="@+id/image_party"
+        android:src="@drawable/user_clock"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="19dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="5월 7일 / 19:00"
+        android:id="@+id/text_date"
+        android:layout_marginLeft="38dp"
+        android:textSize="13sp"
+        android:layout_alignTop="@+id/imageView32"
+        android:layout_toEndOf="@+id/image_party" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView33"
+        android:layout_below="@+id/imageView32"
+        android:layout_toEndOf="@+id/image_party"
+        android:src="@drawable/user_map_gray"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="21dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="서울시 서초구"
+        android:id="@+id/text_location"
+        android:layout_alignTop="@+id/imageView33"
+        android:layout_toEndOf="@+id/image_party"
+        android:layout_marginLeft="38dp"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d0d0d0"
+        android:layout_below="@+id/image_party"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@+id/image_party"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout7">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/image_party"
-            android:src="@drawable/demo_img2"
-            android:layout_weight="2" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="25000원"
+            android:id="@+id/text_price"
             android:layout_gravity="center_vertical"
-            android:layout_weight="3">
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Come to House Party!"
-                android:id="@+id/text_title" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="50% 모금됨"
+            android:id="@+id/text_progress"
+            android:layout_alignTop="@+id/text_price"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true"
+            android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="5월 7일 / 19:00"
-                android:id="@+id/text_date" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="24일 남음"
+            android:id="@+id/text_duedate"
+            android:layout_alignTop="@+id/text_progress"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="서울시 서초구"
-                android:id="@+id/text_location" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="25000원"
-        android:id="@+id/text_price"
-        android:layout_below="@+id/linearLayout7"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="50%"
-        android:id="@+id/text_progress"
-        android:layout_below="@+id/linearLayout7"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="24일 남음"
-        android:id="@+id/text_duedate"
-        android:layout_below="@+id/linearLayout7"
-        android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
         android:id="@+id/progressBar"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/text_price"
-        android:layout_alignEnd="@+id/text_duedate"
         android:progress="50"
-        android:indeterminate="false" />
+        android:indeterminate="false"
+        android:layout_below="@+id/linearLayout7"
+        android:progressDrawable="@drawable/progress_bar"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

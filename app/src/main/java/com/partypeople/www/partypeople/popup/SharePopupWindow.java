@@ -29,8 +29,8 @@ public class SharePopupWindow extends PopupWindow {
         });
         setContentView(view);
 
-        setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
 }

@@ -7,8 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,7 +29,8 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     TabLayout tabs;
     ViewPager pager;
-    TextView titilView, dateView, locationView, priceView, totalPriceView, progressView, duedateView, descriptionView;
+    TextView titilView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
+    CheckBox chboxView;
     ImageView imageView;
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
@@ -64,10 +68,17 @@ public class PartyDetailActivity extends AppCompatActivity {
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PartyDetailActivity.this, "공유하기", Toast.LENGTH_SHORT).show();
                 SharePopupWindow popup = new SharePopupWindow(PartyDetailActivity.this);
                 popup.setOutsideTouchable(true);
-                popup.showAsDropDown(v);
+                popup.showAsDropDown(v, 0, -400);
+            }
+        });
+
+        chboxView = (CheckBox)findViewById(R.id.chbox_img_bookmark);
+        chboxView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
             }
         });
 

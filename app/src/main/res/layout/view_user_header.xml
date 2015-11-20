@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="148dp"
+    android:layout_height="204dp"
     android:background="@drawable/bg">
 
     <ImageView
@@ -10,9 +10,9 @@
         android:id="@+id/btn_back"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+        android:src="@drawable/back"
         android:clickable="true"
-        android:padding="10dp" />
+        android:padding="19dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -20,17 +20,21 @@
         android:id="@+id/btn_modify"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/abc_ic_menu_paste_mtrl_am_alpha"
+        android:src="@drawable/user_edit"
         android:clickable="true"
-        android:padding="10dp" />
+        android:paddingTop="17dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="15dp" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="130dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
         android:id="@+id/imageView7"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/profile_img" />
+        android:src="@drawable/circle"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,27 +44,49 @@
         android:id="@+id/text_name"
         android:layout_below="@+id/imageView7"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="서울시 관악구"
-        android:id="@+id/text_phone"
+        android:orientation="horizontal"
         android:layout_below="@+id/text_name"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff" />
+        android:layout_centerHorizontal="true">
 
-    <TextView
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView34"
+            android:src="@drawable/user_map_white"
+            android:layout_below="@+id/text_name"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="서울시 관악구"
+            android:id="@+id/text_address"
+            android:textColor="#ffffff"
+            android:textSize="13sp"
+            android:layout_alignTop="@+id/imageView34"
+            android:layout_toEndOf="@+id/imageView34"
+            android:layout_marginLeft="4dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="메시지 함"
-        android:id="@+id/text_btn_message"
-        android:layout_below="@+id/text_phone"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff" />
+        android:id="@+id/imageView35"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/user_human"
+        android:layout_marginTop="175dp"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,7 +94,34 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="팔로잉 | 팔로워"
         android:id="@+id/text_btn_follow"
-        android:layout_below="@+id/text_btn_message"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/imageView35"
+        android:layout_toEndOf="@+id/imageView35"
+        android:layout_marginLeft="6dp"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView36"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/btn_modify"
+        android:src="@drawable/user_email"
+        android:layout_marginTop="176dp"
+        android:layout_marginRight="78dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="새 메시지"
+        android:id="@+id/text_btn_message"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:layout_marginLeft="4dp"
+        android:layout_alignTop="@+id/imageView36"
+        android:layout_alignEnd="@+id/btn_modify"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="-2dp" />
+
 </RelativeLayout>

@@ -128,7 +128,7 @@ public class UserAdapter extends BaseAdapter {
                     TextView textView = (TextView)convertView.findViewById(R.id.text_name);
                     textView.setText(PropertyManager.getInstance().getUser().data.name);
 
-                    textView = (TextView)convertView.findViewById(R.id.text_phone);
+                    textView = (TextView)convertView.findViewById(R.id.text_address);
                     textView.setText(PropertyManager.getInstance().getUser().data.email);
                 }
                 return convertView;

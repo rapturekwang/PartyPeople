@@ -40,7 +40,7 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         TextView name = (TextView)findViewById(R.id.text_name);
-        TextView email = (TextView)findViewById(R.id.text_phone);
+        TextView email = (TextView)findViewById(R.id.text_address);
 
         Button btn = (Button)findViewById(R.id.btn_save);
         btn.setOnClickListener(new View.OnClickListener() {
