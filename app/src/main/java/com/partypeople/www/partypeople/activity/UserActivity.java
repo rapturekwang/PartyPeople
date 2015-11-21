@@ -1,11 +1,15 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.User;
@@ -30,7 +34,8 @@ public class UserActivity extends AppCompatActivity {
         for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
             bundle = new Bundle();
             bundle.putInt("index", i);
-            tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabTitle[i]), UserFragment.class, bundle);
+            View tabview = createTabView(tabHost.getContext(), tabTitle[i]);
+            tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabview), UserFragment.class, bundle);
         }
 
         intent = getIntent();
@@ -51,5 +56,12 @@ public class UserActivity extends AppCompatActivity {
     public User getUser() {
         User user = (User)intent.getSerializableExtra("user");
         return user;
+    }
+
+    private static View createTabView(final Context context, final String text) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tabwidget_layout, null);
+        TextView tv = (TextView) view.findViewById(R.id.tabsText);
+        tv.setText(text);
+        return view;
     }
 }

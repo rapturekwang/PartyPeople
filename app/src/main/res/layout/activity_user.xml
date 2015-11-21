@@ -26,8 +26,8 @@
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:visibility="gone" />"
+                android:background="@drawable/rounded_rectangle"
+                android:visibility="gone" />
         </FrameLayout>
     </android.support.v4.app.FragmentTabHost>
 
