@@ -8,10 +8,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
+import com.partypeople.www.partypeople.data.PayMethod;
 
 public class ParticipateActivity extends AppCompatActivity {
+    ListView listView;
+    RewordViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,21 @@ public class ParticipateActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        listView = (ListView)findViewById(R.id.listView);
+        mAdapter = new RewordViewAdapter();
+        listView.setAdapter(mAdapter);
+
+        initData();
+    }
+
+    private void initData() {
+        for(int i=0; i<2; i++) {
+            PayMethod payMethod = new PayMethod();
+            payMethod.price = 10000;
+            payMethod.title = "FREE 음료 1개, 스낵";
+            mAdapter.add(payMethod);
+        }
     }
 
     @Override
