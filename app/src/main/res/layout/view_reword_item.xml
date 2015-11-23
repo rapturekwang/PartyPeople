@@ -2,33 +2,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
+    android:layout_height="75dp">
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/price"
-        android:hint="(금액입력)원"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/number" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="22dp"
+        android:background="@color/backgroundGray">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/reword"
-        android:hint="금액에 포함된 사항 입력"
-        android:layout_below="@+id/price"
-        android:layout_alignStart="@+id/price" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/price"
+            android:hint="(금액입력)원"
+            android:layout_alignParentTop="true"
+            android:textSize="21sp"
+            android:background="@null"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="28dp" />
 
-    <TextView
-        android:layout_width="20dp"
-        android:layout_height="80dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="A"
-        android:id="@+id/number"
-        android:layout_alignParentTop="true"
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reword"
+            android:hint="금액에 포함된 사항 입력"
+            android:layout_below="@+id/price"
+            android:layout_alignStart="@+id/price"
+            android:textSize="14sp"
+            android:background="@null"
+            android:layout_marginTop="8dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#c8c8c8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="58dp" />
+
+        <LinearLayout
+            android:layout_width="58dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView38"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/contain_human"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="참여자"
+                android:id="@+id/textView42"
+                android:layout_below="@+id/imageView38"
+                android:layout_alignParentEnd="true"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="10명"
+                android:id="@+id/textView45"
+                android:textSize="13sp"
+                android:layout_below="@+id/textView42"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView37"
         android:layout_alignParentStart="true"
-        android:gravity="center" />
+        android:src="@drawable/contain_a"
+        android:layout_centerVertical="true" />
+
 </RelativeLayout>

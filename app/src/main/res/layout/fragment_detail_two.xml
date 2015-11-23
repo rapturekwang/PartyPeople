@@ -1,10 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.partypeople.www.partypeople.fragment.DetailTwoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="fragment2" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="포함 사항 선택"
+        android:id="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:textColor="#000000" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:dividerHeight="7dp"
+        android:divider="@null"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+</RelativeLayout>

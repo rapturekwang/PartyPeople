@@ -9,18 +9,26 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
+import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapMarkerItem;
+import com.skp.Tmap.TMapPOIItem;
+import com.skp.Tmap.TMapPoint;
 import com.skp.Tmap.TMapView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +37,9 @@ public class DetailOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
     TMapView mapView;
+    TextView mapLocation;
     LocationManager mLM;
+    ArrayAdapter<POIItem> mAdapter;
 
     public static DetailOneFragment newInstance(String name) {
         DetailOneFragment fragment = new DetailOneFragment();
@@ -68,29 +78,57 @@ public class DetailOneFragment extends Fragment {
 ////                activity.setPagerHeight(linearLayout.getHeight());
 //            }
 //        });
-        initData();
 
         mapView = (TMapView)view.findViewById(R.id.view_map);
+        mapLocation = (TextView)view.findViewById(R.id.text_location);
         new RegisterTask().execute();
 
         mLM = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
 
+        setMap();
+
         return view;
     }
 
-    private void initData() {
-//        for (int i = 0; i < 5 ; i++) {
-//            PartyItemData d = new PartyItemData();
-//            d.title = "Come to House Party!";
-//            d.date = "5월 7일 / 19:00-21:30";
-//            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-//            d.location = "서울시 서초구";
-//            d.price = "$25";
-//            d.progress = 50;
-//            d.progressText = d.progress+"% 모금됨";
-//            d.dueDate = "7일 남음";
-//            mAdapter.add(d);
-//        }
+    void setMap() {
+        String keyword = mapLocation.getText().toString();
+        if(!TextUtils.isEmpty(keyword)) {
+            TMapData data = new TMapData();
+            data.findAllPOI(keyword, new TMapData.FindAllPOIListenerCallback() {
+                @Override
+                public void onFindAllPOI(final ArrayList<TMapPOIItem> arrayList) {
+                    PartyDetailActivity activity = (PartyDetailActivity)getActivity();
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(arrayList.size() > 0) {
+                                moveMap(arrayList.get(0).getPOIPoint().getLatitude(), arrayList.get(0).getPOIPoint().getLongitude());
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private void addMarkerPOI(ArrayList<TMapPOIItem> list) {
+        for(TMapPOIItem poi : list) {
+            TMapPoint point = mapView.getCenterPoint();
+            TMapMarkerItem item = new TMapMarkerItem();
+            item.setTMapPoint(point);
+            Bitmap icon = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_map)).getBitmap();
+            item.setIcon(icon);
+            item.setPosition(0.5f, 1);
+            item.setCalloutTitle(poi.getPOIName());
+            item.setCalloutSubTitle(poi.getPOIContent());
+            Bitmap left = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_alert)).getBitmap();
+            item.setCalloutLeftImage(left);
+            Bitmap right = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_info)).getBitmap();
+            item.setCalloutRightButtonImage(right);
+            item.setCanShowCallout(true);
+
+            mapView.addMarkerItem(poi.getPOIID(), item);
+        }
     }
 
     boolean isInitialized = false;
@@ -145,6 +183,18 @@ public class DetailOneFragment extends Fragment {
         mapView.setIconVisibility(true);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mLM.requestSingleUpdate(LocationManager.GPS_PROVIDER, mListener, null);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mLM.removeUpdates(mListener);
+    }
+
     private void setupMap() {
         if (cacheLocation != null) {
             moveMap(cacheLocation.getLatitude(), cacheLocation.getLongitude());
@@ -158,5 +208,14 @@ public class DetailOneFragment extends Fragment {
                 Toast.makeText(getContext(), "Marker Click", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    class POIItem {
+        TMapPOIItem poi;
+
+        @Override
+        public String toString() {
+            return poi.getPOIName();
+        }
     }
 }

@@ -15,86 +15,93 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="38dp" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="정광희"
-        android:id="@+id/text_user_name"
-        android:textSize="14sp"
-        android:layout_alignTop="@+id/imageView27"
-        android:layout_toEndOf="@+id/imageView27"
-        android:layout_marginLeft="5dp"
-        android:textColor="#ffffff" />
+        android:id="@+id/relativeLayout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="facebook/rapturekwang"
-        android:id="@+id/text_user_email"
-        android:textSize="14sp"
-        android:layout_alignTop="@+id/imageView29"
-        android:layout_alignStart="@+id/textView18"
-        android:textColor="#ffffff" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView27"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/header_human"
+            android:layout_marginLeft="97dp"
+            android:layout_marginTop="36dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView27"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/header_human"
-        android:layout_marginLeft="97dp"
-        android:layout_marginTop="36dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="정광희"
+            android:id="@+id/text_user_name"
+            android:textSize="14sp"
+            android:layout_alignTop="@+id/imageView27"
+            android:layout_toEndOf="@+id/imageView27"
+            android:layout_marginLeft="5dp"
+            android:textColor="#ffffff" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView28"
-        android:layout_below="@+id/imageView27"
-        android:layout_alignStart="@+id/imageView27"
-        android:src="@drawable/navi_map"
-        android:layout_marginTop="7dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView28"
+            android:layout_below="@+id/imageView27"
+            android:layout_alignStart="@+id/imageView27"
+            android:src="@drawable/navi_map"
+            android:layout_marginTop="7dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="서울시 서초구"
-        android:id="@+id/textView18"
-        android:textSize="14sp"
-        android:textColor="#ffffff"
-        android:layout_alignTop="@+id/imageView28"
-        android:layout_alignStart="@+id/text_user_name" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울시 서초구"
+            android:id="@+id/textView18"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:layout_alignTop="@+id/imageView28"
+            android:layout_alignStart="@+id/text_user_name" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView29"
-        android:layout_below="@+id/imageView28"
-        android:layout_alignStart="@+id/imageView28"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/navi_email" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView29"
+            android:layout_below="@+id/imageView28"
+            android:layout_alignStart="@+id/imageView28"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/navi_email" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView30"
-        android:layout_below="@+id/imageView29"
-        android:layout_alignStart="@+id/imageView29"
-        android:layout_marginTop="7dp"
-        android:src="@drawable/navi_message" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="facebook/rapturekwang"
+            android:id="@+id/text_user_email"
+            android:textSize="14sp"
+            android:layout_alignTop="@+id/imageView29"
+            android:layout_alignStart="@+id/textView18"
+            android:textColor="#ffffff" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="25"
-        android:id="@+id/textView21"
-        android:layout_alignTop="@+id/imageView30"
-        android:layout_alignStart="@+id/text_user_email"
-        android:textSize="14sp"
-        android:textColor="#ffffff" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView30"
+            android:layout_below="@+id/imageView29"
+            android:layout_alignStart="@+id/imageView29"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/navi_message" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="25"
+            android:id="@+id/textView21"
+            android:layout_alignTop="@+id/imageView30"
+            android:layout_alignStart="@+id/text_user_email"
+            android:textSize="14sp"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"

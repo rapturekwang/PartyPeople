@@ -5,20 +5,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.CommentAdapter;
+import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DetailThreeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DetailThreeFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class DetailThreeFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
+    ListView listView;
+    CommentAdapter mAdapter;
 
     public static DetailThreeFragment newInstance(String name) {
         DetailThreeFragment fragment = new DetailThreeFragment();
@@ -45,23 +45,10 @@ public class DetailThreeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_three, container, false);
 
-        initData();
+        listView = (ListView)view.findViewById(R.id.listView);
+        mAdapter = new CommentAdapter();
+        listView.setAdapter(mAdapter);
 
         return view;
-    }
-
-    private void initData() {
-//        for (int i = 0; i < 5 ; i++) {
-//            PartyItemData d = new PartyItemData();
-//            d.title = "Come to House Party!";
-//            d.date = "5월 7일 / 19:00-21:30";
-//            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-//            d.location = "서울시 서초구";
-//            d.price = "$25";
-//            d.progress = 50;
-//            d.progressText = d.progress+"% 모금됨";
-//            d.dueDate = "7일 남음";
-//            mAdapter.add(d);
-//        }
     }
 }

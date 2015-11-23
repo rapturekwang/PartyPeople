@@ -16,7 +16,6 @@ import com.partypeople.www.partypeople.data.PayMethod;
 public class RewordItemView extends RelativeLayout implements Checkable {
     boolean isCheck = false;
     EditText priceView, rewordView;
-    TextView numberView;
 
     public RewordItemView(Context context) {
         super(context);
@@ -50,13 +49,13 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         inflate(getContext(), R.layout.view_reword_item, this);
         priceView = (EditText)findViewById(R.id.price);
         rewordView = (EditText)findViewById(R.id.reword);
-        numberView = (TextView)findViewById(R.id.number);
+        //numberView = (TextView)findViewById(R.id.number);
     }
 
     public void setItemData(PayMethod payMethod, int num) {
-        priceView.setText(payMethod.price);
+        priceView.setText(payMethod.price+"원");
         rewordView.setText(payMethod.title);
-        numberView.setText(num);
+        //numberView.setText(num);
     }
 
 //    private void drawCheck() {

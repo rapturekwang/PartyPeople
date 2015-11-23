@@ -5,20 +5,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
+import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
+import com.partypeople.www.partypeople.data.PayMethod;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DetailTwoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DetailTwoFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class DetailTwoFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
+    ListView listView;
+    RewordViewAdapter mAdapter;
 
     public static DetailTwoFragment newInstance(String name) {
         DetailTwoFragment fragment = new DetailTwoFragment();
@@ -45,23 +46,21 @@ public class DetailTwoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_two, container, false);
 
+        listView = (ListView)view.findViewById(R.id.listView);
+        mAdapter = new RewordViewAdapter();
+        listView.setAdapter(mAdapter);
+
         initData();
 
         return view;
     }
 
     private void initData() {
-//        for (int i = 0; i < 5 ; i++) {
-//            PartyItemData d = new PartyItemData();
-//            d.title = "Come to House Party!";
-//            d.date = "5월 7일 / 19:00-21:30";
-//            d.partyImg = getResources().getDrawable(R.drawable.demo_img);
-//            d.location = "서울시 서초구";
-//            d.price = "$25";
-//            d.progress = 50;
-//            d.progressText = d.progress+"% 모금됨";
-//            d.dueDate = "7일 남음";
-//            mAdapter.add(d);
-//        }
+        for(int i=0; i<3; i++) {
+            PayMethod payMethod = new PayMethod();
+            payMethod.price = 10000;
+            payMethod.title = "FREE 음료 1개, 스낵";
+            mAdapter.add(payMethod);
+        }
     }
 }
