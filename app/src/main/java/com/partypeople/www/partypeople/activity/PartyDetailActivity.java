@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.ViewGroup.LayoutParams;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
@@ -45,6 +46,8 @@ public class PartyDetailActivity extends AppCompatActivity {
         DetailTabAdapter adpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 
+        setPagerHeight(2100);
+
         tabs.setupWithViewPager(pager);
 
         tabs.removeAllTabs();
@@ -52,6 +55,33 @@ public class PartyDetailActivity extends AppCompatActivity {
         for (int i = 0; i < Constants.NUM_OF_DETAIL_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
         }
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        setPagerHeight(2100);
+                        break;
+                    case 1:
+                        setPagerHeight(700);
+                        break;
+                    case 2:
+                        setPagerHeight(1500);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         
         Button btn = (Button)findViewById(R.id.btn_parti);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -113,5 +143,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         //descriptionView = (TextView)findViewById(R.id.text_des);
         imageView = (ImageView)findViewById(R.id.image_party);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+    }
+
+    public void setPagerHeight(int height) {
+        LayoutParams params = pager.getLayoutParams();
+        params.height=height;
+        pager.setLayoutParams(params);
     }
 }

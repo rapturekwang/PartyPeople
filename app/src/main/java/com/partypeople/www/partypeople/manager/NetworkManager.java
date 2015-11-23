@@ -81,7 +81,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/partys";
+    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/gro";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
