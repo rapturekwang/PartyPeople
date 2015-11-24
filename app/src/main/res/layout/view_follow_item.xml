@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_height="187dp"
+    android:background="#ffffff">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:id="@+id/img_profile"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/profile_img" />
+        android:src="@drawable/profile_img"
+        android:layout_marginTop="18dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,16 +20,29 @@
         android:text="이름"
         android:id="@+id/text_name"
         android:layout_below="@+id/img_profile"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView40"
+        android:layout_alignTop="@+id/text_address"
+        android:layout_toStartOf="@+id/text_address"
+        android:src="@drawable/follow_map"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="주소"
+        android:text="서울시 관악구"
         android:id="@+id/text_address"
         android:layout_below="@+id/text_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:textSize="13sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,5 +51,17 @@
         android:text="개최수 | 참여수"
         android:id="@+id/text_partys"
         android:layout_below="@+id/text_address"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView41"
+        android:layout_alignTop="@+id/text_partys"
+        android:layout_toStartOf="@+id/text_partys"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/follow_mask" />
+
 </RelativeLayout>

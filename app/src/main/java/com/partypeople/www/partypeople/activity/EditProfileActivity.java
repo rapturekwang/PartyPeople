@@ -36,7 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        actionBar.setHomeAsUpIndicator(R.drawable.back);
         actionBar.setDisplayShowTitleEnabled(false);
 
         TextView name = (TextView)findViewById(R.id.text_name);
@@ -49,6 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 propertyManager.setUser(user);
             }
         });
+
+        setDateSpinner();
     }
 
     private void setDateSpinner() {

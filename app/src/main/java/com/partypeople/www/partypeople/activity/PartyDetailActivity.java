@@ -72,7 +72,7 @@ public class PartyDetailActivity extends AppCompatActivity {
                         setPagerHeight(700);
                         break;
                     case 2:
-                        setPagerHeight(1500);
+                        setPagerHeight(1450);
                         break;
                 }
             }

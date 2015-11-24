@@ -20,20 +20,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.partypeople.www.partypeople.data.Data;
-import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.utils.DateUtil;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -45,12 +43,16 @@ public class MainActivity extends AppCompatActivity implements
     NavigationView navigationView;
     ActionBarDrawerToggle mDrawerToggle;
     FloatingActionButton fab;
+    FrameLayout layout;
+    MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        layout = (FrameLayout)findViewById(R.id.container);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -197,11 +199,32 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 String keyword = keywordView.getText().toString();
                 Toast.makeText(MainActivity.this, "Keyword : " + keyword, Toast.LENGTH_SHORT).show();
+                pager.setVisibility(View.GONE);
+                tabs.setVisibility(View.GONE);
+                layout.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment).commit();
             }
         });
 
         mActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         //doShareAction();
+
+        MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                pager.setVisibility(View.VISIBLE);
+                tabs.setVisibility(View.VISIBLE);
+                layout.setVisibility(View.GONE);
+
+                return true;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }

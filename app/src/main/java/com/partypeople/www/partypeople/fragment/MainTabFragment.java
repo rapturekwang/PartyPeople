@@ -103,6 +103,10 @@ public class MainTabFragment extends Fragment {
                 initData();
                 warningView.setVisibility(View.GONE);
                 break;
+            case 3:
+                initData();
+                warningView.setVisibility(View.GONE);
+                break;
         }
 
         return view;

@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/follow_rectangle"
     tools:context="com.partypeople.www.partypeople.fragment.FollowTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,5 +11,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/gridView"
         android:layout_gravity="center"
-        android:numColumns="2" />
+        android:numColumns="2"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:background="#e9e9e9" />
 </FrameLayout>

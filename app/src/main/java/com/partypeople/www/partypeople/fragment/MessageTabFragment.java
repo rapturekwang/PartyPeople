@@ -87,7 +87,7 @@ public class MessageTabFragment extends Fragment {
             } else {
                 view = (MessageItemView) convertView;
             }
-            view.setItemData("정광희", "10시간 전", "메시지 내용 한줄만...", "");
+            view.setItemData("정광희", "10시간 전", "안녕하세요! 궁금한게있어요!\n이 모임의 평균 연령대는 어떻게 되나요?", "");
 
             return view;
         }

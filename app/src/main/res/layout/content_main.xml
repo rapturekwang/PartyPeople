@@ -50,7 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/container"></FrameLayout>
+            android:id="@+id/container"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
