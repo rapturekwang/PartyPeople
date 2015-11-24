@@ -51,8 +51,8 @@ public class UserPagePartyItemView extends RelativeLayout {
         mData = data;
 
         titleView.setText(data.name);
-        dateView.setText(dateUtil.changeToViewFormat(data.date));
-        dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.date) + "일 남음");
+        dateView.setText(dateUtil.changeToViewFormat(data.end_at));
+        dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.end_at) + "일 남음");
         locationView.setText(data.location);
         priceView.setText(data.expect_pay + "원");
 //        progressView.setText(data.progressText);

@@ -1,5 +1,11 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +26,7 @@ import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +35,9 @@ public class EditProfileActivity extends AppCompatActivity {
     List<Area> areaList = new ArrayList<Area>();
     PropertyManager propertyManager = PropertyManager.getInstance();
     User user = new User();
+    ImageView imageView;
+    File mSavedFile;
+    public static final int REQUEST_CODE_CROP = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +57,62 @@ public class EditProfileActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user = propertyManager.getUser();
                 propertyManager.setUser(user);
+                finish();
+            }
+        });
+
+        imageView = (ImageView)findViewById(R.id.img_profile);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(
+                        Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                photoPickerIntent.setType("image/*");
+                photoPickerIntent.putExtra("crop", "true");
+                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+                photoPickerIntent.putExtra("outputFormat",
+                        Bitmap.CompressFormat.JPEG.toString());
+                photoPickerIntent.putExtra("aspectX", imageView.getWidth());
+                photoPickerIntent.putExtra("aspectY", imageView.getHeight());
+                startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
             }
         });
 
         setDateSpinner();
+
+        mCityAdapter.add("시/도");
+        mGuAdapter.add("군/구");
+        NetworkManager.getInstance().getLocalInfo(this, 1, "L", 0, new NetworkManager.OnResultListener<LocalAreaInfo>() {
+            @Override
+            public void onSuccess(LocalAreaInfo result) {
+                for (Area s : result.areas.area) {
+                    mCityAdapter.add(s.upperDistName);
+                    areaList.add(s);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
+            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
+            imageView.setImageBitmap(bm);
+        }
+    }
+
+    private Uri getTempUri() {
+        mSavedFile = new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
+
+        return Uri.fromFile(mSavedFile);
     }
 
     private void setDateSpinner() {

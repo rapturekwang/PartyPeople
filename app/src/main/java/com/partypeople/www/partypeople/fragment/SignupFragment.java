@@ -149,6 +149,7 @@ public class SignupFragment extends Fragment {
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        getActivity().finish();
                     }
 
                     @Override

@@ -10,12 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.fragment.MakePartyOneFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyThreeFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyTwoFragment;
 
 public class MakePartyActivity extends AppCompatActivity {
 
+    public Party party = new Party();
     Fragment[] list = {MakePartyOneFragment.newInstance("one"),
             MakePartyTwoFragment.newInstance("two"),
             MakePartyThreeFragment.newInstance("three")};

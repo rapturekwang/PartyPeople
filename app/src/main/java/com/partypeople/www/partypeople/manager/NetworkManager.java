@@ -15,6 +15,7 @@ import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
@@ -81,7 +82,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/gro";
+    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
@@ -136,10 +137,12 @@ public class NetworkManager {
         });
     }
 
-    public void postJson(final Context context, String jsonString, final OnResultListener<String> listener) {
-        Header[] headers = null;
+    public void postJson(final Context context, Party party, final OnResultListener<String> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
         try {
-            client.post(context, URL_PARTYS, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
+            client.post(context, URL_PARTYS, headers, new StringEntity(gson.toJson(party,Party.class), "UTF-8"), "application/json", new TextHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
@@ -160,7 +163,7 @@ public class NetworkManager {
         }
     }
 
-    public void getPartys(Context context, final OnResultListener<Party[]> listener) {
+    public void getPartys(Context context, final OnResultListener<PartyResult> listener) {
         RequestParams params = new RequestParams();
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
@@ -173,7 +176,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get Success " + responseString);
-                Party[] result = gson.fromJson(responseString, Party[].class);
+                PartyResult result = gson.fromJson(responseString, PartyResult.class);
                 listener.onSuccess(result);
             }
         });

@@ -39,7 +39,7 @@ public class ReplyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reply, container, false);
 
-        EditText editText = (EditText)view.findViewById(R.id.editText);
+        EditText editText = (EditText)view.findViewById(R.id.edit_bank);
         editText.setText("");
 
         final MessageActivity activity = (MessageActivity)getActivity();

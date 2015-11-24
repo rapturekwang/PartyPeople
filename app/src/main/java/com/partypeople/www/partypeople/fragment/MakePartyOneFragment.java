@@ -26,11 +26,14 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 
 /**
@@ -46,7 +49,10 @@ public class MakePartyOneFragment extends Fragment {
     private String name;
     File mSavedFile;
     public static final int REQUEST_CODE_CROP = 0;
-    ImageView imageView;
+    EditText nameView, locationView, desView, partyPasswordView;
+    String start_at, end_at;
+    SwitchCompat switchCompat;
+    ImageView partyImage;
     GridView gridView;
     gridAdapter mAdapter;
     String year = "2015", month;
@@ -63,8 +69,6 @@ public class MakePartyOneFragment extends Fragment {
     public MakePartyOneFragment() {
         // Required empty public constructor
     }
-
-    TextView nameView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +90,12 @@ public class MakePartyOneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_party_one, container, false);
 
-        imageView = (ImageView)view.findViewById(R.id.image_party);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        nameView = (EditText)view.findViewById(R.id.edit_name);
+        locationView = (EditText)view.findViewById(R.id.edit_location);
+        desView = (EditText)view.findViewById(R.id.edit_description);
+
+        partyImage = (ImageView)view.findViewById(R.id.image_party);
+        partyImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(
@@ -97,8 +105,8 @@ public class MakePartyOneFragment extends Fragment {
                 photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
                 photoPickerIntent.putExtra("outputFormat",
                         Bitmap.CompressFormat.JPEG.toString());
-                photoPickerIntent.putExtra("aspectX", imageView.getWidth());
-                photoPickerIntent.putExtra("aspectY", imageView.getHeight());
+                photoPickerIntent.putExtra("aspectX", partyImage.getWidth());
+                photoPickerIntent.putExtra("aspectY", partyImage.getHeight());
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
             }
         });
@@ -108,6 +116,11 @@ public class MakePartyOneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MakePartyActivity activity = (MakePartyActivity) getActivity();
+                activity.party.name = nameView.getText().toString();
+                activity.party.location = locationView.getText().toString();
+                activity.party.description = desView.getText().toString();
+                activity.party.privated = switchCompat.isChecked();
+                activity.party.password = partyPasswordView.getText().toString();
                 activity.nextFragment();
             }
         });
@@ -131,24 +144,23 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
-        final EditText editText = (EditText)view.findViewById(R.id.edit_party_password);
-        editText.setEnabled(false);
+        partyPasswordView = (EditText)view.findViewById(R.id.edit_party_password);
+        partyPasswordView.setEnabled(false);
 
-        SwitchCompat switchCompat = (SwitchCompat)view.findViewById(R.id.switch_compat);
+        switchCompat = (SwitchCompat)view.findViewById(R.id.switch_compat);
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    editText.setEnabled(true);
+                    partyPasswordView.setEnabled(true);
                 } else {
-                    editText.setEnabled(false);
+                    partyPasswordView.setEnabled(false);
                 }
             }
         });
 
         setDateSpinner(view);
-//        nameView = (TextView)v.findViewById(R.id.text_name);
-//        nameView.setText(name);
+
         return view;
     }
 
@@ -157,7 +169,7 @@ public class MakePartyOneFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == getActivity().RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            imageView.setImageBitmap(bm);
+            partyImage.setImageBitmap(bm);
         }
     }
 

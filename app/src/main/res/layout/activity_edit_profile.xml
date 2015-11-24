@@ -27,7 +27,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView26"
+        android:id="@+id/img_profile"
         android:src="@drawable/profile_img"
         android:layout_above="@+id/text_name"
         android:layout_centerHorizontal="true"

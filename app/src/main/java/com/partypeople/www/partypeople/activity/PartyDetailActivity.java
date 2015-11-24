@@ -121,13 +121,13 @@ public class PartyDetailActivity extends AppCompatActivity {
         Party party = (Party)intent.getSerializableExtra("party");
 
         titilView.setText(party.name);
-        dateView.setText(dateUtil.changeToViewFormat(party.date));
+        dateView.setText(dateUtil.changeToViewFormat(party.end_at));
         locationView.setText(party.location);
         priceView.setText(party.expect_pay+"원");
         //totalPriceView.setText();
         progressView.setText("50%");
         progressBar.setProgress(50);
-        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.date) + "일 남음");
+        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.end_at) + "일 남음");
 //        descriptionView.setText(party.description);
 //        imageView
     }

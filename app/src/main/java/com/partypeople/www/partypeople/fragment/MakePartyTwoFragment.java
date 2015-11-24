@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class MakePartyTwoFragment extends Fragment {
     private static final String ARG_NAME = "name";
     //FragmentManager fmanager = getChildFragmentManager();
     ArrayAdapter<String> mYearAdapter, mMonthAdapter, mDayAdapter;
+    EditText expectPayView;
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -61,6 +63,8 @@ public class MakePartyTwoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_party_two, container, false);
 
+        expectPayView = (EditText)view.findViewById(R.id.edit_expect_pay);
+
         getChildFragmentManager().beginTransaction().add(R.id.container, list[0]).commit();
 
         Button btn = (Button)view.findViewById(R.id.btn_next);
@@ -68,6 +72,7 @@ public class MakePartyTwoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MakePartyActivity activity = (MakePartyActivity)getActivity();
+                activity.party.expect_pay = Double.parseDouble(expectPayView.getText().toString());
                 activity.nextFragment();
             }
         });

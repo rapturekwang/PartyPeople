@@ -17,6 +17,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
@@ -113,12 +114,12 @@ public class MainTabFragment extends Fragment {
     }
 
     private void initData() {
-        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<Party[]>() {
+        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartyResult>() {
             @Override
-            public void onSuccess(Party[] result) {
-                for (int i = 0; i < result.length; i++) {
-                    partyList.add(result[i]);
-                    mAdapter.add(result[i]);
+            public void onSuccess(PartyResult result) {
+                for (int i = 0; i < result.data.size(); i++) {
+                    partyList.add(result.data.get(i));
+                    mAdapter.add(result.data.get(i));
                 }
             }
 
@@ -127,7 +128,7 @@ public class MainTabFragment extends Fragment {
                 for (int i = 0; i < 5 ; i++) {
                     Party d = new Party();
                     d.name = "Come to House Party!";
-                    d.date = "2015-12-04T02:11:11";
+                    d.end_at = "2015-12-04T02:11:11";
                     d.location = "서울시 서초구";
                     d.expect_pay = 25000;
                     partyList.add(d);
