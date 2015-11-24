@@ -45,6 +45,9 @@ public class MakePartyOneFragment extends Fragment {
     ArrayAdapter<String> mYearAdapter, mMonthAdapter, mDayAdapter, mNoonAdapter, mHourAdapter, mMinuteAdapter;
     ArrayAdapter<String> mEYearAdapter, mEMonthAdapter, mEDayAdapter, mENoonAdapter, mEHourAdapter, mEMinuteAdapter;
 
+    Spinner mYearSpinner, mMonthSpinner, mDaySpinner, mNoonSpinner, mHourSpinner, mMinuteSpinner;
+    Spinner mEYearSpinner, mEMonthSpinner, mEDaySpinner, mENoonSpinner, mEHourSpinner, mEMinuteSpinner;
+
     // TODO: Rename and change types of parameters
     private String name;
     File mSavedFile;
@@ -121,6 +124,8 @@ public class MakePartyOneFragment extends Fragment {
                 activity.party.description = desView.getText().toString();
                 activity.party.privated = switchCompat.isChecked();
                 activity.party.password = partyPasswordView.getText().toString();
+                activity.party.start_at = getStartTime();
+                activity.party.end_at = getEndTime();
                 activity.nextFragment();
             }
         });
@@ -136,7 +141,7 @@ public class MakePartyOneFragment extends Fragment {
         gridView = (GridView)view.findViewById(R.id.gridView);
         mAdapter = new gridAdapter();
         gridView.setAdapter(mAdapter);
-        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        gridView.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -187,12 +192,36 @@ public class MakePartyOneFragment extends Fragment {
         }
     }
 
+    private String getStartTime() {
+        String time;
+
+        int hour = Integer.parseInt(mHourSpinner.toString());
+        if(mNoonSpinner.toString().equals("오후")) {
+            hour += 12;
+        }
+        time = mYearSpinner.toString() + "-" + mMonthSpinner.toString() + "-" + mDaySpinner.toString() + "T" + hour + ":" + mMinuteSpinner.toString();
+
+        return time;
+    }
+
+    private String getEndTime() {
+        String time;
+
+        int hour = Integer.parseInt(mEHourSpinner.toString());
+        if(mENoonSpinner.toString().equals("오후")) {
+            hour += 12;
+        }
+        time = mEYearSpinner.toString() + "-" + mEMonthSpinner.toString() + "-" + mEDaySpinner.toString() + "T" + hour + ":" + mEMinuteSpinner.toString();
+
+        return time;
+    }
+
     private void setDateSpinner(View view) {
-        Spinner spinner = (Spinner)view.findViewById(R.id.spinner_year);
+        mYearSpinner = (Spinner)view.findViewById(R.id.spinner_year);
         mYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mYearAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mYearSpinner.setAdapter(mYearAdapter);
+        mYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 year = (String)parent.getItemAtPosition(position);
@@ -217,11 +246,11 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_month);
+        mMonthSpinner = (Spinner)view.findViewById(R.id.spinner_month);
         mMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mMonthAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mMonthSpinner.setAdapter(mMonthAdapter);
+        mMonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 month = (String)parent.getItemAtPosition(position);
@@ -246,25 +275,25 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_day);
+        mDaySpinner = (Spinner)view.findViewById(R.id.spinner_day);
         mDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mDayAdapter);
+        mDaySpinner.setAdapter(mDayAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_noon);
+        mNoonSpinner = (Spinner)view.findViewById(R.id.spinner_noon);
         mNoonAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mNoonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mNoonAdapter);
+        mNoonSpinner.setAdapter(mNoonAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_hour);
+        mHourSpinner = (Spinner)view.findViewById(R.id.spinner_hour);
         mHourAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mHourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mHourAdapter);
+        mHourSpinner.setAdapter(mHourAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_minute);
+        mMinuteSpinner = (Spinner)view.findViewById(R.id.spinner_minute);
         mMinuteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mMinuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mMinuteAdapter);
+        mMinuteSpinner.setAdapter(mMinuteAdapter);
 
         mYearAdapter.add("년");
         int num = Calendar.getInstance().get(Calendar.YEAR);
@@ -295,11 +324,11 @@ public class MakePartyOneFragment extends Fragment {
         }
 
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_year_end);
+        mEYearSpinner = (Spinner)view.findViewById(R.id.spinner_year_end);
         mEYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mEYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mEYearAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mEYearSpinner.setAdapter(mEYearAdapter);
+        mEYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 eYear = (String)parent.getItemAtPosition(position);
@@ -324,11 +353,11 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_month_end);
+        mEMonthSpinner = (Spinner)view.findViewById(R.id.spinner_month_end);
         mEMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mEMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mEMonthAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mEMonthSpinner.setAdapter(mEMonthAdapter);
+        mEMonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 eMonth = (String)parent.getItemAtPosition(position);
@@ -353,25 +382,25 @@ public class MakePartyOneFragment extends Fragment {
             }
         });
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_day_end);
+        mEDaySpinner = (Spinner)view.findViewById(R.id.spinner_day_end);
         mEDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mEDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mEDayAdapter);
+        mEDaySpinner.setAdapter(mEDayAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_noon_end);
+        mENoonSpinner = (Spinner)view.findViewById(R.id.spinner_noon_end);
         mENoonAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mENoonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mENoonAdapter);
+        mENoonSpinner.setAdapter(mENoonAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_hour_end);
+        mEHourSpinner = (Spinner)view.findViewById(R.id.spinner_hour_end);
         mEHourAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mEHourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mEHourAdapter);
+        mEHourSpinner.setAdapter(mEHourAdapter);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner_minute_end);
+        mEMinuteSpinner = (Spinner)view.findViewById(R.id.spinner_minute_end);
         mEMinuteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         mEMinuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mEMinuteAdapter);
+        mEMinuteSpinner.setAdapter(mEMinuteAdapter);
 
         mEYearAdapter.add("년");
         num = Calendar.getInstance().get(Calendar.YEAR);
