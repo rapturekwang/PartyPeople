@@ -43,7 +43,7 @@ public class UserAdapter extends BaseAdapter {
         mTabListener = listener;
 
         User user = ((UserActivity)mContext).getUser();
-        Log.d("UserAdapter", user.data.name);
+        Log.d("UserAdapter", user.name);
     }
 
     public void add(Party data) {
@@ -126,10 +126,10 @@ public class UserAdapter extends BaseAdapter {
                     });
 
                     TextView textView = (TextView)convertView.findViewById(R.id.text_name);
-                    textView.setText(PropertyManager.getInstance().getUser().data.name);
+                    textView.setText(PropertyManager.getInstance().getUser().name);
 
                     textView = (TextView)convertView.findViewById(R.id.text_address);
-                    textView.setText(PropertyManager.getInstance().getUser().data.email);
+                    textView.setText(PropertyManager.getInstance().getUser().email);
                 }
                 return convertView;
             case 1:

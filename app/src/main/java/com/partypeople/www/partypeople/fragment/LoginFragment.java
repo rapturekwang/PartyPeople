@@ -22,6 +22,7 @@ import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -140,14 +141,14 @@ public class LoginFragment extends Fragment {
                     jsonObject.accumulate("password", password.getText().toString());
                     jsonObject.accumulate("email", email.getText().toString());
                 } catch (Exception e) {}
-                NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<User>() {
+                NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<UserResult>() {
                     @Override
-                    public void onSuccess(final User result1) {
-                        NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<User>() {
+                    public void onSuccess(final UserResult result1) {
+                        NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<UserResult>() {
                             @Override
-                            public void onSuccess(User result2) {
-                                result2.token = result1.token;
-                                propertyManager.setUser(result2);
+                            public void onSuccess(UserResult result2) {
+                                propertyManager.setToken(result1.token);
+                                propertyManager.setUser(result2.data);
 
                                 Intent intent = new Intent(getContext(), MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

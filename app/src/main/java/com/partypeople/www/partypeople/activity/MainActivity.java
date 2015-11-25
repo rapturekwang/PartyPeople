@@ -144,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements
             relativeLayout.setVisibility(View.VISIBLE);
             //email.setVisibility(View.VISIBLE);
 
-            name.setText(propertyManager.getUser().data.name);
-            email.setText(propertyManager.getUser().data.email);
+            name.setText(propertyManager.getUser().name);
+            email.setText(propertyManager.getUser().email);
         }
     }
 

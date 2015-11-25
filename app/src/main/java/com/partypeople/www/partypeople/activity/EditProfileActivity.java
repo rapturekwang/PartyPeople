@@ -124,7 +124,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
-                    user.location = mCityAdapter.getItem(position);
+                    user.address = mCityAdapter.getItem(position);
                 }
                 Area area;
                 mGuAdapter.clear();
@@ -164,7 +164,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    user.location = user.location + " " + mGuAdapter.getItem(position);
+                    user.address = user.address + " " + mGuAdapter.getItem(position);
                 }
             }
 

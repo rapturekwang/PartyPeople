@@ -76,9 +76,8 @@ public class PropertyManager {
 
     public void setUser(User user) {
         this.user = user;
-        setToken(user.token);
-        setId(user.data.id);
-        setEmail(user.data.email);
+        setId(user.id);
+        setEmail(user.email);
     }
 
     public void setLocation(String location) {

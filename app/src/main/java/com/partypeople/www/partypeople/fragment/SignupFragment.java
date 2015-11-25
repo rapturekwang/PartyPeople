@@ -21,6 +21,7 @@ import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -140,11 +141,11 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                NetworkManager.getInstance().postUser(getContext(), email.getText().toString(), password.getText().toString(), idName.getText().toString(), new NetworkManager.OnResultListener<User>() {
+                NetworkManager.getInstance().postUser(getContext(), email.getText().toString(), password.getText().toString(), idName.getText().toString(), new NetworkManager.OnResultListener<UserResult>() {
                     @Override
-                    public void onSuccess(User result) {
-                        //Log.d("SignupFragment", "email:" + result.data.email + "id:" + result.data.id + "token:" + result.token);
-                        propertyManager.setUser(result);
+                    public void onSuccess(UserResult result) {
+                        propertyManager.setToken(result.token);
+                        propertyManager.setUser(result.data);
 
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

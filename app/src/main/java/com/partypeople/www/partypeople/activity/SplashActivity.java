@@ -28,6 +28,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.Service.RegistrationIntentService;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -94,12 +95,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void doRealStart() {
         if(PropertyManager.getInstance().isLogin()) {
-            NetworkManager.getInstance().getMyId(this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<User>() {
+            NetworkManager.getInstance().getMyId(this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<UserResult>() {
                 @Override
-                public void onSuccess(User result) {
-                    User user = result;
-                    user.token = PropertyManager.getInstance().getToken();
-                    PropertyManager.getInstance().setUser(user);
+                public void onSuccess(UserResult result) {
+                    PropertyManager.getInstance().setToken(result.token);
+                    PropertyManager.getInstance().setUser(result.data);
                 }
 
                 @Override

@@ -17,6 +17,7 @@ import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
@@ -226,7 +227,7 @@ public class NetworkManager {
         });
     }
 
-    public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<User> listener ) {
+    public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<UserResult> listener ) {
         RequestParams params = new RequestParams();
         params.put("email", param1);
         params.put("password", param2);
@@ -236,7 +237,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "post user Success" + responseString);
-                User result = gson.fromJson(responseString, User.class);
+                UserResult result = gson.fromJson(responseString, UserResult.class);
                 listener.onSuccess(result);
             }
 
@@ -276,7 +277,7 @@ public class NetworkManager {
         File photo = param1;
         FileEntity entity =new FileEntity(param1, "multipart/form-data");
 
-        client.put(context, URL_PARTYS + "/:" + PropertyManager.getInstance().getUser().data.id + "/photo", headers, entity,
+        client.put(context, URL_PARTYS + "/:" + PropertyManager.getInstance().getUser().id + "/photo", headers, entity,
                 "multipart/form-data", new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
@@ -293,7 +294,7 @@ public class NetworkManager {
         });
     }
 
-    public void authUser(Context context, String jsonString, final OnResultListener<User> listener ) {
+    public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {
         Header[] headers = null;
 
         try {
@@ -301,7 +302,7 @@ public class NetworkManager {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
                     Log.d("NetworkManager", "auth Success" + responseString);
-                    User result = gson.fromJson(responseString, User.class);
+                    UserResult result = gson.fromJson(responseString, UserResult.class);
                     listener.onSuccess(result);
                 }
 
@@ -317,7 +318,7 @@ public class NetworkManager {
         }
     }
 
-    public void getMyId(Context context, String token, final OnResultListener<User> listener ) {
+    public void getMyId(Context context, String token, final OnResultListener<UserResult> listener ) {
         RequestParams params = new RequestParams();
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + token);
@@ -326,7 +327,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get id Success" + responseString);
-                User result = gson.fromJson(responseString, User.class);
+                UserResult result = gson.fromJson(responseString, UserResult.class);
                 listener.onSuccess(result);
             }
 

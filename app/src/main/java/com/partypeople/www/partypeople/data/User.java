@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.data;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -7,15 +8,17 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
     public String id;
-    public String token;
-    public String description;
-    public boolean has_photo;
-    public String photo;
-    public String created_at;
-    public boolean email_validated;
-    //public Group group;
-    public Data data;
-    public String location;
+    public String email;
+    public String name;
+//    public List<Follow> follows;
     public String address;
     public String favorite_address;
+    public double tel;
+    public int[] theme;
+//    public Role role;
+    public boolean has_photo;
+    public String photo;
+    public File imageFile;
+    public String created_at;
+    //public Group group;
 }
