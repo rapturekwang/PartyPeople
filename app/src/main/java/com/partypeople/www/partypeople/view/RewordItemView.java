@@ -6,6 +6,7 @@ import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.PayMethod;
@@ -56,6 +57,17 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         priceView.setText(payMethod.price+"원");
         rewordView.setText(payMethod.title);
         //numberView.setText(num);
+    }
+
+    public PayMethod getItemData() {
+        PayMethod payMethod = new PayMethod();
+        payMethod.title = rewordView.getText().toString();
+        try {
+            payMethod.price = Integer.parseInt(priceView.getText().toString());
+        } catch (Exception e) {
+            payMethod.price = -1;
+        }
+        return payMethod;
     }
 
 //    private void drawCheck() {

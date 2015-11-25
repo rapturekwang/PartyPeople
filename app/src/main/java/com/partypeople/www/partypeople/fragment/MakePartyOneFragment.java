@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,13 +54,13 @@ public class MakePartyOneFragment extends Fragment {
     File mSavedFile;
     public static final int REQUEST_CODE_CROP = 0;
     EditText nameView, locationView, desView, partyPasswordView;
-    String start_at, end_at;
     SwitchCompat switchCompat;
     ImageView partyImage;
     GridView gridView;
     gridAdapter mAdapter;
     String year = "2015", month;
     String eYear = "2015", eMonth;
+    int theme = -1;
 
     public static MakePartyOneFragment newInstance(String name) {
         MakePartyOneFragment fragment = new MakePartyOneFragment();
@@ -119,13 +120,34 @@ public class MakePartyOneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MakePartyActivity activity = (MakePartyActivity) getActivity();
-                activity.party.name = nameView.getText().toString();
-                activity.party.location = locationView.getText().toString();
-                activity.party.description = desView.getText().toString();
-                activity.party.privated = switchCompat.isChecked();
-                activity.party.password = partyPasswordView.getText().toString();
-                activity.party.start_at = getStartTime();
-                activity.party.end_at = getEndTime();
+                String warningMessage="";
+                if(desView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
+                if(locationView.getText().toString().equals("")) warningMessage="장소를 입력해 주세요";
+                if(theme==-1) warningMessage="테마를 지정해 주세요.";
+                if(nameView.getText().toString().equals("")) warningMessage="모임 이름을 입력해 주세요.";
+                if(warningMessage.equals("")) {
+                    activity.party.name = nameView.getText().toString();
+                    activity.party.theme = new int[1];
+                    activity.party.theme[0] = theme;
+                    activity.party.location = locationView.getText().toString();
+                    activity.party.description = desView.getText().toString();
+                    activity.party.privated = switchCompat.isChecked();
+                    activity.party.imageFile = mSavedFile;
+                } else {
+                    Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (switchCompat.isChecked()) {
+                    activity.party.password = partyPasswordView.getText().toString();
+                }
+                try {
+                    activity.party.start_at = getStartTime();
+                    activity.party.end_at = getEndTime();
+                    activity.nextFragment();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                }
+//                activity.party.imageFile = mSavedFile;
                 activity.nextFragment();
             }
         });
@@ -146,6 +168,7 @@ public class MakePartyOneFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                theme = position;
             }
         });
 
@@ -195,25 +218,31 @@ public class MakePartyOneFragment extends Fragment {
     private String getStartTime() {
         String time;
 
-        int hour = Integer.parseInt(mHourSpinner.toString());
-        if(mNoonSpinner.toString().equals("오후")) {
+        int hour = Integer.parseInt(mHourSpinner.getSelectedItem().toString());
+        if(mNoonSpinner.getSelectedItem().toString().equals("오후")) {
             hour += 12;
         }
-        time = mYearSpinner.toString() + "-" + mMonthSpinner.toString() + "-" + mDaySpinner.toString() + "T" + hour + ":" + mMinuteSpinner.toString();
+        time = mYearSpinner.getSelectedItem().toString() + "-" + mMonthSpinner.getSelectedItem().toString() + "-"
+                + mDaySpinner.getSelectedItem().toString() + "T" + hour + ":" + mMinuteSpinner.getSelectedItem().toString() + ":00";
 
-        return time;
+        Log.d("MakePartyOneFragment", time);
+
+        return DateUtil.getInstance().changeToPostFormat(time);
     }
 
     private String getEndTime() {
         String time;
 
-        int hour = Integer.parseInt(mEHourSpinner.toString());
-        if(mENoonSpinner.toString().equals("오후")) {
+        int hour = Integer.parseInt(mEHourSpinner.getSelectedItem().toString());
+        if(mENoonSpinner.getSelectedItem().toString().equals("오후")) {
             hour += 12;
         }
-        time = mEYearSpinner.toString() + "-" + mEMonthSpinner.toString() + "-" + mEDaySpinner.toString() + "T" + hour + ":" + mEMinuteSpinner.toString();
+        time = mEYearSpinner.getSelectedItem().toString() + "-" + mEMonthSpinner.getSelectedItem().toString() + "-"
+                + mEDaySpinner.getSelectedItem().toString() + "T" + hour + ":" + mEMinuteSpinner.getSelectedItem().toString() + ":00";
 
-        return time;
+        Log.d("MakePartyOneFragment", time);
+
+        return DateUtil.getInstance().changeToPostFormat(time);
     }
 
     private void setDateSpinner(View view) {
@@ -306,12 +335,10 @@ public class MakePartyOneFragment extends Fragment {
             mMonthAdapter.add(""+i);
         }
         mDayAdapter.add("일");
-//        num = 1;
-//        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
-//            mDayAdapter.add(""+i);
-//        }
+
         mNoonAdapter.add("오전");
         mNoonAdapter.add("오후");
+
         mHourAdapter.add("시");
         num = 1;
         for (int i = num; i<num+Constants.NUM_OF_HOUR; i++) {
@@ -413,10 +440,7 @@ public class MakePartyOneFragment extends Fragment {
             mEMonthAdapter.add(""+i);
         }
         mEDayAdapter.add("일");
-//        num = 1;
-//        for (int i = num; i<num+Constants.NUM_OF_DAY; i++) {
-//            mDayAdapter.add(""+i);
-//        }
+
         mENoonAdapter.add("오전");
         mENoonAdapter.add("오후");
         mEHourAdapter.add("시");

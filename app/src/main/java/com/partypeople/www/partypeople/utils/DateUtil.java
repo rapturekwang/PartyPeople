@@ -81,4 +81,9 @@ public class DateUtil {
         cal.setTime(date);
         return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
+
+    public String changeToPostFormat(String date) {
+        Long temp = changeStringToLong(date);
+        return changeLongToString(temp);
+    }
 }

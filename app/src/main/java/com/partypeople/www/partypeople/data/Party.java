@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +24,17 @@ public class Party implements Serializable{
     public String description;
     public boolean has_photo;
     public String photo;
+    public File imageFile;
     public String created_at;
     public String deleted_at;
     public String start_at;
     public String end_at;
-//    public String theme;
+    public String pay_end_at;
+    public int[] theme;
     public String location;
     @SerializedName("private")
     public boolean privated;
-    public String password;
+    public String password = "0000";
     public double expect_pay;
     public List<PayMethod> pay_method;
     public String bank;

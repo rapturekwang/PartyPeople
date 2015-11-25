@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -55,7 +57,7 @@ public class MakePartyThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_make_party_three, container, false);
+        final View view = inflater.inflate(R.layout.fragment_make_party_three, container, false);
 
         bankView = (EditText)view.findViewById(R.id.edit_bank);
         accountView = (EditText)view.findViewById(R.id.edit_account);
@@ -71,19 +73,59 @@ public class MakePartyThreeFragment extends Fragment {
                 builder.setPositiveButton("만들기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MakePartyActivity activity = (MakePartyActivity)getActivity();
-                        activity.party.bank = bankView.getText().toString();
-                        activity.party.account = Double.parseDouble(accountView.getText().toString());
-                        activity.party.phone = Double.parseDouble(phoneView.getText().toString());
+                        final MakePartyActivity activity = (MakePartyActivity)getActivity();
+                        if(bankView.getText().toString().equals("")) {
+                            Toast.makeText(getContext(), "은행을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            activity.party.bank = bankView.getText().toString();
+                        }
+                        try {
+                            activity.party.account = Double.parseDouble(accountView.getText().toString());
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), "계좌번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        try {
+                            activity.party.phone = Double.parseDouble(phoneView.getText().toString());
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), "핸드폰 번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        CheckBox chbox = (CheckBox)view.findViewById(R.id.chbox_policy);
+                        if(!chbox.isChecked()) {
+                            Toast.makeText(getContext(), "약관에 동의해 주십시오", Toast.LENGTH_SHORT).show();
+                        }
+                        chbox = (CheckBox)view.findViewById(R.id.chbox_agree);
+                        if(!chbox.isChecked()) {
+                            Toast.makeText(getContext(), "모금 사항에 동의하여 주십시오.", Toast.LENGTH_SHORT).show();
+                        }
+
                         NetworkManager.getInstance().postJson(getContext(), activity.party, new NetworkManager.OnResultListener<String>() {
                             @Override
                             public void onSuccess(String result) {
-                                Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+//                                if(activity.party.imageFile != null) {
+//                                    NetworkManager.getInstance().putGroupImage(getContext(), activity.party.imageFile, new NetworkManager.OnResultListener<String>() {
+//                                        @Override
+//                                        public void onSuccess(String result) {
+//                                            Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+//                                        }
+//
+//                                        @Override
+//                                        public void onFail(int code) {
+//                                            Toast.makeText(getActivity(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
+//                                            return;
+//                                        }
+//                                    });
+//                                }else {
+                                    Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+//                                }
                             }
 
                             @Override
                             public void onFail(int code) {
                                 Toast.makeText(getActivity(), "모임 생성이 실패하였습니다", Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         });
 

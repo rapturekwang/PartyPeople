@@ -225,7 +225,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="서울시 서초구 방배동"
+                android:text="서울시 관악구 신림동 10-465"
                 android:id="@+id/text_location"
                 android:layout_marginLeft="16dp"
                 android:textSize="14sp"

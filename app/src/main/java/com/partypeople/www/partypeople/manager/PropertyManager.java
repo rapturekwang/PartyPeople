@@ -100,7 +100,6 @@ public class PropertyManager {
     }
 
     public boolean isLogin() {
-        Log.d("PropertyManager", "test");
         String token;
         token = mPrefs.getString(FIELD_TOKEN, "");
         Log.d("PropertyManager", token);

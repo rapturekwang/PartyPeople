@@ -16,4 +16,6 @@ public class User implements Serializable{
     //public Group group;
     public Data data;
     public String location;
+    public String address;
+    public String favorite_address;
 }

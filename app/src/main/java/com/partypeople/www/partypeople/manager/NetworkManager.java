@@ -21,9 +21,12 @@ import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -265,6 +268,31 @@ public class NetworkManager {
         });
     }
 
+    public void putGroupImage(Context context, File param1, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+
+        File photo = param1;
+        FileEntity entity =new FileEntity(param1, "multipart/form-data");
+
+        client.put(context, URL_PARTYS + "/:" + PropertyManager.getInstance().getUser().data.id + "/photo", headers, entity,
+                "multipart/form-data", new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "put Success");
+            }
+
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+            }
+
+        });
+    }
+
     public void authUser(Context context, String jsonString, final OnResultListener<User> listener ) {
         Header[] headers = null;
 
@@ -299,7 +327,6 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get id Success" + responseString);
                 User result = gson.fromJson(responseString, User.class);
-                Log.d("NetworkManager", "" + result.data.name + result.data.email);
                 listener.onSuccess(result);
             }
 
