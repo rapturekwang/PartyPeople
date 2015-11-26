@@ -2,8 +2,10 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
@@ -42,23 +44,25 @@ public class ThemeItemView extends FrameLayout implements Checkable{
         isCheck = !isCheck;
     }
 
-    TextView textView;
+    ImageView imageView;
+    ImageView choiceView;
 
     private void init() {
         inflate(getContext(), R.layout.view_theme_item, this);
-        textView = (TextView)findViewById(R.id.text_theme);
+        imageView = (ImageView)findViewById(R.id.image_theme);
+        choiceView = (ImageView)findViewById(R.id.image_choice);
     }
 
     private void drawCheck() {
         if (isCheck) {
-            textView.setBackgroundColor(getResources().getColor(R.color.checked));
+            choiceView.setVisibility(View.VISIBLE);
         } else {
-            textView.setBackgroundColor(getResources().getColor(R.color.unchecked));
+            choiceView.setVisibility(View.INVISIBLE);
         }
     }
 
-    public void setGridItem(String title) {
-        textView.setText(title);
+    public void setGridItem(int theme) {
+        imageView.setImageResource(theme);
     }
 }
 

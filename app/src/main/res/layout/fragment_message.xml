@@ -8,18 +8,18 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:background="#969696"
         android:id="@+id/linearLayout2">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView16"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:id="@+id/image_profile"
             android:src="@drawable/profile_img"
-            android:layout_margin="10dp" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,16 +28,26 @@
             android:text="정광희"
             android:id="@+id/textView43"
             android:layout_gravity="center_vertical"
-            android:layout_weight="9" />
+            android:layout_weight="9"
+            android:layout_marginLeft="9dp"
+            android:textSize="16dp"
+            android:textColor="#474747" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img_cancel"
-            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:src="@drawable/x"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
+            android:layout_marginRight="16dp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cfcfcf"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,17 +57,23 @@
         android:id="@+id/textView44"
         android:layout_below="@+id/linearLayout2"
         android:layout_alignParentEnd="true"
-        android:layout_margin="10dp" />
+        android:textColor="#787878"
+        android:textSize="13sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="@drawable/bottom"
         android:text="안녕하세요!"
         android:id="@+id/textView46"
         android:layout_below="@+id/textView44"
         android:layout_alignParentStart="true"
-        android:layout_margin="10dp" />
+        android:layout_marginTop="7dp"
+        android:textSize="14sp"
+        android:textColor="#000000" />
 
     <Button
         android:layout_width="match_parent"
@@ -66,6 +82,20 @@
         android:id="@+id/btn_reply"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#696969"
-        android:textColor="#ffffff" />
+        android:background="@color/toolbarColor"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="받은 메시지"
+        android:id="@+id/textView57"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="13dp"
+        android:textColor="#787878" />
 </RelativeLayout>

@@ -7,6 +7,7 @@ import java.io.Serializable;
  * Created by Tacademy on 2015-11-11.
  */
 public class User implements Serializable{
+    public String _id;
     public String id;
     public String email;
     public String name;

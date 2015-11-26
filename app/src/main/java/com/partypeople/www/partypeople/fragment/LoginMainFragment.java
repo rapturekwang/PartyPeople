@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,8 @@ public class LoginMainFragment extends Fragment {
 
         final LoginActivity activity = (LoginActivity)getActivity();
 
-        Button btn = (Button)view.findViewById(R.id.btn_skip);
-        btn.setOnClickListener(new View.OnClickListener() {
+        TextView btnText = (TextView)view.findViewById(R.id.btn_skip);
+        btnText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), MainActivity.class));
@@ -62,10 +63,10 @@ public class LoginMainFragment extends Fragment {
             }
         });
         if(activity.getStartfrom()==Constants.START_FROM_MAIN) {
-            btn.setVisibility(View.INVISIBLE);
+            btnText.setVisibility(View.INVISIBLE);
         }
 
-        btn = (Button)view.findViewById(R.id.btn_signup);
+        ImageView btn = (ImageView)view.findViewById(R.id.btn_signup);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +74,7 @@ public class LoginMainFragment extends Fragment {
             }
         });
 
-        btn = (Button)view.findViewById(R.id.btn_login);
+        btn = (ImageView)view.findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +82,7 @@ public class LoginMainFragment extends Fragment {
             }
         });
 
-        btn = (Button)view.findViewById(R.id.btn_facebook);
+        btn = (ImageView)view.findViewById(R.id.btn_facebook);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +90,7 @@ public class LoginMainFragment extends Fragment {
             }
         });
 
-        btn = (Button)view.findViewById(R.id.btn_kakao);
+        btn = (ImageView)view.findViewById(R.id.btn_kakao);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

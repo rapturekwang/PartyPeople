@@ -11,18 +11,17 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 
@@ -141,7 +140,7 @@ public class NetworkManager {
         });
     }
 
-    public void postJson(final Context context, Party party, final OnResultListener<String> listener) {
+    public void postJson(final Context context, Party party, final OnResultListener<PartyResult> listener) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
@@ -150,8 +149,10 @@ public class NetworkManager {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                    Log.d("NetworkManager", "post Success");
-                    listener.onSuccess(responseString);
+                    Log.d("NetworkManager", "post Success" + responseString);
+                    PartyResult result = gson.fromJson(responseString, PartyResult.class);
+                    Log.d("NetworkManager", "test:" + result.data.id);
+                    listener.onSuccess(result);
                 }
 
                 @Override
@@ -167,7 +168,7 @@ public class NetworkManager {
         }
     }
 
-    public void getPartys(Context context, final OnResultListener<PartyResult> listener) {
+    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
         RequestParams params = new RequestParams();
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
@@ -180,7 +181,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get Success " + responseString);
-                PartyResult result = gson.fromJson(responseString, PartyResult.class);
+                PartysResult result = gson.fromJson(responseString, PartysResult.class);
                 listener.onSuccess(result);
             }
         });
@@ -269,29 +270,65 @@ public class NetworkManager {
         });
     }
 
-    public void putGroupImage(Context context, File param1, final OnResultListener<String> listener ) {
+    public void putUser(Context context, User user, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        UserResult userResult = new UserResult();
+        userResult.data = user;
+        Log.d("NetworkManager", URL_USERS + "/" + PropertyManager.getInstance().getUser().id);
+
+        try {
+            client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id, headers,
+                    new StringEntity(gson.toJson(user, User.class), "UTF-8"), "application/json", new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            listener.onSuccess(responseString);
+                            Log.d("NetworkManager", "put Success" + responseString);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            listener.onFail(statusCode);
+                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                        }
+                    });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putGroupImage(Context context, File param1, String param2, final OnResultListener<String> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         RequestParams params = new RequestParams();
+        try {
+            params.put("photo", param1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//        File photo = param1;
+        String url = URL_PARTYS + "/" + param2 + "/photo";
+        Log.d("NetworkManager", url);
 
-        File photo = param1;
-        FileEntity entity =new FileEntity(param1, "multipart/form-data");
+        try {
+            client.post(context, url, headers, params,
+                    null, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            listener.onSuccess(responseString);
+                            Log.d("NetworkManager", "put Success");
+                        }
 
-        client.put(context, URL_PARTYS + "/:" + PropertyManager.getInstance().getUser().id + "/photo", headers, entity,
-                "multipart/form-data", new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "put Success");
-            }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            listener.onFail(statusCode);
+                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                        }
 
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
-                Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
-            }
-
-        });
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {

@@ -34,8 +34,6 @@ public class PropertyManager {
     private static final String FIELD_ID = "id";
     private static final String FIELD_TOKEN = "token";
     private static final String FIELD_EMAIL = "email";
-    private static final String FIELD_LOCATION = "location";
-    private static final String FIELD_THEME = "navi_theme";
 
     public void setFacebookId(String id) {
         mEditor.putString(FIELD_FACEBOOK_ID, id);
@@ -78,24 +76,6 @@ public class PropertyManager {
         this.user = user;
         setId(user.id);
         setEmail(user.email);
-    }
-
-    public void setLocation(String location) {
-        mEditor.putString(FIELD_LOCATION, location);
-        mEditor.commit();
-    }
-
-    public String getLocation() {
-        return mPrefs.getString(FIELD_LOCATION, "");
-    }
-
-    public void setTheme(String theme) {
-        mEditor.putString(FIELD_THEME, theme);
-        mEditor.commit();
-    }
-
-    public String getTheme() {
-        return mPrefs.getString(FIELD_THEME, "");
     }
 
     public boolean isLogin() {

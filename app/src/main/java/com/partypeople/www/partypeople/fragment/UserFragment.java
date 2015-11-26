@@ -19,7 +19,7 @@ import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
 import java.util.ArrayList;
@@ -86,9 +86,9 @@ public class UserFragment extends Fragment {
     }
 
     private void initData() {
-        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartyResult>() {
+        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartysResult>() {
             @Override
-            public void onSuccess(PartyResult result) {
+            public void onSuccess(PartysResult result) {
                 for (int i=0 ;i<result.data.size(); i++) {
                     partyList.add(result.data.get(i));
                     mAdapter.add(result.data.get(i));

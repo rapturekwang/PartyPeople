@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,8 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
-import com.partypeople.www.partypeople.manager.PropertyManager;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -95,31 +96,40 @@ public class MakePartyThreeFragment extends Fragment {
                         CheckBox chbox = (CheckBox)view.findViewById(R.id.chbox_policy);
                         if(!chbox.isChecked()) {
                             Toast.makeText(getContext(), "약관에 동의해 주십시오", Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         chbox = (CheckBox)view.findViewById(R.id.chbox_agree);
                         if(!chbox.isChecked()) {
                             Toast.makeText(getContext(), "모금 사항에 동의하여 주십시오.", Toast.LENGTH_SHORT).show();
+                            return;
                         }
 
-                        NetworkManager.getInstance().postJson(getContext(), activity.party, new NetworkManager.OnResultListener<String>() {
+                        NetworkManager.getInstance().postJson(getContext(), activity.party, new NetworkManager.OnResultListener<PartyResult>() {
                             @Override
-                            public void onSuccess(String result) {
-//                                if(activity.party.imageFile != null) {
-//                                    NetworkManager.getInstance().putGroupImage(getContext(), activity.party.imageFile, new NetworkManager.OnResultListener<String>() {
-//                                        @Override
-//                                        public void onSuccess(String result) {
-//                                            Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
-//                                        }
-//
-//                                        @Override
-//                                        public void onFail(int code) {
-//                                            Toast.makeText(getActivity(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
-//                                            return;
-//                                        }
-//                                    });
-//                                }else {
+                            public void onSuccess(PartyResult result) {
+                                if (activity.party.imageFile != null) {
+                                    Log.d("MakePartyThree", result.data.id);
+                                    NetworkManager.getInstance().putGroupImage(getContext(), activity.party.imageFile, result.data.id, new NetworkManager.OnResultListener<String>() {
+                                        @Override
+                                        public void onSuccess(String result) {
+                                            Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                    });
+                                } else {
                                     Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
-//                                }
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
                             }
 
                             @Override
@@ -128,10 +138,6 @@ public class MakePartyThreeFragment extends Fragment {
                                 return;
                             }
                         });
-
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {

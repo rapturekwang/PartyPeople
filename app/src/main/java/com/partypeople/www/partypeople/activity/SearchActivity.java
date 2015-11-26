@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ThemeItemView;
@@ -38,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     GridView gridView;
     gridAdapter mAdapter;
     PropertyManager propertyManager = PropertyManager.getInstance();
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        actionBar.setHomeAsUpIndicator(R.drawable.back);
         actionBar.setDisplayShowTitleEnabled(false);
 
         Button btn = (Button)findViewById(R.id.btn_next);
@@ -55,18 +57,33 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SparseBooleanArray array = gridView.getCheckedItemPositions();
-                List<String> pathList = new ArrayList<String>();
+                int[] theme = new int[array.size()];
                 for (int index = 0; index < array.size(); index++) {
                     int position = array.keyAt(index);
                     if(array.get(position)) {
-                        String s = "" + (position+1);
-                        pathList.add(s);
+                        theme[index] = position;
                     }
                 }
-                propertyManager.setTheme(pathList.toString());
-//                propertyManager.setLocation(pathList);
 
-                Toast.makeText(SearchActivity.this, "테마 : " + pathList + "지역 : " + propertyManager.getLocation(), Toast.LENGTH_SHORT).show();
+                User user = propertyManager.getUser();
+                user.theme = theme;
+                user.favorite_address = location;
+                propertyManager.setUser(user);
+                user = new User();
+                user.theme = theme;
+                user.favorite_address = location;
+                NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+
                 Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -120,14 +137,14 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setDateSpinner() {
         Spinner spinner = (Spinner)findViewById(R.id.spinner_city);
-        mCityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        mCityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCityAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item);
+        mCityAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(mCityAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
-                    propertyManager.setLocation(mCityAdapter.getItem(position));
+                    location = mCityAdapter.getItem(position);
                 }
                 Area area;
                 mGuAdapter.clear();
@@ -160,14 +177,14 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         spinner = (Spinner)findViewById(R.id.spinner_gu);
-        mGuAdapter = new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_spinner_item);
-        mGuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGuAdapter = new ArrayAdapter<String>(SearchActivity.this, R.layout.spinner_item);
+        mGuAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(mGuAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
-                    propertyManager.setLocation(propertyManager.getLocation() + " " + mGuAdapter.getItem(position));
+                    location = location + " " + mGuAdapter.getItem(position);
                 }
             }
 
@@ -180,22 +197,21 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public class gridAdapter extends BaseAdapter {
-        private String[] GRID_DATA = new String[] {
-                "테마1",
-                "테마2",
-                "테마3",
-                "테마4",
-                "테마5"
-        };
+        private int[] ids = {R.drawable.theme_0,
+                R.drawable.theme_1,
+                R.drawable.theme_2,
+                R.drawable.theme_3,
+                R.drawable.theme_4,
+                R.drawable.theme_5};
 
         @Override
         public int getCount() {
-            return GRID_DATA.length;
+            return ids.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return GRID_DATA[position];
+            return ids[position];
         }
 
         @Override
@@ -211,9 +227,8 @@ public class SearchActivity extends AppCompatActivity {
             } else {
                 view = (ThemeItemView) convertView;
             }
-            view.setGridItem(GRID_DATA[position]);
-
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
+            view.setGridItem(ids[position]);
+//            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
 
             return view;
         }

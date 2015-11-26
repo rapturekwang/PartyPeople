@@ -98,7 +98,6 @@ public class SplashActivity extends AppCompatActivity {
             NetworkManager.getInstance().getMyId(this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<UserResult>() {
                 @Override
                 public void onSuccess(UserResult result) {
-                    PropertyManager.getInstance().setToken(result.token);
                     PropertyManager.getInstance().setUser(result.data);
                 }
 

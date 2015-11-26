@@ -35,7 +35,8 @@ public class SignupFragment extends Fragment {
     private String name;
     Validate validate = Validate.getInstance();
     EditText email, password, idName;
-    Button signup, login;
+    ImageView signup;
+    TextView login;
     PropertyManager propertyManager = PropertyManager.getInstance();
 
     public static SignupFragment newInstance(String name) {
@@ -128,7 +129,7 @@ public class SignupFragment extends Fragment {
             }
         });
 
-        signup = (Button) view.findViewById(R.id.btn_signup);
+        signup = (ImageView) view.findViewById(R.id.btn_signup);
         signup.setEnabled(false);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +162,7 @@ public class SignupFragment extends Fragment {
             }
         });
 
-        login = (Button)view.findViewById(R.id.btn_login);
+        login = (TextView)view.findViewById(R.id.btn_login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

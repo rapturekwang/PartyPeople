@@ -4,12 +4,10 @@ package com.partypeople.www.partypeople.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,10 +15,10 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.data.PartysResult;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
-import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
 import java.util.ArrayList;
@@ -90,9 +88,9 @@ public class MainTabFragment extends Fragment {
             case 1:
                 if(PropertyManager.getInstance().isLogin()) {
                     MainTabHeaderView header = new MainTabHeaderView(getContext());
+                    User user = PropertyManager.getInstance().getUser();
+                    header.setItemData(user.favorite_address, user.theme);
                     listView.addHeaderView(header);
-                    List<String> themeList = new ArrayList<String>();
-                    Log.d("MainTabFragment", PropertyManager.getInstance().getTheme());
                     initData();
                     warningView.setVisibility(View.GONE);
                 } else {
@@ -114,9 +112,9 @@ public class MainTabFragment extends Fragment {
     }
 
     private void initData() {
-        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartyResult>() {
+        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartysResult>() {
             @Override
-            public void onSuccess(PartyResult result) {
+            public void onSuccess(PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {
                     partyList.add(result.data.get(i));
                     mAdapter.add(result.data.get(i));

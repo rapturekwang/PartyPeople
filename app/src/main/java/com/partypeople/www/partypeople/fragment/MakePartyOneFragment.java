@@ -202,7 +202,7 @@ public class MakePartyOneFragment extends Fragment {
     }
 
     private Uri getTempUri() {
-        mSavedFile = new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
+        mSavedFile = new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000+".jpg");
 
         return Uri.fromFile(mSavedFile);
     }
@@ -456,22 +456,16 @@ public class MakePartyOneFragment extends Fragment {
     }
 
     public class gridAdapter extends BaseAdapter {
-        private String[] GRID_DATA = new String[] {
-                "테마1",
-                "테마2",
-                "테마3",
-                "테마4",
-                "테마5"
-        };
+        private int[] ids = {R.drawable.theme_1, R.drawable.theme_2, R.drawable.theme_3, R.drawable.theme_4, R.drawable.theme_5};
 
         @Override
         public int getCount() {
-            return GRID_DATA.length;
+            return ids.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return GRID_DATA[position];
+            return ids[position];
         }
 
         @Override
@@ -487,9 +481,9 @@ public class MakePartyOneFragment extends Fragment {
             } else {
                 view = (ThemeItemView) convertView;
             }
-            view.setGridItem(GRID_DATA[position]);
+            view.setGridItem(ids[position]);
 
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
+//            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
 
             return view;
         }

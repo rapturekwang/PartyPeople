@@ -1,116 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.partypeople.www.partypeople.activity.LoginActivity">
+    android:layout_height="match_parent"
+    tools:context="com.partypeople.www.partypeople.activity.LoginActivity"
+    android:background="@drawable/login_bg"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="회원가입 및 로그인"
+        android:id="@+id/textView29"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"
+        android:textSize="17sp"
+        android:textColor="#ffffff" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="건너뛰기"
         android:id="@+id/btn_skip"
-        android:background="@null"
         android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/linearLayout6"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        android:layout_marginTop="24dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView14"
+        android:src="@drawable/mask"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="167dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_facebook"
+        android:background="@drawable/facebook"
+        android:layout_marginTop="110dp"
+        android:layout_below="@+id/imageView14"
+        android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/linearLayout6" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/imageView14"
-        android:layout_below="@+id/btn_skip"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/my_icon"
-        android:layout_above="@+id/btn_facebook" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login with facebook"
-        android:id="@+id/btn_facebook"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/btn_skip" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login with kakao"
         android:id="@+id/btn_kakao"
         android:layout_below="@+id/btn_facebook"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/btn_facebook" />
+        android:layout_alignEnd="@+id/btn_facebook"
+        android:layout_marginTop="10dp"
+        android:layout_alignStart="@+id/btn_facebook"
+        android:background="@drawable/kakao" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_kakao"
+        android:id="@+id/linearLayout6"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout6">
+        android:layout_alignParentEnd="true"
+        android:paddingTop="11dp">
 
-        <Button
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="회원가입"
             android:id="@+id/btn_signup"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/signup"
+            android:layout_marginRight="6.5dp" />
 
-        <Button
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="로그인"
             android:id="@+id/btn_login"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/login"
+            android:layout_marginLeft="6.5dp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="회원가입을 하면 PartyPeople의"
+        android:text="회원가입을 하면 파티피플의 서비스 약관, 개인정보"
         android:id="@+id/textView30"
         android:gravity="center_horizontal"
         android:layout_above="@+id/text_link1"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="12sp"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="서비스 이용약관"
+        android:text="보호정책,"
         android:id="@+id/text_link1"
         android:layout_above="@+id/text_message"
         android:layout_toStartOf="@+id/text_name"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" 및"
+        android:text=" 참여자 환불정책, "
         android:id="@+id/text_name"
         android:layout_above="@+id/text_message"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" 개인정보보호정책"
+        android:text="이용약관에"
         android:id="@+id/text_link2"
         android:layout_above="@+id/text_message"
         android:layout_toEndOf="@+id/text_name"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="에 동의하게 됩니다"
+        android:text="동의하게 됩니다"
         android:id="@+id/text_message"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="12dp" />
+
 </RelativeLayout>
