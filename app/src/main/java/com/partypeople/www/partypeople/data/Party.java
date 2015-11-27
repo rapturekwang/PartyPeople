@@ -30,7 +30,7 @@ public class Party implements Serializable{
     public String start_at;
     public String end_at;
     public String pay_end_at;
-    public int[] theme;
+    public int[] themes;
     public String location;
     @SerializedName("private")
     public boolean privated;

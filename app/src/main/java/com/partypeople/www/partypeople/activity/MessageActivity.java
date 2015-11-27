@@ -26,7 +26,7 @@ public class MessageActivity extends AppCompatActivity {
     Fragment[] list = {null,
             MessageFragment.newInstance("two"),
             ReplyFragment.newInstance("three")};
-    int currentFragment;
+    public int currentFragment;
     TabLayout tabs;
     ViewPager pager;
     Toolbar toolbar;

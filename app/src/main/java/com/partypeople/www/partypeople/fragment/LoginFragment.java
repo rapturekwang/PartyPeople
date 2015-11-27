@@ -39,7 +39,7 @@ public class LoginFragment extends Fragment {
     private String name;
     Validate validate = Validate.getInstance();
     EditText email, password;
-    Button login;
+    ImageView login;
 
     public static LoginFragment newInstance(String name) {
         LoginFragment fragment = new LoginFragment();
@@ -122,7 +122,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        login = (Button)view.findViewById(R.id.btn_login);
+        login = (ImageView)view.findViewById(R.id.btn_login);
         login.setEnabled(false);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +171,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        Button btn = (Button)view.findViewById(R.id.btn_signup);
+        TextView btn = (TextView)view.findViewById(R.id.btn_signup);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

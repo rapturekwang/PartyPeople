@@ -22,6 +22,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ThemeItemView;
@@ -65,17 +66,13 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
 
-                User user = propertyManager.getUser();
-                user.theme = theme;
+                User user = new User();
+                user.themes = theme;
                 user.favorite_address = location;
-                propertyManager.setUser(user);
-                user = new User();
-                user.theme = theme;
-                user.favorite_address = location;
-                NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<String>() {
+                NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                     @Override
-                    public void onSuccess(String result) {
-
+                    public void onSuccess(UserResult result) {
+                        propertyManager.setUser(result.data);
                     }
 
                     @Override

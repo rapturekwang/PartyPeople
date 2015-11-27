@@ -127,8 +127,8 @@ public class MakePartyOneFragment extends Fragment {
                 if(nameView.getText().toString().equals("")) warningMessage="모임 이름을 입력해 주세요.";
                 if(warningMessage.equals("")) {
                     activity.party.name = nameView.getText().toString();
-                    activity.party.theme = new int[1];
-                    activity.party.theme[0] = theme;
+                    activity.party.themes = new int[1];
+                    activity.party.themes[0] = theme;
                     activity.party.location = locationView.getText().toString();
                     activity.party.description = desView.getText().toString();
                     activity.party.privated = switchCompat.isChecked();

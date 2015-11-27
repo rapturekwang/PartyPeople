@@ -1,8 +1,10 @@
 package com.partypeople.www.partypeople.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class ReplyFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String name;
+    EditText editText;
 
     public static ReplyFragment newInstance(String name) {
         ReplyFragment fragment = new ReplyFragment();
@@ -36,23 +39,30 @@ public class ReplyFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reply, container, false);
 
-//        EditText editText = (EditText)view.findViewById(R.id.edit_bank);
-//        editText.setText("");
+        editText = (EditText)view.findViewById(R.id.edit_reply);
+        editText.setText("");
 
         final MessageActivity activity = (MessageActivity)getActivity();
 
-//        Button btn = (Button)view.findViewById(R.id.btn_send);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(), "보내기 완료", Toast.LENGTH_SHORT).show();
-//                activity.onBackPressed();
-//            }
-//        });
+        Button btn = (Button)view.findViewById(R.id.btn_send);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "보내기 완료", Toast.LENGTH_SHORT).show();
+                activity.currentFragment--;
+                activity.getSupportFragmentManager().popBackStack();
+                editText.setText("");
+            }
+        });
 
 //        btn = (Button)view.findViewById(R.id.btn_cancel);
 //        btn.setOnClickListener(new View.OnClickListener() {

@@ -64,7 +64,7 @@ public class FindPasswordFragment extends Fragment {
             }
         });
 
-        Button btn = (Button)view.findViewById(R.id.btn_send);
+        ImageView btn = (ImageView)view.findViewById(R.id.btn_send);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

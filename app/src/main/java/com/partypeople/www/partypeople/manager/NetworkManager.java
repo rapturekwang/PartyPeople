@@ -270,7 +270,7 @@ public class NetworkManager {
         });
     }
 
-    public void putUser(Context context, User user, final OnResultListener<String> listener ) {
+    public void putUser(Context context, User user, final OnResultListener<UserResult> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         UserResult userResult = new UserResult();
@@ -282,7 +282,8 @@ public class NetworkManager {
                     new StringEntity(gson.toJson(user, User.class), "UTF-8"), "application/json", new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                            listener.onSuccess(responseString);
+                            UserResult result = gson.fromJson(responseString, UserResult.class);
+                            listener.onSuccess(result);
                             Log.d("NetworkManager", "put Success" + responseString);
                         }
 

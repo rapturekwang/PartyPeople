@@ -89,7 +89,7 @@ public class MainTabFragment extends Fragment {
                 if(PropertyManager.getInstance().isLogin()) {
                     MainTabHeaderView header = new MainTabHeaderView(getContext());
                     User user = PropertyManager.getInstance().getUser();
-                    header.setItemData(user.favorite_address, user.theme);
+                    header.setItemData(user.favorite_address, user.themes);
                     listView.addHeaderView(header);
                     initData();
                     warningView.setVisibility(View.GONE);

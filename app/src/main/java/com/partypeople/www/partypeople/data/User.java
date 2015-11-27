@@ -15,7 +15,7 @@ public class User implements Serializable{
     public String address;
     public String favorite_address;
     public double tel;
-    public int[] theme;
+    public int[] themes;
 //    public Role role;
     public boolean has_photo;
     public String photo;
