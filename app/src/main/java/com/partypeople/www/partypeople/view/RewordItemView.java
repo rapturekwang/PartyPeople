@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,14 @@ import com.partypeople.www.partypeople.data.PayMethod;
 public class RewordItemView extends RelativeLayout implements Checkable {
     boolean isCheck = false;
     EditText priceView, rewordView;
+    ImageView numView;
+    int[] ids = {
+            R.drawable.contain_0,
+            R.drawable.contain_1,
+            R.drawable.contain_2,
+            R.drawable.contain_3,
+            R.drawable.contain_4,
+    };
 
     public RewordItemView(Context context) {
         super(context);
@@ -50,13 +59,13 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         inflate(getContext(), R.layout.view_reword_item, this);
         priceView = (EditText)findViewById(R.id.price);
         rewordView = (EditText)findViewById(R.id.reword);
-        //numberView = (TextView)findViewById(R.id.number);
+        numView = (ImageView)findViewById(R.id.image_num);
     }
 
     public void setItemData(PayMethod payMethod, int num) {
         priceView.setText(payMethod.price+"원");
         rewordView.setText(payMethod.title);
-        //numberView.setText(num);
+        numView.setImageResource(ids[num]);
     }
 
     public PayMethod getItemData() {

@@ -67,11 +67,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             progressView.setText(progress+"% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
-            //if(data.has_photo) {
             ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + data.photo, imageParty, options);
-//            } else {
-//                imageParty.setImageResource(R.drawable.demo_img2);
-//            }
         }
 
         private void init(View view) {

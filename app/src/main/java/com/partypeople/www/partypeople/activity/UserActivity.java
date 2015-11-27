@@ -18,7 +18,7 @@ import com.partypeople.www.partypeople.utils.Constants;
 
 public class UserActivity extends AppCompatActivity {
 
-    Intent intent;
+    User user;
     FragmentTabHost tabHost;
     TabWidget tabWidget;
     @Override
@@ -38,7 +38,8 @@ public class UserActivity extends AppCompatActivity {
             tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabview), UserFragment.class, bundle);
         }
 
-        intent = getIntent();
+        Intent intent = getIntent();
+        user = (User)intent.getSerializableExtra("user");
     }
 
     public void setTabCurrent(String tag) {
@@ -54,7 +55,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public User getUser() {
-        User user = (User)intent.getSerializableExtra("user");
         return user;
     }
 

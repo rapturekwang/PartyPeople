@@ -39,6 +39,7 @@ public class CommentView extends RelativeLayout{
     public void setItemData(String test, int num) {
 //        priceView.setText(payMethod.price);
 //        rewordView.setText(payMethod.title);
-        commentView.setText("다음에 또 파티 열리면 좋겠어요\n주최자가 엄청 친절하고 맛있는 음식도 많아서 좋았어요");
+//        commentView.setText("다음에 또 파티 열리면 좋겠어요\n주최자가 엄청 친절하고 맛있는 음식도 많아서 좋았어요");
+        commentView.setText(test);
     }
 }

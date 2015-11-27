@@ -51,13 +51,14 @@ public class Party implements Serializable{
     public String bank;
     public double account;
     public double phone;
-//    public JSONObject owner;
+    public User owner;
 //    public List<> likes;
     public List<Member> members;
     public int member_count;
     public boolean auto_approval;
     public String enrollment_code;
     public boolean featured;
+    public List<String> comments;
 
     public String getJsonString() {
         JSONObject jsonObject = new JSONObject();

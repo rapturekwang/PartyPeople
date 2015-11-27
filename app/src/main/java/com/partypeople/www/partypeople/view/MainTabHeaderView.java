@@ -3,6 +3,7 @@ package com.partypeople.www.partypeople.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,10 +50,13 @@ public class MainTabHeaderView extends LinearLayout {
 
         locationView.setText(location);
         if(theme != null) {
-//            Toast.makeText(getContext(), theme[0], Toast.LENGTH_SHORT).show();
-            for(int i=0; i<theme.length; i++) {
-                Log.d("MainTab", ""+theme[i]);
-                listTheme.get(i).setImageResource(ids[theme[i]]);
+            for(int i=0; i<4; i++) {
+                if(i<theme.length) {
+                    listTheme.get(i).setImageResource(ids[theme[i]]);
+                }
+                else {
+                    listTheme.get(i).setVisibility(View.INVISIBLE);
+                }
             }
         }
     }

@@ -123,21 +123,6 @@ public class MainTabFragment extends Fragment {
             @Override
             public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {
-//                    if(result.data.get(i).has_photo) {
-//                        NetworkManager.getInstance().getGroupImage(getContext(), result.data.get(i).id, new NetworkManager.OnResultListener<String>() {
-//                            @Override
-//                            public void onSuccess(String photo) {
-//                                InputStream stream = new ByteArrayInputStream(photo.getBytes());
-//                                bitmap = BitmapFactory.decodeStream(stream);
-//                            }
-//
-//                            @Override
-//                            public void onFail(int code) {
-//                                return;
-//                            }
-//                        });
-//                        result.data.get(i).image = bitmap;
-//                    }
                     partyList.add(result.data.get(i));
                     mAdapter.add(result.data.get(i));
                 }

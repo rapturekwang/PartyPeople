@@ -49,7 +49,7 @@ public class ParticipateActivity extends AppCompatActivity {
             PayMethod payMethod = new PayMethod();
             payMethod.price = 10000;
             payMethod.title = "FREE 음료 1개, 스낵";
-            mAdapter.add(payMethod);
+            mAdapter.add(payMethod, false);
         }
     }
 

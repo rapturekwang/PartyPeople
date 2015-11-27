@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.PayMethod;
@@ -56,11 +57,12 @@ public class DetailTwoFragment extends Fragment {
     }
 
     private void initData() {
-        for(int i=0; i<3; i++) {
-            PayMethod payMethod = new PayMethod();
-            payMethod.price = 10000;
-            payMethod.title = "FREE 음료 1개, 스낵";
-            mAdapter.add(payMethod);
+        PartyDetailActivity activity = (PartyDetailActivity)getActivity();
+        for(int i=0; i<activity.party.pay_method.size(); i++) {
+//            PayMethod payMethod = new PayMethod();
+//            payMethod.price = 10000;
+//            payMethod.title = "FREE 음료 1개, 스낵";
+            mAdapter.add(activity.party.pay_method.get(i), false);
         }
     }
 }

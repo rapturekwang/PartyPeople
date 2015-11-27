@@ -3,7 +3,9 @@ package com.partypeople.www.partypeople.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 
+import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.PayMethod;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.RewordItemView;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 public class RewordViewAdapter extends BaseAdapter{
     public List<PayMethod> list = new ArrayList<PayMethod>();
+    boolean editable = true;
 
     @Override
     public int getCount() {
@@ -34,8 +37,9 @@ public class RewordViewAdapter extends BaseAdapter{
         return position;
     }
 
-    public void add(PayMethod item) {
+    public void add(PayMethod item, boolean edit) {
         list.add(item);
+        editable = edit;
         notifyDataSetChanged();
     }
 
@@ -47,7 +51,11 @@ public class RewordViewAdapter extends BaseAdapter{
         } else {
             view = (RewordItemView)convertView;
         }
-        view.setItemData(list.get(position), 0);
+        EditText edit = (EditText)view.findViewById(R.id.price);
+        edit.setFocusableInTouchMode(editable);
+        edit = (EditText)view.findViewById(R.id.reword);
+        edit.setFocusableInTouchMode(editable);
+        view.setItemData(list.get(position), position);
         return view;
     }
 }

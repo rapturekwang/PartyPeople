@@ -15,21 +15,25 @@ import java.util.List;
  * Created by Tacademy on 2015-11-23.
  */
 public class CommentAdapter extends BaseAdapter{
-    //public List<PayMethod> list = new ArrayList<PayMethod>();
+    public List<String> list = new ArrayList<String>();
 
     @Override
     public int getCount() {
-        return 5;
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void add(String comment) {
+        list.add(comment);
     }
 
     @Override
@@ -40,7 +44,7 @@ public class CommentAdapter extends BaseAdapter{
         } else {
             view = (CommentView)convertView;
         }
-        view.setItemData("test", 0);
+        view.setItemData(list.get(position), 0);
         return view;
     }
 }

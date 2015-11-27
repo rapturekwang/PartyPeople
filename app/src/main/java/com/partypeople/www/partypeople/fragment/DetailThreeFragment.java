@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.CommentAdapter;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 
@@ -44,6 +47,19 @@ public class DetailThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_three, container, false);
+
+        final EditText editText = (EditText)view.findViewById(R.id.edit_comment);
+        ImageView imgSendView = (ImageView)view.findViewById(R.id.image_btn_send);
+        imgSendView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.add(editText.getText().toString());
+                PartyDetailActivity activity = (PartyDetailActivity)getActivity();
+                activity.party.comments.add(editText.getText().toString());
+                activity.setPagerHeight(228 + 200*activity.party.comments.size());
+                editText.setText("");
+            }
+        });
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new CommentAdapter();

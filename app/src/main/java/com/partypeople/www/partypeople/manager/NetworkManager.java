@@ -252,10 +252,12 @@ public class NetworkManager {
         });
     }
 
-    public void getUser(Context context, final OnResultListener<User[]> listener) {
+    public void getUser(Context context, String param1, final OnResultListener<User> listener) {
         RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
-        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+        client.get(context, URL_USERS + "/" + param1, headers, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
@@ -265,8 +267,8 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get Success " + responseString);
-                User[] result = gson.fromJson(responseString, User[].class);
-                listener.onSuccess(result);
+                UserResult result = gson.fromJson(responseString, UserResult.class);
+                listener.onSuccess(result.data);
             }
         });
     }

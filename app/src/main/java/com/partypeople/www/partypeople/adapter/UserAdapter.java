@@ -28,6 +28,7 @@ public class UserAdapter extends BaseAdapter {
 
     ArrayList<Party> items = new ArrayList<Party>();
     Context mContext;
+    User user;
     private static final int VIEW_TYPE_COUNT = 3;
     private static final int SUMMARY_VIEW = 0;
     private static final int TAB_WIDGET_VIEW = 1;
@@ -42,7 +43,7 @@ public class UserAdapter extends BaseAdapter {
         currentIndex = index;
         mTabListener = listener;
 
-        User user = ((UserActivity)mContext).getUser();
+        user = ((UserActivity)mContext).getUser();
         Log.d("UserAdapter", user.name);
     }
 
@@ -103,6 +104,9 @@ public class UserAdapter extends BaseAdapter {
                         }
                     });
                     btn = (ImageView)convertView.findViewById(R.id.btn_modify);
+                    if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
+                        btn.setVisibility(View.INVISIBLE);
+                    }
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -126,10 +130,10 @@ public class UserAdapter extends BaseAdapter {
                     });
 
                     TextView textView = (TextView)convertView.findViewById(R.id.text_name);
-                    textView.setText(PropertyManager.getInstance().getUser().name);
+                    textView.setText(user.name);
 
                     textView = (TextView)convertView.findViewById(R.id.text_address);
-                    textView.setText(PropertyManager.getInstance().getUser().email);
+                    textView.setText(user.address);
                 }
                 return convertView;
             case 1:

@@ -18,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.popup.SharePopupWindow;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -35,6 +37,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     ImageView imageView;
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
+    public Party party;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +72,10 @@ public class PartyDetailActivity extends AppCompatActivity {
                         setPagerHeight(2100);
                         break;
                     case 1:
-                        setPagerHeight(700);
+                        setPagerHeight(108 + 197*party.pay_method.size());
                         break;
                     case 2:
-                        setPagerHeight(1450);
+                        setPagerHeight(228 + 240*party.comments.size());
                         break;
                 }
             }
@@ -117,19 +120,24 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
+//        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + data.photo, imageParty, options);
+
         Intent intent = getIntent();
-        Party party = (Party)intent.getSerializableExtra("party");
+        party = (Party)intent.getSerializableExtra("party");
 
         titilView.setText(party.name);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
-        locationView.setText(party.location);
-        priceView.setText(party.expect_pay+"원");
-        //totalPriceView.setText();
-        progressView.setText("50%");
-        progressBar.setProgress(50);
-        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.end_at) + "일 남음");
-//        descriptionView.setText(party.description);
-//        imageView
+        String[] array = party.location.split(" ");
+        if(array.length==1)
+            locationView.setText(array[0]);
+        else
+            locationView.setText(array[0] + " " + array[1]);
+        priceView.setText(party.pay_method.get(0).price+"원");
+        int progress = (int)((party.members.size()*party.pay_method.get(0).price)/party.expect_pay*100);
+        progressView.setText(progress+"% 모금됨");
+        progressBar.setProgress(progress);
+        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
+        totalPriceView.setText((int)party.expect_pay+"원");
     }
 
     private void initView() {
@@ -140,7 +148,6 @@ public class PartyDetailActivity extends AppCompatActivity {
         totalPriceView = (TextView)findViewById(R.id.text_total_price);
         progressView = (TextView)findViewById(R.id.text_progress);
         duedateView = (TextView)findViewById(R.id.text_duedate);
-        //descriptionView = (TextView)findViewById(R.id.text_des);
         imageView = (ImageView)findViewById(R.id.image_party);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
     }

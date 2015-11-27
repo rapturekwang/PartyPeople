@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="금요일 저녁 한적한 2층집에서 개최되는 파티로 누구든지 환영합니다~! 친구들을 데려오셔도 되고 먹을것 마실것 마음껏 들고 오셔도 되요!!\n시작 시간 보다 조금 일찍오셔두 도빈디ㅏ ;)\n다양한 친구들과 함께 불금을 만들어보아요!!\nDRESS CODE - RED and WHITE"
-            android:id="@+id/textView52"
+            android:id="@+id/text_des"
             android:layout_gravity="center_horizontal"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
@@ -69,7 +69,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="100dp"
-                android:layout_marginTop="17dp" />
+                android:layout_marginTop="17dp"
+                android:visibility="invisible" />
 
             <ImageView
                 android:layout_width="43dp"
@@ -78,7 +79,8 @@
                 android:src="@drawable/profile_img"
                 android:layout_alignTop="@+id/image_parti1"
                 android:layout_toEndOf="@+id/image_parti1"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible" />
 
             <ImageView
                 android:layout_width="43dp"
@@ -87,7 +89,8 @@
                 android:src="@drawable/profile_img"
                 android:layout_alignTop="@+id/image_parti1"
                 android:layout_toEndOf="@+id/image_parti2"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible" />
 
             <ImageView
                 android:layout_width="43dp"
@@ -96,16 +99,18 @@
                 android:src="@drawable/profile_img"
                 android:layout_alignTop="@+id/image_parti1"
                 android:layout_toEndOf="@+id/image_parti3"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView23"
+                android:id="@+id/image_parti_plus"
                 android:layout_toEndOf="@+id/image_parti4"
                 android:layout_centerInParent="true"
                 android:src="@drawable/detail_plus"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <View
@@ -134,7 +139,7 @@
             <ImageView
                 android:layout_width="88dp"
                 android:layout_height="88dp"
-                android:id="@+id/imageView2"
+                android:id="@+id/image_host"
                 android:src="@drawable/profile_img"
                 android:layout_below="@+id/text_host"
                 android:layout_alignParentStart="true"
@@ -144,7 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="정광희"
-                android:id="@+id/textView3"
+                android:id="@+id/text_host_name"
                 android:gravity="center_horizontal"
                 android:layout_below="@+id/text_host"
                 android:layout_alignParentStart="true"
@@ -175,8 +180,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView22"
-                android:layout_below="@+id/textView3"
-                android:layout_alignStart="@+id/textView3"
+                android:layout_below="@+id/text_host_name"
+                android:layout_alignStart="@+id/text_host_name"
                 android:src="@drawable/detail_mask"
                 android:layout_marginTop="9dp" />
 
@@ -193,7 +198,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView25"
+                android:id="@+id/img_btn_userinfo"
                 android:layout_below="@+id/textView5"
                 android:layout_alignStart="@+id/imageView22"
                 android:src="@drawable/btn_host_info"
@@ -203,7 +208,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#e9e9e9"
-                android:layout_below="@+id/imageView25"
+                android:layout_below="@+id/img_btn_userinfo"
                 android:layout_marginTop="26dp" />
 
         </RelativeLayout>
