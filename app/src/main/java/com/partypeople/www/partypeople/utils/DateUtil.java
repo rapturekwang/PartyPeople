@@ -59,11 +59,21 @@ public class DateUtil {
         return day;
     }
 
-    public String changeToViewFormat(String date) {
-        if(date == null)
+    public String changeToViewFormat(String start, String end) {
+        if(start==null || end == null)
             return null;
-        long d = changeStringToLong(date);
-        String result = DateFormat.format("MM월 dd일 / HH:mm - HH:mm", d).toString();
+        String result;
+        if(getDiffDay(start, end)==0) {
+            long d = changeStringToLong(start);
+            result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
+            d = changeStringToLong(end);
+            result += DateFormat.format(" - HH:mm", d).toString();
+        } else {
+            long d = changeStringToLong(start);
+            result = DateFormat.format("MM월 dd일", d).toString();
+            d = changeStringToLong(end);
+            result += DateFormat.format(" - MM월 dd일", d).toString();
+        }
         return result;
     }
 

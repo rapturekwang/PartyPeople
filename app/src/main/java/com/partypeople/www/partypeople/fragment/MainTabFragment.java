@@ -2,6 +2,8 @@ package com.partypeople.www.partypeople.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +23,10 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +45,7 @@ public class MainTabFragment extends Fragment {
     ListView listView;
     MainFragmentAdapter mAdapter;
     String id;
+    Bitmap bitmap;
 
     public static MainTabFragment newInstance(int index) {
         MainTabFragment fragment = new MainTabFragment();
@@ -114,8 +121,23 @@ public class MainTabFragment extends Fragment {
     private void initData() {
         NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartysResult>() {
             @Override
-            public void onSuccess(PartysResult result) {
+            public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {
+//                    if(result.data.get(i).has_photo) {
+//                        NetworkManager.getInstance().getGroupImage(getContext(), result.data.get(i).id, new NetworkManager.OnResultListener<String>() {
+//                            @Override
+//                            public void onSuccess(String photo) {
+//                                InputStream stream = new ByteArrayInputStream(photo.getBytes());
+//                                bitmap = BitmapFactory.decodeStream(stream);
+//                            }
+//
+//                            @Override
+//                            public void onFail(int code) {
+//                                return;
+//                            }
+//                        });
+//                        result.data.get(i).image = bitmap;
+//                    }
                     partyList.add(result.data.get(i));
                     mAdapter.add(result.data.get(i));
                 }

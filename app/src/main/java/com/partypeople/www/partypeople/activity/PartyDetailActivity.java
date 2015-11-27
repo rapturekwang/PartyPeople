@@ -121,7 +121,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         Party party = (Party)intent.getSerializableExtra("party");
 
         titilView.setText(party.name);
-        dateView.setText(dateUtil.changeToViewFormat(party.end_at));
+        dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
         locationView.setText(party.location);
         priceView.setText(party.expect_pay+"원");
         //totalPriceView.setText();

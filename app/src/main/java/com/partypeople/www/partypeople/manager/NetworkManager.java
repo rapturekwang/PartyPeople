@@ -85,6 +85,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
+    public static final String URL_SERVER = "http://61.100.5.61:3000";
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
@@ -307,7 +308,7 @@ public class NetworkManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-//        File photo = param1;
+
         String url = URL_PARTYS + "/" + param2 + "/photo";
         Log.d("NetworkManager", url);
 
@@ -330,6 +331,29 @@ public class NetworkManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void getGroupImage(Context context, String param1, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+
+        String url = URL_PARTYS + "/" + param1 + "/photo";
+        Log.d("NetworkManager", url);
+
+        client.get(context, url, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "get Success");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+            }
+        });
     }
 
     public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {

@@ -1,5 +1,7 @@
 package com.partypeople.www.partypeople.data;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 import com.partypeople.www.partypeople.utils.JSONParsing;
 
@@ -17,6 +19,14 @@ import java.util.List;
  * Created by kwang on 15. 11. 8..
  */
 public class Party implements Serializable{
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
+    }
+
     public boolean bookmark;
 
     public String id;
@@ -25,6 +35,7 @@ public class Party implements Serializable{
     public boolean has_photo;
     public String photo;
     public File imageFile;
+    public Bitmap image;
     public String created_at;
     public String deleted_at;
     public String start_at;
@@ -42,7 +53,7 @@ public class Party implements Serializable{
     public double phone;
 //    public JSONObject owner;
 //    public List<> likes;
-//    public List<> members;
+    public List<Member> members;
     public int member_count;
     public boolean auto_approval;
     public String enrollment_code;
