@@ -26,8 +26,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
@@ -46,13 +49,35 @@ public class MainActivity extends AppCompatActivity implements
     FrameLayout layout;
     MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
+    DisplayImageOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageForEmptyUri(R.drawable.ic_empty)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .build();
+
         layout = (FrameLayout)findViewById(R.id.container);
+
+        NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+            @Override
+            public void onSuccess(final User result) {
+                user = result;
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -107,12 +132,15 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if(propertyManager.isLogin()) {
                     Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                    intent.putExtra("user", propertyManager.getUser());
+                    intent.putExtra("user", user);
                     startActivity(intent);
                     mDrawer.closeDrawer(GravityCompat.START);
                 }
             }
         });
+
+        ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
+//        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + propertyManager.getUser().id + "/photo", imgView, options);
 
         Button btn = (Button)header.findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.user :
                 intent = new Intent(MainActivity.this, UserActivity.class);
-                intent.putExtra("user", propertyManager.getUser());
+                intent.putExtra("user", user);
                 startActivity(intent);
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;

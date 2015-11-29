@@ -63,7 +63,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             else
                 locationView.setText(array[0] + " " + array[1]);
             priceView.setText((int)data.expect_pay + "원");
-            int progress = (int)((data.members.size()*data.pay_method.get(0).price)/data.expect_pay*100);
+            int progress = (int)((data.member_count*data.pay_method.get(0).price)/data.expect_pay*100);
             progressView.setText(progress+"% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);

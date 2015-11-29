@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/img_profile"
         android:layout_marginLeft="16dp"
         android:src="@drawable/circle"
         android:layout_alignParentTop="true"
@@ -112,5 +112,6 @@
         android:background="@null"
         android:layout_alignTop="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ffffff" />
 </RelativeLayout>

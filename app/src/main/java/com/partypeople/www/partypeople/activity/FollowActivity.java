@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,14 +20,22 @@ import com.partypeople.www.partypeople.adapter.FollowTabAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.FollowItemView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FollowActivity extends AppCompatActivity {
 
     TabLayout tabs;
     ViewPager pager;
+    ArrayList<String> followings, followers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
+
+        Intent intent = getIntent();
+        followings = intent.getStringArrayListExtra("followings");
+        followers = intent.getStringArrayListExtra("followers");
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
@@ -54,5 +63,13 @@ public class FollowActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public List<String> getFollowings() {
+        return followings;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
     }
 }

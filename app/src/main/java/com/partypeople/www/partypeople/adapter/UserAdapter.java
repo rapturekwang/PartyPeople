@@ -1,38 +1,25 @@
 package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
-import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.activity.EditProfileActivity;
-import com.partypeople.www.partypeople.activity.FollowActivity;
-import com.partypeople.www.partypeople.activity.MessageActivity;
-import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.ItemTabWidget;
 import com.partypeople.www.partypeople.view.UserPagePartyItemView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserAdapter extends BaseAdapter {
 
     ArrayList<Party> items = new ArrayList<Party>();
     Context mContext;
-    User user;
-    private static final int VIEW_TYPE_COUNT = 3;
-    private static final int SUMMARY_VIEW = 0;
-    private static final int TAB_WIDGET_VIEW = 1;
-    private static final int TEXT_VIEW = 2;
+    private static final int VIEW_TYPE_COUNT = 2;
+    private static final int TAB_WIDGET_VIEW = 0;
+    private static final int TEXT_VIEW = 1;
 
     int currentIndex;
     TabHost.OnTabChangeListener mTabListener;
@@ -42,9 +29,6 @@ public class UserAdapter extends BaseAdapter {
         mContext = context;
         currentIndex = index;
         mTabListener = listener;
-
-        user = ((UserActivity)mContext).getUser();
-        Log.d("UserAdapter", user.name);
     }
 
     public void add(Party data) {
@@ -54,7 +38,7 @@ public class UserAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return items.size() + 2;
+        return items.size() + 1;
     }
 
     @Override
@@ -66,8 +50,6 @@ public class UserAdapter extends BaseAdapter {
     public int getItemViewType(int position) {
         switch (position) {
             case 0:
-                return SUMMARY_VIEW;
-            case 1:
                 return TAB_WIDGET_VIEW;
             default:
                 return TEXT_VIEW;
@@ -77,11 +59,11 @@ public class UserAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         switch (position) {
+//            case 0:
             case 0:
-            case 1:
                 return null;
             default:
-                return items.get(position - 2);
+                return items.get(position - 1);
         }
     }
 
@@ -94,49 +76,6 @@ public class UserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         switch (position) {
             case 0:
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(mContext).inflate(R.layout.view_user_header, null);
-                    ImageView btn = (ImageView)convertView.findViewById(R.id.btn_back);
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((UserActivity) mContext).finish();
-                        }
-                    });
-                    btn = (ImageView)convertView.findViewById(R.id.btn_modify);
-                    if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
-                        btn.setVisibility(View.INVISIBLE);
-                    }
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//                            Toast.makeText(mContext, "modify", Toast.LENGTH_SHORT).show();
-                            mContext.startActivity(new Intent(mContext, EditProfileActivity.class));
-                        }
-                    });
-                    TextView textBtn = (TextView)convertView.findViewById(R.id.text_btn_message);
-                    textBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mContext.startActivity(new Intent(mContext, MessageActivity.class));
-                        }
-                    });
-                    textBtn = (TextView)convertView.findViewById(R.id.text_btn_follow);
-                    textBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mContext.startActivity(new Intent(mContext, FollowActivity.class));
-                        }
-                    });
-
-                    TextView textView = (TextView)convertView.findViewById(R.id.text_name);
-                    textView.setText(user.name);
-
-                    textView = (TextView)convertView.findViewById(R.id.text_address);
-                    textView.setText(user.address);
-                }
-                return convertView;
-            case 1:
                 ItemTabWidget itw = (ItemTabWidget)convertView;
                 if (itw == null) {
                     itw = new ItemTabWidget(mContext);
@@ -151,7 +90,7 @@ public class UserAdapter extends BaseAdapter {
                 } else {
                     view = (UserPagePartyItemView)convertView;
                 }
-                view.setItemData(items.get(position-2));
+                view.setItemData(items.get(position-1));
 
                 return view;
         }

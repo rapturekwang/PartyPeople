@@ -109,6 +109,7 @@ public class MakePartyOneFragment extends Fragment {
                 photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
                 photoPickerIntent.putExtra("outputFormat",
                         Bitmap.CompressFormat.JPEG.toString());
+                photoPickerIntent.putExtra("noFaceDetection",true);
                 photoPickerIntent.putExtra("aspectX", partyImage.getWidth());
                 photoPickerIntent.putExtra("aspectY", partyImage.getHeight());
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
@@ -148,7 +149,7 @@ public class MakePartyOneFragment extends Fragment {
                     Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
 //                activity.party.imageFile = mSavedFile;
-                activity.nextFragment();
+//                activity.nextFragment();
             }
         });
 

@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.data;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Tacademy on 2015-11-11.
@@ -11,15 +12,17 @@ public class User implements Serializable{
     public String id;
     public String email;
     public String name;
-//    public List<Follow> follows;
+    public List<Follow> follows;
     public String address;
     public String favorite_address;
     public double tel;
     public int[] themes;
-//    public Role role;
+    public String role;
     public boolean has_photo;
     public String photo;
     public File imageFile;
     public String created_at;
-    //public Group group;
+    public List<Party> groups;
+
+
 }

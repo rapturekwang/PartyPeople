@@ -38,6 +38,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
+    SharePopupWindow popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        setPagerHeight(2100);
+                        setPagerHeight(2000);
                         break;
                     case 1:
                         setPagerHeight(108 + 197*party.pay_method.size());
@@ -91,7 +92,9 @@ public class PartyDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(PropertyManager.getInstance().isLogin()) {
-                    startActivity(new Intent(PartyDetailActivity.this, ParticipateActivity.class));
+                    Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
+                    intent.putExtra("party", party);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
                 }
@@ -101,7 +104,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharePopupWindow popup = new SharePopupWindow(PartyDetailActivity.this);
+                popup = new SharePopupWindow(PartyDetailActivity.this);
                 popup.setOutsideTouchable(true);
                 popup.showAsDropDown(v, 0, -400);
             }
@@ -156,5 +159,13 @@ public class PartyDetailActivity extends AppCompatActivity {
         LayoutParams params = pager.getLayoutParams();
         params.height=height;
         pager.setLayoutParams(params);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(popup.isShowing())
+            return;
+        else
+            super.onBackPressed();
     }
 }

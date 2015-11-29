@@ -24,9 +24,11 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
+import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapMarkerItem;
@@ -44,10 +46,11 @@ public class DetailOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
     TMapView mapView;
-    TextView mapLocation, descriptionView, participantView, hostNameView;
+    TextView mapLocation, descriptionView, participantView, hostNameView, followingView, followerView, ownerGroupsView, memberGroupsView;
     List<ImageView> parti = new ArrayList<ImageView>();
     ImageView imgHostView, imgBtnUserinfo;
     LocationManager mLM;
+    User user;
     ArrayAdapter<POIItem> mAdapter;
     int[] ids = {
             R.id.image_parti1,
@@ -93,6 +96,10 @@ public class DetailOneFragment extends Fragment {
         participantView = (TextView)view.findViewById(R.id.text_participant);
         hostNameView = (TextView)view.findViewById(R.id.text_host_name);
         imgHostView = (ImageView)view.findViewById(R.id.image_host);
+        followerView = (TextView)view.findViewById(R.id.text_follower);
+        followingView = (TextView)view.findViewById(R.id.text_following);
+        ownerGroupsView = (TextView)view.findViewById(R.id.text_groups_owner);
+        memberGroupsView = (TextView)view.findViewById(R.id.text_groups_memeber);
         imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         for(int i=0;i<ids.length;i++) {
             parti.add((ImageView)view.findViewById(ids[i]));
@@ -102,7 +109,7 @@ public class DetailOneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UserActivity.class);
-                intent.putExtra("user", activity.party.owner);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
@@ -111,6 +118,52 @@ public class DetailOneFragment extends Fragment {
         descriptionView.setText(activity.party.description);
         participantView.setText("참여자 " + activity.party.members.size() + "명");
         hostNameView.setText(activity.party.owner.name);
+
+        NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
+            @Override
+            public void onSuccess(final User result) {
+                user = result;
+                int owner = 0, memeber = 0;
+                if(user.groups!=null) {
+                    for (int i = 0; i < user.groups.size(); i++) {
+                        if (user.groups.get(i).role.equals("OWNER"))
+                            owner++;
+                        else if (user.groups.get(i).role.equals("MEMBER"))
+                            memeber++;
+                        ownerGroupsView.setText("모임 개최 " + owner + " |");
+                        memberGroupsView.setText("모임 참여 " + memeber);
+                    }
+                }
+                NetworkManager.getInstance().getFollows(getContext(), new NetworkManager.OnResultListener<Follow[]>() {
+                    @Override
+                    public void onSuccess(Follow[] result) {
+                        int following = 0, follower = 0;
+                        if(result!=null) {
+                            for (int i = 0; i < result.length; i++) {
+                                if (result[i].from.equals(user.id)) {
+                                    following++;
+                                } else if (result[i].to.equals(user.id)) {
+                                    follower++;
+                                }
+                                followingView.setText("팔로잉 " + following + " |");
+                                followerView.setText("팔로워 " + follower);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        return;
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+
         for(int i=0;i<activity.party.members.size();i++) {
             if(i==5)
                 break;

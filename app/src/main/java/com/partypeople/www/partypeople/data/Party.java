@@ -60,6 +60,8 @@ public class Party implements Serializable{
     public boolean featured;
     public List<String> comments;
 
+    public String role;
+
     public String getJsonString() {
         JSONObject jsonObject = new JSONObject();
         try {

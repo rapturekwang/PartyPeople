@@ -25,6 +25,7 @@ import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.RoundedAvatarDrawable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,9 +58,19 @@ public class EditProfileActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = propertyManager.getUser();
-                propertyManager.setUser(user);
-                finish();
+            NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    user = propertyManager.getUser();
+                    propertyManager.setUser(user);
+                    finish();
+                }
+
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
             }
         });
 
@@ -76,6 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         Bitmap.CompressFormat.JPEG.toString());
                 photoPickerIntent.putExtra("aspectX", imageView.getWidth());
                 photoPickerIntent.putExtra("aspectY", imageView.getHeight());
+                photoPickerIntent.putExtra("noFaceDetection",true);
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
             }
         });
@@ -105,7 +117,9 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            imageView.setImageBitmap(bm);
+            RoundedAvatarDrawable circleBm = new RoundedAvatarDrawable(bm);
+//            circleBm.onBoundsChange(10);
+            imageView.setImageBitmap(circleBm.getBitmap());
         }
     }
 

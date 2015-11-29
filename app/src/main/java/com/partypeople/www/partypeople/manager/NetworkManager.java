@@ -11,6 +11,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -88,6 +89,7 @@ public class NetworkManager {
     public static final String URL_SERVER = "http://61.100.5.61:3000";
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
+    public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
@@ -188,6 +190,27 @@ public class NetworkManager {
         });
     }
 
+    public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                PartyResult result = gson.fromJson(responseString, PartyResult.class);
+                listener.onSuccess(result);
+            }
+        });
+    }
+
     public void putPartys(Context context, String param1, String key, String param2, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
         params.put(key, param2);
@@ -226,6 +249,27 @@ public class NetworkManager {
                 Log.d("NetworkManager", "delete Fail: " + statusCode + responseString);
             }
 
+        });
+    }
+
+    public void getFollows(Context context, final OnResultListener<Follow[]> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.get(context, URL_FOLLOWS, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                Follow[] result = gson.fromJson(responseString, Follow[].class);
+                listener.onSuccess(result);
+            }
         });
     }
 
@@ -301,6 +345,40 @@ public class NetworkManager {
         }
     }
 
+    public void putUserImage(Context context, File param1, String param2, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+        try {
+            params.put("photo", param1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String url = URL_USERS + "/" + param2 + "/photo";
+        Log.d("NetworkManager", url);
+
+        try {
+            client.post(context, url, headers, params,
+                null, new TextHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        listener.onSuccess(responseString);
+                        Log.d("NetworkManager", "put Success");
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        listener.onFail(statusCode);
+                        Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                    }
+
+                });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void putGroupImage(Context context, File param1, String param2, final OnResultListener<String> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
@@ -335,28 +413,28 @@ public class NetworkManager {
         }
     }
 
-    public void getGroupImage(Context context, String param1, final OnResultListener<String> listener ) {
-        Header[] headers = new Header[1];
-        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-        RequestParams params = new RequestParams();
-
-        String url = URL_PARTYS + "/" + param1 + "/photo";
-        Log.d("NetworkManager", url);
-
-        client.get(context, url, headers, params, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "get Success");
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-            }
-        });
-    }
+//    public void getGroupImage(Context context, String param1, final OnResultListener<String> listener ) {
+//        Header[] headers = new Header[1];
+//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+//        RequestParams params = new RequestParams();
+//
+//        String url = URL_PARTYS + "/" + param1 + "/photo";
+//        Log.d("NetworkManager", url);
+//
+//        client.get(context, url, headers, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+//                listener.onSuccess(responseString);
+//                Log.d("NetworkManager", "get Success");
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                listener.onFail(statusCode);
+//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+//            }
+//        });
+//    }
 
     public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {
         Header[] headers = null;

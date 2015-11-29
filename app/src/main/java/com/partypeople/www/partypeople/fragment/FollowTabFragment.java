@@ -11,7 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.FollowActivity;
+import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.view.FollowItemView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -55,24 +61,67 @@ public class FollowTabFragment extends Fragment {
             }
         });
 
+        initData();
+
         return view;
     }
 
+    void initData() {
+        FollowActivity activity = (FollowActivity)getActivity();
+        if(activity.getFollowers()!=null && index==1) {
+            for (int i = 0; i < activity.getFollowers().size(); i++) {
+                NetworkManager.getInstance().getUser(getContext(), activity.getFollowers().get(i), new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        mAdapter.add(result);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        }
+
+        if(activity.getFollowings()!=null && index==0) {
+            for (int i = 0; i < activity.getFollowings().size(); i++) {
+                NetworkManager.getInstance().getUser(getContext(), activity.getFollowings().get(i), new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        mAdapter.add(result);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        }
+    }
+
     public class gridAdapter extends BaseAdapter {
+        List<User> list = new ArrayList<User>();
 
         @Override
         public int getCount() {
-            return 10;
+            return list.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return position;
+            return list.get(position);
         }
 
         @Override
         public long getItemId(int position) {
             return position;
+        }
+
+        public void add(User user) {
+            list.add(user);
+            notifyDataSetChanged();
         }
 
         @Override
@@ -83,7 +132,7 @@ public class FollowTabFragment extends Fragment {
             } else {
                 view = (FollowItemView) convertView;
             }
-            view.setItemData("정광희", "서울시 관악구", "개최수/참여수", "");
+            view.setItemData(list.get(position));
 
             return view;
         }
