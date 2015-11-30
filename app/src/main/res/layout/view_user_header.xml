@@ -52,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/linearLayout"
         android:layout_below="@+id/text_name"
         android:layout_centerHorizontal="true">
 
@@ -78,62 +79,105 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView35"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/user_human"
-        android:layout_marginTop="175dp"
-        android:layout_marginLeft="8dp" />
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="12dp"
+        android:id="@+id/linearLayout2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="팔로잉 0 |"
-        android:id="@+id/text_following"
-        android:textColor="#ffffff"
-        android:layout_alignTop="@+id/imageView35"
-        android:layout_toEndOf="@+id/imageView35"
-        android:layout_marginLeft="6dp"
-        android:textSize="14sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_follow"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/user_human"
+            android:layout_marginLeft="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="팔로워 0"
-        android:id="@+id/text_follower"
-        android:textColor="#ffffff"
-        android:layout_marginLeft="6dp"
-        android:textSize="14sp"
-        android:layout_alignTop="@+id/text_following"
-        android:layout_toEndOf="@+id/text_following" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="팔로잉 0 |"
+            android:id="@+id/text_following"
+            android:textColor="#ffffff"
+            android:layout_alignTop="@+id/img_follow"
+            android:layout_toEndOf="@+id/img_follow"
+            android:layout_marginLeft="6dp"
+            android:textSize="14sp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView36"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/btn_modify"
-        android:src="@drawable/user_email"
-        android:layout_marginTop="176dp"
-        android:layout_marginRight="78dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="팔로워 0"
+            android:id="@+id/text_follower"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="6dp"
+            android:textSize="14sp"
+            android:layout_alignTop="@+id/text_following"
+            android:layout_toEndOf="@+id/text_following" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView34"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_message"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/btn_modify"
+            android:src="@drawable/user_email" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="새 메시지"
+            android:id="@+id/text_btn_message"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:layout_marginLeft="4dp"
+            android:layout_alignTop="@+id/img_message"
+            android:layout_alignEnd="@+id/btn_modify"
+            android:layout_marginEnd="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="새 메시지"
-        android:id="@+id/text_btn_message"
-        android:textColor="#ffffff"
-        android:textSize="14sp"
-        android:layout_marginLeft="4dp"
-        android:layout_alignTop="@+id/imageView36"
-        android:layout_alignEnd="@+id/btn_modify"
-        android:layout_marginEnd="18dp"
-        android:layout_marginTop="-2dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearlayout_user"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_btn_follow"
+            android:layout_gravity="bottom"
+            android:src="@drawable/user_follow"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="46dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_btn_message"
+            android:layout_gravity="bottom"
+            android:src="@drawable/user_message"
+            android:layout_weight="1"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="16dp" />
+    </LinearLayout>
 
 </RelativeLayout>

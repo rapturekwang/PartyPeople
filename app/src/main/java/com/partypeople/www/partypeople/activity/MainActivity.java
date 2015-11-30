@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageForEmptyUri(R.drawable.ic_empty)
-                .showImageOnFail(R.drawable.ic_error)
-                .cacheInMemory(true)
-                .cacheOnDisc(true)
-                .considerExifParams(true)
-                .build();
+//        options = new DisplayImageOptions.Builder()
+//                .showImageOnLoading(R.drawable.ic_stub)
+//                .showImageForEmptyUri(R.drawable.ic_empty)
+//                .showImageOnFail(R.drawable.ic_error)
+//                .cacheInMemory(true)
+//                .cacheOnDisc(true)
+//                .considerExifParams(true)
+//                .build();
 
         layout = (FrameLayout)findViewById(R.id.container);
 
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 if(propertyManager.isLogin()) {
+                    Log.d("MainActivity", "test");
                     Intent intent = new Intent(MainActivity.this, UserActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);

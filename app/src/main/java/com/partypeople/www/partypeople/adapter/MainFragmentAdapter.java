@@ -50,10 +50,17 @@ public class MainFragmentAdapter extends BaseAdapter {
         Party mData;
         DateUtil dateUtil = DateUtil.getInstance();
 
+        int[] ids = {0,
+                R.drawable.main_theme_1,
+                R.drawable.main_theme_2,
+                R.drawable.main_theme_3,
+                R.drawable.main_theme_4,
+                R.drawable.main_theme_5};
+
         public void setItemData(Party data, Context context) {
             mData = data;
 
-            //imageTheme.setImageResource();
+            imageTheme.setImageResource(ids[data.themes[0]]);
             titleView.setText(data.name);
             dateView.setText(dateUtil.changeToViewFormat(data.start_at, data.end_at));
             dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");

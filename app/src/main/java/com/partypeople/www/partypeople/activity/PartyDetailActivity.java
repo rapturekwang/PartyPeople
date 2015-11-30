@@ -161,11 +161,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         pager.setLayoutParams(params);
     }
 
-    @Override
-    public void onBackPressed() {
-        if(popup.isShowing())
-            return;
-        else
-            super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(popup.isShowing())
+//            return;
+//        else
+//            super.onBackPressed();
+//    }
 }

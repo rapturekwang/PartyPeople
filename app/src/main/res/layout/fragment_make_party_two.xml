@@ -11,26 +11,33 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="모금 희망 금액"
                 android:id="@+id/textView10"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:background="#f5f5f5"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:paddingLeft="16dp"
+                android:gravity="center_vertical" />
 
             <EditText
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="57dp"
                 android:id="@+id/edit_expect_pay"
                 android:layout_below="@+id/textView10"
                 android:inputType="number"
                 android:singleLine="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:autoText="false"
+                android:background="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,52 +51,73 @@
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="모금 마감일"
                 android:id="@+id/textView15"
                 android:layout_below="@+id/edit_expect_pay"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp" />
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:background="#f5f5f5" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="77dp"
                 android:id="@+id/linearLayout3"
                 android:layout_below="@+id/textView15"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:paddingTop="20dp">
 
                 <Spinner
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:id="@+id/spinner_year"
                     android:layout_weight="3"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_rectangle_nomargin"
+                    android:popupBackground="@drawable/dropdown"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="3dp" />
 
                 <Spinner
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:id="@+id/spinner_month"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:background="@drawable/rounded_rectangle_nomargin"
+                    android:popupBackground="@drawable/dropdown"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp" />
 
                 <Spinner
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:id="@+id/spinner_day"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:background="@drawable/rounded_rectangle_nomargin"
+                    android:popupBackground="@drawable/dropdown"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="3dp" />
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="모금 방식 선택"
                 android:id="@+id/textView17"
                 android:layout_below="@+id/linearLayout3"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp" />
+                android:background="#f5f5f5"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:textSize="14dp"
+                android:textColor="#000000" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -117,7 +145,7 @@
                     android:checked="false"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp" />
 
                 <RadioButton
                     android:layout_width="0dp"
@@ -127,7 +155,7 @@
                     android:checked="false"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp" />
             </RadioGroup>
 
             <FrameLayout
@@ -162,10 +190,12 @@
             android:layout_height="wrap_content"
             android:text="다음으로"
             android:id="@+id/btn_next"
-            android:background="#696969"
+            android:background="@color/toolbarColor"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </ScrollView>

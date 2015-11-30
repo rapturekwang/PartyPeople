@@ -273,6 +273,27 @@ public class NetworkManager {
         });
     }
 
+    public void takeFollow(Context context, String param1, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        params.put("to", param1);
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.post(context, URL_FOLLOWS, headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+        });
+    }
+
     public void postUser(Context context, String param1, String param2, String param3, final OnResultListener<UserResult> listener ) {
         RequestParams params = new RequestParams();
         params.put("email", param1);

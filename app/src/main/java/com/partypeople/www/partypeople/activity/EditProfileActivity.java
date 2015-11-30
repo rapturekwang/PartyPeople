@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
@@ -58,24 +59,28 @@ public class EditProfileActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    user = propertyManager.getUser();
-                    propertyManager.setUser(user);
-                    finish();
-                }
-
-                @Override
-                public void onFail(int code) {
-
-                }
-            });
+//            NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
+//                @Override
+//                public void onSuccess(String result) {
+//                    user = propertyManager.getUser();
+//                    propertyManager.setUser(user);
+//                    finish();
+//                }
+//
+//                @Override
+//                public void onFail(int code) {
+//
+//                }
+//            });
+                Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
         imageView = (ImageView)findViewById(R.id.img_profile);
-        imageView.setOnClickListener(new View.OnClickListener() {
+
+        ImageView imgBtn = (ImageView)findViewById(R.id.img_btn_profile);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(
@@ -131,8 +136,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void setDateSpinner() {
         Spinner spinner = (Spinner)findViewById(R.id.spinner_city);
-        mCityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        mCityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCityAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item);
+        mCityAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(mCityAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -171,8 +176,8 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         spinner = (Spinner)findViewById(R.id.spinner_gu);
-        mGuAdapter = new ArrayAdapter<String>(EditProfileActivity.this, android.R.layout.simple_spinner_item);
-        mGuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGuAdapter = new ArrayAdapter<String>(EditProfileActivity.this, R.layout.spinner_item);
+        mGuAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(mGuAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

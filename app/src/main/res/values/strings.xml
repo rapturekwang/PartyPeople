@@ -38,6 +38,15 @@
         <item>보낸메시지</item>
     </string-array>
 
+    <string-array name="bank_name">
+        <item>신한</item>
+        <item>우리</item>
+        <item>하나</item>
+        <item>농협</item>
+        <item>국민</item>
+        <item>외환</item>
+    </string-array>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

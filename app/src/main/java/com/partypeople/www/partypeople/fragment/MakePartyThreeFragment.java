@@ -9,18 +9,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
-import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.Constants;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -30,7 +32,9 @@ public class MakePartyThreeFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String name;
-    EditText bankView, accountView, phoneView;
+    Spinner bankView;
+    ArrayAdapter<String> mBankAdapter;
+    EditText accountView, phoneView;
 
     public static MakePartyThreeFragment newInstance(String name) {
         MakePartyThreeFragment fragment = new MakePartyThreeFragment();
@@ -60,9 +64,16 @@ public class MakePartyThreeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_make_party_three, container, false);
 
-        bankView = (EditText)view.findViewById(R.id.edit_bank);
+        bankView = (Spinner)view.findViewById(R.id.spinner_bank);
+        mBankAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
+        mBankAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        String[] banks = getResources().getStringArray(R.array.bank_name);
+        for (int i = 0; i < banks.length; i++) {
+            mBankAdapter.add(banks[i]);
+        }
+        bankView.setAdapter(mBankAdapter);
         accountView = (EditText)view.findViewById(R.id.edit_account);
-        phoneView = (EditText)view.findViewById(R.id.edit_phone);
+//        phoneView = (EditText)view.findViewById(R.id.edit_phone);
 
         Button btn = (Button)view.findViewById(R.id.btn_make);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -75,24 +86,24 @@ public class MakePartyThreeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final MakePartyActivity activity = (MakePartyActivity)getActivity();
-                        if(bankView.getText().toString().equals("")) {
-                            Toast.makeText(getContext(), "은행을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            activity.party.bank = bankView.getText().toString();
-                        }
+//                        if(bankView.getText().toString().equals("")) {
+//                            Toast.makeText(getContext(), "은행을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        } else {
+//                            activity.party.bank = bankView.getText().toString();
+//                        }
                         try {
                             activity.party.account = Double.parseDouble(accountView.getText().toString());
                         } catch (Exception e) {
                             Toast.makeText(getContext(), "계좌번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        try {
-                            activity.party.phone = Double.parseDouble(phoneView.getText().toString());
-                        } catch (Exception e) {
-                            Toast.makeText(getContext(), "핸드폰 번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+//                        try {
+//                            activity.party.phone = Double.parseDouble(phoneView.getText().toString());
+//                        } catch (Exception e) {
+//                            Toast.makeText(getContext(), "핸드폰 번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
                         CheckBox chbox = (CheckBox)view.findViewById(R.id.chbox_policy);
                         if(!chbox.isChecked()) {
                             Toast.makeText(getContext(), "약관에 동의해 주십시오", Toast.LENGTH_SHORT).show();

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class MakePartyChildFragment extends Fragment {
     //List<RewordItemView> listReword = new ArrayList<RewordItemView>();
     private static final String ARG_NAME = "index";
     private int mIndex;
-    Button btnAdd, btnRemove;
+    ImageView btnAdd, btnRemove;
 
     public static MakePartyChildFragment newInstance(int index) {
         MakePartyChildFragment fragment = new MakePartyChildFragment();
@@ -63,7 +64,7 @@ public class MakePartyChildFragment extends Fragment {
             linearLayout.addView(rewordItemView);
         }
 
-        btnAdd = (Button)view.findViewById(R.id.btn_add);
+        btnAdd = (ImageView)view.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +76,7 @@ public class MakePartyChildFragment extends Fragment {
             }
         });
 
-        btnRemove = (Button)view.findViewById(R.id.btn_remove);
+        btnRemove = (ImageView)view.findViewById(R.id.btn_remove);
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

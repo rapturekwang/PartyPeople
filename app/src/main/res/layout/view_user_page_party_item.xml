@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView31"
+        android:id="@+id/img_theme"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/image_party"
         android:src="@drawable/user_culture"
@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Come to House Party!"
         android:id="@+id/text_title"
-        android:layout_alignTop="@+id/imageView31"
+        android:layout_alignTop="@+id/img_theme"
         android:layout_toEndOf="@+id/image_party"
         android:layout_marginLeft="38dp"
         android:textSize="15sp" />
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView32"
-        android:layout_below="@+id/imageView31"
+        android:layout_below="@+id/img_theme"
         android:layout_toEndOf="@+id/image_party"
         android:src="@drawable/user_clock"
         android:layout_marginTop="9dp"

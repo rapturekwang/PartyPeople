@@ -35,12 +35,20 @@ public class UserPagePartyItemView extends RelativeLayout {
     }
 
     TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
-    ImageView partyImgView;
+    ImageView partyImgView, imgTheme;
     ProgressBar progressBar;
     Party mData;
 
+    int[] ids = {0,
+            R.drawable.main_theme_1,
+            R.drawable.main_theme_2,
+            R.drawable.main_theme_3,
+            R.drawable.main_theme_4,
+            R.drawable.main_theme_5};
+
     private void init() {
         inflate(getContext(), R.layout.view_user_page_party_item, this);
+        imgTheme = (ImageView)findViewById(R.id.img_theme);
         partyImgView = (ImageView)findViewById(R.id.image_party);
         titleView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
@@ -63,6 +71,7 @@ public class UserPagePartyItemView extends RelativeLayout {
     public void setItemData(Party data) {
         mData = data;
 
+//        imgTheme.setImageResource(ids[data.themes[0]]);
         titleView.setText(data.name);
         dateView.setText(dateUtil.changeToViewFormat(data.start_at, data.end_at));
         dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");

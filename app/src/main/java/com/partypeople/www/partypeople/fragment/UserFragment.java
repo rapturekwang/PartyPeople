@@ -12,9 +12,11 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -48,7 +50,9 @@ public class UserFragment extends Fragment {
     UserAdapter mAdapter;
     ArrayList<String> followings, followers;
     TextView followingView, followerView;
+    LinearLayout linearLayout;
     DisplayImageOptions options;
+    ImageView modify;
 
     public UserFragment() {
         Bundle args = new Bundle();
@@ -59,14 +63,14 @@ public class UserFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageForEmptyUri(R.drawable.ic_empty)
-                .showImageOnFail(R.drawable.ic_error)
-                .cacheInMemory(true)
-                .cacheOnDisc(true)
-                .considerExifParams(true)
-                .build();
+//        options = new DisplayImageOptions.Builder()
+//                .showImageOnLoading(R.drawable.ic_stub)
+//                .showImageForEmptyUri(R.drawable.ic_empty)
+//                .showImageOnFail(R.drawable.ic_error)
+//                .cacheInMemory(true)
+//                .cacheOnDisc(true)
+//                .considerExifParams(true)
+//                .build();
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter(getActivity(), index , new OnTabChangeListener() {
@@ -96,6 +100,7 @@ public class UserFragment extends Fragment {
         listView.setAdapter(mAdapter);
 
         listView.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.view_user_header, null));
+        linearLayout = (LinearLayout)view.findViewById(R.id.linearlayout_user);
         ImageView btn = (ImageView)view.findViewById(R.id.btn_back);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +108,9 @@ public class UserFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        User user = ((UserActivity)getActivity()).getUser();
-        btn = (ImageView)view.findViewById(R.id.btn_modify);
-        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
-            btn.setVisibility(View.INVISIBLE);
-        }
-        btn.setOnClickListener(new View.OnClickListener() {
+        final User user = ((UserActivity)getActivity()).getUser();
+        modify = (ImageView)view.findViewById(R.id.btn_modify);
+        modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getContext().startActivity(new Intent(getContext(), EditProfileActivity.class));
@@ -149,6 +151,39 @@ public class UserFragment extends Fragment {
 
         textView = (TextView)view.findViewById(R.id.text_address);
         textView.setText(user.address);
+
+        LinearLayout linearLayout2 = (LinearLayout)view.findViewById(R.id.linearLayout2);
+        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
+            modify.setVisibility(View.INVISIBLE);
+            linearLayout2.setVisibility(View.INVISIBLE);
+        } else {
+            linearLayout.setVisibility(View.INVISIBLE);
+        }
+
+        ImageView takeFollow = (ImageView)view.findViewById(R.id.image_btn_follow);
+        takeFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().takeFollow(getContext(), user.id, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(getContext(), "팔로우 하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        });
+        ImageView takeMessage = (ImageView)view.findViewById(R.id.image_btn_message);
+        takeMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "아직 준비중 입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -213,14 +248,11 @@ public class UserFragment extends Fragment {
             @Override
             public void onSuccess(Follow[] result) {
                 if(result!=null) {
-                    int following=0, follower=0;
                     for (int i = 0; i < result.length; i++) {
                         if (result[i].from.equals(user.id)) {
                             followings.add(result[i].to);
-                            following++;
                         } else if (result[i].to.equals(user.id)) {
                             followers.add(result[i].from);
-                            follower++;
                         }
                     }
                 }

@@ -39,18 +39,7 @@
         <ImageView
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:id="@+id/image_theme1"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/img_cycle"
-            android:layout_alignParentTop="false"
-            android:layout_toStartOf="@+id/image_theme2"
-            android:layout_marginRight="6dp"
-            android:layout_centerVertical="true" />
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:id="@+id/image_theme2"
+            android:id="@+id/image_theme4"
             android:layout_gravity="center_vertical"
             android:src="@drawable/img_cycle"
             android:layout_alignParentTop="false"
@@ -65,14 +54,25 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/img_cycle"
             android:layout_alignParentTop="false"
-            android:layout_toStartOf="@+id/image_theme4"
+            android:layout_toStartOf="@+id/image_theme2"
             android:layout_marginRight="6dp"
             android:layout_centerVertical="true" />
 
         <ImageView
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:id="@+id/image_theme4"
+            android:id="@+id/image_theme2"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_cycle"
+            android:layout_alignParentTop="false"
+            android:layout_toStartOf="@+id/image_theme1"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/image_theme1"
             android:layout_gravity="center_vertical"
             android:src="@drawable/img_cycle"
             android:layout_alignParentTop="false"

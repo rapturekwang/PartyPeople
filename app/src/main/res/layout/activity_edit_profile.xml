@@ -24,49 +24,82 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/img_profile"
-        android:src="@drawable/profile_img"
-        android:layout_above="@+id/text_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="204dp"
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/bg">
+
+        <ImageView
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:id="@+id/img_profile"
+            android:src="@drawable/profile_img"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_profile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_btn_bg"
+                android:src="@drawable/edit_bg_photo"
+                android:layout_weight="1"
+                android:layout_marginLeft="45dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_btn_profile"
+                android:src="@drawable/edit_profile_photo"
+                android:layout_weight="1"
+                android:layout_marginRight="45dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_name"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:hint="이름(닉네임)"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="15sp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_address"
-        android:layout_below="@+id/text_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="32dp"
-        android:hint="전화번호"
-        android:layout_alignParentStart="false" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/textView16"
+        android:layout_alignParentStart="true"
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="지역"
+        android:text="지역설정"
         android:id="@+id/textView25"
+        android:layout_marginLeft="20dp"
         android:layout_below="@+id/text_address"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="20dp"
+        android:textSize="15sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -74,19 +107,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView25"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout5">
+        android:id="@+id/linearLayout5"
+        android:layout_marginTop="9dp">
 
         <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_city"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/rounded_rectangle_nomargin"
+            android:popupBackground="@drawable/dropdown"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="3dp" />
 
         <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_gu"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/rounded_rectangle_nomargin"
+            android:popupBackground="@drawable/dropdown"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="3dp" />
     </LinearLayout>
 
     <Button
@@ -96,8 +138,35 @@
         android:id="@+id/btn_save"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#696969"
-        android:textColor="#ffffff" />
+        android:background="@color/toolbarColor"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="이름(닉네임)"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="26dp"
+        android:textSize="15sp"
+        android:textColor="#787878" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="전화번호"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/text_name"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textColor="#787878" />
 
 
 </RelativeLayout>

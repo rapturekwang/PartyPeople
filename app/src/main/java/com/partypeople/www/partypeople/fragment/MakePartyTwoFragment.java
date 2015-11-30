@@ -154,8 +154,8 @@ public class MakePartyTwoFragment extends Fragment {
 
     private void setDateSpinner(View view) {
         mYearSpinner = (Spinner)view.findViewById(R.id.spinner_year);
-        mYearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-        mYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mYearAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
+        mYearAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mYearSpinner.setAdapter(mYearAdapter);
         mYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -183,8 +183,8 @@ public class MakePartyTwoFragment extends Fragment {
         });
 
         mMonthSpinner = (Spinner)view.findViewById(R.id.spinner_month);
-        mMonthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-        mMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mMonthAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
+        mMonthAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mMonthSpinner.setAdapter(mMonthAdapter);
         mMonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -212,8 +212,8 @@ public class MakePartyTwoFragment extends Fragment {
         });
 
         mDaySpinner = (Spinner)view.findViewById(R.id.spinner_day);
-        mDayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-        mDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mDayAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
+        mDayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mDaySpinner.setAdapter(mDayAdapter);
 
         mYearAdapter.add("년");

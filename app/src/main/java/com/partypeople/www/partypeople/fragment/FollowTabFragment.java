@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.GridView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.FollowActivity;
+import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.view.FollowItemView;
@@ -58,6 +60,10 @@ public class FollowTabFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = mAdapter.list.get(position);
+                Intent intent = new Intent(getActivity(), UserActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
             }
         });
 

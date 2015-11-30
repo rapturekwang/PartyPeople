@@ -41,17 +41,19 @@ public class MainTabHeaderView extends LinearLayout {
     }
 
     public void setItemData(String location, int[] theme) {
-         int[] ids = {R.drawable.theme_0,
-                R.drawable.theme_1,
-                R.drawable.theme_2,
-                R.drawable.theme_3,
-                R.drawable.theme_4,
-                R.drawable.theme_5};
+        Log.d("MainTabHeaderView", "test:"+theme.length);
+         int[] ids = {0,
+                R.drawable.main_theme_1,
+                R.drawable.main_theme_2,
+                R.drawable.main_theme_3,
+                R.drawable.main_theme_4,
+                R.drawable.main_theme_5};
 
         locationView.setText(location);
         if(theme != null) {
             for(int i=0; i<4; i++) {
                 if(i<theme.length) {
+                    Log.d("MainTabHeaderView", "test"+i + ":" + theme[i]);
                     listTheme.get(i).setImageResource(ids[theme[i]]);
                 }
                 else {
