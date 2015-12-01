@@ -22,6 +22,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.fragment.DetailOneFragment;
+import com.partypeople.www.partypeople.fragment.DetailThreeFragment;
+import com.partypeople.www.partypeople.fragment.DetailTwoFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.popup.SharePopupWindow;
@@ -50,7 +53,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         DetailTabAdapter adpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 
-        setPagerHeight(2100);
+        setPagerHeight(2800);
 
         tabs.setupWithViewPager(pager);
 
@@ -70,13 +73,21 @@ public class PartyDetailActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        setPagerHeight(2000);
+                        Log.d("PartyDetail", position + "selected");
+                        setPagerHeight(2800);
+                        ((DetailOneFragment) getSupportFragmentManager().getFragments().get(0)).test();
                         break;
                     case 1:
-                        setPagerHeight(108 + 197*party.pay_method.size());
+                        Log.d("PartyDetail", position + "selected");
+                        setPagerHeight(200 + 197 * party.pay_method.size());
+                        ((DetailTwoFragment) getSupportFragmentManager().getFragments().get(1)).test();
+//                        setPagerHeight(108 + 197*party.pay_method.size());
                         break;
                     case 2:
-                        setPagerHeight(228 + 240*party.comments.size());
+                        Log.d("PartyDetail", position + "selected");
+                        setPagerHeight(350 + 240*party.comments.size());
+                        ((DetailThreeFragment) getSupportFragmentManager().getFragments().get(2)).test();
+//                        setPagerHeight(228 + 240*party.comments.size());
                         break;
                 }
             }

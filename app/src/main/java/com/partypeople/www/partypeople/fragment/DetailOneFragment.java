@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +52,7 @@ public class DetailOneFragment extends Fragment {
     ImageView imgHostView, imgBtnUserinfo;
     LocationManager mLM;
     User user;
+    LinearLayout layout;
     ArrayAdapter<POIItem> mAdapter;
     int[] ids = {
             R.id.image_parti1,
@@ -85,6 +87,18 @@ public class DetailOneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_one, container, false);
         final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.root_layout);
+
+        layout = (LinearLayout)view.findViewById(R.id.root_layout);
+//        ViewTreeObserver vto = layout.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                int height = layout.getMeasuredHeight();
+//                Log.d("DetailOne", height+"");
+//                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
+//            }
+//        });
 
         final PartyDetailActivity activity = (PartyDetailActivity)getActivity();
 
@@ -174,6 +188,8 @@ public class DetailOneFragment extends Fragment {
 
         setMap();
 
+        test();
+
         return view;
     }
 
@@ -196,6 +212,19 @@ public class DetailOneFragment extends Fragment {
                 }
             });
         }
+    }
+
+    public void test() {
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int height = layout.getMeasuredHeight();
+                Log.d("DetailOne", height+"");
+                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
+            }
+        });
     }
 
     private void addMarkerPOI(ArrayList<TMapPOIItem> list) {

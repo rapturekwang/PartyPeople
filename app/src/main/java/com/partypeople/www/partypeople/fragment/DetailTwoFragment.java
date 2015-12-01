@@ -2,9 +2,12 @@ package com.partypeople.www.partypeople.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
@@ -21,6 +24,7 @@ public class DetailTwoFragment extends Fragment {
     private String mName;
     ListView listView;
     RewordViewAdapter mAdapter;
+    LinearLayout layout;
 
     public static DetailTwoFragment newInstance(String name) {
         DetailTwoFragment fragment = new DetailTwoFragment();
@@ -47,6 +51,18 @@ public class DetailTwoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_two, container, false);
 
+        layout = (LinearLayout)view.findViewById(R.id.root_layout);
+//        ViewTreeObserver vto = layout.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                int height = layout.getMeasuredHeight();
+//                Log.d("DetailTwo", height + "");
+//                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
+//            }
+//        });
+
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new RewordViewAdapter();
         listView.setAdapter(mAdapter);
@@ -64,5 +80,18 @@ public class DetailTwoFragment extends Fragment {
 //            payMethod.title = "FREE 음료 1개, 스낵";
             mAdapter.add(activity.party.pay_method.get(i), false);
         }
+    }
+
+    public void test() {
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int height = layout.getMeasuredHeight();
+                Log.d("DetailTwo", height+"");
+                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
+            }
+        });
     }
 }

@@ -86,7 +86,8 @@ public class LoginMainFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.login(null);
+                Toast.makeText(getContext(), "준비중 입니다.", Toast.LENGTH_SHORT).show();
+//                activity.login(null);
             }
         });
 
@@ -94,7 +95,7 @@ public class LoginMainFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getContext(), "준비중 입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

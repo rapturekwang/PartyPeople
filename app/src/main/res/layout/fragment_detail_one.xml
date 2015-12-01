@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.partypeople.www.partypeople.fragment.DetailOneFragment">
 
@@ -9,7 +9,7 @@
         android:id="@+id/root_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- TODO: Update blank fragment layout -->
 
@@ -26,7 +26,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:id="@+id/imageView200"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/demo_img4"
