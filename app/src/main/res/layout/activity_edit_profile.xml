@@ -31,7 +31,7 @@
         android:layout_below="@+id/toolbar"
         android:background="@drawable/bg">
 
-        <ImageView
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:id="@+id/img_profile"
@@ -69,7 +69,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_name"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -81,10 +80,10 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/text_address"
+        android:id="@+id/text_tel"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:inputType="number"
         android:layout_below="@+id/textView16"
         android:layout_alignParentStart="true"
         android:textSize="15sp" />
@@ -96,7 +95,7 @@
         android:text="지역설정"
         android:id="@+id/textView25"
         android:layout_marginLeft="20dp"
-        android:layout_below="@+id/text_address"
+        android:layout_below="@+id/text_tel"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
         android:textSize="15sp" />

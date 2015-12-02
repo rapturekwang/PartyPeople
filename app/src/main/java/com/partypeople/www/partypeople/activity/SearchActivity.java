@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
 
-                User user = new User();
+                User user = propertyManager.getUser();
                 user.themes = theme;
                 user.favorite_address = location;
                 NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {

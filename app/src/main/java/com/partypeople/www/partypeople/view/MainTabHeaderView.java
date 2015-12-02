@@ -53,7 +53,6 @@ public class MainTabHeaderView extends LinearLayout {
         if(theme != null) {
             for(int i=0; i<4; i++) {
                 if(i<theme.length) {
-                    Log.d("MainTabHeaderView", "test"+i + ":" + theme[i]);
                     listTheme.get(i).setImageResource(ids[theme[i]]);
                 }
                 else {

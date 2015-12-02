@@ -89,7 +89,7 @@ public class DetailOneFragment extends Fragment {
                 .showImageForEmptyUri(R.drawable.profile_img)
                 .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
-                .cacheOnDisc(true)
+                .cacheOnDisc(false)
                 .considerExifParams(true)
                 .build();
     }
@@ -131,12 +131,12 @@ public class DetailOneFragment extends Fragment {
         mapLocation.setText(activity.party.location);
         descriptionView.setText(activity.party.description);
         participantView.setText("참여자 " + activity.party.members.size() + "명");
-        hostNameView.setText(activity.party.owner.name);
-        if(activity.party.owner.has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.owner.id + "/photo", imgHostView, options);
+        hostNameView.setText(activity.party.members.get(0).name);
+        if(activity.party.members.get(0).has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.members.get(0).id + "/photo", imgHostView, options);
         }
 
-        NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
+        NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(0).id, new NetworkManager.OnResultListener<User>() {
             @Override
             public void onSuccess(final User result) {
                 user = result;

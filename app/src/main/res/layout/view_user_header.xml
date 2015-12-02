@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="서울시 관악구"
-            android:id="@+id/text_address"
+            android:id="@+id/text_tel"
             android:textColor="#ffffff"
             android:textSize="13sp"
             android:layout_alignTop="@+id/imageView34"

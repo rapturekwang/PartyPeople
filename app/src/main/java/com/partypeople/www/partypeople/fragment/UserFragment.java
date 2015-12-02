@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +29,10 @@ import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
-import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
-import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +64,7 @@ public class UserFragment extends Fragment {
                 .showImageForEmptyUri(R.drawable.profile_img)
                 .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
-                .cacheOnDisc(true)
+                .cacheOnDisc(false)
                 .considerExifParams(true)
                 .build();
 
@@ -151,7 +147,7 @@ public class UserFragment extends Fragment {
         TextView textView = (TextView)view.findViewById(R.id.text_name);
         textView.setText(user.name);
 
-        textView = (TextView)view.findViewById(R.id.text_address);
+        textView = (TextView)view.findViewById(R.id.text_tel);
         textView.setText(user.address);
 
         LinearLayout linearLayout2 = (LinearLayout)view.findViewById(R.id.linearLayout2);

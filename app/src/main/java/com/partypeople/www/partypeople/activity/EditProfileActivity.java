@@ -24,6 +24,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.RoundedAvatarDrawable;
@@ -36,10 +37,13 @@ public class EditProfileActivity extends AppCompatActivity {
     ArrayAdapter<String> mCityAdapter, mGuAdapter;
     List<Area> areaList = new ArrayList<Area>();
     PropertyManager propertyManager = PropertyManager.getInstance();
-    User user = new User();
     ImageView imageView;
+    TextView name, tel;
     File mSavedFile;
+    boolean update;
+    User user = propertyManager.getUser();
     public static final int REQUEST_CODE_CROP = 0;
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +56,59 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.back);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        TextView name = (TextView)findViewById(R.id.text_name);
-        TextView email = (TextView)findViewById(R.id.text_address);
+        name = (TextView)findViewById(R.id.text_name);
+        tel = (TextView)findViewById(R.id.text_tel);
 
         Button btn = (Button)findViewById(R.id.btn_save);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//            NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
-//                @Override
-//                public void onSuccess(String result) {
-//                    user = propertyManager.getUser();
+                update = false;
+                if(mSavedFile!=null) {
+                    NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            user.photo = "/api/v1/users/" + user.id + "/photo";
+//                            update = true;
+                            propertyManager.setUser(user);
+                            Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
+                }
+//                if(!name.getText().equals("")) {
+//                    user.name = name.getText().toString();
+//                }
+//                if(!tel.getText().equals("")) {
+//                    user.tel = Double.parseDouble(tel.getText().toString());
+//                }
+//                if(location!=null || !location.equals("")) {
+//                    user.address = location;
+//                }
+//                if(!name.getText().equals("") || !tel.getText().equals("") || location!=null || !location.equals("")) {
+//                    NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
+//                        @Override
+//                        public void onSuccess(UserResult result) {
+//                            propertyManager.setUser(result.data);
+//                            update = true;
+//                        }
+//
+//                        @Override
+//                        public void onFail(int code) {
+//
+//                        }
+//                    });
+//                }
+//                if(update) {
 //                    propertyManager.setUser(user);
+//                    Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 //                    finish();
 //                }
-//
-//                @Override
-//                public void onFail(int code) {
-//
-//                }
-//            });
-                Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
 
@@ -94,6 +129,14 @@ public class EditProfileActivity extends AppCompatActivity {
                 photoPickerIntent.putExtra("aspectY", imageView.getHeight());
                 photoPickerIntent.putExtra("noFaceDetection",true);
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
+            }
+        });
+
+        imgBtn = (ImageView)findViewById(R.id.img_btn_bg);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditProfileActivity.this, "준비중 입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,7 +186,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
-                    user.address = mCityAdapter.getItem(position);
+                    location = mCityAdapter.getItem(position);
                 }
                 Area area;
                 mGuAdapter.clear();
@@ -183,7 +226,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    user.address = user.address + " " + mGuAdapter.getItem(position);
+                    location = location + " " + mGuAdapter.getItem(position);
                 }
             }
 

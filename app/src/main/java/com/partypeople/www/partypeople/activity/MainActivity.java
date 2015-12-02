@@ -62,9 +62,11 @@ public class MainActivity extends AppCompatActivity implements
                 .showImageForEmptyUri(R.drawable.profile_img)
                 .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
-                .cacheOnDisc(true)
+                .cacheOnDisc(false)
                 .considerExifParams(true)
                 .build();
+
+//        ((MyDiscCache) imageLoader.getDiscCache()).setIgnoreDiskCache(true);
 
         layout = (FrameLayout)findViewById(R.id.container);
 
@@ -134,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 if(propertyManager.isLogin()) {
-                    Log.d("MainActivity", "test");
                     Intent intent = new Intent(MainActivity.this, UserActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
@@ -145,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements
 
         CircularImageView imgView = (CircularImageView)header.findViewById(R.id.img_profile);
         if(propertyManager.getUser().has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + propertyManager.getUser().id + "/photo", imgView, options);
+            Log.d("MainActivity", "test : " + propertyManager.getUser().photo);
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo, imgView, options);
         }
 
         Button btn = (Button)header.findViewById(R.id.btn_login);

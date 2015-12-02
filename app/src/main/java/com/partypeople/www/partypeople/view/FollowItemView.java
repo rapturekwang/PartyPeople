@@ -12,8 +12,6 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by kwang on 15. 11. 15..
  */
@@ -35,7 +33,7 @@ public class FollowItemView extends RelativeLayout {
     private void init() {
         inflate(getContext(), R.layout.view_follow_item, this);
         nameView = (TextView)findViewById(R.id.text_name);
-        addressView = (TextView)findViewById(R.id.text_address);
+        addressView = (TextView)findViewById(R.id.text_tel);
         partysView = (TextView)findViewById(R.id.text_partys);
         imgView = (ImageView)findViewById(R.id.img_profile);
 
@@ -44,7 +42,7 @@ public class FollowItemView extends RelativeLayout {
                 .showImageForEmptyUri(R.drawable.profile_img)
                 .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
-                .cacheOnDisc(true)
+                .cacheOnDisc(false)
                 .considerExifParams(true)
                 .build();
     }

@@ -94,7 +94,7 @@ public class MainFragmentAdapter extends BaseAdapter {
                     .showImageForEmptyUri(R.drawable.profile_img)
                     .showImageOnFail(R.drawable.profile_img)
                     .cacheInMemory(true)
-                    .cacheOnDisc(true)
+                    .cacheOnDisc(false)
                     .considerExifParams(true)
                     .build();
         }

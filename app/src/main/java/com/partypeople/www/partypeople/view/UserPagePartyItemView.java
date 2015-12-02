@@ -63,7 +63,7 @@ public class UserPagePartyItemView extends RelativeLayout {
                 .showImageForEmptyUri(R.drawable.profile_img)
                 .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
-                .cacheOnDisc(true)
+                .cacheOnDisc(false)
                 .considerExifParams(true)
                 .build();
     }
