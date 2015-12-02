@@ -12,6 +12,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Follow;
+import com.partypeople.www.partypeople.data.Likes;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -90,6 +91,7 @@ public class NetworkManager {
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows";
+    public static final String URL_LIKES = "http://61.100.5.61:3000/api/v1/likes";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
@@ -121,6 +123,27 @@ public class NetworkManager {
                 LocalInfoResult result = gson.fromJson(responseString, LocalInfoResult.class);
                 listener.onSuccess(result.localAreaInfo);
             }
+        });
+    }
+
+    public void participate(Context context, String param1, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.post(context, URL_PARTYS + "/" + param1 + "/members/enroll", headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "post Success");
+            }
+
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+            }
+
         });
     }
 
@@ -280,6 +303,48 @@ public class NetworkManager {
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
         client.post(context, URL_FOLLOWS, headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+        });
+    }
+
+    public void getLikes(Context context, final OnResultListener<Likes[]> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.get(context, URL_LIKES, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get Success " + responseString);
+                Likes[] result = gson.fromJson(responseString, Likes[].class);
+                listener.onSuccess(result);
+            }
+        });
+    }
+
+    public void takeLike(Context context, String param1, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        params.put("group", param1);
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.post(context, URL_LIKES, headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get Fail: " + statusCode + responseString);

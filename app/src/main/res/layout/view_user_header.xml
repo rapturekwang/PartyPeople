@@ -27,7 +27,7 @@
         android:paddingLeft="15dp"
         android:paddingBottom="15dp" />
 
-    <ImageView
+    <com.github.siyamed.shapeimageview.CircularImageView
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:id="@+id/image_profile"
@@ -35,6 +35,13 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/circle"
         android:layout_marginTop="15dp" />
+
+    <!--<com.github.siyamed.shapeimageview.CircularImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:src="@drawable/neo"-->
+    <!--app:siBorderWidth="6dp"-->
+    <!--app:siBorderColor="@color/darkgray"/>-->
 
     <TextView
         android:layout_width="wrap_content"

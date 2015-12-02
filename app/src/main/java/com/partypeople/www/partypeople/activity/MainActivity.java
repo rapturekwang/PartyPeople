@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.data.User;
@@ -56,28 +57,30 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        options = new DisplayImageOptions.Builder()
-//                .showImageOnLoading(R.drawable.ic_stub)
-//                .showImageForEmptyUri(R.drawable.ic_empty)
-//                .showImageOnFail(R.drawable.ic_error)
-//                .cacheInMemory(true)
-//                .cacheOnDisc(true)
-//                .considerExifParams(true)
-//                .build();
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .build();
 
         layout = (FrameLayout)findViewById(R.id.container);
 
-        NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
-            @Override
-            public void onSuccess(final User result) {
-                user = result;
-            }
+        if(propertyManager.isLogin()) {
+            NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+                @Override
+                public void onSuccess(final User result) {
+                    user = result;
+                }
 
-            @Override
-            public void onFail(int code) {
+                @Override
+                public void onFail(int code) {
 
-            }
-        });
+                }
+            });
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -140,8 +143,10 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
-//        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + propertyManager.getUser().id + "/photo", imgView, options);
+        CircularImageView imgView = (CircularImageView)header.findViewById(R.id.img_profile);
+        if(propertyManager.getUser().has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + propertyManager.getUser().id + "/photo", imgView, options);
+        }
 
         Button btn = (Button)header.findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements
             navigationView.getMenu().getItem(5).setEnabled(false);
             btn.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.GONE);
-            //email.setVisibility(View.GONE);
         } else {
             navigationView.getMenu().getItem(1).setEnabled(true);
             navigationView.getMenu().getItem(2).setEnabled(true);
@@ -171,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements
             navigationView.getMenu().getItem(5).setEnabled(true);
             btn.setVisibility(View.GONE);
             relativeLayout.setVisibility(View.VISIBLE);
-            //email.setVisibility(View.VISIBLE);
 
             name.setText(propertyManager.getUser().name);
             email.setText(propertyManager.getUser().email);

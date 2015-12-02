@@ -90,9 +90,9 @@ public class MainFragmentAdapter extends BaseAdapter {
             progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
 
             options = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.drawable.ic_stub)
-                    .showImageForEmptyUri(R.drawable.ic_empty)
-                    .showImageOnFail(R.drawable.ic_error)
+                    .showImageOnLoading(R.drawable.profile_img)
+                    .showImageForEmptyUri(R.drawable.profile_img)
+                    .showImageOnFail(R.drawable.profile_img)
                     .cacheInMemory(true)
                     .cacheOnDisc(true)
                     .considerExifParams(true)
@@ -123,7 +123,7 @@ public class MainFragmentAdapter extends BaseAdapter {
     @Override
      public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.view_party_item, null);
             holder = new ViewHolder();
@@ -134,6 +134,19 @@ public class MainFragmentAdapter extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int getPosition = (Integer) buttonView.getTag();
                     items.get(getPosition).setBookmark(buttonView.isChecked());
+//                    if(isChecked) {
+//                        NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
+//                            @Override
+//                            public void onSuccess(String result) {
+//                                Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onFail(int code) {
+//
+//                            }
+//                        });
+//                    }
                 }
             });
 

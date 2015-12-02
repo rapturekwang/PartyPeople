@@ -59,9 +59,9 @@ public class UserPagePartyItemView extends RelativeLayout {
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageForEmptyUri(R.drawable.ic_empty)
-                .showImageOnFail(R.drawable.ic_error)
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .considerExifParams(true)
@@ -71,7 +71,7 @@ public class UserPagePartyItemView extends RelativeLayout {
     public void setItemData(Party data) {
         mData = data;
 
-//        imgTheme.setImageResource(ids[data.themes[0]]);
+        imgTheme.setImageResource(ids[data.themes[0]]);
         titleView.setText(data.name);
         dateView.setText(dateUtil.changeToViewFormat(data.start_at, data.end_at));
         dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");

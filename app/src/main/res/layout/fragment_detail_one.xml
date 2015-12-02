@@ -61,7 +61,7 @@
                 android:textSize="14dp"
                 android:gravity="center_vertical" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="43dp"
                 android:layout_height="43dp"
                 android:id="@+id/image_parti1"
@@ -72,7 +72,7 @@
                 android:layout_marginTop="17dp"
                 android:visibility="invisible" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="43dp"
                 android:layout_height="43dp"
                 android:id="@+id/image_parti2"
@@ -82,7 +82,7 @@
                 android:layout_marginLeft="8dp"
                 android:visibility="invisible" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="43dp"
                 android:layout_height="43dp"
                 android:id="@+id/image_parti3"
@@ -92,7 +92,7 @@
                 android:layout_marginLeft="8dp"
                 android:visibility="invisible" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="43dp"
                 android:layout_height="43dp"
                 android:id="@+id/image_parti4"
@@ -136,7 +136,7 @@
                 android:layout_marginTop="26dp"
                 android:textSize="14sp" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="88dp"
                 android:layout_height="88dp"
                 android:id="@+id/image_host"

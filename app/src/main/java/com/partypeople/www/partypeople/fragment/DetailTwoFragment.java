@@ -90,7 +90,7 @@ public class DetailTwoFragment extends Fragment {
                 layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 int height = layout.getMeasuredHeight();
                 Log.d("DetailTwo", height+"");
-                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
+                ((PartyDetailActivity)getActivity()).setPagerHeight(height + 50);
             }
         });
     }

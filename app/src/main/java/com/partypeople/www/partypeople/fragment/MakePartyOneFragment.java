@@ -129,7 +129,7 @@ public class MakePartyOneFragment extends Fragment {
                 if(warningMessage.equals("")) {
                     activity.party.name = nameView.getText().toString();
                     activity.party.themes = new int[1];
-                    activity.party.themes[0] = theme;
+                    activity.party.themes[0] = theme+1;
                     activity.party.location = locationView.getText().toString();
                     activity.party.description = desView.getText().toString();
                     activity.party.privated = switchCompat.isChecked();

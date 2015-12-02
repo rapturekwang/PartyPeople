@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
@@ -54,6 +56,7 @@ public class DetailOneFragment extends Fragment {
     User user;
     LinearLayout layout;
     ArrayAdapter<POIItem> mAdapter;
+    DisplayImageOptions options;
     int[] ids = {
             R.id.image_parti1,
             R.id.image_parti2,
@@ -80,26 +83,23 @@ public class DetailOneFragment extends Fragment {
         if (getArguments() != null) {
             mName = getArguments().getString(ARG_NAME);
         }
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .build();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_one, container, false);
-        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.root_layout);
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
-//        ViewTreeObserver vto = layout.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                int height = layout.getMeasuredHeight();
-//                Log.d("DetailOne", height+"");
-//                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
-//            }
-//        });
-
         final PartyDetailActivity activity = (PartyDetailActivity)getActivity();
 
         mapView = (TMapView)view.findViewById(R.id.view_map);
@@ -132,6 +132,9 @@ public class DetailOneFragment extends Fragment {
         descriptionView.setText(activity.party.description);
         participantView.setText("참여자 " + activity.party.members.size() + "명");
         hostNameView.setText(activity.party.owner.name);
+        if(activity.party.owner.has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.owner.id + "/photo", imgHostView, options);
+        }
 
         NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
             @Override
@@ -179,9 +182,14 @@ public class DetailOneFragment extends Fragment {
         });
 
         for(int i=0;i<activity.party.members.size();i++) {
-            if(i==5)
-                break;
+//            if(i==5)
+//                break;
             parti.get(i).setVisibility(View.VISIBLE);
+            if(i==4)
+                break;
+            if(activity.party.members.get(i).has_photo) {
+                ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.members.get(i).id + "/photo", parti.get(i), options);
+            }
         }
 
         mLM = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);

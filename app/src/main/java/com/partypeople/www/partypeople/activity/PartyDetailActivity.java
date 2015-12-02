@@ -79,13 +79,13 @@ public class PartyDetailActivity extends AppCompatActivity {
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(200 + 197 * party.pay_method.size());
+                        setPagerHeight(200 + 230 * party.pay_method.size());
                         ((DetailTwoFragment) getSupportFragmentManager().getFragments().get(1)).test();
 //                        setPagerHeight(108 + 197*party.pay_method.size());
                         break;
                     case 2:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(350 + 240*party.comments.size());
+                        setPagerHeight(350 + 300*party.comments.size());
                         ((DetailThreeFragment) getSupportFragmentManager().getFragments().get(2)).test();
 //                        setPagerHeight(228 + 240*party.comments.size());
                         break;
@@ -103,9 +103,14 @@ public class PartyDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(PropertyManager.getInstance().isLogin()) {
-                    Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
-                    intent.putExtra("party", party);
-                    startActivity(intent);
+                    if(PropertyManager.getInstance().getUser().id.equals(party.owner.id)) {
+                        Toast.makeText(PartyDetailActivity.this, "본인의 모임에는 참여신청을 할수 없습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
+                        intent.putExtra("party", party);
+                        startActivity(intent);
+                    }
                 } else {
                     Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
                 }

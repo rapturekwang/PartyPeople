@@ -99,6 +99,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UserResult result) {
                     PropertyManager.getInstance().setUser(result.data);
+                    Log.d("SplashActivity", result.data.id);
                 }
 
                 @Override

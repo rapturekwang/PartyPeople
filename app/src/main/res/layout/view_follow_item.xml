@@ -4,8 +4,8 @@
     android:layout_height="187dp"
     android:background="#ffffff">
 
-    <ImageView
-        android:layout_width="match_parent"
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/img_profile"
         android:layout_alignParentTop="true"

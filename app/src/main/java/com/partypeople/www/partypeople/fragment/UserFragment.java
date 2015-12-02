@@ -63,14 +63,14 @@ public class UserFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
-//        options = new DisplayImageOptions.Builder()
-//                .showImageOnLoading(R.drawable.ic_stub)
-//                .showImageForEmptyUri(R.drawable.ic_empty)
-//                .showImageOnFail(R.drawable.ic_error)
-//                .cacheInMemory(true)
-//                .cacheOnDisc(true)
-//                .considerExifParams(true)
-//                .build();
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .build();
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter(getActivity(), index , new OnTabChangeListener() {
@@ -117,7 +117,9 @@ public class UserFragment extends Fragment {
             }
         });
         btn = (ImageView)view.findViewById(R.id.image_profile);
-//        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + user.id + "/photo", btn, options);
+        if(user.has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + user.id + "/photo", btn, options);
+        }
         TextView textBtn = (TextView)view.findViewById(R.id.text_btn_message);
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override

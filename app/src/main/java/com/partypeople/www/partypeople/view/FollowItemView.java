@@ -6,8 +6,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 import org.w3c.dom.Text;
 
@@ -15,6 +18,7 @@ import org.w3c.dom.Text;
  * Created by kwang on 15. 11. 15..
  */
 public class FollowItemView extends RelativeLayout {
+    DisplayImageOptions options;
     public FollowItemView(Context context) {
         super(context);
         init();
@@ -34,9 +38,21 @@ public class FollowItemView extends RelativeLayout {
         addressView = (TextView)findViewById(R.id.text_address);
         partysView = (TextView)findViewById(R.id.text_partys);
         imgView = (ImageView)findViewById(R.id.img_profile);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .build();
     }
 
     public void setItemData(User user) {
+        if(user.has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + user.id + "/photo", imgView, options);
+        }
         nameView.setText(user.name);
         addressView.setText(user.address);
         int owner = 0, memeber = 0;
@@ -48,6 +64,6 @@ public class FollowItemView extends RelativeLayout {
                     memeber++;
             }
         }
-        partysView.setText("개최 " + owner + "|참여 " + memeber);
+        partysView.setText("개최 " + owner + " |참여 " + memeber);
     }
 }

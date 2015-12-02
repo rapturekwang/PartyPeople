@@ -15,6 +15,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PayMethod;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 public class ParticipateActivity extends AppCompatActivity {
     ListView listView;
@@ -39,7 +40,17 @@ public class ParticipateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                NetworkManager.getInstance().participate(ParticipateActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
             }
         });
 

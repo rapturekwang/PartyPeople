@@ -32,10 +32,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Come to House Party!"
         android:id="@+id/text_title"
+        android:layout_marginLeft="4dp"
+        android:textSize="15sp"
         android:layout_alignTop="@+id/img_theme"
-        android:layout_toEndOf="@+id/image_party"
-        android:layout_marginLeft="38dp"
-        android:textSize="15sp" />
+        android:layout_toEndOf="@+id/img_theme"
+        android:layout_marginTop="4dp" />
 
     <ImageView
         android:layout_width="wrap_content"
