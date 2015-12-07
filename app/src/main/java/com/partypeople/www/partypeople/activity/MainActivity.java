@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements
     MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
     DisplayImageOptions options;
+    RelativeLayout relativeLayout;
+    TextView name, email;
+    Button headerBtn;
+    View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,34 +70,33 @@ public class MainActivity extends AppCompatActivity implements
                 .considerExifParams(true)
                 .build();
 
-//        ((MyDiscCache) imageLoader.getDiscCache()).setIgnoreDiskCache(true);
-
         layout = (FrameLayout)findViewById(R.id.container);
+        user = propertyManager.getUser();
 
-        if(propertyManager.isLogin()) {
-            NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
-                @Override
-                public void onSuccess(final User result) {
-                    user = result;
-                }
-
-                @Override
-                public void onFail(int code) {
-
-                }
-            });
-        }
+//        if(propertyManager.isLogin()) {
+//            NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+//                @Override
+//                public void onSuccess(final User result) {
+//                    user = result;
+//                }
+//
+//                @Override
+//                public void onFail(int code) {
+//
+//                }
+//            });
+//        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(propertyManager.isLogin()) {
-                    Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
-                }
+            if(propertyManager.isLogin()) {
+                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements
         pager = (ViewPager)findViewById(R.id.pager);
         MainTabAdapter adpater = new MainTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
+        pager.setOffscreenPageLimit(2);
 
         tabs.setupWithViewPager(pager);
 
@@ -131,27 +135,31 @@ public class MainActivity extends AppCompatActivity implements
         navigationView = (NavigationView)findViewById(R.id.navi);
         navigationView.setNavigationItemSelectedListener(this);
 
-        View header = navigationView.inflateHeaderView(R.layout.view_navigation_header);
+        header = navigationView.inflateHeaderView(R.layout.view_navigation_header);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(propertyManager.isLogin()) {
-                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
-                    mDrawer.closeDrawer(GravityCompat.START);
+                if (propertyManager.isLogin()) {
+                    NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+                        @Override
+                        public void onSuccess(final User result) {
+                            Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                            intent.putExtra("user", result);
+                            startActivity(intent);
+                            mDrawer.closeDrawer(GravityCompat.START);
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
 
-        CircularImageView imgView = (CircularImageView)header.findViewById(R.id.img_profile);
-        if(propertyManager.getUser().has_photo) {
-            Log.d("MainActivity", "test : " + propertyManager.getUser().photo);
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo, imgView, options);
-        }
-
-        Button btn = (Button)header.findViewById(R.id.btn_login);
-        btn.setOnClickListener(new View.OnClickListener() {
+        headerBtn = (Button)header.findViewById(R.id.btn_login);
+        headerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -159,23 +167,33 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
-        TextView name = (TextView)header.findViewById(R.id.text_user_name);
-        TextView email = (TextView)header.findViewById(R.id.text_user_email);
-        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+
+        name = (TextView)header.findViewById(R.id.text_user_name);
+        email = (TextView)header.findViewById(R.id.text_user_email);
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+
+        setNavigation();
+    }
+
+    public void setNavigation() {
+        CircularImageView imgView = (CircularImageView)header.findViewById(R.id.img_profile);
+        if(propertyManager.getUser().has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo, imgView, options);
+        }
 
         if(!propertyManager.isLogin()) {
             navigationView.getMenu().getItem(1).setEnabled(false);
             navigationView.getMenu().getItem(2).setEnabled(false);
             navigationView.getMenu().getItem(3).setEnabled(false);
             navigationView.getMenu().getItem(5).setEnabled(false);
-            btn.setVisibility(View.VISIBLE);
+            headerBtn.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.GONE);
         } else {
             navigationView.getMenu().getItem(1).setEnabled(true);
             navigationView.getMenu().getItem(2).setEnabled(true);
             navigationView.getMenu().getItem(3).setEnabled(true);
             navigationView.getMenu().getItem(5).setEnabled(true);
-            btn.setVisibility(View.GONE);
+            headerBtn.setVisibility(View.GONE);
             relativeLayout.setVisibility(View.VISIBLE);
 
             name.setText(propertyManager.getUser().name);
@@ -195,10 +213,20 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 break;
             case R.id.user :
-                intent = new Intent(MainActivity.this, UserActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                mDrawer.closeDrawer(GravityCompat.START);
+                NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(final User result) {
+                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                        intent.putExtra("user", result);
+                        startActivity(intent);
+                        mDrawer.closeDrawer(GravityCompat.START);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case R.id.make_party :
                 startActivity(new Intent(MainActivity.this, MakePartyActivity.class));
@@ -261,6 +289,12 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setNavigation();
     }
 
     @Override

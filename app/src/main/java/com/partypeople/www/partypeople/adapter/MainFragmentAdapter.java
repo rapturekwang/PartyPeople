@@ -173,4 +173,8 @@ public class MainFragmentAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void removeAll() {
+        items.clear();
+    }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.FollowActivity;
@@ -60,10 +61,23 @@ public class FollowTabFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = mAdapter.list.get(position);
-                Intent intent = new Intent(getActivity(), UserActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
+                NetworkManager.getInstance().getUser(getContext(), mAdapter.list.get(position).id, new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(final User result) {
+                        Intent intent = new Intent(getContext(), UserActivity.class);
+                        intent.putExtra("user", result);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                User user = mAdapter.list.get(position);
+//                Intent intent = new Intent(getActivity(), UserActivity.class);
+//                intent.putExtra("user", user);
+//                startActivity(intent);
             }
         });
 

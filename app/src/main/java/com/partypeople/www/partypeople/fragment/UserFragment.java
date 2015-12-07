@@ -70,7 +70,6 @@ public class UserFragment extends Fragment {
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter(getActivity(), index , new OnTabChangeListener() {
-
             @Override
             public void onTabChanged(String tabId) {
                 ((UserActivity)getActivity()).setTabCurrent(tabId);
@@ -186,20 +185,20 @@ public class UserFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NetworkManager.getInstance().getParty(getContext(), partyList.get(position-2).id, new NetworkManager.OnResultListener<PartyResult>() {
-                    @Override
-                    public void onSuccess(PartyResult result) {
-                        Intent i = new Intent(getActivity(), PartyDetailActivity.class);
-                        Party party = result.data;
-                        i.putExtra("party", party);
-                        startActivity(i);
-                    }
+            NetworkManager.getInstance().getParty(getContext(), partyList.get(position-2).id, new NetworkManager.OnResultListener<PartyResult>() {
+                @Override
+                public void onSuccess(PartyResult result) {
+                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                    Party party = result.data;
+                    i.putExtra("party", party);
+                    startActivity(i);
+                }
 
-                    @Override
-                    public void onFail(int code) {
-
-                    }
-                });
+                @Override
+                public void onFail(int code) {
+                    Toast.makeText(getContext(), "네트워크 상태가 좋지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+            });
             }
         });
 

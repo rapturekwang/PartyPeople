@@ -99,20 +99,27 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UserResult result) {
                     PropertyManager.getInstance().setUser(result.data);
-                    Log.d("SplashActivity", result.data.id);
+//                    Log.d("SplashActivity", result.data.id);
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            goMainActivity();
+                        }
+                    }, Constants.SPLASH_TIME_OUT);
                 }
 
                 @Override
                 public void onFail(int code) {
                     Toast.makeText(SplashActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                    goLoginActivity();
                 }
             });
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goMainActivity();
-                }
-            }, Constants.SPLASH_TIME_OUT);
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    goMainActivity();
+//                }
+//            }, Constants.SPLASH_TIME_OUT);
         } else {
             final String id = PropertyManager.getInstance().getFaceBookId();
             if (!TextUtils.isEmpty(id)) {

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
@@ -37,11 +38,12 @@ public class PartyDetailActivity extends AppCompatActivity {
     ViewPager pager;
     TextView titilView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
     CheckBox chboxView;
-    ImageView imageView;
+    ImageView imageView, imgPartyView;
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
     SharePopupWindow popup;
+    DisplayImageOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +141,10 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
-//        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + data.photo, imageParty, options);
-
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
 
+        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + party.photo, imgPartyView, options);
         titilView.setText(party.name);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
         String[] array = party.location.split(" ");
@@ -160,6 +161,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        imgPartyView = (ImageView)findViewById(R.id.img_party);
         titilView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
         locationView = (TextView)findViewById(R.id.text_location);
@@ -169,6 +171,15 @@ public class PartyDetailActivity extends AppCompatActivity {
         duedateView = (TextView)findViewById(R.id.text_duedate);
         imageView = (ImageView)findViewById(R.id.image_party);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.profile_img)
+                .showImageForEmptyUri(R.drawable.profile_img)
+                .showImageOnFail(R.drawable.profile_img)
+                .cacheInMemory(true)
+                .cacheOnDisc(false)
+                .considerExifParams(true)
+                .build();
     }
 
     public void setPagerHeight(int height) {

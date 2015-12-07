@@ -32,15 +32,12 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-//    Fragment[] list = {SearchFragment.newInstance("search"),
-//            SearchResultFragment.newInstance("result")};
-    int currentFragment = 0;
     List<Area> areaList = new ArrayList<Area>();
     ArrayAdapter<String> mCityAdapter, mGuAdapter;
     GridView gridView;
     gridAdapter mAdapter;
     PropertyManager propertyManager = PropertyManager.getInstance();
-    String location;
+    String location="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,12 +121,6 @@ public class SearchActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        currentFragment--;
-        super.onBackPressed();
     }
 
     private void setDateSpinner() {

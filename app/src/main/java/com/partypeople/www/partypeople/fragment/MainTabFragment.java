@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
@@ -44,6 +46,7 @@ public class MainTabFragment extends Fragment {
     TextView warningView;
     ListView listView;
     MainFragmentAdapter mAdapter;
+    MainTabHeaderView header;
     String id;
     Bitmap bitmap;
 
@@ -87,18 +90,31 @@ public class MainTabFragment extends Fragment {
             }
         });
 
+//        initData();
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.removeAll();
+        partyList.clear();
+        initData();
+    }
+
+    private void initData() {
         switch (getArguments().getInt(ARG_INDEX)) {
             case 0:
-                initData();
                 warningView.setVisibility(View.GONE);
                 break;
             case 1:
                 User user = PropertyManager.getInstance().getUser();
                 if(PropertyManager.getInstance().isLogin()) {
-                    MainTabHeaderView header = new MainTabHeaderView(getContext());
+                    listView.removeHeaderView(header);
+                    header = new MainTabHeaderView(getContext());
                     header.setItemData(user.favorite_address, user.themes);
                     listView.addHeaderView(header);
-                    initData();
                     warningView.setVisibility(View.GONE);
                 } else if(user.themes==null && user.favorite_address==null) {
                     warningView.setVisibility(View.VISIBLE);
@@ -109,19 +125,13 @@ public class MainTabFragment extends Fragment {
                 }
                 break;
             case 2:
-                initData();
                 warningView.setVisibility(View.GONE);
                 break;
             case 3:
-                initData();
                 warningView.setVisibility(View.GONE);
                 break;
         }
 
-        return view;
-    }
-
-    private void initData() {
         NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartysResult>() {
             @Override
             public void onSuccess(final PartysResult result) {
@@ -133,15 +143,16 @@ public class MainTabFragment extends Fragment {
 
             @Override
             public void onFail(int code) {
-                for (int i = 0; i < 5 ; i++) {
-                    Party d = new Party();
-                    d.name = "Come to House Party!";
-                    d.end_at = "2015-12-04T02:11:11";
-                    d.location = "서울시 서초구";
-                    d.expect_pay = 25000;
-                    partyList.add(d);
-                    mAdapter.add(d);
-                }
+//                for (int i = 0; i < 5 ; i++) {
+//                    Party d = new Party();
+//                    d.name = "Come to House Party!";
+//                    d.end_at = "2015-12-04T02:11:11";
+//                    d.location = "서울시 서초구";
+//                    d.expect_pay = 25000;
+//                    partyList.add(d);
+//                    mAdapter.add(d);
+//                }
+                Toast.makeText(getContext(), "통신 연결상태가 좋지 않습니다", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -27,7 +27,6 @@ import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
-import com.partypeople.www.partypeople.utils.RoundedAvatarDrawable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -165,9 +164,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            RoundedAvatarDrawable circleBm = new RoundedAvatarDrawable(bm);
-//            circleBm.onBoundsChange(10);
-            imageView.setImageBitmap(circleBm.getBitmap());
+            imageView.setImageBitmap(bm);
         }
     }
 

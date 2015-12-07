@@ -206,7 +206,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "get partys Success " + responseString);
                 PartysResult result = gson.fromJson(responseString, PartysResult.class);
                 listener.onSuccess(result);
             }
@@ -227,7 +227,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "get party Success " + responseString);
                 PartyResult result = gson.fromJson(responseString, PartyResult.class);
                 listener.onSuccess(result);
             }
@@ -289,7 +289,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "get follows Success " + responseString);
                 Follow[] result = gson.fromJson(responseString, Follow[].class);
                 listener.onSuccess(result);
             }
@@ -311,7 +311,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "take follow Success " + responseString);
                 listener.onSuccess(responseString);
             }
         });
@@ -353,7 +353,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "take like Success " + responseString);
                 listener.onSuccess(responseString);
             }
         });
@@ -396,7 +396,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get Success " + responseString);
+                Log.d("NetworkManager", "get user Success " + responseString);
                 UserResult result = gson.fromJson(responseString, UserResult.class);
                 listener.onSuccess(result.data);
             }

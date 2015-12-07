@@ -41,7 +41,6 @@ public class MainTabHeaderView extends LinearLayout {
     }
 
     public void setItemData(String location, int[] theme) {
-        Log.d("MainTabHeaderView", "test:"+theme.length);
          int[] ids = {0,
                 R.drawable.main_theme_1,
                 R.drawable.main_theme_2,

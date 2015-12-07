@@ -122,9 +122,22 @@ public class DetailOneFragment extends Fragment {
         imgBtnUserinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), UserActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
+                NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
+                    @Override
+                    public void onSuccess(final User result) {
+                        Intent intent = new Intent(getContext(), UserActivity.class);
+                        intent.putExtra("user", result);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                Intent intent = new Intent(getContext(), UserActivity.class);
+//                intent.putExtra("user", user);
+//                startActivity(intent);
             }
         });
 

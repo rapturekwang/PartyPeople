@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.partypeople.www.partypeople.fragment.FollowTabFragment;
-import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.utils.Constants;
 
 /**
