@@ -154,72 +154,21 @@
                 android:layout_below="@+id/text_host"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="100dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:includeFontPadding="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="모임 개최 0 |"
                 android:id="@+id/text_groups_owner"
-                android:layout_alignTop="@+id/imageView22"
-                android:layout_toEndOf="@+id/imageView22"
                 android:textColor="#474747"
-                android:layout_marginLeft="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="팔로잉 0 |"
-                android:id="@+id/text_following"
-                android:layout_alignTop="@+id/imageView24"
-                android:layout_toEndOf="@+id/imageView24"
-                android:layout_marginLeft="7dp"
-                android:textColor="#474747" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView22"
+                android:drawableLeft="@drawable/detail_mask"
+                android:drawablePadding="4dp"
                 android:layout_below="@+id/text_host_name"
                 android:layout_alignStart="@+id/text_host_name"
-                android:src="@drawable/detail_mask"
-                android:layout_marginTop="9dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView24"
-                android:layout_below="@+id/imageView22"
-                android:layout_alignStart="@+id/imageView22"
-                android:src="@drawable/detail_human"
                 android:layout_marginTop="9dp"
-                android:layout_marginLeft="4dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/img_btn_userinfo"
-                android:layout_below="@+id/text_following"
-                android:layout_alignStart="@+id/imageView22"
-                android:src="@drawable/btn_host_info"
-                android:layout_marginTop="12dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#e9e9e9"
-                android:layout_below="@+id/img_btn_userinfo"
-                android:layout_marginTop="26dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="팔로워 0"
-                android:id="@+id/text_follower"
-                android:layout_marginLeft="7dp"
-                android:textColor="#474747"
-                android:layout_alignTop="@+id/text_following"
-                android:layout_toEndOf="@+id/text_following" />
+                android:includeFontPadding="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -229,7 +178,49 @@
                 android:textColor="#474747"
                 android:layout_marginLeft="4dp"
                 android:layout_alignTop="@+id/text_groups_owner"
-                android:layout_toEndOf="@+id/text_groups_owner" />
+                android:layout_toEndOf="@+id/text_groups_owner"
+                android:includeFontPadding="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="팔로잉 0 |"
+                android:id="@+id/text_following"
+                android:textColor="#474747"
+                android:drawableLeft="@drawable/detail_human"
+                android:drawablePadding="7dp"
+                android:layout_below="@+id/text_groups_owner"
+                android:layout_alignStart="@+id/text_groups_owner"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="4dp"
+                android:includeFontPadding="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="팔로워 0"
+                android:id="@+id/text_follower"
+                android:layout_marginLeft="7dp"
+                android:textColor="#474747"
+                android:layout_alignTop="@+id/text_following"
+                android:layout_toEndOf="@+id/text_following"
+                android:includeFontPadding="false"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_btn_userinfo"
+                android:layout_below="@+id/text_following"
+                android:layout_alignStart="@+id/text_groups_owner"
+                android:src="@drawable/btn_host_info"
+                android:layout_marginTop="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e9e9e9"
+                android:layout_below="@+id/img_btn_userinfo"
+                android:layout_marginTop="26dp" />
 
         </RelativeLayout>
 

@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,10 +40,8 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageView imageView;
     TextView name, tel;
     File mSavedFile;
-    boolean update;
-    User user = propertyManager.getUser();
     public static final int REQUEST_CODE_CROP = 0;
-    String location;
+    String location = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,58 +55,74 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         name = (TextView)findViewById(R.id.text_name);
-        tel = (TextView)findViewById(R.id.text_tel);
+        tel = (TextView)findViewById(R.id.text_address);
 
         Button btn = (Button)findViewById(R.id.btn_save);
         btn.setOnClickListener(new View.OnClickListener() {
+            User user = new User();
             @Override
             public void onClick(View v) {
-                update = false;
-                if(mSavedFile!=null) {
-                    NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
+                if(name.getText().toString().equals("") && tel.getText().toString().equals("") && location.equals("") && mSavedFile==null) {
+                    Toast.makeText(EditProfileActivity.this, "아무런 값도 입력하지 않으셨습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!name.getText().toString().equals("")) {
+                    user.name = name.getText().toString();
+                }
+                Log.d("EditProfileActivity", "test: " + tel.getText().toString());
+                if(!tel.getText().toString().equals("")) {
+                    user.tel = Double.parseDouble(tel.getText().toString());
+                }
+                if(!location.equals("")) {
+                    user.address = location;
+                }
+                if(!name.getText().toString().equals("") || !tel.getText().toString().equals("") || !location.equals("")) {
+                    Log.d("EditProfileActivity", "call putuser");
+                    user.has_photo = propertyManager.getUser().has_photo;
+                    NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                         @Override
-                        public void onSuccess(String result) {
-                            user.photo = "/api/v1/users/" + user.id + "/photo";
-//                            update = true;
-                            propertyManager.setUser(user);
-                            Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
-                            finish();
+                        public void onSuccess(UserResult result) {
+                            propertyManager.setUser(result.data);
+                            if (mSavedFile == null) {
+                                Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
                         }
 
                         @Override
                         public void onFail(int code) {
-
+                            Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-//                if(!name.getText().equals("")) {
-//                    user.name = name.getText().toString();
-//                }
-//                if(!tel.getText().equals("")) {
-//                    user.tel = Double.parseDouble(tel.getText().toString());
-//                }
-//                if(location!=null || !location.equals("")) {
-//                    user.address = location;
-//                }
-//                if(!name.getText().equals("") || !tel.getText().equals("") || location!=null || !location.equals("")) {
-//                    NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
-//                        @Override
-//                        public void onSuccess(UserResult result) {
-//                            propertyManager.setUser(result.data);
-//                            update = true;
-//                        }
-//
-//                        @Override
-//                        public void onFail(int code) {
-//
-//                        }
-//                    });
-//                }
-//                if(update) {
-//                    propertyManager.setUser(user);
-//                    Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
+
+                if(mSavedFile!=null) {
+                    Log.d("EditProfileActivity", "call putuserimage");
+                    NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            NetworkManager.getInstance().getUser(EditProfileActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+                                @Override
+                                public void onSuccess(User result) {
+                                    propertyManager.setUser(result);
+                                    Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
 

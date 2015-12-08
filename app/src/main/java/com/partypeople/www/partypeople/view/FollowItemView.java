@@ -33,7 +33,7 @@ public class FollowItemView extends RelativeLayout {
     private void init() {
         inflate(getContext(), R.layout.view_follow_item, this);
         nameView = (TextView)findViewById(R.id.text_name);
-        addressView = (TextView)findViewById(R.id.text_tel);
+        addressView = (TextView)findViewById(R.id.text_address);
         partysView = (TextView)findViewById(R.id.text_partys);
         imgView = (ImageView)findViewById(R.id.img_profile);
 

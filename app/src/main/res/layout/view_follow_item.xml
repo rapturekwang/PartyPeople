@@ -22,27 +22,31 @@
         android:layout_below="@+id/img_profile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:includeFontPadding="false"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView40"
-        android:layout_alignTop="@+id/text_tel"
-        android:layout_toStartOf="@+id/text_tel"
-        android:src="@drawable/follow_map"
-        android:layout_marginRight="10dp" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView40"-->
+        <!--android:layout_alignTop="@+id/text_address"-->
+        <!--android:layout_toStartOf="@+id/text_address"-->
+        <!--android:src="@drawable/follow_map"-->
+        <!--android:layout_marginRight="10dp" />-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="서울시 관악구"
-        android:id="@+id/text_tel"
+        android:id="@+id/text_address"
         android:layout_below="@+id/text_name"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:drawableLeft="@drawable/follow_map"
+        android:drawablePadding="10dp"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="29dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,18 +54,21 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="개최수 0 | 참여수 0"
         android:id="@+id/text_partys"
-        android:layout_below="@+id/text_tel"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text_address"
         android:layout_marginTop="6dp"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:drawableLeft="@drawable/follow_mask"
+        android:drawablePadding="5dp"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="24dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView41"
-        android:layout_alignTop="@+id/text_partys"
-        android:layout_toStartOf="@+id/text_partys"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/follow_mask" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView41"-->
+        <!--android:layout_alignTop="@+id/text_partys"-->
+        <!--android:layout_toStartOf="@+id/text_partys"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:src="@drawable/follow_mask" />-->
 
 </RelativeLayout>

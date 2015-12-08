@@ -159,7 +159,6 @@
     <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="module" module-name="ImageLoader" exported="" />
     <orderEntry type="module" module-name="async" exported="" />
-    <orderEntry type="module" module-name="refresh" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>
 </module>

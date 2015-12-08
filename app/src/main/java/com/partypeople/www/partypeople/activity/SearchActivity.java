@@ -63,24 +63,24 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
 
-                User user = propertyManager.getUser();
+                User user = new User();
                 user.themes = theme;
                 user.favorite_address = location;
+                user.has_photo = propertyManager.getUser().has_photo;
                 NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(UserResult result) {
                         propertyManager.setUser(result.data);
+                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onFail(int code) {
-
+                        Toast.makeText(SearchActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
             }
         });
 

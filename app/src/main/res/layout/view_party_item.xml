@@ -2,59 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/img_theme"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/img_cocktailicon"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:id="@+id/text_item_title"
         android:text="Come to house party!"
-        android:layout_alignTop="@+id/img_theme"
-        android:layout_alignBottom="@+id/img_theme"
-        android:layout_toEndOf="@+id/img_theme"
-        android:gravity="center"
-        android:layout_marginLeft="5dp" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView9"
-        android:src="@drawable/img_clock"
-        android:layout_marginLeft="27dp"
-        android:layout_below="@+id/img_theme"
+        android:drawableLeft="@drawable/img_cocktailicon"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:includeFontPadding="false"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_date"
         android:text="5월 7일 / 19:00 - 21:30"
-        android:layout_marginLeft="5dp"
         android:textSize="14sp"
-        android:layout_alignBottom="@+id/imageView9"
-        android:layout_alignTop="@+id/imageView9"
-        android:layout_toEndOf="@+id/imageView9"
-        android:gravity="center" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView15"
-        android:layout_alignTop="@+id/text_date"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/text_item_title"
         android:layout_alignParentStart="true"
-        android:src="@drawable/img_address"
-        android:layout_above="@+id/frameLayout"
-        android:layout_marginLeft="226dp" />
+        android:drawableLeft="@drawable/img_clock"
+        android:drawablePadding="5dp"
+        android:includeFontPadding="false"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,17 +37,19 @@
         android:id="@+id/text_location"
         android:text="서울시 서초구"
         android:textSize="14dp"
-        android:layout_marginLeft="5dp"
-        android:layout_alignTop="@+id/imageView15"
-        android:layout_alignBottom="@+id/imageView15"
-        android:layout_toEndOf="@+id/imageView15"
-        android:gravity="center" />
+        android:drawableLeft="@drawable/img_address"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:layout_alignTop="@+id/text_date"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="226dp"
+        android:includeFontPadding="false"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/frameLayout"
-        android:layout_below="@+id/imageView9"
+        android:layout_below="@+id/text_date"
         android:layout_alignParentStart="true"
         android:layout_marginTop="11dp">
 
@@ -97,7 +74,7 @@
             android:layout_marginTop="12dp"
             android:text="0"
             android:gravity="right|center_vertical"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -108,38 +85,38 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/text_price"
                 android:text="25,000"
                 android:layout_above="@+id/progressBar"
                 android:layout_alignParentStart="true"
                 android:textColor="#ffffff"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="16dp"
                 android:textSize="16sp"
-                android:layout_marginTop="9dp" />
+                android:layout_marginTop="9dp"
+                android:includeFontPadding="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/text_progress"
                 android:text="50% 모금됨"
                 android:layout_alignTop="@+id/text_price"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:includeFontPadding="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/text_duedate"
                 android:text="60일 남음"
                 android:layout_alignTop="@+id/text_price"
                 android:layout_alignParentEnd="true"
                 android:textColor="#ffffff"
-                android:layout_marginRight="10dp"
-                android:textSize="16sp" />
+                android:layout_marginRight="16dp"
+                android:textSize="16sp"
+                android:includeFontPadding="false"/>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"

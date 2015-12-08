@@ -36,7 +36,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     TabLayout tabs;
     ViewPager pager;
-    TextView titilView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
+    TextView titleView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
     CheckBox chboxView;
     ImageView imageView, imgPartyView;
     ProgressBar progressBar;
@@ -44,6 +44,13 @@ public class PartyDetailActivity extends AppCompatActivity {
     public Party party;
     SharePopupWindow popup;
     DisplayImageOptions options;
+
+    int[] ids = {0,
+            R.drawable.main_theme_1,
+            R.drawable.main_theme_2,
+            R.drawable.main_theme_3,
+            R.drawable.main_theme_4,
+            R.drawable.main_theme_5};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +152,8 @@ public class PartyDetailActivity extends AppCompatActivity {
         party = (Party)intent.getSerializableExtra("party");
 
         ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + party.photo, imgPartyView, options);
-        titilView.setText(party.name);
+        titleView.setText(party.name);
+        titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
         String[] array = party.location.split(" ");
         if(array.length==1)
@@ -162,7 +170,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     private void initView() {
         imgPartyView = (ImageView)findViewById(R.id.img_party);
-        titilView = (TextView)findViewById(R.id.text_title);
+        titleView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
         locationView = (TextView)findViewById(R.id.text_location);
         priceView = (TextView)findViewById(R.id.text_price);

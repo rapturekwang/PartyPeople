@@ -45,10 +45,10 @@ public class UserFragment extends Fragment {
 
     UserAdapter mAdapter;
     ArrayList<String> followings, followers;
-    TextView followingView, followerView;
+    TextView followingView, followerView, nameView, addressView;
     LinearLayout linearLayout;
     DisplayImageOptions options;
-    ImageView modify;
+    ImageView modify, profileView;
 
     public UserFragment() {
         Bundle args = new Bundle();
@@ -111,10 +111,7 @@ public class UserFragment extends Fragment {
                 getContext().startActivity(new Intent(getContext(), EditProfileActivity.class));
             }
         });
-        btn = (ImageView)view.findViewById(R.id.image_profile);
-        if(user.has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + user.id + "/photo", btn, options);
-        }
+        profileView = (ImageView)view.findViewById(R.id.image_profile);
         TextView textBtn = (TextView)view.findViewById(R.id.text_btn_message);
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,11 +140,8 @@ public class UserFragment extends Fragment {
             }
         });
 
-        TextView textView = (TextView)view.findViewById(R.id.text_name);
-        textView.setText(user.name);
-
-        textView = (TextView)view.findViewById(R.id.text_tel);
-        textView.setText(user.address);
+        nameView = (TextView)view.findViewById(R.id.text_name);
+        addressView = (TextView)view.findViewById(R.id.text_address);
 
         LinearLayout linearLayout2 = (LinearLayout)view.findViewById(R.id.linearLayout2);
         if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
@@ -226,6 +220,11 @@ public class UserFragment extends Fragment {
     private void initData(int index) {
         UserActivity activity = (UserActivity)getActivity();
         final User user = activity.getUser();
+        if(user.has_photo) {
+            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + activity.getUser().photo, profileView, options);
+        }
+        nameView.setText(user.name);
+        addressView.setText(user.address);
         for(int i=0;i<user.groups.size();i++) {
             if(user.groups.get(i).role.equals("OWNER") && index==0) {
                 partyList.add(user.groups.get(i));

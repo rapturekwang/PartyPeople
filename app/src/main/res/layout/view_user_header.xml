@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="204dp"
-    android:background="@drawable/bg">
+    android:layout_height="204dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="204dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/bg" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -36,72 +43,48 @@
         android:src="@drawable/profile_img"
         android:layout_marginTop="15dp" />
 
-    <!--<com.github.siyamed.shapeimageview.CircularImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:src="@drawable/neo"-->
-    <!--app:siBorderWidth="6dp"-->
-    <!--app:siBorderColor="@color/darkgray"/>-->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="정광희"
         android:id="@+id/text_name"
         android:layout_below="@+id/image_profile"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
-        android:layout_marginTop="10dp"
+        android:includeFontPadding="false"
+        android:layout_marginTop="8dp"
         android:textSize="16sp" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout"
+        android:text="서울시 관악구"
+        android:id="@+id/text_address"
+        android:drawableLeft="@drawable/user_map_white"
+        android:drawablePadding="4dp"
+        android:textColor="#ffffff"
+        android:textSize="13sp"
         android:layout_below="@+id/text_name"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView34"
-            android:src="@drawable/user_map_white"
-            android:layout_below="@+id/text_name"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="서울시 관악구"
-            android:id="@+id/text_tel"
-            android:textColor="#ffffff"
-            android:textSize="13sp"
-            android:layout_alignTop="@+id/imageView34"
-            android:layout_toEndOf="@+id/imageView34"
-            android:layout_marginLeft="4dp"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/linearLayout"
-        android:layout_marginTop="12dp"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="10dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_follow"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/user_human"
-            android:layout_marginLeft="8dp" />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/img_follow"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:src="@drawable/user_human"-->
+            <!--android:layout_marginLeft="8dp" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,7 +95,9 @@
             android:textColor="#ffffff"
             android:layout_alignTop="@+id/img_follow"
             android:layout_toEndOf="@+id/img_follow"
-            android:layout_marginLeft="6dp"
+            android:drawableLeft="@drawable/user_human"
+            android:drawablePadding="6dp"
+            android:layout_marginLeft="8dp"
             android:textSize="14sp" />
 
         <TextView
@@ -134,13 +119,13 @@
             android:id="@+id/textView34"
             android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_message"
-            android:layout_alignParentTop="true"
-            android:layout_alignEnd="@+id/btn_modify"
-            android:src="@drawable/user_email" />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/img_message"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignEnd="@+id/btn_modify"-->
+            <!--android:src="@drawable/user_email" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -151,9 +136,11 @@
             android:textColor="#ffffff"
             android:textSize="14sp"
             android:layout_marginLeft="4dp"
+            android:drawableLeft="@drawable/user_email"
+            android:drawablePadding="4dp"
             android:layout_alignTop="@+id/img_message"
             android:layout_alignEnd="@+id/btn_modify"
-            android:layout_marginEnd="18dp" />
+            android:layout_marginEnd="13dp" />
 
     </LinearLayout>
 
@@ -164,7 +151,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/linearlayout_user"
-        android:layout_marginBottom="20dp">
+        android:paddingBottom="10dp">
 
         <ImageView
             android:layout_width="wrap_content"

@@ -408,7 +408,7 @@ public class NetworkManager {
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         UserResult userResult = new UserResult();
         userResult.data = user;
-        Log.d("NetworkManager", URL_USERS + "/" + PropertyManager.getInstance().getUser().id);
+//        Log.d("NetworkManager", URL_USERS + "/" + PropertyManager.getInstance().getUser().id);
 
         try {
             client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id, headers,

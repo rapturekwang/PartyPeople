@@ -34,6 +34,7 @@ public class CommentAdapter extends BaseAdapter{
 
     public void add(String comment) {
         list.add(comment);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -45,7 +45,7 @@ public class MainFragmentAdapter extends BaseAdapter {
         DisplayImageOptions options;
         TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
         CheckBox bookMarkView;
-        ImageView imageTheme, imageParty;
+        ImageView imageParty;
         ProgressBar progressBar;
         Party mData;
         DateUtil dateUtil = DateUtil.getInstance();
@@ -60,8 +60,8 @@ public class MainFragmentAdapter extends BaseAdapter {
         public void setItemData(Party data, Context context) {
             mData = data;
 
-            imageTheme.setImageResource(ids[data.themes[0]]);
             titleView.setText(data.name);
+            titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
             dateView.setText(dateUtil.changeToViewFormat(data.start_at, data.end_at));
             dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");
             String[] array = data.location.split(" ");
@@ -79,7 +79,7 @@ public class MainFragmentAdapter extends BaseAdapter {
 
         private void init(View view) {
             imageParty = (ImageView)view.findViewById(R.id.image_party);
-            imageTheme = (ImageView)view.findViewById(R.id.img_theme);
+//            imageTheme = (ImageView)view.findViewById(R.id.img_theme);
             titleView = (TextView)view.findViewById(R.id.text_item_title);
             dateView = (TextView)view.findViewById(R.id.text_date);
             locationView = (TextView)view.findViewById(R.id.text_location);
@@ -154,7 +154,6 @@ public class MainFragmentAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
             convertView.setTag(R.id.image_party, holder.imageParty);
-            convertView.setTag(R.id.img_theme, holder.imageTheme);
             convertView.setTag(R.id.text_item_title, holder.titleView);
             convertView.setTag(R.id.text_date, holder.dateView);
             convertView.setTag(R.id.text_location, holder.locationView);

@@ -113,6 +113,7 @@ public class MainTabFragment extends Fragment {
                 if(PropertyManager.getInstance().isLogin()) {
                     listView.removeHeaderView(header);
                     header = new MainTabHeaderView(getContext());
+                    Log.d("MainTabFragment", user.favorite_address + ":" + user.themes.toString());
                     header.setItemData(user.favorite_address, user.themes);
                     listView.addHeaderView(header);
                     warningView.setVisibility(View.GONE);
