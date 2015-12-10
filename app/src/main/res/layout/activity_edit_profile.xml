@@ -31,7 +31,7 @@
         android:layout_below="@+id/toolbar"
         android:background="@drawable/bg">
 
-        <com.github.siyamed.shapeimageview.CircularImageView
+        <ImageView
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:id="@+id/img_profile"

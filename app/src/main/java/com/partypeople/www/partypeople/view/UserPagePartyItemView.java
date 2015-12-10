@@ -2,17 +2,17 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
 /**
@@ -21,7 +21,6 @@ import com.partypeople.www.partypeople.utils.DateUtil;
 public class UserPagePartyItemView extends RelativeLayout {
     DateUtil dateUtil = DateUtil.getInstance();
     Context mContext;
-    DisplayImageOptions options;
 
     public UserPagePartyItemView(Context context) {
         super(context);
@@ -56,15 +55,6 @@ public class UserPagePartyItemView extends RelativeLayout {
         progressView = (TextView)findViewById(R.id.text_progress);
         dueDateView = (TextView)findViewById(R.id.text_duedate);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_img)
-                .showImageForEmptyUri(R.drawable.profile_img)
-                .showImageOnFail(R.drawable.profile_img)
-                .cacheInMemory(true)
-                .cacheOnDisc(false)
-                .considerExifParams(true)
-                .build();
     }
 
     public void setItemData(Party data) {
@@ -81,8 +71,20 @@ public class UserPagePartyItemView extends RelativeLayout {
             locationView.setText(array[0] + " " + array[1]);
         priceView.setText((int)data.expect_pay + "원");
         int progress = (int)((data.member_count*data.pay_method.get(0).price)/data.expect_pay*100);
-        progressView.setText(progress+"% 모금됨");
+        progressView.setText(progress + "% 모금됨");
         progressBar.setProgress(progress);
-        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + data.photo, partyImgView, options);
+//        Picasso.with(getContext())
+//                .load(NetworkManager.getInstance().URL_SERVER + data.photo)
+//                .placeholder(R.drawable.profile_img)
+//                .error(R.drawable.profile_img)
+//                .into(partyImgView);
+
+        CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+        GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + data.photo);
+        Glide.with(getContext())
+                .load(glideUrl)
+                .placeholder(R.drawable.profile_img)
+                .error(R.drawable.profile_img)
+                .into(partyImgView);
     }
 }

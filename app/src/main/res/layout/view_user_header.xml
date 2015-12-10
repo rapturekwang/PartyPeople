@@ -34,7 +34,7 @@
         android:paddingLeft="15dp"
         android:paddingBottom="15dp" />
 
-    <com.github.siyamed.shapeimageview.CircularImageView
+    <ImageView
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:id="@+id/image_profile"

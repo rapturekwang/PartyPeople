@@ -17,8 +17,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.EditProfileActivity;
 import com.partypeople.www.partypeople.activity.FollowActivity;
@@ -32,6 +33,10 @@ import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
+
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +52,6 @@ public class UserFragment extends Fragment {
     ArrayList<String> followings, followers;
     TextView followingView, followerView, nameView, addressView;
     LinearLayout linearLayout;
-    DisplayImageOptions options;
     ImageView modify, profileView;
 
     public UserFragment() {
@@ -58,15 +62,6 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_img)
-                .showImageForEmptyUri(R.drawable.profile_img)
-                .showImageOnFail(R.drawable.profile_img)
-                .cacheInMemory(true)
-                .cacheOnDisc(false)
-                .considerExifParams(true)
-                .build();
 
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter(getActivity(), index , new OnTabChangeListener() {
@@ -221,7 +216,22 @@ public class UserFragment extends Fragment {
         UserActivity activity = (UserActivity)getActivity();
         final User user = activity.getUser();
         if(user.has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + activity.getUser().photo, profileView, options);
+//            Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
+//            picasso.load(NetworkManager.getInstance().URL_SERVER + activity.getUser().photo)
+//                    .networkPolicy(NetworkPolicy.NO_CACHE)
+//                    .placeholder(R.drawable.profile_img)
+//                    .error(R.drawable.profile_img)
+//                    .into(profileView);
+
+            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.getUser().photo);
+            Glide.with(getContext())
+                    .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .transform(new CircleTransform(getContext()))
+                    .into(profileView);
         }
         nameView.setText(user.name);
         addressView.setText(user.address);

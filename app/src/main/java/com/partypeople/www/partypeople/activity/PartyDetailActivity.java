@@ -1,13 +1,11 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,8 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
@@ -43,7 +40,6 @@ public class PartyDetailActivity extends AppCompatActivity {
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
     SharePopupWindow popup;
-    DisplayImageOptions options;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -151,7 +147,18 @@ public class PartyDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
 
-        ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + party.photo, imgPartyView, options);
+//        CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+//        GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
+        Glide.with(this)
+                .load(NetworkManager.getInstance().URL_SERVER + party.photo)
+                .placeholder(R.drawable.profile_img)
+                .error(R.drawable.profile_img)
+                .into(imgPartyView);
+//        Picasso.with(this)
+//                .load(NetworkManager.getInstance().URL_SERVER + party.photo)
+//                .placeholder(R.drawable.profile_img)
+//                .error(R.drawable.profile_img)
+//                .into(imgPartyView);
         titleView.setText(party.name);
         titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
@@ -179,15 +186,6 @@ public class PartyDetailActivity extends AppCompatActivity {
         duedateView = (TextView)findViewById(R.id.text_duedate);
         imageView = (ImageView)findViewById(R.id.image_party);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_img)
-                .showImageForEmptyUri(R.drawable.profile_img)
-                .showImageOnFail(R.drawable.profile_img)
-                .cacheInMemory(true)
-                .cacheOnDisc(false)
-                .considerExifParams(true)
-                .build();
     }
 
     public void setPagerHeight(int height) {

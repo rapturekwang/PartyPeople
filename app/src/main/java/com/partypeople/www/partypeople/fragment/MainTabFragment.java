@@ -83,6 +83,11 @@ public class MainTabFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(getArguments().getInt(ARG_INDEX)==1) {
+                    if(position==0)
+                        return;
+                    position--;
+                }
                 Intent i = new Intent(getActivity(), PartyDetailActivity.class);
                 Party party = partyList.get(position);
                 i.putExtra("party", party);

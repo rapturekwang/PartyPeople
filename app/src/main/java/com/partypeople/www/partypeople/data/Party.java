@@ -27,7 +27,7 @@ public class Party implements Serializable{
         this.bookmark = bookmark;
     }
 
-    public boolean bookmark;
+    public boolean bookmark = false;
 
     public String id;
     public String name;

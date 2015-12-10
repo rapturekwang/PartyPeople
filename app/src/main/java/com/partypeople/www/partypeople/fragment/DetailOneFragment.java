@@ -22,17 +22,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Follow;
-import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
+import com.partypeople.www.partypeople.utils.DateUtil;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapPOIItem;
@@ -56,7 +57,6 @@ public class DetailOneFragment extends Fragment {
     User user;
     LinearLayout layout;
     ArrayAdapter<POIItem> mAdapter;
-    DisplayImageOptions options;
     int[] ids = {
             R.id.image_parti1,
             R.id.image_parti2,
@@ -83,15 +83,6 @@ public class DetailOneFragment extends Fragment {
         if (getArguments() != null) {
             mName = getArguments().getString(ARG_NAME);
         }
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_img)
-                .showImageForEmptyUri(R.drawable.profile_img)
-                .showImageOnFail(R.drawable.profile_img)
-                .cacheInMemory(true)
-                .cacheOnDisc(false)
-                .considerExifParams(true)
-                .build();
     }
 
     @Override
@@ -135,21 +126,32 @@ public class DetailOneFragment extends Fragment {
                         Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
                     }
                 });
-//                Intent intent = new Intent(getContext(), UserActivity.class);
-//                intent.putExtra("user", user);
-//                startActivity(intent);
             }
         });
 
         mapLocation.setText(activity.party.location);
         descriptionView.setText(activity.party.description);
         participantView.setText("참여자 " + activity.party.members.size() + "명");
-        hostNameView.setText(activity.party.members.get(0).name);
-        if(activity.party.members.get(0).has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.members.get(0).id + "/photo", imgHostView, options);
+        hostNameView.setText(activity.party.owner.name);
+        if(activity.party.owner.has_photo) {
+//            Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
+//            picasso.load(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo)
+//                    .networkPolicy(NetworkPolicy.NO_CACHE)
+//                    .placeholder(R.drawable.profile_img)
+//                    .error(R.drawable.profile_img)
+//                    .into(imgHostView);
+            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo);
+            Glide.with(getContext())
+                    .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .transform(new CircleTransform(getContext()))
+                    .into(imgHostView);
         }
 
-        NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(0).id, new NetworkManager.OnResultListener<User>() {
+        NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
             @Override
             public void onSuccess(final User result) {
                 user = result;
@@ -195,13 +197,27 @@ public class DetailOneFragment extends Fragment {
         });
 
         for(int i=0;i<activity.party.members.size();i++) {
-//            if(i==5)
-//                break;
             parti.get(i).setVisibility(View.VISIBLE);
             if(i==4)
                 break;
-            if(activity.party.members.get(i).has_photo) {
-                ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_USERS + "/" + activity.party.members.get(i).id + "/photo", parti.get(i), options);
+            else if(activity.party.members.get(i).has_photo) {
+//                Log.d("DetailOneFragment", "has photo: " + activity.party.members.get(i).photo);
+//                Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
+//                picasso.load(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo)
+//                        .networkPolicy(NetworkPolicy.NO_CACHE)
+//                        .placeholder(R.drawable.profile_img)
+//                        .error(R.drawable.profile_img)
+//                        .into(parti.get(i));
+
+                CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+                GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
+                Glide.with(getContext())
+                        .load(glideUrl)
+                        .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                        .placeholder(R.drawable.profile_img)
+                        .error(R.drawable.profile_img)
+                        .transform(new CircleTransform(getContext()))
+                        .into(parti.get(i));
             }
         }
 
@@ -242,7 +258,7 @@ public class DetailOneFragment extends Fragment {
             public void onGlobalLayout() {
                 layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 int height = layout.getMeasuredHeight();
-                Log.d("DetailOne", height+"");
+//                Log.d("DetailOne", height+"");
                 ((PartyDetailActivity)getActivity()).setPagerHeight(height);
             }
         });

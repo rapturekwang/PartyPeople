@@ -1,1 +1,1 @@
-include ':app', ':async', ':ImageLoader'
+include ':app', ':async'

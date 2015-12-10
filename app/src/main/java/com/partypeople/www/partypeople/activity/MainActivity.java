@@ -26,16 +26,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.siyamed.shapeimageview.CircularImageView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -50,9 +54,8 @@ public class MainActivity extends AppCompatActivity implements
     FrameLayout layout;
     MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
-    DisplayImageOptions options;
     RelativeLayout relativeLayout;
-    TextView name, email;
+    TextView name, email, address;
     Button headerBtn;
     View header;
 
@@ -61,31 +64,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_img)
-                .showImageForEmptyUri(R.drawable.profile_img)
-                .showImageOnFail(R.drawable.profile_img)
-                .cacheInMemory(true)
-                .cacheOnDisc(false)
-                .considerExifParams(true)
-                .build();
-
         layout = (FrameLayout)findViewById(R.id.container);
         user = propertyManager.getUser();
-
-//        if(propertyManager.isLogin()) {
-//            NetworkManager.getInstance().getUser(this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
-//                @Override
-//                public void onSuccess(final User result) {
-//                    user = result;
-//                }
-//
-//                @Override
-//                public void onFail(int code) {
-//
-//                }
-//            });
-//        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -170,15 +150,24 @@ public class MainActivity extends AppCompatActivity implements
 
         name = (TextView)header.findViewById(R.id.text_user_name);
         email = (TextView)header.findViewById(R.id.text_user_email);
+        address = (TextView)header.findViewById(R.id.text_user_address);
         relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
 
         setNavigation();
     }
 
     public void setNavigation() {
-        CircularImageView imgView = (CircularImageView)header.findViewById(R.id.img_profile);
+        ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
         if(propertyManager.getUser().has_photo) {
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo, imgView, options);
+            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
+            Glide.with(this)
+                    .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .transform(new CircleTransform(this))
+                    .into(imgView);
         }
 
         if(!propertyManager.isLogin()) {
@@ -198,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements
 
             name.setText(propertyManager.getUser().name);
             email.setText(propertyManager.getUser().email);
+            address.setText(propertyManager.getUser().address);
         }
     }
 

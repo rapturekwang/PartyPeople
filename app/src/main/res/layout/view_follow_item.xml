@@ -4,7 +4,7 @@
     android:layout_height="187dp"
     android:background="#ffffff">
 
-    <com.github.siyamed.shapeimageview.CircularImageView
+    <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/img_profile"

@@ -1,26 +1,19 @@
 package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.bumptech.glide.Glide;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -42,7 +35,6 @@ public class MainFragmentAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        DisplayImageOptions options;
         TextView titleView, dateView, locationView, priceView, progressView, dueDateView;
         CheckBox bookMarkView;
         ImageView imageParty;
@@ -70,16 +62,26 @@ public class MainFragmentAdapter extends BaseAdapter {
             else
                 locationView.setText(array[0] + " " + array[1]);
             priceView.setText((int)data.expect_pay + "원");
-            int progress = (int)((data.member_count*data.pay_method.get(0).price)/data.expect_pay*100);
-            progressView.setText(progress+"% 모금됨");
+            int progress = (int)((data.member_count * data.pay_method.get(0).price)/data.expect_pay * 100);
+            progressView.setText(progress + "% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
-            ImageLoader.getInstance().displayImage(NetworkManager.getInstance().URL_SERVER + data.photo, imageParty, options);
+//            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+//            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
+            Glide.with(context)
+                    .load(NetworkManager.getInstance().URL_SERVER + data.photo)
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .into(imageParty);
+//            Picasso.with(context)
+//                    .load(NetworkManager.getInstance().URL_SERVER + data.photo)
+//                    .placeholder(R.drawable.profile_img)
+//                    .error(R.drawable.profile_img)
+//                    .into(imageParty);
         }
 
         private void init(View view) {
             imageParty = (ImageView)view.findViewById(R.id.image_party);
-//            imageTheme = (ImageView)view.findViewById(R.id.img_theme);
             titleView = (TextView)view.findViewById(R.id.text_item_title);
             dateView = (TextView)view.findViewById(R.id.text_date);
             locationView = (TextView)view.findViewById(R.id.text_location);
@@ -88,15 +90,6 @@ public class MainFragmentAdapter extends BaseAdapter {
             dueDateView = (TextView)view.findViewById(R.id.text_duedate);
             bookMarkView = (CheckBox)view.findViewById(R.id.chbox_bookmark);
             progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
-
-            options = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.drawable.profile_img)
-                    .showImageForEmptyUri(R.drawable.profile_img)
-                    .showImageOnFail(R.drawable.profile_img)
-                    .cacheInMemory(true)
-                    .cacheOnDisc(false)
-                    .considerExifParams(true)
-                    .build();
         }
     }
 
@@ -132,9 +125,17 @@ public class MainFragmentAdapter extends BaseAdapter {
             holder.bookMarkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(buttonView.getTag()==null)
+                        return;
                     int getPosition = (Integer) buttonView.getTag();
+                    boolean update = false;
+                    if(!items.get(getPosition).isBookmark() && buttonView.isChecked()) {
+                        update = true;
+                    }
                     items.get(getPosition).setBookmark(buttonView.isChecked());
-//                    if(isChecked) {
+
+                    if(update) {
+                        Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
 //                        NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
 //                            @Override
 //                            public void onSuccess(String result) {
@@ -146,7 +147,7 @@ public class MainFragmentAdapter extends BaseAdapter {
 //
 //                            }
 //                        });
-//                    }
+                    }
                 }
             });
 
