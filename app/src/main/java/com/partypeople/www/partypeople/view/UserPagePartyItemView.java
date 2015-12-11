@@ -73,11 +73,6 @@ public class UserPagePartyItemView extends RelativeLayout {
         int progress = (int)((data.member_count*data.pay_method.get(0).price)/data.expect_pay*100);
         progressView.setText(progress + "% 모금됨");
         progressBar.setProgress(progress);
-//        Picasso.with(getContext())
-//                .load(NetworkManager.getInstance().URL_SERVER + data.photo)
-//                .placeholder(R.drawable.profile_img)
-//                .error(R.drawable.profile_img)
-//                .into(partyImgView);
 
         CustomGlideUrl customGlideUrl = new CustomGlideUrl();
         GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + data.photo);

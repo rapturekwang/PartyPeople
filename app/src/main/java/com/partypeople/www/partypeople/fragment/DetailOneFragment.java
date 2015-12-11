@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
+//import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -116,6 +116,8 @@ public class DetailOneFragment extends Fragment {
                 NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
+//                        Intent intent = new Intent(getContext(), UserActivity.class);
+//                        intent.putExtra("user", result);
                         Intent intent = new Intent(getContext(), UserActivity.class);
                         intent.putExtra("user", result);
                         startActivity(intent);

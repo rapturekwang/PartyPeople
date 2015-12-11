@@ -1,34 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context=".MainActivity" >
 
-    <android.support.v4.app.FragmentTabHost
-        android:id="@+id/tabhost"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <FrameLayout
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
             <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
-            <FrameLayout
-                android:id="@+id/realtabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <TabWidget
-                android:id="@android:id/tabs"
+                android:layout_height="204dp"
+                android:id="@+id/header"/>
+
+            <android.support.design.widget.TabLayout
+                android:layout_below="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:id="@+id/tabs"
+                android:background="@drawable/userpage_menubar"
+                android:layout_gravity="center_vertical"
+                app:tabTextAppearance="@style/TabText"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabPaddingTop="3dp"
+                app:tabIndicatorColor="@null"
+                app:tabTextColor="@color/tabUnfocused"
+                app:tabSelectedTextColor="@color/tabFocused"/>
+
+            <android.support.v4.view.ViewPager
+                android:layout_below="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/userpage_menubar"
-                android:visibility="gone" />
-        </FrameLayout>
-    </android.support.v4.app.FragmentTabHost>
+                android:id="@+id/pager"
+                android:layout_gravity="center_horizontal" />
 
-</LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/fake_tabs"
+        android:background="@drawable/userpage_menubar"
+        android:layout_gravity="center_vertical"
+        app:tabTextAppearance="@style/TabText"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabPaddingTop="3dp"
+        app:tabIndicatorColor="@null"
+        app:tabTextColor="@color/tabUnfocused"
+        app:tabSelectedTextColor="@color/tabFocused"
+        android:visibility="invisible" />
+</RelativeLayout>

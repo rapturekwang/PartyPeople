@@ -1,17 +1,21 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
@@ -31,7 +35,7 @@ import com.partypeople.www.partypeople.utils.DateUtil;
 
 public class PartyDetailActivity extends AppCompatActivity {
 
-    TabLayout tabs;
+    TabLayout tabs, fakeTabs;
     ViewPager pager;
     TextView titleView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
     CheckBox chboxView;
@@ -53,7 +57,8 @@ public class PartyDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_detail);
 
-        tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs = (TabLayout)findViewById(R.id.tabs);
+        fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
         pager = (ViewPager)findViewById(R.id.pager);
         DetailTabAdapter adpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
@@ -61,12 +66,28 @@ public class PartyDetailActivity extends AppCompatActivity {
         setPagerHeight(2800);
 
         tabs.setupWithViewPager(pager);
+        fakeTabs.setupWithViewPager(pager);
 
         tabs.removeAllTabs();
+        fakeTabs.removeAllTabs();
         String[] tabTitle = getResources().getStringArray(R.array.detail_tab_name);
         for (int i = 0; i < Constants.NUM_OF_DETAIL_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i]));
+            fakeTabs.addTab(fakeTabs.newTab().setText(tabTitle[i]));
         }
+
+        final ScrollView scrollView = (ScrollView)findViewById(R.id.scroll);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                Log.d("PartyDetailActivity", "scroll Y : "+scrollView.getScrollY() + "\ntab Y : " + tabs.getY());
+                if(scrollView.getScrollY()>tabs.getY()) {
+                    fakeTabs.setVisibility(View.VISIBLE);
+                } else {
+                    fakeTabs.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -80,19 +101,17 @@ public class PartyDetailActivity extends AppCompatActivity {
                     case 0:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(2800);
-                        ((DetailOneFragment) getSupportFragmentManager().getFragments().get(0)).test();
+//                        ((DetailOneFragment) getSupportFragmentManager().getFragments().get(0)).test();
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(200 + 230 * party.pay_method.size());
-                        ((DetailTwoFragment) getSupportFragmentManager().getFragments().get(1)).test();
-//                        setPagerHeight(108 + 197*party.pay_method.size());
+//                        ((DetailTwoFragment) getSupportFragmentManager().getFragments().get(1)).test();
                         break;
                     case 2:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(350 + 300*party.comments.size());
-                        ((DetailThreeFragment) getSupportFragmentManager().getFragments().get(2)).test();
-//                        setPagerHeight(228 + 240*party.comments.size());
+                        setPagerHeight(350 + 300 * party.comments.size());
+//                        ((DetailThreeFragment) getSupportFragmentManager().getFragments().get(2)).test();
                         break;
                 }
             }
@@ -147,18 +166,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
 
-//        CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-//        GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
         Glide.with(this)
                 .load(NetworkManager.getInstance().URL_SERVER + party.photo)
                 .placeholder(R.drawable.profile_img)
                 .error(R.drawable.profile_img)
                 .into(imgPartyView);
-//        Picasso.with(this)
-//                .load(NetworkManager.getInstance().URL_SERVER + party.photo)
-//                .placeholder(R.drawable.profile_img)
-//                .error(R.drawable.profile_img)
-//                .into(imgPartyView);
         titleView.setText(party.name);
         titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
@@ -167,12 +179,12 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0]);
         else
             locationView.setText(array[0] + " " + array[1]);
-        priceView.setText(party.pay_method.get(0).price+"원");
+        priceView.setText(party.pay_method.get(0).price + "원");
         int progress = (int)((party.members.size()*party.pay_method.get(0).price)/party.expect_pay*100);
         progressView.setText(progress+"% 모금됨");
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
-        totalPriceView.setText((int)party.expect_pay+"원");
+        totalPriceView.setText((int) party.expect_pay + "원");
     }
 
     private void initView() {

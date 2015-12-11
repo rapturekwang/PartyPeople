@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.data.User;
@@ -206,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements
                 NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
+//                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
+//                        intent.putExtra("user", result);
                         Intent intent = new Intent(MainActivity.this, UserActivity.class);
                         intent.putExtra("user", result);
                         startActivity(intent);

@@ -1,67 +1,252 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TabHost;
-import android.widget.TabWidget;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.UserTabAdapter;
+import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.fragment.UserFragment;
+import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
-public class UserActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+/**
+ * Created by kwang on 15. 12. 11..
+ */
+public class UserActivity extends AppCompatActivity{
     User user;
-    FragmentTabHost tabHost;
-    TabWidget tabWidget;
+    TabLayout tabs, fakeTabs;
+    ViewPager pager;
+    FrameLayout header;
+    ArrayList<String> followings, followers;
+    TextView followingView, followerView, nameView, addressView;
+    LinearLayout linearLayout;
+    ImageView modify, profileView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        tabHost = (FragmentTabHost)findViewById(R.id.tabhost);
-        tabWidget = (TabWidget)findViewById(android.R.id.tabs);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        String[] tabTitle = getResources().getStringArray(R.array.user_page_tab_name);
-        Bundle bundle;
-        for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
-            bundle = new Bundle();
-            bundle.putInt("index", i);
-            View tabview = createTabView(tabHost.getContext(), tabTitle[i]);
-            tabHost.addTab(tabHost.newTabSpec(Constants.TAB_IDS[i]).setIndicator(tabview), UserFragment.class, bundle);
-        }
 
         Intent intent = getIntent();
         user = (User)intent.getSerializableExtra("user");
-    }
 
-    public void setTabCurrent(String tag) {
-        tabHost.setCurrentTabByTag(tag);
-    }
+        tabs = (TabLayout)findViewById(R.id.tabs);
+        fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
+        pager = (ViewPager)findViewById(R.id.pager);
+        UserTabAdapter adapter = new UserTabAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(2);
 
-    public void setTabWidgetVisible(boolean isVisible) {
-        if (isVisible) {
-            tabWidget.setVisibility(View.VISIBLE);
-        } else {
-            tabWidget.setVisibility(View.GONE);
+        header = (FrameLayout)findViewById(R.id.header);
+        header.addView(LayoutInflater.from(UserActivity.this).inflate(R.layout.view_user_header, null));
+
+        tabs.setupWithViewPager(pager);
+        fakeTabs.setupWithViewPager(pager);
+
+        setPagerHeight(2000);
+
+        tabs.removeAllTabs();
+        fakeTabs.removeAllTabs();
+        String[] tabTitle = getResources().getStringArray(R.array.user_page_tab_name);
+        for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
+            tabs.addTab(tabs.newTab().setText(tabTitle[i]));
+            fakeTabs.addTab(fakeTabs.newTab().setText(tabTitle[i]));
         }
+
+        ImageView btn = (ImageView)findViewById(R.id.btn_back);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        modify = (ImageView)findViewById(R.id.btn_modify);
+        modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, EditProfileActivity.class));
+            }
+        });
+        profileView = (ImageView)findViewById(R.id.image_profile);
+        TextView textBtn = (TextView)findViewById(R.id.text_btn_message);
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, MessageActivity.class));
+            }
+        });
+        followingView = (TextView)findViewById(R.id.text_following);
+        followingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserActivity.this, FollowActivity.class);
+                i.putStringArrayListExtra("followings", followings);
+                i.putStringArrayListExtra("followers", followers);
+                startActivity(i);
+            }
+        });
+        followerView = (TextView)findViewById(R.id.text_follower);
+        followerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserActivity.this, FollowActivity.class);
+                i.putStringArrayListExtra("followings", followings);
+                i.putStringArrayListExtra("followers", followers);
+                startActivity(i);
+            }
+        });
+
+        nameView = (TextView)findViewById(R.id.text_name);
+        addressView = (TextView)findViewById(R.id.text_address);
+
+        linearLayout = (LinearLayout)findViewById(R.id.linearlayout_user);
+        LinearLayout linearLayout2 = (LinearLayout)findViewById(R.id.linearLayout2);
+        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
+            modify.setVisibility(View.INVISIBLE);
+            linearLayout2.setVisibility(View.INVISIBLE);
+        } else {
+            linearLayout.setVisibility(View.INVISIBLE);
+        }
+
+        ImageView takeFollow = (ImageView)findViewById(R.id.image_btn_follow);
+        takeFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().takeFollow(UserActivity.this, user.id, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(UserActivity.this, "팔로우 하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        });
+        ImageView takeMessage = (ImageView)findViewById(R.id.image_btn_message);
+        takeMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserActivity.this, "아직 준비중 입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final ScrollView scrollView = (ScrollView)findViewById(R.id.scroll);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+//                Log.d("UserActivity", "scroll Y : " + scrollView.getScrollY() + "\ntab Y : " + tabs.getY());
+                if(scrollView.getScrollY()>tabs.getY()) {
+                    fakeTabs.setVisibility(View.VISIBLE);
+                } else {
+                    fakeTabs.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        Log.d("UserActivity", position + "selected");
+                        break;
+                    case 1:
+                        Log.d("UserActivity", position + "selected");
+                        break;
+                    case 2:
+                        Log.d("UserActivity", position + "selected");
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        initData();
+    }
+
+    private void initData() {
+        if(user.has_photo) {
+            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
+            Glide.with(this)
+                    .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .transform(new CircleTransform(this))
+                    .into(profileView);
+        }
+        nameView.setText(user.name);
+        addressView.setText(user.address);
+
+        followers = new ArrayList<String>();
+        followings = new ArrayList<String>();
+        NetworkManager.getInstance().getFollows(this, new NetworkManager.OnResultListener<Follow[]>() {
+            @Override
+            public void onSuccess(Follow[] result) {
+                if(result!=null) {
+                    for (int i = 0; i < result.length; i++) {
+                        if (result[i].from.equals(user.id)) {
+                            followings.add(result[i].to);
+                        } else if (result[i].to.equals(user.id)) {
+                            followers.add(result[i].from);
+                        }
+                    }
+                }
+                followingView.setText("팔로잉 " + followings.size() + " |");
+                followerView.setText("팔로워 " + followers.size());
+            }
+
+            @Override
+            public void onFail(int code) {
+                return;
+            }
+        });
+    }
+
+    public void setPagerHeight(int height) {
+        ViewGroup.LayoutParams params = pager.getLayoutParams();
+        params.height=height;
+        pager.setLayoutParams(params);
     }
 
     public User getUser() {
         return user;
-    }
-
-    private static View createTabView(final Context context, final String text) {
-        View view = LayoutInflater.from(context).inflate(R.layout.tabwidget_layout, null);
-        TextView tv = (TextView) view.findViewById(R.id.tabsText);
-        tv.setText(text);
-        return view;
     }
 }

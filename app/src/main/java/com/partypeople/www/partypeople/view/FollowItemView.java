@@ -43,12 +43,6 @@ public class FollowItemView extends RelativeLayout {
 
     public void setItemData(User user) {
         if(user.has_photo) {
-//            Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
-//            picasso.load(NetworkManager.getInstance().URL_SERVER + user.photo)
-//                    .networkPolicy(NetworkPolicy.NO_CACHE)
-//                    .placeholder(R.drawable.profile_img)
-//                    .error(R.drawable.profile_img)
-//                    .into(imgView);
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
             GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
             Glide.with(getContext())

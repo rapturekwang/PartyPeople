@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;

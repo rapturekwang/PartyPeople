@@ -66,18 +66,11 @@ public class MainFragmentAdapter extends BaseAdapter {
             progressView.setText(progress + "% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
-//            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-//            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
             Glide.with(context)
                     .load(NetworkManager.getInstance().URL_SERVER + data.photo)
                     .placeholder(R.drawable.profile_img)
                     .error(R.drawable.profile_img)
                     .into(imageParty);
-//            Picasso.with(context)
-//                    .load(NetworkManager.getInstance().URL_SERVER + data.photo)
-//                    .placeholder(R.drawable.profile_img)
-//                    .error(R.drawable.profile_img)
-//                    .into(imageParty);
         }
 
         private void init(View view) {
@@ -129,12 +122,13 @@ public class MainFragmentAdapter extends BaseAdapter {
                         return;
                     int getPosition = (Integer) buttonView.getTag();
                     boolean update = false;
-                    if(!items.get(getPosition).isBookmark() && buttonView.isChecked()) {
+                    Log.d("MainFragmentAdapter", items.get(getPosition).isBookmark() + ":" + buttonView.isChecked());
+                    if(items.get(getPosition).isBookmark() != buttonView.isChecked()) {
                         update = true;
                     }
                     items.get(getPosition).setBookmark(buttonView.isChecked());
 
-                    if(update) {
+                    if(update && isChecked) {
                         Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
 //                        NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
 //                            @Override
@@ -147,6 +141,9 @@ public class MainFragmentAdapter extends BaseAdapter {
 //
 //                            }
 //                        });
+                    }
+                    if(update && !isChecked) {
+                        Toast.makeText(mContext, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
