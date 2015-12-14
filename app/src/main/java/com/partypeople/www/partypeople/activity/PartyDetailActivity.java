@@ -1,13 +1,14 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.content.Context;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
 import com.bumptech.glide.Glide;
+import com.cocosw.bottomsheet.BottomSheet;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Party;
@@ -29,7 +31,6 @@ import com.partypeople.www.partypeople.fragment.DetailThreeFragment;
 import com.partypeople.www.partypeople.fragment.DetailTwoFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
-import com.partypeople.www.partypeople.popup.SharePopupWindow;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
@@ -43,8 +44,8 @@ public class PartyDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
-    SharePopupWindow popup;
     DetailTabAdapter mAdpater;
+    BottomSheet sheet;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -146,9 +147,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup = new SharePopupWindow(PartyDetailActivity.this);
-                popup.setOutsideTouchable(true);
-                popup.showAsDropDown(v, 0, -400);
+                showDialog(0);
             }
         });
 
@@ -208,11 +207,30 @@ public class PartyDetailActivity extends AppCompatActivity {
         pager.setLayoutParams(params);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(popup.isShowing())
-//            return;
-//        else
-//            super.onBackPressed();
-//    }
+    @Nullable
+    @Override
+    protected Dialog onCreateDialog(final int position, Bundle args) {
+        sheet = new BottomSheet.Builder(this, R.style.BottomSheet_CustomizedDialog).grid().title("\n모임이 생성 되었습니다\n친구들과 공유해 보세요\n").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                PartyDetailActivity.this.onClick("", which);
+            }
+        }).grid().build();
+        return sheet;
+    }
+
+    void onClick(String name, int which) {
+        switch (which) {
+            case R.id.share_fb:
+                Toast.makeText(PartyDetailActivity.this, "페이스북 공유", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.share_kko:
+                Toast.makeText(PartyDetailActivity.this, "카톡 공유", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.share_insta:
+                Toast.makeText(PartyDetailActivity.this, "인스타 공유", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
 }

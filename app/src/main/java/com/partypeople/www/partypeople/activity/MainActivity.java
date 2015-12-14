@@ -204,8 +204,6 @@ public class MainActivity extends AppCompatActivity implements
                 NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
-//                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
-//                        intent.putExtra("user", result);
                         Intent intent = new Intent(MainActivity.this, UserActivity.class);
                         intent.putExtra("user", result);
                         startActivity(intent);

@@ -39,4 +39,9 @@
         <item name="collapseIcon">@drawable/back</item>
     </style>
 
+    <style name="BottomSheet.CustomizedDialog" parent="BottomSheet.Dialog">
+        <item name="bs_gridItemLayout">@layout/new_grid_entry</item>
+        <item name="bs_headerLayout">@layout/bottom_sheet_header</item>
+    </style>
+
 </resources>

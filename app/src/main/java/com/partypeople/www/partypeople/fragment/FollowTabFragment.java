@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.FollowActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
-//import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.view.FollowItemView;
@@ -65,8 +64,6 @@ public class FollowTabFragment extends Fragment {
                 NetworkManager.getInstance().getUser(getContext(), mAdapter.list.get(position).id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
-//                        Intent intent = new Intent(getContext(), UserActivity.class);
-//                        intent.putExtra("user", result);
                         Intent intent = new Intent(getContext(), UserActivity.class);
                         intent.putExtra("user", result);
                         startActivity(intent);
