@@ -1,1 +1,1 @@
-include ':app', ':async'
+include ':app', ':async', ':bottomSheet'
