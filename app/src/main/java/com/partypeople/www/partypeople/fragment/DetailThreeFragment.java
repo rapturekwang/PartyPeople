@@ -85,7 +85,7 @@ public class DetailThreeFragment extends Fragment {
         return view;
     }
 
-    public void test() {
+    public void changeHeight() {
         ViewTreeObserver vto = layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

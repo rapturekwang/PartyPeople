@@ -2,12 +2,16 @@ package com.partypeople.www.partypeople.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
@@ -23,7 +27,8 @@ public class UserFragment extends Fragment {
     private static final String ARG_INDEX = "index";
     List<Party> partyList = new ArrayList<Party>();
     ListView listView;
-    int index;
+    int index, height;
+    LinearLayout layout;
 
     UserAdapter mAdapter;
 
@@ -53,6 +58,17 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
+        layout = (LinearLayout)view.findViewById(R.id.root_layout);
+//        ViewTreeObserver vto = layout.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                height = layout.getMeasuredHeight();
+////                ((UserActivity) getActivity()).setPagerHeight(height);
+//            }
+//        });
+
         listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter();
         listView.setAdapter(mAdapter);
@@ -79,16 +95,18 @@ public class UserFragment extends Fragment {
         }
     }
 
-//    public void test() {
-//        ViewTreeObserver vto = layout.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                int height = layout.getMeasuredHeight();
-//                Log.d("DetailTwo", height + "");
-//                ((PartyDetailActivity)getActivity()).setPagerHeight(height + 50);
-//            }
-//        });
-//    }
+    public int changeHeight() {
+//        Log.d("UserFragment", "height:" + height);
+//        return height;
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout.getMeasuredHeight();
+                ((UserActivity) getActivity()).setPagerHeight(height);
+            }
+        });
+        return 0;
+    }
 }

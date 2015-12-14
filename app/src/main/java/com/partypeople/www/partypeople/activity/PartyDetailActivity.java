@@ -44,6 +44,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
     SharePopupWindow popup;
+    DetailTabAdapter mAdpater;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -60,8 +61,10 @@ public class PartyDetailActivity extends AppCompatActivity {
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
         pager = (ViewPager)findViewById(R.id.pager);
-        DetailTabAdapter adpater = new DetailTabAdapter(getSupportFragmentManager());
-        pager.setAdapter(adpater);
+        mAdpater = new DetailTabAdapter(getSupportFragmentManager());
+        pager.setAdapter(mAdpater);
+
+        pager.setOffscreenPageLimit(Constants.NUM_OF_DETAIL_TAB-1);
 
         setPagerHeight(2800);
 
@@ -80,7 +83,6 @@ public class PartyDetailActivity extends AppCompatActivity {
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                Log.d("PartyDetailActivity", "scroll Y : "+scrollView.getScrollY() + "\ntab Y : " + tabs.getY());
                 if(scrollView.getScrollY()>tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
                 } else {
@@ -101,17 +103,17 @@ public class PartyDetailActivity extends AppCompatActivity {
                     case 0:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(2800);
-//                        ((DetailOneFragment) getSupportFragmentManager().getFragments().get(0)).test();
+                        ((DetailOneFragment)mAdpater.getItem(position)).changeHeight();
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(200 + 230 * party.pay_method.size());
-//                        ((DetailTwoFragment) getSupportFragmentManager().getFragments().get(1)).test();
+                        ((DetailTwoFragment)mAdpater.getItem(position)).changeHeight();
                         break;
                     case 2:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(350 + 300 * party.comments.size());
-//                        ((DetailThreeFragment) getSupportFragmentManager().getFragments().get(2)).test();
+                        ((DetailThreeFragment)mAdpater.getItem(position)).changeHeight();
                         break;
                 }
             }

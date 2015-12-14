@@ -116,8 +116,6 @@ public class DetailOneFragment extends Fragment {
                 NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
-//                        Intent intent = new Intent(getContext(), UserActivity.class);
-//                        intent.putExtra("user", result);
                         Intent intent = new Intent(getContext(), UserActivity.class);
                         intent.putExtra("user", result);
                         startActivity(intent);
@@ -136,19 +134,13 @@ public class DetailOneFragment extends Fragment {
         participantView.setText("참여자 " + activity.party.members.size() + "명");
         hostNameView.setText(activity.party.owner.name);
         if(activity.party.owner.has_photo) {
-//            Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
-//            picasso.load(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo)
-//                    .networkPolicy(NetworkPolicy.NO_CACHE)
-//                    .placeholder(R.drawable.profile_img)
-//                    .error(R.drawable.profile_img)
-//                    .into(imgHostView);
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
             GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo);
             Glide.with(getContext())
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
                     .transform(new CircleTransform(getContext()))
                     .into(imgHostView);
         }
@@ -203,21 +195,13 @@ public class DetailOneFragment extends Fragment {
             if(i==4)
                 break;
             else if(activity.party.members.get(i).has_photo) {
-//                Log.d("DetailOneFragment", "has photo: " + activity.party.members.get(i).photo);
-//                Picasso picasso = new Picasso.Builder(getContext()).downloader(new CustomOkHttpDownloader(getContext())).build();
-//                picasso.load(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo)
-//                        .networkPolicy(NetworkPolicy.NO_CACHE)
-//                        .placeholder(R.drawable.profile_img)
-//                        .error(R.drawable.profile_img)
-//                        .into(parti.get(i));
-
                 CustomGlideUrl customGlideUrl = new CustomGlideUrl();
                 GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
                 Glide.with(getContext())
                         .load(glideUrl)
                         .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                        .placeholder(R.drawable.profile_img)
-                        .error(R.drawable.profile_img)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile)
                         .transform(new CircleTransform(getContext()))
                         .into(parti.get(i));
             }
@@ -227,7 +211,7 @@ public class DetailOneFragment extends Fragment {
 
         setMap();
 
-        test();
+        changeHeight();
 
         return view;
     }
@@ -253,7 +237,7 @@ public class DetailOneFragment extends Fragment {
         }
     }
 
-    public void test() {
+    public void changeHeight() {
         ViewTreeObserver vto = layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

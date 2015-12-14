@@ -82,7 +82,7 @@ public class DetailTwoFragment extends Fragment {
         }
     }
 
-    public void test() {
+    public void changeHeight() {
         ViewTreeObserver vto = layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

@@ -35,7 +35,7 @@
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:id="@+id/img_profile"
-            android:src="@drawable/profile_img"
+            android:src="@drawable/default_profile"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp" />

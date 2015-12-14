@@ -162,8 +162,8 @@ public class MainActivity extends AppCompatActivity implements
             Glide.with(this)
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
                     .transform(new CircleTransform(this))
                     .into(imgView);
         }

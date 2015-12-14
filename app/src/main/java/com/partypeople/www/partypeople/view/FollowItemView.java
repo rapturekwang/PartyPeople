@@ -48,8 +48,8 @@ public class FollowItemView extends RelativeLayout {
             Glide.with(getContext())
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
                     .transform(new CircleTransform(getContext()))
                     .into(imgView);
         }

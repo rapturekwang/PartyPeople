@@ -14,26 +14,27 @@ import java.util.List;
  * Created by kwang on 15. 12. 10..
  */
 public class UserTabAdapter extends FragmentPagerAdapter {
-        public UserTabAdapter(FragmentManager fm) {
-            super(fm);
-        }
+    List<Fragment> fragments = new ArrayList<Fragment>();
 
-        @Override
-        public Fragment getItem(int position) {
-            List<Fragment> fragments = new ArrayList<Fragment>();
-            fragments.add(UserFragment.newInstance(0));
-            fragments.add(UserFragment.newInstance(1));
-            fragments.add(UserFragment.newInstance(2));
-            return fragments.get(position);
-        }
+    public UserTabAdapter(FragmentManager fm) {
+        super(fm);
+        fragments.add(UserFragment.newInstance(0));
+        fragments.add(UserFragment.newInstance(1));
+        fragments.add(UserFragment.newInstance(2));
+    }
 
-        @Override
-        public int getCount() {
-            return Constants.NUM_OF_USER_PAGE_TAB;
-        }
+    @Override
+    public Fragment getItem(int position) {
+        return fragments.get(position);
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Title " + position;
-        }
+    @Override
+    public int getCount() {
+        return Constants.NUM_OF_USER_PAGE_TAB;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "Title " + position;
+    }
 }

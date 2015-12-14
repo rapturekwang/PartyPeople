@@ -24,6 +24,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.UserTabAdapter;
 import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.fragment.UserFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
@@ -45,6 +46,7 @@ public class UserActivity extends AppCompatActivity{
     TextView followingView, followerView, nameView, addressView;
     LinearLayout linearLayout;
     ImageView modify, profileView;
+    UserTabAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +59,11 @@ public class UserActivity extends AppCompatActivity{
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
         pager = (ViewPager)findViewById(R.id.pager);
-        UserTabAdapter adapter = new UserTabAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(2);
+        mAdapter = new UserTabAdapter(getSupportFragmentManager());
+        pager.setAdapter(mAdapter);
+        pager.setOffscreenPageLimit(Constants.NUM_OF_USER_PAGE_TAB-1);
+
+        setPagerHeight(1000);
 
         header = (FrameLayout)findViewById(R.id.header);
         header.addView(LayoutInflater.from(UserActivity.this).inflate(R.layout.view_user_header, null));
@@ -67,7 +71,7 @@ public class UserActivity extends AppCompatActivity{
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
 
-        setPagerHeight(2000);
+//        setPagerHeight(2000);
 
         tabs.removeAllTabs();
         fakeTabs.removeAllTabs();
@@ -180,13 +184,16 @@ public class UserActivity extends AppCompatActivity{
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        Log.d("UserActivity", position + "selected");
+                        setPagerHeight(1000);
+                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
                         break;
                     case 1:
-                        Log.d("UserActivity", position + "selected");
+                        setPagerHeight(1000);
+                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
                         break;
                     case 2:
-                        Log.d("UserActivity", position + "selected");
+                        setPagerHeight(1000);
+                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
                         break;
                 }
             }
@@ -207,13 +214,17 @@ public class UserActivity extends AppCompatActivity{
             Glide.with(this)
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
                     .transform(new CircleTransform(this))
                     .into(profileView);
         }
         nameView.setText(user.name);
-        addressView.setText(user.address);
+        if(user.address.equals("")) addressView.setVisibility(View.INVISIBLE);
+        else {
+            addressView.setVisibility(View.VISIBLE);
+            addressView.setText(user.address);
+        }
 
         followers = new ArrayList<String>();
         followings = new ArrayList<String>();

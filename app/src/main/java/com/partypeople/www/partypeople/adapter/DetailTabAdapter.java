@@ -16,16 +16,17 @@ import java.util.List;
  * Created by Tacademy on 2015-10-26.
  */
 public class DetailTabAdapter extends FragmentPagerAdapter {
+    List<Fragment> fragments = new ArrayList<Fragment>();
+
     public DetailTabAdapter(FragmentManager fm) {
         super(fm);
+        fragments.add(DetailOneFragment.newInstance("Tab1"));
+        fragments.add(DetailTwoFragment.newInstance("Tab2"));
+        fragments.add(DetailThreeFragment.newInstance("Tab3"));
     }
 
     @Override
     public Fragment getItem(int position) {
-        List<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(DetailOneFragment.newInstance("Tab1"));
-        fragments.add(DetailTwoFragment.newInstance("Tab2"));
-        fragments.add(DetailThreeFragment.newInstance("Tab3"));
         return fragments.get(position);
     }
 
