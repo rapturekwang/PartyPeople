@@ -99,19 +99,21 @@ public class LoginMainFragment extends Fragment {
             }
         });
 
-        TextView textBtn = (TextView)view.findViewById(R.id.text_link1);
+        TextView textBtn = (TextView)view.findViewById(R.id.text_tos);
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "서비스 이용약관", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "이용약관", Toast.LENGTH_SHORT).show();
+                activity.goToFragment(4, Constants.STACK_ADD);
             }
         });
 
-        textBtn = (TextView)view.findViewById(R.id.text_link2);
+        textBtn = (TextView)view.findViewById(R.id.text_policy);
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "개인정보 보호정책", Toast.LENGTH_SHORT).show();
+                activity.goToFragment(5, Constants.STACK_ADD);
             }
         });
 

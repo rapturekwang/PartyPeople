@@ -50,7 +50,7 @@ public class DetailOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String mName;
     TMapView mapView;
-    TextView mapLocation, descriptionView, participantView, hostNameView, followingView, followerView, ownerGroupsView, memberGroupsView;
+    TextView mapLocation, descriptionView, participantView, hostNameView, followView, groupsView;
     List<ImageView> parti = new ArrayList<ImageView>();
     ImageView imgHostView, imgBtnUserinfo;
     LocationManager mLM;
@@ -101,10 +101,8 @@ public class DetailOneFragment extends Fragment {
         participantView = (TextView)view.findViewById(R.id.text_participant);
         hostNameView = (TextView)view.findViewById(R.id.text_host_name);
         imgHostView = (ImageView)view.findViewById(R.id.image_host);
-        followerView = (TextView)view.findViewById(R.id.text_follower);
-        followingView = (TextView)view.findViewById(R.id.text_following);
-        ownerGroupsView = (TextView)view.findViewById(R.id.text_groups_owner);
-        memberGroupsView = (TextView)view.findViewById(R.id.text_groups_memeber);
+        followView = (TextView)view.findViewById(R.id.text_follow);
+        groupsView = (TextView)view.findViewById(R.id.text_groups);
         imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         for(int i=0;i<ids.length;i++) {
             parti.add((ImageView)view.findViewById(ids[i]));
@@ -150,38 +148,16 @@ public class DetailOneFragment extends Fragment {
             public void onSuccess(final User result) {
                 user = result;
                 int owner = 0, memeber = 0;
-                if(user.groups!=null) {
+                if(user.groups.size()!=0) {
                     for (int i = 0; i < user.groups.size(); i++) {
                         if (user.groups.get(i).role.equals("OWNER"))
                             owner++;
                         else if (user.groups.get(i).role.equals("MEMBER"))
                             memeber++;
-                        ownerGroupsView.setText("모임 개최 " + owner + " |");
-                        memberGroupsView.setText("모임 참여 " + memeber);
+                        groupsView.setText("모임 개최 " + owner + " | 모임 참여 " + memeber);
                     }
                 }
-                NetworkManager.getInstance().getFollows(getContext(), new NetworkManager.OnResultListener<Follow[]>() {
-                    @Override
-                    public void onSuccess(Follow[] result) {
-                        int following = 0, follower = 0;
-                        if(result!=null) {
-                            for (int i = 0; i < result.length; i++) {
-                                if (result[i].from.equals(user.id)) {
-                                    following++;
-                                } else if (result[i].to.equals(user.id)) {
-                                    follower++;
-                                }
-                                followingView.setText("팔로잉 " + following + " |");
-                                followerView.setText("팔로워 " + follower);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFail(int code) {
-                        return;
-                    }
-                });
+                followView.setText("팔로잉 " + user.following.size() + " | 팔로워 " + user.follower.size());
             }
 
             @Override

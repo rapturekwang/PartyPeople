@@ -19,6 +19,8 @@ import com.partypeople.www.partypeople.fragment.FindPasswordFragment;
 import com.partypeople.www.partypeople.fragment.LoginFragment;
 import com.partypeople.www.partypeople.fragment.LoginMainFragment;
 import com.partypeople.www.partypeople.fragment.SignupFragment;
+import com.partypeople.www.partypeople.fragment.TOSFragment;
+import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 
@@ -31,7 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     Fragment[] list = {LoginMainFragment.newInstance(""),
             SignupFragment.newInstance(""),
             LoginFragment.newInstance(""),
-            FindPasswordFragment.newInstance("")};
+            FindPasswordFragment.newInstance(""),
+            TOSFragment.newInstance(""),
+            UserInfoPolicyFragment.newInstance("")};
     CallbackManager callbackManager = CallbackManager.Factory.create();
 
     LoginManager mLoginManager = LoginManager.getInstance();

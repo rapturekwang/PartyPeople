@@ -68,89 +68,47 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/linearLayout2"
+        android:id="@+id/relativelayout"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:paddingBottom="10dp">
 
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/img_follow"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:src="@drawable/user_human"-->
-            <!--android:layout_marginLeft="8dp" />-->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="팔로잉 0 |"
-            android:id="@+id/text_following"
+            android:text="팔로잉 0 | 팔로워 0"
+            android:id="@+id/text_follow"
             android:textColor="#ffffff"
-            android:layout_alignTop="@+id/img_follow"
-            android:layout_toEndOf="@+id/img_follow"
             android:drawableLeft="@drawable/user_human"
             android:drawablePadding="6dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="팔로워 0"
-            android:id="@+id/text_follower"
-            android:textColor="#ffffff"
-            android:layout_marginLeft="6dp"
-            android:textSize="14sp"
-            android:layout_alignTop="@+id/text_following"
-            android:layout_toEndOf="@+id/text_following" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textView34"
-            android:layout_weight="1" />
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/img_message"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignEnd="@+id/btn_modify"-->
-            <!--android:src="@drawable/user_email" />-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="새 메시지"
             android:id="@+id/text_btn_message"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:layout_marginLeft="4dp"
             android:drawableLeft="@drawable/user_email"
             android:drawablePadding="4dp"
-            android:layout_alignTop="@+id/img_message"
-            android:layout_alignEnd="@+id/btn_modify"
-            android:layout_marginEnd="13dp" />
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/linearlayout_user"
+        android:id="@+id/relativelayout_user"
         android:paddingBottom="10dp">
 
         <ImageView
@@ -159,9 +117,16 @@
             android:id="@+id/image_btn_follow"
             android:layout_gravity="bottom"
             android:src="@drawable/user_follow"
-            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_btn_unfollow"
+            android:layout_gravity="bottom"
+            android:src="@drawable/unset_bookmark"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="46dp" />
+            android:visibility="invisible"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -169,9 +134,9 @@
             android:id="@+id/image_btn_message"
             android:layout_gravity="bottom"
             android:src="@drawable/user_message"
-            android:layout_weight="1"
-            android:layout_marginLeft="46dp"
-            android:layout_marginRight="16dp" />
-    </LinearLayout>
+            android:layout_marginRight="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

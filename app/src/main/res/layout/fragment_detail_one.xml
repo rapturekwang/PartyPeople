@@ -160,8 +160,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="모임 개최 0 |"
-                android:id="@+id/text_groups_owner"
+                android:text="모임 개최 0 | 모임 참여 0"
+                android:id="@+id/text_groups"
                 android:textColor="#474747"
                 android:drawableLeft="@drawable/detail_mask"
                 android:drawablePadding="4dp"
@@ -173,45 +173,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="모임 참여 0"
-                android:id="@+id/text_groups_memeber"
-                android:textColor="#474747"
-                android:layout_marginLeft="4dp"
-                android:layout_alignTop="@+id/text_groups_owner"
-                android:layout_toEndOf="@+id/text_groups_owner"
-                android:includeFontPadding="false"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="팔로잉 0 |"
-                android:id="@+id/text_following"
+                android:text="팔로잉 0 | 팔로워 0"
+                android:id="@+id/text_follow"
                 android:textColor="#474747"
                 android:drawableLeft="@drawable/detail_human"
                 android:drawablePadding="7dp"
-                android:layout_below="@+id/text_groups_owner"
-                android:layout_alignStart="@+id/text_groups_owner"
+                android:layout_below="@+id/text_groups"
+                android:layout_alignStart="@+id/text_groups"
                 android:layout_marginTop="9dp"
                 android:layout_marginLeft="4dp"
-                android:includeFontPadding="false"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="팔로워 0"
-                android:id="@+id/text_follower"
-                android:layout_marginLeft="7dp"
-                android:textColor="#474747"
-                android:layout_alignTop="@+id/text_following"
-                android:layout_toEndOf="@+id/text_following"
                 android:includeFontPadding="false"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/img_btn_userinfo"
-                android:layout_below="@+id/text_following"
-                android:layout_alignStart="@+id/text_groups_owner"
+                android:layout_below="@+id/text_follow"
+                android:layout_alignStart="@+id/text_groups"
                 android:src="@drawable/btn_host_info"
                 android:layout_marginTop="12dp" />
 

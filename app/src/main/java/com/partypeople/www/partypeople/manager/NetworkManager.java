@@ -12,7 +12,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Follow;
-import com.partypeople.www.partypeople.data.Likes;
+import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -38,7 +38,6 @@ import java.util.List;
  */
 public class NetworkManager {
     Gson gson;
-    List<Party> partysList = new ArrayList<Party>();
     MediaSession.Token token;
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
@@ -90,7 +89,7 @@ public class NetworkManager {
     public static final String URL_SERVER = "http://61.100.5.61:3000";
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
-    public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows";
+    public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
     public static final String URL_LIKES = "http://61.100.5.61:3000/api/v1/likes";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
@@ -147,24 +146,24 @@ public class NetworkManager {
         });
     }
 
-    public void postPartys(Context context, final OnResultListener<String> listener ) {
-        RequestParams params = new RequestParams();
-
-        client.post(context, URL_PARTYS, params, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "post Success");
-            }
-
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
-                Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
-            }
-
-        });
-    }
+//    public void postPartys(Context context, final OnResultListener<String> listener ) {
+//        RequestParams params = new RequestParams();
+//
+//        client.post(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                listener.onSuccess(responseString);
+//                Log.d("NetworkManager", "post Success");
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                listener.onFail(statusCode);
+//                Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+//            }
+//
+//        });
+//    }
 
     public void postJson(final Context context, Party party, final OnResultListener<PartyResult> listener) {
         Header[] headers = new Header[1];
@@ -213,88 +212,88 @@ public class NetworkManager {
         });
     }
 
-    public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
-        RequestParams params = new RequestParams();
-        Header[] headers = new Header[1];
-        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+//    public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
+//        RequestParams params = new RequestParams();
+//        Header[] headers = new Header[1];
+//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+//
+//        client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+//                listener.onFail(statusCode);
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                Log.d("NetworkManager", "get party Success " + responseString);
+//                PartyResult result = gson.fromJson(responseString, PartyResult.class);
+//                listener.onSuccess(result);
+//            }
+//        });
+//    }
 
-        client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
-            }
+//    public void putPartys(Context context, String param1, String key, String param2, final OnResultListener<String> listener ) {
+//        RequestParams params = new RequestParams();
+//        params.put(key, param2);
+//        Log.d("NetworkManager", "id : " + param1 + "key : " + key + "value : " + param2);
+//
+//        client.put(context, URL_PARTYS + "/" + param1, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                listener.onSuccess(responseString);
+//                Log.d("NetworkManager", "put Success");
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                listener.onFail(statusCode);
+//                Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+//            }
+//
+//        });
+//    }
 
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get party Success " + responseString);
-                PartyResult result = gson.fromJson(responseString, PartyResult.class);
-                listener.onSuccess(result);
-            }
-        });
-    }
+//    public void deletePartys(Context context, String param1, final OnResultListener<String> listener ) {
+//        Header[] headers = null;
+//        RequestParams params = new RequestParams();
+//
+//        client.delete(context, URL_PARTYS + "/" + param1, headers, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                listener.onSuccess(responseString);
+//                Log.d("NetworkManager", "delete Success");
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                listener.onFail(statusCode);
+//                Log.d("NetworkManager", "delete Fail: " + statusCode + responseString);
+//            }
+//
+//        });
+//    }
 
-    public void putPartys(Context context, String param1, String key, String param2, final OnResultListener<String> listener ) {
-        RequestParams params = new RequestParams();
-        params.put(key, param2);
-        Log.d("NetworkManager", "id : " + param1 + "key : " + key + "value : " + param2);
-
-        client.put(context, URL_PARTYS + "/" + param1, params, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "put Success");
-            }
-
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
-                Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
-            }
-
-        });
-    }
-
-    public void deletePartys(Context context, String param1, final OnResultListener<String> listener ) {
-        Header[] headers = null;
-        RequestParams params = new RequestParams();
-
-        client.delete(context, URL_PARTYS + "/" + param1, headers, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
-                Log.d("NetworkManager", "delete Success");
-            }
-
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
-                Log.d("NetworkManager", "delete Fail: " + statusCode + responseString);
-            }
-
-        });
-    }
-
-    public void getFollows(Context context, final OnResultListener<Follow[]> listener) {
-        RequestParams params = new RequestParams();
-        Header[] headers = new Header[1];
-        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-
-        client.get(context, URL_FOLLOWS, headers, params, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get follows Success " + responseString);
-                Follow[] result = gson.fromJson(responseString, Follow[].class);
-                listener.onSuccess(result);
-            }
-        });
-    }
+//    public void getFollows(Context context, final OnResultListener<Follow[]> listener) {
+//        RequestParams params = new RequestParams();
+//        Header[] headers = new Header[1];
+//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+//
+//        client.get(context, URL_FOLLOWS, headers, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+//                listener.onFail(statusCode);
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                Log.d("NetworkManager", "get follows Success " + responseString);
+//                Follow[] result = gson.fromJson(responseString, Follow[].class);
+//                listener.onSuccess(result);
+//            }
+//        });
+//    }
 
     public void takeFollow(Context context, String param1, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
@@ -302,22 +301,43 @@ public class NetworkManager {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
-        client.post(context, URL_FOLLOWS, headers, params, null, new TextHttpResponseHandler() {
+        client.post(context, URL_FOLLOWS + param1, headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                Log.d("NetworkManager", "follow Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "take follow Success " + responseString);
+                Log.d("NetworkManager", "follow Success " + responseString);
                 listener.onSuccess(responseString);
             }
         });
     }
 
-    public void getLikes(Context context, final OnResultListener<Likes[]> listener) {
+    public void takeUnfollow(Context context, String param1, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        params.put("to", param1);
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.delete(context, URL_FOLLOWS + param1, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "unfollow Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "unfollow Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+        });
+    }
+
+    public void getLikes(Context context, final OnResultListener<Like[]> listener) {
         RequestParams params = new RequestParams();
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
@@ -332,7 +352,7 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get Success " + responseString);
-                Likes[] result = gson.fromJson(responseString, Likes[].class);
+                Like[] result = gson.fromJson(responseString, Like[].class);
                 listener.onSuccess(result);
             }
         });
@@ -347,13 +367,13 @@ public class NetworkManager {
         client.post(context, URL_LIKES, headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                Log.d("NetworkManager", "taking like Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "take like Success " + responseString);
+                Log.d("NetworkManager", "taking like Success " + responseString);
                 listener.onSuccess(responseString);
             }
         });

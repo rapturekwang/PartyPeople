@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,10 +42,9 @@ public class UserActivity extends AppCompatActivity{
     TabLayout tabs, fakeTabs;
     ViewPager pager;
     FrameLayout header;
-    ArrayList<String> followings, followers;
-    TextView followingView, followerView, nameView, addressView;
-    LinearLayout linearLayout;
-    ImageView modify, profileView;
+    TextView followView, nameView, addressView;
+    RelativeLayout relativeLayout, relativeLayout2;
+    ImageView modify, profileView, takeFollow, takeUnfollow;
     UserTabAdapter mAdapter;
 
     @Override
@@ -61,7 +60,7 @@ public class UserActivity extends AppCompatActivity{
         pager = (ViewPager)findViewById(R.id.pager);
         mAdapter = new UserTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdapter);
-        pager.setOffscreenPageLimit(Constants.NUM_OF_USER_PAGE_TAB-1);
+        pager.setOffscreenPageLimit(Constants.NUM_OF_USER_PAGE_TAB - 1);
 
         setPagerHeight(1000);
 
@@ -70,8 +69,6 @@ public class UserActivity extends AppCompatActivity{
 
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
-
-//        setPagerHeight(2000);
 
         tabs.removeAllTabs();
         fakeTabs.removeAllTabs();
@@ -103,23 +100,12 @@ public class UserActivity extends AppCompatActivity{
                 startActivity(new Intent(UserActivity.this, MessageActivity.class));
             }
         });
-        followingView = (TextView)findViewById(R.id.text_following);
-        followingView.setOnClickListener(new View.OnClickListener() {
+        followView = (TextView)findViewById(R.id.text_follow);
+        followView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(UserActivity.this, FollowActivity.class);
-                i.putStringArrayListExtra("followings", followings);
-                i.putStringArrayListExtra("followers", followers);
-                startActivity(i);
-            }
-        });
-        followerView = (TextView)findViewById(R.id.text_follower);
-        followerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(UserActivity.this, FollowActivity.class);
-                i.putStringArrayListExtra("followings", followings);
-                i.putStringArrayListExtra("followers", followers);
+                i.putExtra("user", user);
                 startActivity(i);
             }
         });
@@ -127,16 +113,10 @@ public class UserActivity extends AppCompatActivity{
         nameView = (TextView)findViewById(R.id.text_name);
         addressView = (TextView)findViewById(R.id.text_address);
 
-        linearLayout = (LinearLayout)findViewById(R.id.linearlayout_user);
-        LinearLayout linearLayout2 = (LinearLayout)findViewById(R.id.linearLayout2);
-        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
-            modify.setVisibility(View.INVISIBLE);
-            linearLayout2.setVisibility(View.INVISIBLE);
-        } else {
-            linearLayout.setVisibility(View.INVISIBLE);
-        }
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativelayout_user);
+        relativeLayout2 = (RelativeLayout)findViewById(R.id.relativelayout);
 
-        ImageView takeFollow = (ImageView)findViewById(R.id.image_btn_follow);
+        takeFollow = (ImageView)findViewById(R.id.image_btn_follow);
         takeFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +124,8 @@ public class UserActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(String result) {
                         Toast.makeText(UserActivity.this, "팔로우 하였습니다", Toast.LENGTH_SHORT).show();
+                        takeFollow.setVisibility(View.INVISIBLE);
+                        takeUnfollow.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -153,6 +135,26 @@ public class UserActivity extends AppCompatActivity{
                 });
             }
         });
+        takeUnfollow = (ImageView)findViewById(R.id.image_btn_unfollow);
+        takeUnfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().takeUnfollow(UserActivity.this, user.id, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(UserActivity.this, "팔로우를 취소 하였습니다", Toast.LENGTH_SHORT).show();
+                        takeFollow.setVisibility(View.VISIBLE);
+                        takeUnfollow.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        });
+
         ImageView takeMessage = (ImageView)findViewById(R.id.image_btn_message);
         takeMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +167,6 @@ public class UserActivity extends AppCompatActivity{
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-//                Log.d("UserActivity", "scroll Y : " + scrollView.getScrollY() + "\ntab Y : " + tabs.getY());
                 if(scrollView.getScrollY()>tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
                 } else {
@@ -220,35 +221,32 @@ public class UserActivity extends AppCompatActivity{
                     .into(profileView);
         }
         nameView.setText(user.name);
-        if(user.address.equals("")) addressView.setVisibility(View.INVISIBLE);
-        else {
+        if(user.address==null) {
+            addressView.setVisibility(View.INVISIBLE);
+        } else {
             addressView.setVisibility(View.VISIBLE);
             addressView.setText(user.address);
         }
 
-        followers = new ArrayList<String>();
-        followings = new ArrayList<String>();
-        NetworkManager.getInstance().getFollows(this, new NetworkManager.OnResultListener<Follow[]>() {
-            @Override
-            public void onSuccess(Follow[] result) {
-                if(result!=null) {
-                    for (int i = 0; i < result.length; i++) {
-                        if (result[i].from.equals(user.id)) {
-                            followings.add(result[i].to);
-                        } else if (result[i].to.equals(user.id)) {
-                            followers.add(result[i].from);
-                        }
+        followView.setText("팔로잉 " + user.following.size() + " | 팔로워 " + user.follower.size());
+
+        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
+            modify.setVisibility(View.INVISIBLE);
+            relativeLayout2.setVisibility(View.INVISIBLE);
+            if(user.follower.size()>0) {
+                for (int i = 0; i < user.follower.size(); i++) {
+                    if (user.follower.get(i).from.equals(PropertyManager.getInstance().getUser().id)) {
+                        takeFollow.setVisibility(View.INVISIBLE);
+                        takeUnfollow.setVisibility(View.VISIBLE);
+                        break;
                     }
                 }
-                followingView.setText("팔로잉 " + followings.size() + " |");
-                followerView.setText("팔로워 " + followers.size());
             }
+        } else {
+            relativeLayout.setVisibility(View.INVISIBLE);
+        }
 
-            @Override
-            public void onFail(int code) {
-                return;
-            }
-        });
+//        ((UserFragment) mAdapter.getItem(0)).changeHeight();
     }
 
     public void setPagerHeight(int height) {

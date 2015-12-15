@@ -11,7 +11,7 @@
         android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/relativelayout">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#cfcfcf"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/relativelayout"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -55,7 +55,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="받은 메시지"
         android:id="@+id/textView57"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/relativelayout"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
@@ -68,7 +68,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="2015. 10. 25"
         android:id="@+id/textView44"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/relativelayout"
         android:layout_alignParentEnd="true"
         android:textColor="#787878"
         android:textSize="13sp"

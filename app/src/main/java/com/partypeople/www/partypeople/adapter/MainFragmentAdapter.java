@@ -129,18 +129,18 @@ public class MainFragmentAdapter extends BaseAdapter {
                     items.get(getPosition).setBookmark(buttonView.isChecked());
 
                     if(update && isChecked) {
-                        Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
-//                        NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
-//                            @Override
-//                            public void onSuccess(String result) {
-//                                Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
-//                            }
-//
-//                            @Override
-//                            public void onFail(int code) {
-//
-//                            }
-//                        });
+//                        Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
+                        NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
                     }
                     if(update && !isChecked) {
                         Toast.makeText(mContext, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();

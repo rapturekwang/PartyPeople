@@ -84,9 +84,9 @@ public class FollowTabFragment extends Fragment {
 
     void initData() {
         FollowActivity activity = (FollowActivity)getActivity();
-        if(activity.getFollowers()!=null && index==1) {
-            for (int i = 0; i < activity.getFollowers().size(); i++) {
-                NetworkManager.getInstance().getUser(getContext(), activity.getFollowers().get(i), new NetworkManager.OnResultListener<User>() {
+        if(activity.getUser().follower.size()!=0 && index==1) {
+            for (int i = 0; i < activity.getUser().follower.size(); i++) {
+                NetworkManager.getInstance().getUser(getContext(), activity.getUser().follower.get(i).from, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(User result) {
                         mAdapter.add(result);
@@ -100,9 +100,9 @@ public class FollowTabFragment extends Fragment {
             }
         }
 
-        if(activity.getFollowings()!=null && index==0) {
-            for (int i = 0; i < activity.getFollowings().size(); i++) {
-                NetworkManager.getInstance().getUser(getContext(), activity.getFollowings().get(i), new NetworkManager.OnResultListener<User>() {
+        if(activity.getUser().following.size()!=0 && index==0) {
+            for (int i = 0; i < activity.getUser().following.size(); i++) {
+                NetworkManager.getInstance().getUser(getContext(), activity.getUser().following.get(i).to, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(User result) {
                         mAdapter.add(result);

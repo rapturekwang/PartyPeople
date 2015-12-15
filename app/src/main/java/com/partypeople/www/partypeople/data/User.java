@@ -12,7 +12,8 @@ public class User implements Serializable{
     public String id;
     public String email;
     public String name;
-    public List<Follow> follows;
+    public List<Follow> following;
+    public List<Follow> follower;
     public String address;
     public String favorite_address;
     public double tel;

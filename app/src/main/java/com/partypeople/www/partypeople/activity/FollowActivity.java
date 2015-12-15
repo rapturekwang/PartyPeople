@@ -17,6 +17,7 @@ import android.widget.BaseAdapter;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.FollowTabAdapter;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.FollowItemView;
 
@@ -27,15 +28,14 @@ public class FollowActivity extends AppCompatActivity {
 
     TabLayout tabs;
     ViewPager pager;
-    ArrayList<String> followings, followers;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
 
         Intent intent = getIntent();
-        followings = intent.getStringArrayListExtra("followings");
-        followers = intent.getStringArrayListExtra("followers");
+        user = (User)intent.getSerializableExtra("user");
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
@@ -65,11 +65,7 @@ public class FollowActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public List<String> getFollowings() {
-        return followings;
-    }
-
-    public List<String> getFollowers() {
-        return followers;
+    public User getUser() {
+        return user;
     }
 }

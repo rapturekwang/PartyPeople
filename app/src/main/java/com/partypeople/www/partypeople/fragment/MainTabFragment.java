@@ -115,19 +115,23 @@ public class MainTabFragment extends Fragment {
                 break;
             case 1:
                 User user = PropertyManager.getInstance().getUser();
-                if(PropertyManager.getInstance().isLogin()) {
+                Log.d("MainTabFragment", "themes" + user.themes.length + "favorite_address" + user.favorite_address);
+                if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && user.favorite_address.equals("")) {
+                    warningView.setVisibility(View.VISIBLE);
+                    warningView.setText("맞춤모임 설정이 필요합니다");
+                    listView.setVisibility(View.INVISIBLE);
+                }
+                else if(PropertyManager.getInstance().isLogin()) {
                     listView.removeHeaderView(header);
                     header = new MainTabHeaderView(getContext());
-                    Log.d("MainTabFragment", user.favorite_address + ":" + user.themes.toString());
                     header.setItemData(user.favorite_address, user.themes);
                     listView.addHeaderView(header);
                     warningView.setVisibility(View.GONE);
-                } else if(user.themes==null && user.favorite_address==null) {
-                    warningView.setVisibility(View.VISIBLE);
-                    warningView.setText("맞춤모임 설정이 필요합니다");
+                    listView.setVisibility(View.VISIBLE);
                 } else {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("로그인이 필요한 서비스 입니다");
+                    listView.setVisibility(View.INVISIBLE);
                 }
                 break;
             case 2:
