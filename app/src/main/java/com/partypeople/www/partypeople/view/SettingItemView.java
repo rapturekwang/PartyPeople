@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,12 +33,12 @@ public class SettingItemView extends LinearLayout{
         imageView = (ImageView)findViewById(R.id.image);
     }
 
-    public void setItemData(String name, String version, boolean image) {
+    public void setItemData(String name, String version) {
         nameView.setText(name);
         versionView.setText(version);
-        if(image == true) {
-            imageView.setImageResource(R.drawable.my_icon);
+        if(!version.equals("")) {
+            versionView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.INVISIBLE);
         }
-        imageView.setVisibility(GONE);
     }
 }

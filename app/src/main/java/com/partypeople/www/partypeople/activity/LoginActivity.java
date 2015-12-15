@@ -2,11 +2,15 @@ package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -30,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
     int mStartfrom;
     Intent intent;
+    Toolbar toolbar;
+    TextView title;
     Fragment[] list = {LoginMainFragment.newInstance(""),
             SignupFragment.newInstance(""),
             LoginFragment.newInstance(""),
@@ -46,8 +52,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
+        title = (TextView)findViewById(R.id.text_title);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.back);
+        actionBar.setDisplayShowTitleEnabled(false);
+
         mStartfrom = getIntent().getExtras().getInt("startfrom");
         initFragment();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void login(List<String> permissions) {
@@ -106,6 +130,21 @@ public class LoginActivity extends AppCompatActivity {
                         .addToBackStack(null).commit();
             }
         }
+
+        if(num==4) {
+            toolbar.setVisibility(View.VISIBLE);
+            title.setText("이용약관");
+        } else if(num==5) {
+            toolbar.setVisibility(View.VISIBLE);
+            title.setText("개인정보 보호정책");
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        toolbar.setVisibility(View.GONE);
+        title.setText("");
     }
 
     @Override
@@ -115,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public int getStartfrom() {
-        Log.d("LoginActivity", ""+mStartfrom);
         return mStartfrom;
     }
 }

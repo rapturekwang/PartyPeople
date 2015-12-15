@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.SettingActivity;
 import com.partypeople.www.partypeople.adapter.PushAlarmListAdapter;
-import com.partypeople.www.partypeople.adapter.SettingListAdapter;
 
 import java.util.List;
 
@@ -59,15 +57,15 @@ public class PushAlarmFragment extends Fragment {
         mAdapter = new PushAlarmListAdapter();
         listView.setAdapter(mAdapter);
 
-        Button btn = (Button)view.findViewById(R.id.btn_save);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "푸쉬알림이 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                SettingActivity activity = (SettingActivity)getActivity();
-                activity.onBackPressed();
-            }
-        });
+//        Button btn = (Button)view.findViewById(R.id.btn_save);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(), "푸쉬알림이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+//                SettingActivity activity = (SettingActivity)getActivity();
+//                activity.onBackPressed();
+//            }
+//        });
 
         return view;
     }

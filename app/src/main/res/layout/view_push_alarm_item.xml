@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="44dp"
+    android:background="@drawable/setting_roundrectangle">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="push"
         android:id="@+id/text_name"
-        android:layout_weight="9" />
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp" />
 
     <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view"
-        android:layout_below="@+id/toggleButton"
-        android:layout_weight="1"
-        android:checked="true" />
+        android:id="@+id/switch_compat"
+        android:checked="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        app:theme="@style/colorSitchStyle"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class FAQAdapter extends BaseExpandableListAdapter {
     public static final String[] FAQS = new String[] {
-            "# 비밀번호를 분실했습니다.", "# 호스트의 계좌번호가 변경되었습니다.",
-            "# 일이 생겨 모임참석을 취소하고 싶습니다.", "# 환불규정은 어떻게 되나요?"};
+            "비밀번호를 분실했습니다.", "호스트의 계좌번호가 변경되었습니다.",
+            "일이 생겨 모임참석을 취소하고 싶습니다.", "환불규정은 어떻게 되나요?"};
 
     public static final String[] ANSWERS = new String[] {
             "저런 저런....", "그렇군요....",

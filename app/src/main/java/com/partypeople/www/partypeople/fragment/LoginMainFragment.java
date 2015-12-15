@@ -103,7 +103,6 @@ public class LoginMainFragment extends Fragment {
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "이용약관", Toast.LENGTH_SHORT).show();
                 activity.goToFragment(4, Constants.STACK_ADD);
             }
         });
@@ -112,7 +111,6 @@ public class LoginMainFragment extends Fragment {
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "개인정보 보호정책", Toast.LENGTH_SHORT).show();
                 activity.goToFragment(5, Constants.STACK_ADD);
             }
         });

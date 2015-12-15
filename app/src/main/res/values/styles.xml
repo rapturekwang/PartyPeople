@@ -44,4 +44,8 @@
         <item name="bs_headerLayout">@layout/bottom_sheet_header</item>
     </style>
 
+    <style name="colorSitchStyle">
+        <item name="colorControlActivated">#8e15bb</item>
+    </style>
+
 </resources>
