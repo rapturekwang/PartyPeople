@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     PropertyManager propertyManager = PropertyManager.getInstance();
     RelativeLayout relativeLayout;
     TextView name, email, address;
-    Button headerBtn;
+    RelativeLayout headerBtn;
     View header;
 
     @Override
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        headerBtn = (Button)header.findViewById(R.id.btn_login);
+        headerBtn = (RelativeLayout)header.findViewById(R.id.btn_login);
         headerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +185,11 @@ public class MainActivity extends AppCompatActivity implements
 
             name.setText(propertyManager.getUser().name);
             email.setText(propertyManager.getUser().email);
-            address.setText(propertyManager.getUser().address);
+            if(propertyManager.getUser().address==null || propertyManager.getUser().address.equals("")) {
+                address.setVisibility(View.GONE);
+            } else {
+                address.setText(propertyManager.getUser().address);
+            }
         }
     }
 

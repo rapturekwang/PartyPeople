@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -66,6 +67,16 @@ public class MainFragmentAdapter extends BaseAdapter {
             progressView.setText(progress + "% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
+            bookMarkView.setText(""+data.likes.size());
+            if(data.likes.size()>0) {
+                for(int i=0;i<data.likes.size();i++) {
+                    if(data.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                        data.setBookmark(true);
+                        bookMarkView.setChecked(true);
+                        break;
+                    }
+                }
+            }
             Glide.with(context)
                     .load(NetworkManager.getInstance().URL_SERVER + data.photo)
                     .placeholder(R.drawable.profile_img)
@@ -122,14 +133,13 @@ public class MainFragmentAdapter extends BaseAdapter {
                         return;
                     int getPosition = (Integer) buttonView.getTag();
                     boolean update = false;
-                    Log.d("MainFragmentAdapter", items.get(getPosition).isBookmark() + ":" + buttonView.isChecked());
+//                    Log.d("MainFragmentAdapter", "position:" + getPosition + "true/flase: " + items.get(getPosition).isBookmark() + ":" + buttonView.isChecked() + ":" + isChecked);
                     if(items.get(getPosition).isBookmark() != buttonView.isChecked()) {
                         update = true;
                     }
                     items.get(getPosition).setBookmark(buttonView.isChecked());
 
                     if(update && isChecked) {
-//                        Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
                         NetworkManager.getInstance().takeLike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
                             @Override
                             public void onSuccess(String result) {
@@ -143,7 +153,17 @@ public class MainFragmentAdapter extends BaseAdapter {
                         });
                     }
                     if(update && !isChecked) {
-                        Toast.makeText(mContext, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();
+                        NetworkManager.getInstance().takeUnlike(mContext, holder.mData.id, new NetworkManager.OnResultListener<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Toast.makeText(mContext, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
                     }
                 }
             });

@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -39,9 +39,9 @@ import java.util.ArrayList;
  */
 public class UserActivity extends AppCompatActivity{
     User user;
-    TabLayout tabs, fakeTabs;
+    public TabLayout tabs, fakeTabs;
     ViewPager pager;
-    FrameLayout header;
+    public FrameLayout header;
     TextView followView, nameView, addressView;
     RelativeLayout relativeLayout, relativeLayout2;
     ImageView modify, profileView, takeFollow, takeUnfollow;
@@ -245,12 +245,10 @@ public class UserActivity extends AppCompatActivity{
         } else {
             relativeLayout.setVisibility(View.INVISIBLE);
         }
-
-//        ((UserFragment) mAdapter.getItem(0)).changeHeight();
     }
 
     public void setPagerHeight(int height) {
-        ViewGroup.LayoutParams params = pager.getLayoutParams();
+        LayoutParams params = pager.getLayoutParams();
         params.height=height;
         pager.setLayoutParams(params);
     }

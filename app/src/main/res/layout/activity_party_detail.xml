@@ -174,8 +174,9 @@
                 android:background="@drawable/detail_bookmark_selector"
                 android:layout_marginTop="13dp"
                 android:layout_marginRight="16dp"
-                android:text="120"
-                android:paddingStart="32dp" />
+                android:text="0"
+                android:gravity="right|center_vertical"
+                android:paddingRight="10dp" />
 
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
@@ -251,5 +252,6 @@
         app:tabIndicatorColor="@null"
         app:tabTextColor="@color/tabUnfocused"
         app:tabSelectedTextColor="@color/tabFocused"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:fillViewport="false" />
 </FrameLayout>

@@ -6,90 +6,114 @@
     android:layout_height="148dp"
     android:background="@drawable/bg">
 
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인하기"
         android:id="@+id/btn_login"
-        android:background="@null"
-        android:textColor="#ffffff"
-        android:layout_centerInParent="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/default_profile"
+            android:id="@+id/imageView10"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인하기"
+            android:layout_toRightOf="@+id/imageView10"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="11dp"
+            android:textSize="17sp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/relativeLayout"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp">
 
         <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:id="@+id/img_profile"
-            android:layout_marginLeft="16dp"
             android:src="@drawable/default_profile"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="38dp" />
+            android:layout_centerVertical="true" />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="정광희"
-            android:id="@+id/text_user_name"
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:drawableLeft="@drawable/header_human"
-            android:drawablePadding="5dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/header_human"
-            android:layout_marginLeft="97dp"
-            android:layout_marginTop="36dp"
-            android:includeFontPadding="false"/>
+            android:layout_toRightOf="@+id/img_profile"
+            android:layout_marginLeft="9dp"
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="서울시 서초구"
-            android:id="@+id/text_user_address"
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:drawableLeft="@drawable/navi_map"
-            android:drawablePadding="5dp"
-            android:layout_below="@+id/text_user_name"
-            android:layout_alignStart="@+id/text_user_name"
-            android:src="@drawable/navi_map"
-            android:layout_marginTop="7dp"
-            android:includeFontPadding="false"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정광희"
+                android:id="@+id/text_user_name"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/header_human"
+                android:drawablePadding="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="false"
+                android:src="@drawable/header_human"
+                android:includeFontPadding="false" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="facebook/rapturekwang"
-            android:id="@+id/text_user_email"
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:drawableLeft="@drawable/navi_email"
-            android:drawablePadding="5dp"
-            android:includeFontPadding="false"
-            android:layout_below="@+id/text_user_address"
-            android:layout_alignStart="@+id/text_user_address"
-            android:layout_marginTop="6dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울시 서초구"
+                android:id="@+id/text_user_address"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/navi_map"
+                android:drawablePadding="5dp"
+                android:layout_below="@+id/text_user_name"
+                android:layout_alignStart="@+id/text_user_name"
+                android:src="@drawable/navi_map"
+                android:layout_marginTop="7dp"
+                android:includeFontPadding="false"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="25"
-            android:id="@+id/textView21"
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:drawableLeft="@drawable/navi_message"
-            android:drawablePadding="5dp"
-            android:layout_below="@+id/text_user_email"
-            android:layout_alignStart="@+id/text_user_email"
-            android:layout_marginTop="7dp"
-            android:includeFontPadding="false"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="facebook/rapturekwang"
+                android:id="@+id/text_user_email"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/navi_email"
+                android:drawablePadding="5dp"
+                android:includeFontPadding="false"
+                android:layout_below="@+id/text_user_address"
+                android:layout_alignStart="@+id/text_user_address"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="25"
+                android:id="@+id/text_user_message"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/navi_message"
+                android:drawablePadding="5dp"
+                android:layout_below="@+id/text_user_email"
+                android:layout_alignStart="@+id/text_user_email"
+                android:layout_marginTop="7dp"
+                android:includeFontPadding="false"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -54,16 +55,6 @@ public class DetailThreeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_three, container, false);
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
-//        ViewTreeObserver vto = layout.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                int height = layout.getMeasuredHeight();
-//                Log.d("DetailThree", height + "");
-//                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
-//            }
-//        });
 
         final EditText editText = (EditText)view.findViewById(R.id.edit_comment);
         ImageView imgSendView = (ImageView)view.findViewById(R.id.image_btn_send);
@@ -73,7 +64,7 @@ public class DetailThreeFragment extends Fragment {
                 mAdapter.add(editText.getText().toString());
                 PartyDetailActivity activity = (PartyDetailActivity)getActivity();
                 activity.party.comments.add(editText.getText().toString());
-                activity.setPagerHeight(228 + 200*activity.party.comments.size());
+                changeHeight();
                 editText.setText("");
             }
         });
@@ -92,8 +83,12 @@ public class DetailThreeFragment extends Fragment {
             public void onGlobalLayout() {
                 layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 int height = layout.getMeasuredHeight();
-                Log.d("DetailThree", height+"");
-                ((PartyDetailActivity)getActivity()).setPagerHeight(height + 50);
+                Point size = new Point();
+                getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+                int screenHeight = size.y - (int)Math.ceil((57 + 25 + 53) * getContext().getResources().getDisplayMetrics().density);
+                if(screenHeight > height)
+                    height = screenHeight;
+                ((PartyDetailActivity)getActivity()).setPagerHeight(height);
             }
         });
     }

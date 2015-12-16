@@ -39,7 +39,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     TabLayout tabs, fakeTabs;
     ViewPager pager;
     TextView titleView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
-    CheckBox chboxView;
+    CheckBox chboxView, chboxView2;
     ImageView imageView, imgPartyView;
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
@@ -104,17 +104,17 @@ public class PartyDetailActivity extends AppCompatActivity {
                     case 0:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(2800);
-                        ((DetailOneFragment)mAdpater.getItem(position)).changeHeight();
+                        ((DetailOneFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(200 + 230 * party.pay_method.size());
-                        ((DetailTwoFragment)mAdpater.getItem(position)).changeHeight();
+                        ((DetailTwoFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 2:
                         Log.d("PartyDetail", position + "selected");
                         setPagerHeight(350 + 300 * party.comments.size());
-                        ((DetailThreeFragment)mAdpater.getItem(position)).changeHeight();
+                        ((DetailThreeFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                 }
             }
@@ -129,8 +129,8 @@ public class PartyDetailActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(PropertyManager.getInstance().isLogin()) {
-                    if(PropertyManager.getInstance().getUser().id.equals(party.owner.id)) {
+                if (PropertyManager.getInstance().isLogin()) {
+                    if (PropertyManager.getInstance().getUser().id.equals(party.owner.id)) {
                         Toast.makeText(PartyDetailActivity.this, "본인의 모임에는 참여신청을 할수 없습니다", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
@@ -153,6 +153,13 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         chboxView = (CheckBox)findViewById(R.id.chbox_img_bookmark);
         chboxView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
+        chboxView2 = (CheckBox)findViewById(R.id.chbox_bookmark);
+        chboxView2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -186,6 +193,16 @@ public class PartyDetailActivity extends AppCompatActivity {
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
         totalPriceView.setText((int) party.expect_pay + "원");
+        chboxView.setText(""+party.likes.size());
+        if(party.likes.size()>0) {
+            for(int i=0;i<party.likes.size();i++) {
+                if(party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                    chboxView.setChecked(true);
+                    chboxView2.setChecked(true);
+                    break;
+                }
+            }
+        }
     }
 
     private void initView() {

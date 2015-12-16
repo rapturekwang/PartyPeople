@@ -115,8 +115,8 @@ public class MainTabFragment extends Fragment {
                 break;
             case 1:
                 User user = PropertyManager.getInstance().getUser();
-                Log.d("MainTabFragment", "themes" + user.themes.length + "favorite_address" + user.favorite_address);
-                if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && user.favorite_address.equals("")) {
+//                Log.d("MainTabFragment", "themes" + user.themes.length + "favorite_address" + user.favorite_address);
+                if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && (user.favorite_address==null || user.favorite_address.equals(""))) {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("맞춤모임 설정이 필요합니다");
                     listView.setVisibility(View.INVISIBLE);
@@ -153,15 +153,6 @@ public class MainTabFragment extends Fragment {
 
             @Override
             public void onFail(int code) {
-//                for (int i = 0; i < 5 ; i++) {
-//                    Party d = new Party();
-//                    d.name = "Come to House Party!";
-//                    d.end_at = "2015-12-04T02:11:11";
-//                    d.location = "서울시 서초구";
-//                    d.expect_pay = 25000;
-//                    partyList.add(d);
-//                    mAdapter.add(d);
-//                }
                 Toast.makeText(getContext(), "통신 연결상태가 좋지 않습니다", Toast.LENGTH_SHORT).show();
             }
         });
