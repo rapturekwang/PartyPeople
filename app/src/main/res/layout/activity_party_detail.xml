@@ -104,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="250,000"
-                        android:id="@+id/text_price"
+                        android:id="@+id/text_payment"
                         android:textColor="#ffffff"
                         android:textSize="20dp"
                         android:layout_above="@+id/progressBar"
@@ -120,7 +120,7 @@
                         android:textColor="#ffffff"
                         android:layout_marginRight="16dp"
                         android:textSize="15dp"
-                        android:layout_alignBottom="@+id/text_price"
+                        android:layout_alignBottom="@+id/text_payment"
                         android:layout_alignParentEnd="true"
                         android:includeFontPadding="false"/>
 

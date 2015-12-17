@@ -73,18 +73,17 @@ public class UserActivity extends AppCompatActivity{
                     partys[0]++;
                 } else if (user.groups.get(i).role.equals("MEMBER")) {
                     partys[1]++;
-                } else if (user.groups.get(i).role.equals("WANNABE")) {
-                    partys[2]++;
                 }
             }
         }
+        partys[2] = user.likes.size();
 
         tabs.removeAllTabs();
         fakeTabs.removeAllTabs();
         String[] tabTitle = getResources().getStringArray(R.array.user_page_tab_name);
         for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
             tabs.addTab(tabs.newTab().setText(tabTitle[i] + " " + partys[i]));
-            fakeTabs.addTab(fakeTabs.newTab().setText(tabTitle[i]));
+            fakeTabs.addTab(fakeTabs.newTab().setText(tabTitle[i] + " " + partys[i]));
         }
 
         ImageView btn = (ImageView)findViewById(R.id.btn_back);

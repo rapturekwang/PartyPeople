@@ -193,26 +193,26 @@ public class NetworkManager {
         });
     }
 
-//    public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
-//        RequestParams params = new RequestParams();
-//        Header[] headers = new Header[1];
-//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-//
-//        client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-//                listener.onFail(statusCode);
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-//                Log.d("NetworkManager", "get party Success " + responseString);
-//                PartyResult result = gson.fromJson(responseString, PartyResult.class);
-//                listener.onSuccess(result);
-//            }
-//        });
-//    }
+    public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get party Success " + responseString);
+                PartyResult result = gson.fromJson(responseString, PartyResult.class);
+                listener.onSuccess(result);
+            }
+        });
+    }
 
 //    public void putPartys(Context context, String param1, String key, String param2, final OnResultListener<String> listener ) {
 //        RequestParams params = new RequestParams();
@@ -320,11 +320,10 @@ public class NetworkManager {
 
     public void takeUnlike(Context context, String param1, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
-        params.put("group", param1);
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
-        client.delete(context, URL_LIKES + "/" + param1, headers, params, new TextHttpResponseHandler() {
+        client.post(context, URL_PARTYS + "/" + param1 + "/likes/unvote", headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "unlike Fail: " + statusCode + responseString);
@@ -341,11 +340,10 @@ public class NetworkManager {
 
     public void takeLike(Context context, String param1, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
-        params.put("group", param1);
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
-        client.post(context, URL_LIKES + "/" + param1, headers, params, null, new TextHttpResponseHandler() {
+        client.post(context, URL_PARTYS + "/" + param1 + "/likes/vote", headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "taking like Fail: " + statusCode + responseString);

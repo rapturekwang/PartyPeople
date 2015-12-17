@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -13,10 +14,13 @@ import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 
 import java.util.ArrayList;
@@ -67,6 +71,25 @@ public class UserFragment extends Fragment {
         mAdapter = new UserAdapter();
         listView.setAdapter(mAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NetworkManager.getInstance().getParty(getContext(), partyList.get(position).id, new NetworkManager.OnResultListener<PartyResult>() {
+                    @Override
+                    public void onSuccess(PartyResult result) {
+                        Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                        i.putExtra("party", result.data);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+        });
+
         warningView = (TextView)view.findViewById(R.id.text_warning);
         btnMake = (Button)view.findViewById(R.id.btn_make);
         btnMake.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +120,14 @@ public class UserFragment extends Fragment {
                 } else if (user.groups.get(i).role.equals("MEMBER") && index == 1) {
                     partyList.add(user.groups.get(i));
                     mAdapter.add(user.groups.get(i));
-                } else if (user.groups.get(i).role.equals("WANNABE") && index == 2) {
-                    partyList.add(user.groups.get(i));
-                    mAdapter.add(user.groups.get(i));
+                }
+            }
+        }
+        if(user.likes.size()>0) {
+            for (int i=0; i<user.likes.size(); i++) {
+                if(index == 2) {
+                    partyList.add(user.likes.get(i));
+                    mAdapter.add(user.likes.get(i));
                 }
             }
         }

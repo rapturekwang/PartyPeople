@@ -51,7 +51,7 @@ public class UserPagePartyItemView extends RelativeLayout {
         titleView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
         locationView = (TextView)findViewById(R.id.text_location);
-        priceView = (TextView)findViewById(R.id.text_price);
+        priceView = (TextView)findViewById(R.id.text_payment);
         progressView = (TextView)findViewById(R.id.text_progress);
         dueDateView = (TextView)findViewById(R.id.text_duedate);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);

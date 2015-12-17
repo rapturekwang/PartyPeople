@@ -69,7 +69,7 @@ public class MainTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //((TextView)view.findViewById(R.id.text_name)).setText(mName);
-        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
+        listView = (ListView)view.findViewById(R.id.listview);
         mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
         warningView = (TextView)view.findViewById(R.id.text_warning);

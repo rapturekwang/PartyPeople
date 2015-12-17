@@ -1,7 +1,6 @@
 package com.partypeople.www.partypeople.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
@@ -93,7 +93,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             titleView = (TextView)view.findViewById(R.id.text_item_title);
             dateView = (TextView)view.findViewById(R.id.text_date);
             locationView = (TextView)view.findViewById(R.id.text_location);
-            priceView = (TextView)view.findViewById(R.id.text_price);
+            priceView = (TextView)view.findViewById(R.id.text_payment);
             progressView = (TextView)view.findViewById(R.id.text_progress);
             dueDateView = (TextView)view.findViewById(R.id.text_duedate);
             bookMarkView = (CheckBox)view.findViewById(R.id.chbox_bookmark);
@@ -148,6 +148,10 @@ public class MainFragmentAdapter extends BaseAdapter {
                             @Override
                             public void onSuccess(String result) {
                                 Toast.makeText(mContext, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
+                                Like like = new Like();
+                                like.user = PropertyManager.getInstance().getUser().id;
+                                holder.mData.likes.add(like);
+                                holder.setItemData(holder.mData, mContext);
                             }
 
                             @Override
@@ -161,6 +165,14 @@ public class MainFragmentAdapter extends BaseAdapter {
                             @Override
                             public void onSuccess(String result) {
                                 Toast.makeText(mContext, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();
+                                if(holder.mData.likes.size() > 0) {
+                                    for (int i = 0; i < holder.mData.likes.size(); i++) {
+                                        if (holder.mData.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                                            holder.mData.likes.remove(i);
+                                        }
+                                    }
+                                }
+                                holder.setItemData(holder.mData, mContext);
                             }
 
                             @Override
@@ -179,7 +191,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             convertView.setTag(R.id.text_item_title, holder.titleView);
             convertView.setTag(R.id.text_date, holder.dateView);
             convertView.setTag(R.id.text_location, holder.locationView);
-            convertView.setTag(R.id.text_price, holder.priceView);
+            convertView.setTag(R.id.text_payment, holder.priceView);
             convertView.setTag(R.id.text_progress, holder.progressView);
             convertView.setTag(R.id.text_duedate, holder.dueDateView);
             convertView.setTag(R.id.chbox_bookmark, holder.bookMarkView);

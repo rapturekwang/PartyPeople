@@ -24,6 +24,5 @@ public class User implements Serializable{
     public File imageFile;
     public String created_at;
     public List<Party> groups;
-
-
+    public List<Party> likes;
 }

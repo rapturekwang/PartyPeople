@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
+import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.fragment.DetailOneFragment;
 import com.partypeople.www.partypeople.fragment.DetailThreeFragment;
@@ -58,6 +59,9 @@ public class PartyDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_detail);
+
+        Intent intent = getIntent();
+        party = (Party)intent.getSerializableExtra("party");
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
@@ -152,17 +156,19 @@ public class PartyDetailActivity extends AppCompatActivity {
         });
 
         chboxView = (CheckBox)findViewById(R.id.chbox_img_bookmark);
+        chboxView2 = (CheckBox)findViewById(R.id.chbox_bookmark);
+
         chboxView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                chboxView2.setChecked(isChecked);
             }
         });
-        chboxView2 = (CheckBox)findViewById(R.id.chbox_bookmark);
         chboxView2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                chboxView.setChecked(isChecked);
+                changeLike(isChecked);
             }
         });
 
@@ -170,10 +176,54 @@ public class PartyDetailActivity extends AppCompatActivity {
         initData();
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        party = (Party)intent.getSerializableExtra("party");
+    private void changeLike(boolean isChecked) {
+        if(isChecked) {
+            if(party.likes.size()>0) {
+                for (int i = 0; i < party.likes.size(); i++) {
+                    if (party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                        return;
+                    }
+                }
+            }
+            NetworkManager.getInstance().takeLike(PartyDetailActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Toast.makeText(PartyDetailActivity.this, "즐겨찾기가 추가되었습니다", Toast.LENGTH_SHORT).show();
+                    Like like = new Like();
+                    like.user = PropertyManager.getInstance().getUser().id;
+                    party.likes.add(like);
+                    initData();
+                }
 
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
+        } else {
+            NetworkManager.getInstance().takeUnlike(PartyDetailActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Toast.makeText(PartyDetailActivity.this, "즐겨찾기가 취소되었습니다", Toast.LENGTH_SHORT).show();
+                    if(party.likes.size()>0) {
+                        for (int i = 0; i < party.likes.size(); i++) {
+                            if (party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                                party.likes.remove(i);
+                            }
+                        }
+                    }
+                    initData();
+                }
+
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
+        }
+    }
+
+    private void initData() {
         Glide.with(this)
                 .load(NetworkManager.getInstance().URL_SERVER + party.photo)
                 .placeholder(R.drawable.profile_img)
@@ -199,7 +249,6 @@ public class PartyDetailActivity extends AppCompatActivity {
                 for (int i = 0; i < party.likes.size(); i++) {
                     if (party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
                         chboxView.setChecked(true);
-                        chboxView2.setChecked(true);
                         break;
                     }
                 }
@@ -212,7 +261,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         titleView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
         locationView = (TextView)findViewById(R.id.text_location);
-        priceView = (TextView)findViewById(R.id.text_price);
+        priceView = (TextView)findViewById(R.id.text_payment);
         totalPriceView = (TextView)findViewById(R.id.text_total_price);
         progressView = (TextView)findViewById(R.id.text_progress);
         duedateView = (TextView)findViewById(R.id.text_duedate);
