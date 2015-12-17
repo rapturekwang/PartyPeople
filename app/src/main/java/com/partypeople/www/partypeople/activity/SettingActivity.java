@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +23,9 @@ import com.partypeople.www.partypeople.fragment.FAQFragment;
 import com.partypeople.www.partypeople.fragment.PushAlarmFragment;
 import com.partypeople.www.partypeople.fragment.TOSFragment;
 import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
-import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.view.LeaveDialog;
+import com.partypeople.www.partypeople.view.LogoutDialog;
 import com.partypeople.www.partypeople.view.SettingItemView;
-
-import java.util.Set;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -123,26 +121,8 @@ public class SettingActivity extends AppCompatActivity {
         settingItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
-                builder.setMessage("정말로 로그아웃 하시겠습니까?");
-                builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(SettingActivity.this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
-                        PropertyManager.getInstance().logout();
-                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
+                LogoutDialog dialog = new LogoutDialog(SettingActivity.this);
+                dialog.show();
             }
         });
         linearLayout4.addView(settingItemView);
@@ -151,22 +131,8 @@ public class SettingActivity extends AppCompatActivity {
         settingItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
-                builder.setMessage("정말로 회원탈퇴를 진행 하시겠습니까? 회원탈퇴시 회원님의 모든 기록이 삭제되며, 다시 복구할 수 없습니다");
-                builder.setPositiveButton("회원탈퇴", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(SettingActivity.this, "회원탈퇴", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
+                LeaveDialog dialog = new LeaveDialog(SettingActivity.this);
+                dialog.show();
             }
         });
         linearLayout4.addView(settingItemView);

@@ -42,7 +42,7 @@
                 android:textSize="15sp"
                 android:minHeight="55dp"
                 android:background="@drawable/comment_left"
-                android:hint="참여 후기를 남겨주세요"
+                android:hint="후기를 남겨주세요"
                 android:paddingLeft="8dp"
                 android:textColor="#000000" />
 
