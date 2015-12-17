@@ -22,9 +22,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="아직 개최한 모임이 없습니다"
         android:id="@+id/text_warning"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="139dp"
+        android:textSize="16sp"
+        android:textColor="#474747" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="모임 만들기"
+        android:id="@+id/btn_make"
+        android:background="@color/toolbarColor"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/relativeLayout3"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_gravity="bottom" />
 </FrameLayout>

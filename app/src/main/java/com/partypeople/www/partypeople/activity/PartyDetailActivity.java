@@ -61,7 +61,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager)findViewById(R.id.container);
         mAdpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdpater);
 
@@ -193,13 +193,15 @@ public class PartyDetailActivity extends AppCompatActivity {
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
         totalPriceView.setText((int) party.expect_pay + "원");
-        chboxView.setText(""+party.likes.size());
-        if(party.likes.size()>0) {
-            for(int i=0;i<party.likes.size();i++) {
-                if(party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
-                    chboxView.setChecked(true);
-                    chboxView2.setChecked(true);
-                    break;
+        if(party.likes!=null) {
+            chboxView.setText("" + party.likes.size());
+            if (party.likes.size() > 0) {
+                for (int i = 0; i < party.likes.size(); i++) {
+                    if (party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                        chboxView.setChecked(true);
+                        chboxView2.setChecked(true);
+                        break;
+                    }
                 }
             }
         }

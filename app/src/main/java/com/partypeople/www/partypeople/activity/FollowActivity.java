@@ -2,27 +2,17 @@ package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.FollowTabAdapter;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.Constants;
-import com.partypeople.www.partypeople.view.FollowItemView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FollowActivity extends AppCompatActivity {
 
@@ -44,7 +34,7 @@ public class FollowActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager)findViewById(R.id.container);
         FollowTabAdapter adpater = new FollowTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 

@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,7 +55,11 @@ public class FollowItemView extends RelativeLayout {
                     .into(imgView);
         }
         nameView.setText(user.name);
-        addressView.setText(user.address);
+        if(user.address==null || user.address.equals("")) {
+            addressView.setVisibility(View.GONE);
+        } else {
+            addressView.setText(user.address);
+        }
         int owner = 0, memeber = 0;
         if(user.groups!=null) {
             for (int i = 0; i < user.groups.size(); i++) {

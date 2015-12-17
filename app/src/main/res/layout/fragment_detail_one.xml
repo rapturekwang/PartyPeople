@@ -68,7 +68,7 @@
                 android:src="@drawable/default_profile"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="90dp"
                 android:layout_marginTop="17dp"
                 android:visibility="invisible" />
 
@@ -109,8 +109,9 @@
                 android:layout_toEndOf="@+id/image_parti4"
                 android:layout_centerInParent="true"
                 android:src="@drawable/detail_plus"
-                android:layout_marginLeft="8dp"
-                android:visibility="invisible" />
+                android:layout_marginLeft="4dp"
+                android:visibility="invisible"
+                android:padding="10dp" />
         </RelativeLayout>
 
         <View

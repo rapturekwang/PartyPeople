@@ -29,7 +29,6 @@
         android:id="@+id/listView"
         android:layout_below="@+id/textView6"
         android:layout_alignParentStart="true"
-        android:dividerHeight="7dp"
         android:divider="@null"
         android:layout_marginTop="18dp"
         android:layout_marginRight="16dp"

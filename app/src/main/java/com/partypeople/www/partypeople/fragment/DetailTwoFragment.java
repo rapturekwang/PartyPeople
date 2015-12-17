@@ -3,6 +3,7 @@ package com.partypeople.www.partypeople.fragment;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
@@ -77,11 +79,6 @@ public class DetailTwoFragment extends Fragment {
             public void onGlobalLayout() {
                 layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 int height = layout.getMeasuredHeight();
-                Point size = new Point();
-                getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-                int screenHeight = size.y - (int)Math.ceil((57 + 25 + 53) * getContext().getResources().getDisplayMetrics().density);
-                if(screenHeight > height)
-                    height = screenHeight;
                 ((PartyDetailActivity)getActivity()).setPagerHeight(height);
             }
         });

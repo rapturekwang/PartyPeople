@@ -29,6 +29,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 //import com.partypeople.www.partypeople.activity.UserActivity;
+import com.partypeople.www.partypeople.activity.UserListActivity;
 import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -106,7 +107,38 @@ public class DetailOneFragment extends Fragment {
         groupsView = (TextView)view.findViewById(R.id.text_groups);
         imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         for(int i=0;i<ids.length;i++) {
+            final int temp = i;
             parti.add((ImageView)view.findViewById(ids[i]));
+            if(i<activity.party.members.size()) {
+                parti.get(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(temp==4) {
+                            ArrayList<String> participants = new ArrayList<String>();
+                            for(int i=0;i<activity.party.members.size();i++) {
+                                participants.add(activity.party.members.get(i).id);
+                            }
+                            Intent intent = new Intent(getContext(), UserListActivity.class);
+                            intent.putStringArrayListExtra("userlist", participants);
+                            startActivity(intent);
+                        } else {
+                            NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp).id, new NetworkManager.OnResultListener<User>() {
+                                @Override
+                                public void onSuccess(User result) {
+                                    Intent intent = new Intent(getContext(), UserActivity.class);
+                                    intent.putExtra("user", result);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "서버와 통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
         }
 
         imgBtnUserinfo.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +237,7 @@ public class DetailOneFragment extends Fragment {
                         @Override
                         public void run() {
                             if(arrayList.size() > 0) {
+                                addMarkerPOI(arrayList.get(0));
                                 moveMap(arrayList.get(0).getPOIPoint().getLatitude(), arrayList.get(0).getPOIPoint().getLongitude());
                             }
                         }
@@ -212,6 +245,17 @@ public class DetailOneFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void addMarkerPOI(TMapPOIItem poiItem) {
+        TMapPoint point = poiItem.getPOIPoint();
+        TMapMarkerItem item = new TMapMarkerItem();
+        item.setTMapPoint(point);
+        Bitmap icon = ((BitmapDrawable)getResources().getDrawable(R.drawable.mapicon)).getBitmap();
+        item.setIcon(icon);
+        item.setPosition(0.5f, 1);
+
+        mapView.addMarkerItem(poiItem.getPOIID(), item);
     }
 
     public void changeHeight() {
@@ -224,26 +268,6 @@ public class DetailOneFragment extends Fragment {
                 ((PartyDetailActivity)getActivity()).setPagerHeight(height);
             }
         });
-    }
-
-    private void addMarkerPOI(ArrayList<TMapPOIItem> list) {
-        for(TMapPOIItem poi : list) {
-            TMapPoint point = mapView.getCenterPoint();
-            TMapMarkerItem item = new TMapMarkerItem();
-            item.setTMapPoint(point);
-            Bitmap icon = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_map)).getBitmap();
-            item.setIcon(icon);
-            item.setPosition(0.5f, 1);
-            item.setCalloutTitle(poi.getPOIName());
-            item.setCalloutSubTitle(poi.getPOIContent());
-            Bitmap left = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_alert)).getBitmap();
-            item.setCalloutLeftImage(left);
-            Bitmap right = ((BitmapDrawable)getResources().getDrawable(android.R.drawable.ic_dialog_info)).getBitmap();
-            item.setCalloutRightButtonImage(right);
-            item.setCanShowCallout(true);
-
-            mapView.addMarkerItem(poi.getPOIID(), item);
-        }
     }
 
     boolean isInitialized = false;

@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -22,17 +22,13 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.UserTabAdapter;
-import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.fragment.UserFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
-
-import java.util.ArrayList;
 
 /**
  * Created by kwang on 15. 12. 11..
@@ -42,10 +38,11 @@ public class UserActivity extends AppCompatActivity{
     public TabLayout tabs, fakeTabs;
     ViewPager pager;
     public FrameLayout header;
-    TextView followView, nameView, addressView;
+    TextView followView, nameView, addressView, takeFollow, takeUnfollow;
     RelativeLayout relativeLayout, relativeLayout2;
-    ImageView modify, profileView, takeFollow, takeUnfollow;
+    ImageView modify, profileView;
     UserTabAdapter mAdapter;
+    int[] partys = {0, 0, 0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class UserActivity extends AppCompatActivity{
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager)findViewById(R.id.container);
         mAdapter = new UserTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdapter);
         pager.setOffscreenPageLimit(Constants.NUM_OF_USER_PAGE_TAB - 1);
@@ -70,11 +67,23 @@ public class UserActivity extends AppCompatActivity{
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
 
+        if(user.groups.size()>0) {
+            for (int i = 0; i < user.groups.size(); i++) {
+                if (user.groups.get(i).role.equals("OWNER")) {
+                    partys[0]++;
+                } else if (user.groups.get(i).role.equals("MEMBER")) {
+                    partys[1]++;
+                } else if (user.groups.get(i).role.equals("WANNABE")) {
+                    partys[2]++;
+                }
+            }
+        }
+
         tabs.removeAllTabs();
         fakeTabs.removeAllTabs();
         String[] tabTitle = getResources().getStringArray(R.array.user_page_tab_name);
         for (int i = 0; i < Constants.NUM_OF_USER_PAGE_TAB; i++) {
-            tabs.addTab(tabs.newTab().setText(tabTitle[i]));
+            tabs.addTab(tabs.newTab().setText(tabTitle[i] + " " + partys[i]));
             fakeTabs.addTab(fakeTabs.newTab().setText(tabTitle[i]));
         }
 
@@ -116,7 +125,7 @@ public class UserActivity extends AppCompatActivity{
         relativeLayout = (RelativeLayout)findViewById(R.id.relativelayout_user);
         relativeLayout2 = (RelativeLayout)findViewById(R.id.relativelayout);
 
-        takeFollow = (ImageView)findViewById(R.id.image_btn_follow);
+        takeFollow = (TextView)findViewById(R.id.image_btn_follow);
         takeFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +144,7 @@ public class UserActivity extends AppCompatActivity{
                 });
             }
         });
-        takeUnfollow = (ImageView)findViewById(R.id.image_btn_unfollow);
+        takeUnfollow = (TextView)findViewById(R.id.image_btn_unfollow);
         takeUnfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +164,7 @@ public class UserActivity extends AppCompatActivity{
             }
         });
 
-        ImageView takeMessage = (ImageView)findViewById(R.id.image_btn_message);
+        TextView takeMessage = (TextView)findViewById(R.id.image_btn_message);
         takeMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +176,7 @@ public class UserActivity extends AppCompatActivity{
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if(scrollView.getScrollY()>tabs.getY()) {
+                if (scrollView.getScrollY() > tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
                 } else {
                     fakeTabs.setVisibility(View.INVISIBLE);
@@ -183,20 +192,7 @@ public class UserActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        setPagerHeight(1000);
-                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
-                        break;
-                    case 1:
-                        setPagerHeight(1000);
-                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
-                        break;
-                    case 2:
-                        setPagerHeight(1000);
-                        ((UserFragment) mAdapter.getItem(position)).changeHeight();
-                        break;
-                }
+                changeHeight(partys[position]);
             }
 
             @Override
@@ -231,7 +227,6 @@ public class UserActivity extends AppCompatActivity{
         followView.setText("팔로잉 " + user.following.size() + " | 팔로워 " + user.follower.size());
 
         if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
-            modify.setVisibility(View.INVISIBLE);
             relativeLayout2.setVisibility(View.INVISIBLE);
             if(user.follower.size()>0) {
                 for (int i = 0; i < user.follower.size(); i++) {
@@ -251,6 +246,17 @@ public class UserActivity extends AppCompatActivity{
         LayoutParams params = pager.getLayoutParams();
         params.height=height;
         pager.setLayoutParams(params);
+    }
+
+    public void changeHeight(int partyCount) {
+        int height = (int)Math.ceil(partyCount * 116 * getResources().getDisplayMetrics().density);
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int screenHeight = size.y - (int)Math.ceil(285 * getResources().getDisplayMetrics().density);
+        //285 means statusbar + header + tablayout height
+        if(screenHeight > height)
+            height = screenHeight;
+        setPagerHeight(height);
     }
 
     public User getUser() {

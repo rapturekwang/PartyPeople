@@ -20,7 +20,7 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager)findViewById(R.id.container);
         mAdapter = new IntroPagerAdapter();
         pager.setAdapter(mAdapter);
 

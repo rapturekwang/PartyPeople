@@ -67,15 +67,19 @@ public class MainFragmentAdapter extends BaseAdapter {
             progressView.setText(progress + "% 모금됨");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
-            bookMarkView.setText(""+data.likes.size());
-            if(data.likes.size()>0) {
-                for(int i=0;i<data.likes.size();i++) {
-                    if(data.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
-                        data.setBookmark(true);
-                        bookMarkView.setChecked(true);
-                        break;
+            if(data.likes!=null) {
+                bookMarkView.setText("" + data.likes.size());
+                if (data.likes.size() > 0) {
+                    for (int i = 0; i < data.likes.size(); i++) {
+                        if (data.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
+                            data.setBookmark(true);
+                            bookMarkView.setChecked(true);
+                            break;
+                        }
                     }
                 }
+            }else {
+                bookMarkView.setText("0");
             }
             Glide.with(context)
                     .load(NetworkManager.getInstance().URL_SERVER + data.photo)

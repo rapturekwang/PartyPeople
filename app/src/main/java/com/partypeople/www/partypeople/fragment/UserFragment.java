@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,17 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +37,7 @@ public class UserFragment extends Fragment {
     int index;
     LinearLayout layout;
     TextView warningView;
-
+    Button btnMake;
     UserAdapter mAdapter;
 
     public static UserFragment newInstance(int index) {
@@ -69,11 +73,19 @@ public class UserFragment extends Fragment {
         listView.setAdapter(mAdapter);
 
         warningView = (TextView)view.findViewById(R.id.text_warning);
+        btnMake = (Button)view.findViewById(R.id.btn_make);
+        btnMake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MakePartyActivity.class);
+                startActivity(intent);
+            }
+        });
 
         initData();
 
         if(index==0) {
-            changeHeight();
+            ((UserActivity)getActivity()).changeHeight(partyList.size());
         }
 
         return view;
@@ -101,35 +113,19 @@ public class UserFragment extends Fragment {
             switch (index) {
                 case 0:
                     warningView.setText("아직 개최한 모임이 없습니다");
+                    if(user.id.equals(PropertyManager.getInstance().getUser().id))
+                        btnMake.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     warningView.setText("아직 참여한 모임이 없습니다");
                     break;
                 case 2:
-                    warningView.setText("아직 '좋아요'한 모임이 없습니다");
+                    warningView.setText("아직 관심모임이 없습니다");
                     break;
             }
         } else {
             warningView.setVisibility(View.GONE);
+            btnMake.setVisibility(View.GONE);
         }
-    }
-
-    public int changeHeight() {
-        ViewTreeObserver vto = layout.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                int height = layout.getMeasuredHeight();
-                Point size = new Point();
-                getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-                int screenHeight = size.y - (int)Math.ceil(285 * getContext().getResources().getDisplayMetrics().density);
-                //285 means statusbar + header + tablayout height
-                if(screenHeight > height)
-                    height = screenHeight;
-                ((UserActivity) getActivity()).setPagerHeight(height);
-            }
-        });
-        return 0;
     }
 }

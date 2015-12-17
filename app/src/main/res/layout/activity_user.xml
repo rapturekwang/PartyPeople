@@ -40,7 +40,7 @@
                 android:layout_below="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:id="@+id/pager"
+                android:id="@+id/container"
                 android:layout_gravity="center_horizontal" />
 
         </RelativeLayout>

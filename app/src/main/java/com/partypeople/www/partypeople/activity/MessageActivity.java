@@ -7,16 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MessageTabAdapter;
-import com.partypeople.www.partypeople.fragment.MakePartyOneFragment;
-import com.partypeople.www.partypeople.fragment.MakePartyThreeFragment;
-import com.partypeople.www.partypeople.fragment.MakePartyTwoFragment;
 import com.partypeople.www.partypeople.fragment.MessageFragment;
 import com.partypeople.www.partypeople.fragment.ReplyFragment;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -44,7 +39,7 @@ public class MessageActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager)findViewById(R.id.container);
         MessageTabAdapter adpater = new MessageTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
 
