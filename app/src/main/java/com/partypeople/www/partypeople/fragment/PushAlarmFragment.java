@@ -5,16 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.activity.SettingActivity;
 import com.partypeople.www.partypeople.adapter.PushAlarmListAdapter;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,7 +48,7 @@ public class PushAlarmFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_push_alarm, container, false);
 
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new PushAlarmListAdapter();
         listView.setAdapter(mAdapter);
 

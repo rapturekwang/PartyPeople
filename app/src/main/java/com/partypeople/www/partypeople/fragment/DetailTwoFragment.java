@@ -1,23 +1,17 @@
 package com.partypeople.www.partypeople.fragment;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
-import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
-import com.partypeople.www.partypeople.data.PayMethod;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +50,7 @@ public class DetailTwoFragment extends Fragment {
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new RewordViewAdapter();
         listView.setAdapter(mAdapter);
 

@@ -1,23 +1,19 @@
 package com.partypeople.www.partypeople.fragment;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.CommentAdapter;
-import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +53,7 @@ public class DetailThreeFragment extends Fragment {
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
         final EditText editText = (EditText)view.findViewById(R.id.edit_comment);
-        ImageView imgSendView = (ImageView)view.findViewById(R.id.image_btn_send);
+        TextView imgSendView = (TextView)view.findViewById(R.id.image_btn_send);
         imgSendView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +66,7 @@ public class DetailThreeFragment extends Fragment {
             }
         });
 
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new CommentAdapter();
         listView.setAdapter(mAdapter);
 

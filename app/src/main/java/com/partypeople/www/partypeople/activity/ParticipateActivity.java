@@ -9,18 +9,21 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PayMethod;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.view.RewordItemView;
 
 public class ParticipateActivity extends AppCompatActivity {
-    ListView listView;
-    RewordViewAdapter mAdapter;
     Party party;
+    LinearLayout layoutRewords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +57,31 @@ public class ParticipateActivity extends AppCompatActivity {
             }
         });
 
-        listView = (ListView)findViewById(R.id.listView);
-        mAdapter = new RewordViewAdapter();
-        listView.setAdapter(mAdapter);
+        layoutRewords = (LinearLayout)findViewById(R.id.linearlayout_reword);
+
+        TextView textBtn = (TextView)findViewById(R.id.text_btn_tos);
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ParticipateActivity.this, "이용약관", Toast.LENGTH_SHORT).show();
+            }
+        });
+        textBtn = (TextView)findViewById(R.id.text_btn_policy);
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ParticipateActivity.this, "개인정보 취급방침", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         initData();
     }
 
     private void initData() {
         for(int i=0; i<party.pay_method.size(); i++) {
-            mAdapter.add(party.pay_method.get(i), false);
+            RewordItemView rewordItemView = new RewordItemView(this);
+            rewordItemView.setItemData(party.pay_method.get(i), i, false);
+            layoutRewords.addView(rewordItemView);
         }
     }
 

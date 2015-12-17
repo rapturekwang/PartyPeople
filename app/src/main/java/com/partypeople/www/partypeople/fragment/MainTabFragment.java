@@ -3,10 +3,8 @@ package com.partypeople.www.partypeople.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +23,6 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +69,7 @@ public class MainTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //((TextView)view.findViewById(R.id.text_name)).setText(mName);
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
         warningView = (TextView)view.findViewById(R.id.text_warning);

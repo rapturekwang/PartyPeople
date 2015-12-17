@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ public class RewordItemView extends RelativeLayout implements Checkable {
     boolean isCheck = false;
     EditText priceView, rewordView;
     ImageView numView;
+    RelativeLayout relativeLayout;
     int[] ids = {
             R.drawable.contain_0,
             R.drawable.contain_1,
@@ -60,12 +62,20 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         priceView = (EditText)findViewById(R.id.price);
         rewordView = (EditText)findViewById(R.id.reword);
         numView = (ImageView)findViewById(R.id.image_num);
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
     }
 
-    public void setItemData(PayMethod payMethod, int num) {
-        priceView.setText(payMethod.price+"원");
-        rewordView.setText(payMethod.title);
+    public void setItemData(PayMethod payMethod, int num, boolean editable) {
+        if(payMethod!=null) {
+            priceView.setText(payMethod.price + "원");
+            rewordView.setText(payMethod.title);
+        }
         numView.setImageResource(ids[num]);
+        priceView.setFocusableInTouchMode(editable);
+        rewordView.setFocusableInTouchMode(editable);
+        if(!editable) {
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     public PayMethod getItemData() {

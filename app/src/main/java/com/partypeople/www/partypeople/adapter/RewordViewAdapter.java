@@ -51,11 +51,8 @@ public class RewordViewAdapter extends BaseAdapter{
         } else {
             view = (RewordItemView)convertView;
         }
-        EditText edit = (EditText)view.findViewById(R.id.price);
-        edit.setFocusableInTouchMode(editable);
-        edit = (EditText)view.findViewById(R.id.reword);
-        edit.setFocusableInTouchMode(editable);
-        view.setItemData(list.get(position), position);
+        view.setItemData(list.get(position), position, false);
+
         return view;
     }
 }

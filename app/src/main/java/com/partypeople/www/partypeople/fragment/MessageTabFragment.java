@@ -46,7 +46,7 @@ public class MessageTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message_tab, container, false);
 
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new MessageListAdapter();
         listView.setAdapter(mAdapter);
 

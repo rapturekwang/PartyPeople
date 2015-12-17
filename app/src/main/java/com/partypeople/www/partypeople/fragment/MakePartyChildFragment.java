@@ -69,6 +69,7 @@ public class MakePartyChildFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 RewordItemView rewordItemView = new RewordItemView(getContext());
+                rewordItemView.setItemData(null, linearLayout.getChildCount(), true);
                 linearLayout.addView(rewordItemView);
                 if(linearLayout.getChildCount()==5) {
                     btnAdd.setVisibility(View.GONE);

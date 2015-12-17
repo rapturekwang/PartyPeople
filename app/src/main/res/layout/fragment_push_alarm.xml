@@ -9,7 +9,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/linearlayout_reword"
         android:background="#f5f5f5"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="8dp"

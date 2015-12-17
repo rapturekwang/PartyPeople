@@ -1,23 +1,18 @@
 package com.partypeople.www.partypeople.fragment;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
-import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
@@ -68,7 +63,7 @@ public class UserFragment extends Fragment {
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
-        listView = (ListView)view.findViewById(R.id.listView);
+        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
         mAdapter = new UserAdapter();
         listView.setAdapter(mAdapter);
 
