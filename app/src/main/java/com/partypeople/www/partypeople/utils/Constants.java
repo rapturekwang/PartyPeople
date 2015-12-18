@@ -22,6 +22,9 @@ public class Constants {
     public static final int START_FROM_INTRO = 3;
     public static final int START_FROM_MAIN = 4;
 
+    public static final int CALL_TOS = 0;
+    public static final int CALL_POLICY = 1;
+
     public static final String VERSION = "0.1";
 
     public static final String[] TAB_IDS = {"tab1", "tab2" , "tab3" };

@@ -29,13 +29,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="은행"
                 android:id="@+id/textView12"
                 android:layout_below="@+id/textView8"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="16dp" />
+                android:layout_marginLeft="16dp"
+                android:textColor="#474747" />
 
             <Spinner
                 android:layout_width="100dp"
@@ -79,7 +79,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button2"
+                android:id="@+id/btn_tos"
                 android:layout_below="@+id/textView19"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="이용 약관에 동의합니다"
                 android:id="@+id/chbox_policy"
-                android:layout_below="@+id/button2"
+                android:layout_below="@+id/btn_tos"
                 android:layout_alignParentStart="true"
                 android:checked="false"
                 android:layout_marginLeft="16dp"
@@ -101,13 +101,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearance"
-            android:text="테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트"
+            android:text="모금완료일(24:00)까지 목표금액이 달성되지 못하면, 모임이 자동 취소 처리되며, 참가자들에게 자동환불 됩니다.\n모임이 개설된 후에는 시간, 장소, 참가비, 모금목표금액, 모금방식을 변경할 수 없습니다.\n모금액은 펀딩 종료 후 은행영업일 기준 이틀 안에 호스트 계좌 정보로 입금됩니다.\n모임 사전 정보는 입력한 이메일로 발송됩니다."
             android:id="@+id/textView17"
                 android:layout_below="@+id/chbox_policy"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="18dp" />
+                android:layout_marginTop="12dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -118,12 +118,12 @@
                 android:layout_alignParentStart="true"
                 android:checked="false"
                 android:layout_marginLeft="16dp"
-                android:layout_marginBottom="21dp" />
+                android:layout_marginBottom="21dp"
+                android:layout_marginTop="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="계좌 번호(-없이 입력)"
                 android:id="@+id/textView4"
                 android:layout_below="@+id/spinner_bank"
@@ -131,7 +131,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:textSize="14dp"
-                android:textColor="#000000" />
+                android:textColor="#474747" />
 
         </RelativeLayout>
 

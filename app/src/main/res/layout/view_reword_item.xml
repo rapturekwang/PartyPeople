@@ -40,7 +40,7 @@
             android:id="@+id/relativeLayout"
             android:orientation="vertical"
             android:layout_alignParentEnd="true"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <View
                 android:layout_width="1dp"

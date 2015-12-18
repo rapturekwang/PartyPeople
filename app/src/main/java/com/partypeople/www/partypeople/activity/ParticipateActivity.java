@@ -19,6 +19,7 @@ import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PayMethod;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.RewordItemView;
 
 public class ParticipateActivity extends AppCompatActivity {
@@ -63,14 +64,18 @@ public class ParticipateActivity extends AppCompatActivity {
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ParticipateActivity.this, "이용약관", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ParticipateActivity.this, NoticeActivity.class);
+                intent.putExtra("call", Constants.CALL_TOS);
+                startActivity(intent);
             }
         });
         textBtn = (TextView)findViewById(R.id.text_btn_policy);
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ParticipateActivity.this, "개인정보 취급방침", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ParticipateActivity.this, NoticeActivity.class);
+                intent.putExtra("call", Constants.CALL_POLICY);
+                startActivity(intent);
             }
         });
 

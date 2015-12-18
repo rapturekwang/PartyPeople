@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
+import com.partypeople.www.partypeople.activity.NoticeActivity;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -73,7 +75,16 @@ public class MakePartyThreeFragment extends Fragment {
         }
         bankView.setAdapter(mBankAdapter);
         accountView = (EditText)view.findViewById(R.id.edit_account);
-//        phoneView = (EditText)view.findViewById(R.id.edit_phone);
+
+        ImageView imgBtn = (ImageView)view.findViewById(R.id.btn_tos);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), NoticeActivity.class);
+                intent.putExtra("call", Constants.CALL_TOS);
+                startActivity(intent);
+            }
+        });
 
         Button btn = (Button)view.findViewById(R.id.btn_make);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -86,24 +97,12 @@ public class MakePartyThreeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final MakePartyActivity activity = (MakePartyActivity)getActivity();
-//                        if(bankView.getText().toString().equals("")) {
-//                            Toast.makeText(getContext(), "은행을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        } else {
-//                            activity.party.bank = bankView.getText().toString();
-//                        }
                         try {
                             activity.party.account = Double.parseDouble(accountView.getText().toString());
                         } catch (Exception e) {
                             Toast.makeText(getContext(), "계좌번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
-//                        try {
-//                            activity.party.phone = Double.parseDouble(phoneView.getText().toString());
-//                        } catch (Exception e) {
-//                            Toast.makeText(getContext(), "핸드폰 번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
                         CheckBox chbox = (CheckBox)view.findViewById(R.id.chbox_policy);
                         if(!chbox.isChecked()) {
                             Toast.makeText(getContext(), "약관에 동의해 주십시오", Toast.LENGTH_SHORT).show();

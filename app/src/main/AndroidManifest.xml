@@ -126,7 +126,11 @@
             android:exported="false" >
         </service>
 
-        <activity android:name=".activity.UserListActivity"
+        <activity
+            android:name=".activity.UserListActivity"
+            android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.NoticeActivity"
             android:theme="@style/AppTheme.NoTitle">
         </activity>
     </application>
