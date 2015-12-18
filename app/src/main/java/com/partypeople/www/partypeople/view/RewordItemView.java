@@ -21,12 +21,20 @@ public class RewordItemView extends RelativeLayout implements Checkable {
     EditText priceView, rewordView;
     ImageView numView;
     RelativeLayout relativeLayout;
+    int num;
     int[] ids = {
             R.drawable.contain_0,
             R.drawable.contain_1,
             R.drawable.contain_2,
             R.drawable.contain_3,
             R.drawable.contain_4,
+    };
+    int[] ids_checked = {
+            R.drawable.contain_selected_0,
+            R.drawable.contain_selected_1,
+            R.drawable.contain_selected_2,
+            R.drawable.contain_selected_3,
+            R.drawable.contain_selected_4,
     };
 
     public RewordItemView(Context context) {
@@ -48,7 +56,7 @@ public class RewordItemView extends RelativeLayout implements Checkable {
     public void setChecked(boolean checked) {
         if (isCheck != checked) {
             isCheck = checked;
-            //drawCheck();
+            drawCheck();
         }
     }
 
@@ -70,6 +78,7 @@ public class RewordItemView extends RelativeLayout implements Checkable {
             priceView.setText(payMethod.price + "원");
             rewordView.setText(payMethod.title);
         }
+        this.num = num;
         numView.setImageResource(ids[num]);
         priceView.setFocusableInTouchMode(editable);
         rewordView.setFocusableInTouchMode(editable);
@@ -89,11 +98,11 @@ public class RewordItemView extends RelativeLayout implements Checkable {
         return payMethod;
     }
 
-//    private void drawCheck() {
-//        if (isCheck) {
-//            textView.setBackgroundColor(getResources().getColor(R.color.checked));
-//        } else {
-//            textView.setBackgroundColor(getResources().getColor(R.color.unchecked));
-//        }
-//    }
+    private void drawCheck() {
+        if (isCheck) {
+            numView.setImageResource(ids_checked[num]);
+        } else {
+            numView.setImageResource(ids_checked[num]);
+        }
+    }
 }

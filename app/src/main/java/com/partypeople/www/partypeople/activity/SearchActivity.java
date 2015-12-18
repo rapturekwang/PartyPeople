@@ -55,10 +55,16 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SparseBooleanArray array = gridView.getCheckedItemPositions();
+                for (int i = 0; i < array.size(); i++) {
+                    if (!array.get(array.keyAt(i))) {
+                        array.delete(array.keyAt(i));
+                        i = -1;
+                    }
+                }
                 int[] theme = new int[array.size()];
                 for (int index = 0; index < array.size(); index++) {
                     int position = array.keyAt(index);
-                    if(array.get(position)) {
+                    if (array.get(position)) {
                         theme[index] = position;
                     }
                 }
@@ -111,6 +117,20 @@ public class SearchActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0 && gridView.isItemChecked(0)) {
+                    for(int i=1;i<6;i++) {
+                        gridView.setItemChecked(i, true);
+                    }
+                } else if(position==0 && !gridView.isItemChecked(0)) {
+                    for(int i=1;i<6;i++) {
+                        gridView.setItemChecked(i, false);
+                    }
+                } else if(!gridView.isItemChecked(position) && gridView.isItemChecked(0)){
+                    gridView.setItemChecked(0, false);
+                } else if(gridView.isItemChecked(1) && gridView.isItemChecked(2) && gridView.isItemChecked(3) &&
+                        gridView.isItemChecked(4) && gridView.isItemChecked(5)) {
+                    gridView.setItemChecked(0, true);
+                }
             }
         });
     }
@@ -171,7 +191,7 @@ public class SearchActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0) {
+                if (position != 0) {
                     location = location + " " + mGuAdapter.getItem(position);
                 }
             }
@@ -216,7 +236,6 @@ public class SearchActivity extends AppCompatActivity {
                 view = (ThemeItemView) convertView;
             }
             view.setGridItem(ids[position]);
-//            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 110));
 
             return view;
         }

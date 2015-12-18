@@ -43,7 +43,7 @@ public class MainFragmentAdapter extends BaseAdapter {
         Party mData;
         DateUtil dateUtil = DateUtil.getInstance();
 
-        int[] ids = {0,
+        int[] ids = {R.drawable.theme_0,
                 R.drawable.main_theme_1,
                 R.drawable.main_theme_2,
                 R.drawable.main_theme_3,
