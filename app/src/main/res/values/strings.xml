@@ -2,7 +2,8 @@
     <string name="app_name">Party People</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="facebook_app_id">1124532390893340</string>
+    <string name="facebook_app_id">806111302848586</string>
+    <string name="kakao_app_key">e447904f2d3ba48c29b888924d85eed2</string>
 
     <string-array name="tab_name">
         <item>인기모임</item>

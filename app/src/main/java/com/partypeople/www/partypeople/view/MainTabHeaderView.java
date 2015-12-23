@@ -41,7 +41,7 @@ public class MainTabHeaderView extends LinearLayout {
     }
 
     public void setItemData(String location, int[] theme) {
-         int[] ids = {R.drawable.theme_0,
+         int[] ids = {R.drawable.main_theme_0,
                 R.drawable.main_theme_1,
                 R.drawable.main_theme_2,
                 R.drawable.main_theme_3,

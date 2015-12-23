@@ -99,7 +99,6 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UserResult result) {
                     PropertyManager.getInstance().setUser(result.data);
-//                    Log.d("SplashActivity", result.data.id);
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -114,12 +113,6 @@ public class SplashActivity extends AppCompatActivity {
                     goLoginActivity();
                 }
             });
-//            mHandler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    goMainActivity();
-//                }
-//            }, Constants.SPLASH_TIME_OUT);
         } else {
             final String id = PropertyManager.getInstance().getFaceBookId();
             if (!TextUtils.isEmpty(id)) {
@@ -137,7 +130,19 @@ public class SplashActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(String result) {
                                         if (result.equals("OK")) {
-                                            goMainActivity();
+                                            NetworkManager.getInstance().getMyId(SplashActivity.this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<UserResult>() {
+                                                @Override
+                                                public void onSuccess(UserResult result) {
+                                                    PropertyManager.getInstance().setUser(result.data);
+                                                    goMainActivity();
+                                                }
+
+                                                @Override
+                                                public void onFail(int code) {
+                                                    Toast.makeText(SplashActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                                                    goLoginActivity();
+                                                }
+                                            });
                                         }
                                     }
 
@@ -157,15 +162,12 @@ public class SplashActivity extends AppCompatActivity {
                 mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-//                    Toast.makeText(SplashActivity.this, "login success", Toast.LENGTH_SHORT).show();
-//                    Log.d("SplashActivity", "onSuccess()");
-//                    goMainActivity();
+
                     }
 
                     @Override
                     public void onCancel() {
-//                    Log.d("SplashActivity", "onCancel()");
-//                    goMainActivity();
+
                     }
 
                     @Override

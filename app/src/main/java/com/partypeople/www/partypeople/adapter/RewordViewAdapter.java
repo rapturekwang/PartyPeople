@@ -37,9 +37,8 @@ public class RewordViewAdapter extends BaseAdapter{
         return position;
     }
 
-    public void add(PayMethod item, boolean edit) {
+    public void add(PayMethod item) {
         list.add(item);
-        editable = edit;
         notifyDataSetChanged();
     }
 
@@ -51,7 +50,7 @@ public class RewordViewAdapter extends BaseAdapter{
         } else {
             view = (RewordItemView)convertView;
         }
-        view.setItemData(list.get(position), position, false);
+        view.setItemData(list.get(position), position);
 
         return view;
     }

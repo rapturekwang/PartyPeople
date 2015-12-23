@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -19,19 +20,20 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.fragment.FindPasswordFragment;
 import com.partypeople.www.partypeople.fragment.LoginFragment;
 import com.partypeople.www.partypeople.fragment.LoginMainFragment;
 import com.partypeople.www.partypeople.fragment.SignupFragment;
 import com.partypeople.www.partypeople.fragment.TOSFragment;
 import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-
     int mStartfrom;
     Intent intent;
     Toolbar toolbar;
@@ -62,8 +64,18 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.back);
         actionBar.setDisplayShowTitleEnabled(false);
 
+//        Button btn = (Button)findViewById(R.id.btn_logout_fb);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("LoginActivity", "logout");
+//                LoginManager.getInstance().logOut();
+//            }
+//        });
+
         mStartfrom = getIntent().getExtras().getInt("startfrom");
         initFragment();
+
     }
 
     @Override
@@ -74,18 +86,42 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void login(List<String> permissions) {
-        login(permissions, true);
+    public void loginWithFacebook(List<String> permissions) {
+        loginWithFacebook(permissions, true);
     }
 
-    private void login(List<String> permissions, boolean isRead) {
+    private void loginWithFacebook(List<String> permissions, boolean isRead) {
         mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 token = AccessToken.getCurrentAccessToken();
-                PropertyManager.getInstance().setFacebookId(token.getUserId());
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                NetworkManager.getInstance().authFacebook(LoginActivity.this, token.getToken(), new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(final String result1) {
+                        NetworkManager.getInstance().getMyId(LoginActivity.this, result1, new NetworkManager.OnResultListener<UserResult>() {
+                            @Override
+                            public void onSuccess(UserResult result2) {
+                                PropertyManager.getInstance().setFacebookId(token.getUserId());
+                                PropertyManager.getInstance().setToken(result1);
+                                PropertyManager.getInstance().setUser(result2.data);
+                                PropertyManager.getInstance().setLoginMethod(Constants.LOGIN_WITH_FACEBOOK);
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(LoginActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -95,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-
+                Log.d("LoginActivity", "onError");
             }
         });
         if (isRead) {
@@ -151,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+//        Log.d("LoginActivity", "request code: " + requestCode + " result code: " + resultCode + " data: " + data);
     }
 
     public int getStartfrom() {

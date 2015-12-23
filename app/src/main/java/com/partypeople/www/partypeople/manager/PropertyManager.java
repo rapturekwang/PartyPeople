@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.facebook.login.LoginManager;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.MyApplication;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class PropertyManager {
     private static final String FIELD_ID = "id";
     private static final String FIELD_TOKEN = "token";
     private static final String FIELD_EMAIL = "email";
+    private static final String FIELD_LOGIN_METHOD = "loginMethod";
 
     public void setFacebookId(String id) {
         mEditor.putString(FIELD_FACEBOOK_ID, id);
@@ -46,6 +49,16 @@ public class PropertyManager {
 
     public String getFaceBookId() {
         return mPrefs.getString(FIELD_FACEBOOK_ID, "");
+    }
+
+    public void setLoginMethod(int method) {
+        mEditor.putInt(FIELD_LOGIN_METHOD, method);
+        mEditor.commit();
+    }
+
+    public int getLoginMethod() {
+        int loginMethod = mPrefs.getInt(FIELD_LOGIN_METHOD, -1);
+        return loginMethod;
     }
 
     public void setId(String id) {
@@ -81,11 +94,14 @@ public class PropertyManager {
     public boolean isLogin() {
         String token;
         token = mPrefs.getString(FIELD_TOKEN, "");
-        Log.d("PropertyManager", token);
+//        Log.d("PropertyManager", token);
         return token.equals("") ? false: true;
     }
 
     public void logout() {
+        if(getLoginMethod()==Constants.LOGIN_WITH_FACEBOOK) {
+            LoginManager.getInstance().logOut();
+        }
         mEditor.clear();
         mEditor.commit();
     }

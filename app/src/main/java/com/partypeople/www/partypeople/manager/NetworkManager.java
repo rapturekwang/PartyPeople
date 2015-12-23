@@ -18,6 +18,7 @@ import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
+import com.partypeople.www.partypeople.data.Token;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.utils.MyApplication;
@@ -86,12 +87,14 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
+    public static final String URL_FACEBOOK_AUTH = "http://61.100.5.61:3000/api/auth/facebook";
     public static final String URL_SERVER = "http://61.100.5.61:3000";
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
     public static final String URL_LIKES = "http://61.100.5.61:3000/api/v1/likes";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
+    public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
 
@@ -520,6 +523,27 @@ public class NetworkManager {
 //            }
 //        });
 //    }
+
+    public void authFacebook(Context context, String token, final OnResultListener<String> listener ) {
+        RequestParams params = new RequestParams();
+        params.put("access_token", token);
+        Header[] headers = null;
+
+        client.get(context, URL_AUTH_FACEBOOK, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "facebook auth Success" + responseString);
+                Token token = gson.fromJson(responseString, Token.class);
+                listener.onSuccess(token.token);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "facebook auth Fail: " + statusCode + responseString);
+            }
+        });
+    }
 
     public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {
         Header[] headers = null;

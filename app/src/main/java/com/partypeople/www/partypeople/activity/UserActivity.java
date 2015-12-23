@@ -76,7 +76,11 @@ public class UserActivity extends AppCompatActivity{
                 }
             }
         }
-        partys[2] = user.likes.size();
+        if(user.likes==null) {
+            partys[2] = 0;
+        } else {
+            partys[2] = user.likes.size();
+        }
 
         tabs.removeAllTabs();
         fakeTabs.removeAllTabs();

@@ -62,7 +62,7 @@ public class DetailTwoFragment extends Fragment {
     private void initData() {
         PartyDetailActivity activity = (PartyDetailActivity)getActivity();
         for(int i=0; i<activity.party.pay_method.size(); i++) {
-            mAdapter.add(activity.party.pay_method.get(i), false);
+            mAdapter.add(activity.party.pay_method.get(i));
         }
     }
 

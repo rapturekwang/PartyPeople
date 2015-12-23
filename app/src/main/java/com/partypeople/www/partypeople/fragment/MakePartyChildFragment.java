@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.PayMethod;
-import com.partypeople.www.partypeople.view.RewordItemView;
+import com.partypeople.www.partypeople.view.RewordItemEditView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,17 +58,17 @@ public class MakePartyChildFragment extends Fragment {
         linearLayout = (LinearLayout)view.findViewById(R.id.linearLayout);
         //linearLayout.removeAllViews();
         if(linearLayout.getChildCount()==0) {
-            RewordItemView rewordItemView = new RewordItemView(getContext());
-            linearLayout.addView(rewordItemView);
+            RewordItemEditView rewordItemEditView = new RewordItemEditView(getContext());
+            linearLayout.addView(rewordItemEditView);
         }
 
         btnAdd = (ImageView)view.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RewordItemView rewordItemView = new RewordItemView(getContext());
-                rewordItemView.setItemData(null, linearLayout.getChildCount(), true);
-                linearLayout.addView(rewordItemView);
+                RewordItemEditView rewordItemEditView = new RewordItemEditView(getContext());
+                rewordItemEditView.setItemData(null, linearLayout.getChildCount());
+                linearLayout.addView(rewordItemEditView);
                 if(linearLayout.getChildCount()==5) {
                     btnAdd.setVisibility(View.GONE);
                 }
@@ -99,7 +97,7 @@ public class MakePartyChildFragment extends Fragment {
 
     public List<PayMethod> getItem() {
         for(int i=0;i<linearLayout.getChildCount();i++) {
-            list.add(((RewordItemView)linearLayout.getChildAt(i)).getItemData());
+            list.add(((RewordItemEditView)linearLayout.getChildAt(i)).getItemData());
         }
         return list;
     }

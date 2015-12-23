@@ -4,10 +4,10 @@ package com.partypeople.www.partypeople.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,16 +86,7 @@ public class LoginMainFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "준비중 입니다.", Toast.LENGTH_SHORT).show();
-//                activity.login(null);
-            }
-        });
-
-        btn = (ImageView)view.findViewById(R.id.btn_kakao);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "준비중 입니다.", Toast.LENGTH_SHORT).show();
+                activity.loginWithFacebook(null);
             }
         });
 

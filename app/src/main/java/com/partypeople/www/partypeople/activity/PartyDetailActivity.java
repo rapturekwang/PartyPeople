@@ -245,7 +245,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         totalPriceView.setText((int) party.expect_pay + "원");
         if(party.likes!=null) {
             chboxView.setText("" + party.likes.size());
-            if (party.likes.size() > 0) {
+            if (PropertyManager.getInstance().isLogin() && party.likes.size() > 0) {
                 for (int i = 0; i < party.likes.size(); i++) {
                     if (party.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
                         chboxView.setChecked(true);

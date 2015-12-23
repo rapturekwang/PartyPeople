@@ -43,7 +43,7 @@ public class MainFragmentAdapter extends BaseAdapter {
         Party mData;
         DateUtil dateUtil = DateUtil.getInstance();
 
-        int[] ids = {R.drawable.theme_0,
+        int[] ids = {0,
                 R.drawable.main_theme_1,
                 R.drawable.main_theme_2,
                 R.drawable.main_theme_3,
@@ -69,7 +69,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             bookMarkView.setChecked(data.bookmark);
             if(data.likes!=null) {
                 bookMarkView.setText("" + data.likes.size());
-                if (data.likes.size() > 0) {
+                if (PropertyManager.getInstance().isLogin() && data.likes.size() > 0) {
                     for (int i = 0; i < data.likes.size(); i++) {
                         if (data.likes.get(i).user.equals(PropertyManager.getInstance().getUser().id)) {
                             data.setBookmark(true);
@@ -133,6 +133,10 @@ public class MainFragmentAdapter extends BaseAdapter {
             holder.bookMarkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(!PropertyManager.getInstance().isLogin()) {
+                        Toast.makeText(mContext, "로그인이 필요한 서비스 입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if(buttonView.getTag()==null)
                         return;
                     int getPosition = (Integer) buttonView.getTag();

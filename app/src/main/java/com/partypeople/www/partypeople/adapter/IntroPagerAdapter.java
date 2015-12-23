@@ -16,10 +16,15 @@ import java.util.List;
  */
 public class IntroPagerAdapter extends PagerAdapter {
 
+    int[] intro = {
+            R.drawable.intro_0,
+            R.drawable.intro_1,
+            R.drawable.intro_2
+    };
     List<View> scrappedView = new ArrayList<View>();
     @Override
     public int getCount() {
-        return 4;
+        return intro.length;
     }
 
     @Override
@@ -30,8 +35,7 @@ public class IntroPagerAdapter extends PagerAdapter {
         } else {
             view = LayoutInflater.from(container.getContext()).inflate(R.layout.view_intro, container, false);
         }
-        TextView tv = (TextView)view.findViewById(R.id.text_intro);
-        tv.setText("intro " + (position+1));
+        view.setBackgroundResource(intro[position]);
         container.addView(view);
         return view;
     }

@@ -123,7 +123,7 @@ public class UserFragment extends Fragment {
                 }
             }
         }
-        if(user.likes.size()>0) {
+        if(user.likes!=null && user.likes.size()>0) {
             for (int i=0; i<user.likes.size(); i++) {
                 if(index == 2) {
                     partyList.add(user.likes.get(i));

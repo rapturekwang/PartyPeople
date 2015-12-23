@@ -122,10 +122,10 @@ public class MakePartyOneFragment extends Fragment {
             public void onClick(View v) {
                 MakePartyActivity activity = (MakePartyActivity) getActivity();
                 String warningMessage="";
-                if(desView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
-                if(locationView.getText().toString().equals("")) warningMessage="장소를 입력해 주세요";
-                if(theme==-1) warningMessage="테마를 지정해 주세요.";
-                if(nameView.getText().toString().equals("")) warningMessage="모임 이름을 입력해 주세요.";
+//                if(desView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
+//                if(locationView.getText().toString().equals("")) warningMessage="장소를 입력해 주세요";
+//                if(theme==-1) warningMessage="테마를 지정해 주세요.";
+//                if(nameView.getText().toString().equals("")) warningMessage="모임 이름을 입력해 주세요.";
                 if(warningMessage.equals("")) {
                     activity.party.name = nameView.getText().toString();
                     activity.party.themes = new int[1];
@@ -134,22 +134,22 @@ public class MakePartyOneFragment extends Fragment {
                     activity.party.description = desView.getText().toString();
                     activity.party.privated = switchCompat.isChecked();
                     activity.party.imageFile = mSavedFile;
-                } else {
-                    Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
-                    return;
+//                } else {
+//                    Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
+//                    return;
                 }
                 if (switchCompat.isChecked()) {
                     activity.party.password = partyPasswordView.getText().toString();
                 }
-                try {
-                    activity.party.start_at = getStartTime();
-                    activity.party.end_at = getEndTime();
-                    activity.nextFragment();
-                } catch (Exception e) {
-                    Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                }
+//                try {
+//                    activity.party.start_at = getStartTime();
+//                    activity.party.end_at = getEndTime();
+//                    activity.nextFragment();
+//                } catch (Exception e) {
+//                    Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+//                }
 //                activity.party.imageFile = mSavedFile;
-//                activity.nextFragment();
+                activity.nextFragment();
             }
         });
 

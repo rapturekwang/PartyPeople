@@ -2,54 +2,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:layout_marginBottom="7dp">
+    android:layout_height="wrap_content"
+    android:minHeight="75dp"
+    android:layout_marginBottom="7dp"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="22dp"
-        android:background="@color/backgroundGray">
+        android:background="@color/backgroundGray"
+        android:layout_alignParentEnd="false">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/price"
-            android:hint="(금액입력)원"
             android:layout_alignParentTop="true"
             android:textSize="21sp"
-            android:background="@null"
             android:layout_marginTop="13dp"
             android:layout_marginLeft="28dp"
-            android:inputType="number" />
+            android:text="10000원" />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/reword"
-            android:hint="금액에 포함된 사항 입력"
             android:layout_below="@+id/price"
             android:layout_alignStart="@+id/price"
             android:textSize="14sp"
-            android:background="@null"
-            android:layout_marginTop="3dp" />
+            android:layout_marginTop="3dp"
+            android:text="프리드링크 1개" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#c8c8c8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="60dp" />
 
         <RelativeLayout
             android:layout_width="58dp"
             android:layout_height="match_parent"
             android:id="@+id/relativeLayout"
             android:orientation="vertical"
-            android:layout_alignParentEnd="true"
-            android:visibility="invisible">
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#c8c8c8"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="false"
-                android:visibility="visible"
-                android:layout_alignParentStart="true" />
+            android:layout_alignParentEnd="true">
 
             <ImageView
                 android:layout_width="wrap_content"

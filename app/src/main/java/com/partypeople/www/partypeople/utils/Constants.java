@@ -34,4 +34,7 @@ public class Constants {
     public static final int NUM_OF_DAY = 30;
     public static final int NUM_OF_HOUR = 12;
     public static final int NUM_OF_MINUTE = 60;
+
+    public static final int LOGIN_WITH_LOCAL = 0;
+    public static final int LOGIN_WITH_FACEBOOK = 1;
 }

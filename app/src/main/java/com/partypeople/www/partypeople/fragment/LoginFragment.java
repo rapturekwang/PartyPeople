@@ -149,6 +149,7 @@ public class LoginFragment extends Fragment {
                             public void onSuccess(UserResult result2) {
                                 propertyManager.setToken(result1.token);
                                 propertyManager.setUser(result2.data);
+                                propertyManager.setLoginMethod(Constants.LOGIN_WITH_LOCAL);
 
                                 Intent intent = new Intent(getContext(), MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

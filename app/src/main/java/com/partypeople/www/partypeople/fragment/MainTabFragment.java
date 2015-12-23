@@ -3,6 +3,8 @@ package com.partypeople.www.partypeople.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +23,9 @@ import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.view.LeaveDialog;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
+import com.partypeople.www.partypeople.view.PasswordDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,19 +81,24 @@ public class MainTabFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(getArguments().getInt(ARG_INDEX)==1) {
-                    if(position==0)
+                if (getArguments().getInt(ARG_INDEX) == 1) {
+                    if (position == 0)
                         return;
                     position--;
                 }
-                Intent i = new Intent(getActivity(), PartyDetailActivity.class);
                 Party party = partyList.get(position);
-                i.putExtra("party", party);
-                startActivity(i);
+                if (party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
+                    PasswordDialog dialog = new PasswordDialog(getContext());
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.setParty(party);
+                    dialog.show();
+                } else {
+                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                    i.putExtra("party", party);
+                    startActivity(i);
+                }
             }
         });
-
-//        initData();
 
         return view;
     }

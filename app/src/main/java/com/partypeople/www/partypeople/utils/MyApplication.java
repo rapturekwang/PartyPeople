@@ -1,6 +1,5 @@
 package com.partypeople.www.partypeople.utils;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;

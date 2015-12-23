@@ -18,9 +18,8 @@ import com.partypeople.www.partypeople.data.PayMethod;
  */
 public class RewordItemView extends RelativeLayout implements Checkable {
     boolean isCheck = false;
-    EditText priceView, rewordView;
+    TextView priceView, rewordView;
     ImageView numView;
-    RelativeLayout relativeLayout;
     int num;
     int[] ids = {
             R.drawable.contain_0,
@@ -67,42 +66,25 @@ public class RewordItemView extends RelativeLayout implements Checkable {
 
     private void init() {
         inflate(getContext(), R.layout.view_reword_item, this);
-        priceView = (EditText)findViewById(R.id.price);
-        rewordView = (EditText)findViewById(R.id.reword);
         numView = (ImageView)findViewById(R.id.image_num);
-        relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+        priceView = (TextView)findViewById(R.id.price);
+        rewordView = (TextView)findViewById(R.id.reword);
     }
 
-    public void setItemData(PayMethod payMethod, int num, boolean editable) {
+    public void setItemData(PayMethod payMethod, int num) {
         if(payMethod!=null) {
             priceView.setText(payMethod.price + "원");
             rewordView.setText(payMethod.title);
         }
         this.num = num;
         numView.setImageResource(ids[num]);
-        priceView.setFocusableInTouchMode(editable);
-        rewordView.setFocusableInTouchMode(editable);
-        if(!editable) {
-            relativeLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public PayMethod getItemData() {
-        PayMethod payMethod = new PayMethod();
-        payMethod.title = rewordView.getText().toString();
-        try {
-            payMethod.price = Integer.parseInt(priceView.getText().toString());
-        } catch (Exception e) {
-            payMethod.price = -1;
-        }
-        return payMethod;
     }
 
     private void drawCheck() {
         if (isCheck) {
             numView.setImageResource(ids_checked[num]);
         } else {
-            numView.setImageResource(ids_checked[num]);
+            numView.setImageResource(ids[num]);
         }
     }
 }

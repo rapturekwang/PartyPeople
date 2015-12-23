@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -155,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements
 
     public void setNavigation() {
         ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
-        if(propertyManager.getUser().has_photo) {
+        if(propertyManager.isLogin() && propertyManager.getUser().has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
             GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
             Glide.with(this)
