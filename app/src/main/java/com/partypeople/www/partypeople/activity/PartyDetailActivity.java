@@ -34,6 +34,7 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.dialog.LoadingDialog;
 
 public class PartyDetailActivity extends AppCompatActivity {
 
@@ -47,6 +48,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     public Party party;
     DetailTabAdapter mAdpater;
     BottomSheet sheet;
+    LoadingDialog loadingDialog;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -59,6 +61,9 @@ public class PartyDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_detail);
+
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
 
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
@@ -239,7 +244,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0] + " " + array[1]);
         priceView.setText(party.pay_method.get(0).price + "원");
         int progress = (int)((party.members.size()*party.pay_method.get(0).price)/party.expect_pay*100);
-        progressView.setText(progress+"% 모금됨");
+        progressView.setText(progress + "% 모금됨");
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
         totalPriceView.setText((int) party.expect_pay + "원");
@@ -254,6 +259,8 @@ public class PartyDetailActivity extends AppCompatActivity {
                 }
             }
         }
+
+        loadingDialog.dismiss();
     }
 
     private void initView() {

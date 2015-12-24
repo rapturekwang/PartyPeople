@@ -2,11 +2,11 @@ package com.partypeople.www.partypeople.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +23,8 @@ import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
-import com.partypeople.www.partypeople.view.LeaveDialog;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
-import com.partypeople.www.partypeople.view.PasswordDialog;
+import com.partypeople.www.partypeople.dialog.PasswordDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +44,7 @@ public class MainTabFragment extends Fragment {
     ListView listView;
     MainFragmentAdapter mAdapter;
     MainTabHeaderView header;
-    String id;
-    Bitmap bitmap;
+    String id, queryWord;
 
     public static MainTabFragment newInstance(int index) {
         MainTabFragment fragment = new MainTabFragment();
@@ -76,11 +74,14 @@ public class MainTabFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listview);
         mAdapter = new MainFragmentAdapter(getContext());
         listView.setAdapter(mAdapter);
-        warningView = (TextView)view.findViewById(R.id.text_warning);
+        warningView = (TextView) view.findViewById(R.id.text_warning);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                final LoadingDialog dialog = new LoadingDialog(getContext());
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.show();
                 if (getArguments().getInt(ARG_INDEX) == 1) {
                     if (position == 0)
                         return;
@@ -88,10 +89,10 @@ public class MainTabFragment extends Fragment {
                 }
                 Party party = partyList.get(position);
                 if (party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
-                    PasswordDialog dialog = new PasswordDialog(getContext());
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.setParty(party);
-                    dialog.show();
+                    PasswordDialog passwordDialog = new PasswordDialog(getContext());
+                    passwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    passwordDialog.setParty(party);
+                    passwordDialog.show();
                 } else {
                     Intent i = new Intent(getActivity(), PartyDetailActivity.class);
                     i.putExtra("party", party);
@@ -106,19 +107,26 @@ public class MainTabFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.removeAll();
-        partyList.clear();
+        initData();
+    }
+
+    public void setQueryWord(String queryWord) {
+        this.queryWord = queryWord;
         initData();
     }
 
     private void initData() {
+        String keyword = null;
+        String parameter = null;
+
+        mAdapter.removeAll();
+        partyList.clear();
+
         switch (getArguments().getInt(ARG_INDEX)) {
             case 0:
-                warningView.setVisibility(View.GONE);
                 break;
             case 1:
                 User user = PropertyManager.getInstance().getUser();
-//                Log.d("MainTabFragment", "themes" + user.themes.length + "favorite_address" + user.favorite_address);
                 if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && (user.favorite_address==null || user.favorite_address.equals(""))) {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("맞춤모임 설정이 필요합니다");
@@ -138,14 +146,14 @@ public class MainTabFragment extends Fragment {
                 }
                 break;
             case 2:
-                warningView.setVisibility(View.GONE);
                 break;
             case 3:
-                warningView.setVisibility(View.GONE);
+                keyword = "name";
+                parameter = queryWord;
                 break;
         }
 
-        NetworkManager.getInstance().getPartys(getContext(), new NetworkManager.OnResultListener<PartysResult>() {
+        NetworkManager.getInstance().getPartysQuery(getContext(), keyword, parameter, new NetworkManager.OnResultListener<PartysResult>() {
             @Override
             public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {

@@ -1,4 +1,4 @@
-package com.partypeople.www.partypeople.view;
+package com.partypeople.www.partypeople.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -24,7 +24,6 @@ public class MakePartyChildFragment extends Fragment {
     LinearLayout linearLayout;
     List<PayMethod> list = new ArrayList<PayMethod>();
 
-    //List<RewordItemView> listReword = new ArrayList<RewordItemView>();
     private static final String ARG_NAME = "index";
     private int mIndex;
     ImageView btnAdd, btnRemove;
@@ -43,7 +42,6 @@ public class MakePartyChildFragment extends Fragment {
         if (getArguments() != null) {
             mIndex = getArguments().getInt(ARG_NAME);
         }
-        //listReword.add(new RewordItemView(getContext()));
     }
 
     public MakePartyChildFragment() {
@@ -56,7 +54,6 @@ public class MakePartyChildFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_make_party_child, container, false);
 
         linearLayout = (LinearLayout)view.findViewById(R.id.linearLayout);
-        //linearLayout.removeAllViews();
         if(linearLayout.getChildCount()==0) {
             RewordItemEditView rewordItemEditView = new RewordItemEditView(getContext());
             linearLayout.addView(rewordItemEditView);
@@ -69,18 +66,22 @@ public class MakePartyChildFragment extends Fragment {
                 RewordItemEditView rewordItemEditView = new RewordItemEditView(getContext());
                 rewordItemEditView.setItemData(null, linearLayout.getChildCount());
                 linearLayout.addView(rewordItemEditView);
+                btnRemove.setEnabled(true);
                 if(linearLayout.getChildCount()==5) {
-                    btnAdd.setVisibility(View.GONE);
+                    btnAdd.setEnabled(false);
                 }
             }
         });
 
         btnRemove = (ImageView)view.findViewById(R.id.btn_remove);
+        btnRemove.setEnabled(false);
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(linearLayout.getChildCount()>1) {
-                    linearLayout.removeViewAt(linearLayout.getChildCount()-1);
+                linearLayout.removeViewAt(linearLayout.getChildCount()-1);
+                btnAdd.setEnabled(true);
+                if(linearLayout.getChildCount()==1) {
+                    btnRemove.setEnabled(false);
                 }
             }
         });

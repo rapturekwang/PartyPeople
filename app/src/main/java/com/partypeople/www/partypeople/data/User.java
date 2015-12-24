@@ -25,4 +25,5 @@ public class User implements Serializable{
     public String created_at;
     public List<Party> groups;
     public List<Party> likes;
+    public String provider;
 }

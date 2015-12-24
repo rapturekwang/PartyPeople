@@ -19,5 +19,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="로그인이 필요한 서비스 입니다"
         android:id="@+id/text_warning"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 </FrameLayout>

@@ -1,7 +1,5 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,8 +23,9 @@ import com.partypeople.www.partypeople.fragment.FAQFragment;
 import com.partypeople.www.partypeople.fragment.PushAlarmFragment;
 import com.partypeople.www.partypeople.fragment.TOSFragment;
 import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
-import com.partypeople.www.partypeople.view.LeaveDialog;
-import com.partypeople.www.partypeople.view.LogoutDialog;
+import com.partypeople.www.partypeople.dialog.LeaveDialog;
+import com.partypeople.www.partypeople.dialog.LogoutDialog;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.SettingItemView;
 
 
@@ -114,7 +113,11 @@ public class SettingActivity extends AppCompatActivity {
         settingItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFragment("비밀번호 변경", ChangePasswordFragment.newInstance("changePassword"));
+                if(PropertyManager.getInstance().getUser().provider.equals("facebook")) {
+                    Toast.makeText(SettingActivity.this, "페이스북 아이디는 비밀번호를 변경하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    changeFragment("비밀번호 변경", ChangePasswordFragment.newInstance("changePassword"));
+                }
             }
         });
         linearLayout4.addView(settingItemView);

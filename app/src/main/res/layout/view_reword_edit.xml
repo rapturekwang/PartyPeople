@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/price"
-            android:hint="(금액입력)원"
+            android:hint="(금액입력)"
             android:layout_alignParentTop="true"
             android:textSize="21sp"
             android:background="@null"
@@ -34,6 +34,15 @@
             android:textSize="14sp"
             android:background="@null"
             android:layout_marginTop="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            android:id="@+id/textView27"
+            android:layout_alignTop="@+id/price"
+            android:layout_toEndOf="@+id/price"
+            android:textSize="21sp" />
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,9 +16,11 @@ import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -153,16 +156,28 @@ public class MainActivity extends AppCompatActivity implements
         address = (TextView)header.findViewById(R.id.text_user_address);
         relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment).commit();
+
         setNavigation();
     }
 
     public void setNavigation() {
         ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
+        Log.d("MainActivity", "has photo: " + propertyManager.getUser().has_photo + " provider: " + propertyManager.getUser().provider);
         if(propertyManager.isLogin() && propertyManager.getUser().has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
             GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
             Glide.with(this)
                     .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
+                    .transform(new CircleTransform(this))
+                    .into(imgView);
+        } else if(propertyManager.isLogin() && !propertyManager.getUser().has_photo && propertyManager.getUser().provider.equals("facebook")) {
+            Glide.with(this)
+                    .load(propertyManager.getUser().photo)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
                     .placeholder(R.drawable.default_profile)
                     .error(R.drawable.default_profile)
@@ -249,17 +264,30 @@ public class MainActivity extends AppCompatActivity implements
 
         View view = MenuItemCompat.getActionView(item);
         keywordView = (EditText)view.findViewById(R.id.edit_keyword);
+        keywordView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    pager.setVisibility(View.GONE);
+                    tabs.setVisibility(View.GONE);
+                    layout.setVisibility(View.VISIBLE);
+                    fragment.setQueryWord(keywordView.getText().toString());
+                    hideKeyboard();
+
+                    return true;
+                }
+                return false;
+            }
+        });
         ImageView btn = (ImageView)view.findViewById(R.id.btn_search);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String keyword = keywordView.getText().toString();
-                Toast.makeText(MainActivity.this, "Keyword : " + keyword, Toast.LENGTH_SHORT).show();
                 pager.setVisibility(View.GONE);
                 tabs.setVisibility(View.GONE);
                 layout.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, fragment).commit();
+                fragment.setQueryWord(keywordView.getText().toString());
+                hideKeyboard();
             }
         });
 
@@ -277,12 +305,18 @@ public class MainActivity extends AppCompatActivity implements
                 pager.setVisibility(View.VISIBLE);
                 tabs.setVisibility(View.VISIBLE);
                 layout.setVisibility(View.GONE);
+                keywordView.setText("");
 
                 return true;
             }
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override

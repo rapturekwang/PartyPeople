@@ -64,14 +64,14 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.back);
         actionBar.setDisplayShowTitleEnabled(false);
 
-//        Button btn = (Button)findViewById(R.id.btn_logout_fb);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("LoginActivity", "logout");
-//                LoginManager.getInstance().logOut();
-//            }
-//        });
+        Button btn = (Button)findViewById(R.id.btn_logout_fb);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LoginActivity", "logout");
+                LoginManager.getInstance().logOut();
+            }
+        });
 
         mStartfrom = getIntent().getExtras().getInt("startfrom");
         initFragment();

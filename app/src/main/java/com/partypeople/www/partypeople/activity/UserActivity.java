@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -109,7 +110,8 @@ public class UserActivity extends AppCompatActivity{
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MessageActivity.class));
+                Toast.makeText(UserActivity.this, "준비중 입니다.", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(UserActivity.this, MessageActivity.class));
             }
         });
         followView = (TextView)findViewById(R.id.text_follow);
@@ -171,7 +173,9 @@ public class UserActivity extends AppCompatActivity{
         takeMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(UserActivity.this, "아직 준비중 입니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+user.email));
+                startActivity(intent);
+//                Toast.makeText(UserActivity.this, "아직 준비중 입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

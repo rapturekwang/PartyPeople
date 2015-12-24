@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.facebook.login.LoginManager;
+import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.MyApplication;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class PropertyManager {
     User user;
+    Party party;
     private static PropertyManager instance;
     public static PropertyManager getInstance() {
         if (instance == null) {

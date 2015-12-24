@@ -18,6 +18,7 @@ import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
+import com.partypeople.www.partypeople.data.PasswordChange;
 import com.partypeople.www.partypeople.data.Token;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
@@ -87,12 +88,10 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_FACEBOOK_AUTH = "http://61.100.5.61:3000/api/auth/facebook";
     public static final String URL_SERVER = "http://61.100.5.61:3000";
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
-    public static final String URL_LIKES = "http://61.100.5.61:3000/api/v1/likes";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
@@ -177,13 +176,17 @@ public class NetworkManager {
         }
     }
 
-    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
+    public void getPartysQuery(Context context, String keyword, String parameter, final OnResultListener<PartysResult> listener) {
         RequestParams params = new RequestParams();
+        if(keyword!=null) {
+            params.put(keyword, parameter);
+        }
+        Log.d("NetworkManager", "keyword: " + keyword + "parameter: " + parameter);
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                Log.d("NetworkManager", "get partys Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
@@ -195,6 +198,25 @@ public class NetworkManager {
             }
         });
     }
+
+//    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
+//        RequestParams params = new RequestParams();
+//
+//        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+//                listener.onFail(statusCode);
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                Log.d("NetworkManager", "get partys Success " + responseString);
+//                PartysResult result = gson.fromJson(responseString, PartysResult.class);
+//                listener.onSuccess(result);
+//            }
+//        });
+//    }
 
     public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
         RequestParams params = new RequestParams();
@@ -410,7 +432,6 @@ public class NetworkManager {
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         UserResult userResult = new UserResult();
         userResult.data = user;
-//        Log.d("NetworkManager", URL_USERS + "/" + PropertyManager.getInstance().getUser().id);
 
         try {
             client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id, headers,
@@ -448,20 +469,20 @@ public class NetworkManager {
 
         try {
             client.post(context, url, headers, params,
-                null, new TextHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                        listener.onSuccess(responseString);
-                        Log.d("NetworkManager", "put Success");
-                    }
+                    null, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            listener.onSuccess(responseString);
+                            Log.d("NetworkManager", "put Success");
+                        }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        listener.onFail(statusCode);
-                        Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
-                    }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            listener.onFail(statusCode);
+                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                        }
 
-                });
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -501,28 +522,54 @@ public class NetworkManager {
         }
     }
 
-//    public void getGroupImage(Context context, String param1, final OnResultListener<String> listener ) {
-//        Header[] headers = new Header[1];
-//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-//        RequestParams params = new RequestParams();
-//
-//        String url = URL_PARTYS + "/" + param1 + "/photo";
-//        Log.d("NetworkManager", url);
-//
-//        client.get(context, url, headers, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                listener.onSuccess(responseString);
-//                Log.d("NetworkManager", "get Success");
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                listener.onFail(statusCode);
-//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-//            }
-//        });
-//    }
+    public void leaveService(Context context, String id, final OnResultListener<String> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.delete(context, URL_USERS + "/" + id, headers, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                listener.onSuccess(responseString);
+                Log.d("NetworkManager", "leave service Success");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "leave service Fail: " + statusCode + responseString);
+            }
+        });
+    }
+
+    public void changePassword(Context context, String oldPassword, String newPassword, final OnResultListener<String> listener) {
+        PasswordChange passwordChange = new PasswordChange();
+        passwordChange.oldPassword = oldPassword;
+        passwordChange.newPassword = newPassword;
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        Log.d("Networkmanager", "token: " + PropertyManager.getInstance().getToken());
+
+        try {
+            client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id + "/password", headers,
+                    new StringEntity(gson.toJson(passwordChange, PasswordChange.class), "UTF-8"),
+                    "application/json", new TextHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    listener.onSuccess(responseString);
+                    Log.d("NetworkManager", "change password Success");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    listener.onFail(statusCode);
+                    Log.d("NetworkManager", "change password Fail: " + statusCode + responseString);
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void authFacebook(Context context, String token, final OnResultListener<String> listener ) {
         RequestParams params = new RequestParams();
