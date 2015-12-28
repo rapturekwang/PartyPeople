@@ -12,5 +12,4 @@ public class Member implements Serializable{
     public boolean has_photo;
     public String photo;
     public int rating;
-    public String comment;
 }

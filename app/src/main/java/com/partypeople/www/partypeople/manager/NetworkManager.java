@@ -92,6 +92,7 @@ public class NetworkManager {
     public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
+    public static final String URL_COMMENT = "http://61.100.5.61:3000/api/v1/comments";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
@@ -300,6 +301,28 @@ public class NetworkManager {
 //            }
 //        });
 //    }
+
+    public void addComment(Context context, String groupId, String comment, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        params.put("group", groupId);
+        params.put("comment", comment);
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.post(context, URL_COMMENT, headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "add comment Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "add comment Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+        });
+    }
 
     public void takeFollow(Context context, String param1, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();

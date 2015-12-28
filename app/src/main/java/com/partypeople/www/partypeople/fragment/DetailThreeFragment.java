@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.CommentAdapter;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,12 +58,26 @@ public class DetailThreeFragment extends Fragment {
         imgSendView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.add(editText.getText().toString());
-                PartyDetailActivity activity = (PartyDetailActivity)getActivity();
-                activity.party.comments.add(editText.getText().toString());
-                ((PartyDetailActivity)getActivity()).setPagerHeight(350 + 300 * activity.party.comments.size());
-                changeHeight();
-                editText.setText("");
+                if(!editText.getText().toString().equals("")) {
+                    PartyDetailActivity activity = (PartyDetailActivity) getActivity();
+                    NetworkManager.getInstance().addComment(getContext(), activity.party.id, editText.getText().toString(),
+                            new NetworkManager.OnResultListener<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    editText.setText("");
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+
+                                }
+                            });
+//                mAdapter.add(editText.getText().toString());
+//                activity.party.comments.add(editText.getText().toString());
+//                activity.setPagerHeight(350 + 300 * activity.party.comments.size());
+//                changeHeight();
+//                editText.setText("");
+                }
             }
         });
 

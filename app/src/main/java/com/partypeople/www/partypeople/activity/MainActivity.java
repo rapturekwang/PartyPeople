@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
             case R.id.theme :
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 0);
                 break;
             case R.id.user :
                 NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
@@ -335,6 +335,16 @@ public class MainActivity extends AppCompatActivity implements
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1) {
+            mDrawer.closeDrawer(GravityCompat.START);
+            TabLayout.Tab tab = tabs.getTabAt(1);
+            tab.select();
         }
     }
 }

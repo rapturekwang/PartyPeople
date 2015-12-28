@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoTitle" >
+            android:theme="@style/AppTheme.NoTitle"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <meta-data

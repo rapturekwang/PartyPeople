@@ -58,7 +58,7 @@ public class Party implements Serializable{
     public boolean auto_approval;
     public String enrollment_code;
     public boolean featured;
-    public List<String> comments;
+    public List<comment> comments;
 
     public String role;
 

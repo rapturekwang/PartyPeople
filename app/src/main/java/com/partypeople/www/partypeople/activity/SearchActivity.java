@@ -78,8 +78,9 @@ public class SearchActivity extends AppCompatActivity {
                     public void onSuccess(UserResult result) {
                         propertyManager.setUser(result.data);
                         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        setResult(1, intent);
+                        finish();
+                        Toast.makeText(SearchActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
