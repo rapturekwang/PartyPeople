@@ -1,6 +1,5 @@
 package com.partypeople.www.partypeople.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -31,8 +30,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
@@ -165,24 +162,23 @@ public class MainActivity extends AppCompatActivity implements
     public void setNavigation() {
         ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
         Log.d("MainActivity", "has photo: " + propertyManager.getUser().has_photo + " provider: " + propertyManager.getUser().provider);
-        if(propertyManager.isLogin() && propertyManager.getUser().has_photo) {
-            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
-            Glide.with(this)
-                    .load(glideUrl)
-                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .transform(new CircleTransform(this))
-                    .into(imgView);
-        } else if(propertyManager.isLogin() && !propertyManager.getUser().has_photo && propertyManager.getUser().provider.equals("facebook")) {
-            Glide.with(this)
-                    .load(propertyManager.getUser().photo)
-                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .transform(new CircleTransform(this))
-                    .into(imgView);
+        if(propertyManager.isLogin()) {
+            GlideUrl glideUrl = null;
+            if (propertyManager.getUser().has_photo) {
+                CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+                glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + propertyManager.getUser().photo);
+            } else if (!propertyManager.getUser().has_photo && propertyManager.getUser().provider.equals("facebook")) {
+                glideUrl = new GlideUrl(propertyManager.getUser().photo);
+            }
+            if(glideUrl!=null) {
+                Glide.with(this)
+                        .load(glideUrl)
+                        .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile)
+                        .transform(new CircleTransform(this))
+                        .into(imgView);
+            }
         }
 
         if(!propertyManager.isLogin()) {

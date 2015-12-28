@@ -164,10 +164,16 @@ public class DetailOneFragment extends Fragment {
         descriptionView.setText(activity.party.description);
         participantView.setText("참여자 " + activity.party.members.size() + "명");
         hostNameView.setText(activity.party.owner.name);
-        if(activity.party.owner.has_photo) {
+
+        GlideUrl glideUrl = null;
+        if (activity.party.owner.has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo);
-            Glide.with(getContext())
+            glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.owner.photo);
+        } else if (!activity.party.owner.has_photo && activity.party.owner.provider.equals("facebook")) {
+            glideUrl = new GlideUrl(activity.party.owner.photo);
+        }
+        if(glideUrl!=null) {
+            Glide.with(this)
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
                     .placeholder(R.drawable.default_profile)
@@ -205,7 +211,7 @@ public class DetailOneFragment extends Fragment {
                 break;
             else if(activity.party.members.get(i).has_photo) {
                 CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-                GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
+                glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
                 Glide.with(getContext())
                         .load(glideUrl)
                         .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))

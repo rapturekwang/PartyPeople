@@ -43,9 +43,14 @@ public class FollowItemView extends RelativeLayout {
     }
 
     public void setItemData(User user) {
-        if(user.has_photo) {
+        GlideUrl glideUrl = null;
+        if (user.has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
+            glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
+        } else if (!user.has_photo && user.provider.equals("facebook")) {
+            glideUrl = new GlideUrl(user.photo);
+        }
+        if(glideUrl!=null) {
             Glide.with(getContext())
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
@@ -54,6 +59,7 @@ public class FollowItemView extends RelativeLayout {
                     .transform(new CircleTransform(getContext()))
                     .into(imgView);
         }
+
         nameView.setText(user.name);
         if(user.address==null || user.address.equals("")) {
             addressView.setVisibility(View.GONE);

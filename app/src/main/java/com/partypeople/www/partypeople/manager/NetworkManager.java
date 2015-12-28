@@ -176,7 +176,7 @@ public class NetworkManager {
         }
     }
 
-    public void getPartysQuery(Context context, String keyword, String parameter, final OnResultListener<PartysResult> listener) {
+    public void getPartys(Context context, String keyword, String parameter, final OnResultListener<PartysResult> listener) {
         RequestParams params = new RequestParams();
         if(keyword!=null) {
             params.put(keyword, parameter);
@@ -199,24 +199,24 @@ public class NetworkManager {
         });
     }
 
-//    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
-//        RequestParams params = new RequestParams();
-//
-//        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-//                listener.onFail(statusCode);
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-//                Log.d("NetworkManager", "get partys Success " + responseString);
-//                PartysResult result = gson.fromJson(responseString, PartysResult.class);
-//                listener.onSuccess(result);
-//            }
-//        });
-//    }
+    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
+        RequestParams params = new RequestParams();
+
+        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get partys Success " + responseString);
+                PartysResult result = gson.fromJson(responseString, PartysResult.class);
+                listener.onSuccess(result);
+            }
+        });
+    }
 
     public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
         RequestParams params = new RequestParams();

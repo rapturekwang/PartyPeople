@@ -74,10 +74,8 @@ public class UserPagePartyItemView extends RelativeLayout {
         progressView.setText(progress + "% 모금됨");
         progressBar.setProgress(progress);
 
-        CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-        GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + data.photo);
         Glide.with(getContext())
-                .load(glideUrl)
+                .load(NetworkManager.getInstance().URL_SERVER + data.photo)
                 .placeholder(R.drawable.profile_img)
                 .error(R.drawable.profile_img)
                 .into(partyImgView);

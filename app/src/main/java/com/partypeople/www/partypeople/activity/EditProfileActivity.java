@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
@@ -28,6 +30,8 @@ import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,8 +88,11 @@ public class EditProfileActivity extends AppCompatActivity {
                         public void onSuccess(UserResult result) {
                             propertyManager.setUser(result.data);
                             if (mSavedFile == null) {
-                                Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                intent.putExtra("updateduser", result.data);
+                                setResult(1, intent);
                                 finish();
+                                Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -105,8 +112,11 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(User result) {
                                     propertyManager.setUser(result);
-                                    Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("updateduser", result);
+                                    setResult(1, intent);
                                     finish();
+                                    Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -178,8 +188,13 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
-            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            imageView.setImageBitmap(bm);
+//            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
+//            imageView.setImageBitmap(bm);
+            Glide.with(this)
+                    .load(mSavedFile)
+                    .placeholder(R.drawable.default_profile)
+                    .transform(new CircleTransform(this))
+                    .into(imageView);
         }
     }
 

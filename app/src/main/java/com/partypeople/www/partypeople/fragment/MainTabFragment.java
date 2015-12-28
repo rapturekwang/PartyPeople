@@ -153,7 +153,7 @@ public class MainTabFragment extends Fragment {
                 break;
         }
 
-        NetworkManager.getInstance().getPartysQuery(getContext(), keyword, parameter, new NetworkManager.OnResultListener<PartysResult>() {
+        NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, new NetworkManager.OnResultListener<PartysResult>() {
             @Override
             public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {

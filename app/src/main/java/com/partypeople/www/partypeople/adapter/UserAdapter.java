@@ -46,4 +46,8 @@ public class UserAdapter extends BaseAdapter{
         view.setItemData(partyList.get(position));
         return view;
     }
+
+    public void removeAll() {
+        partyList.clear();
+    }
 }

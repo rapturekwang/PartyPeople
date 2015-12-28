@@ -102,7 +102,7 @@ public class UserActivity extends AppCompatActivity{
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, EditProfileActivity.class));
+                startActivityForResult(new Intent(UserActivity.this, EditProfileActivity.class), 0);
             }
         });
         profileView = (ImageView)findViewById(R.id.image_profile);
@@ -175,7 +175,6 @@ public class UserActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+user.email));
                 startActivity(intent);
-//                Toast.makeText(UserActivity.this, "아직 준비중 입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -211,10 +210,24 @@ public class UserActivity extends AppCompatActivity{
         initData();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1) {
+            user = (User)data.getSerializableExtra("updateduser");
+            initData();
+        }
+    }
+
     private void initData() {
-        if(user.has_photo) {
+        GlideUrl glideUrl = null;
+        if (user.has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-            GlideUrl glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
+            glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + user.photo);
+        } else if (!user.has_photo && user.provider.equals("facebook")) {
+            glideUrl = new GlideUrl(user.photo);
+        }
+        if(glideUrl!=null) {
             Glide.with(this)
                     .load(glideUrl)
                     .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
@@ -223,6 +236,7 @@ public class UserActivity extends AppCompatActivity{
                     .transform(new CircleTransform(this))
                     .into(profileView);
         }
+
         nameView.setText(user.name);
         if(user.address==null) {
             addressView.setVisibility(View.INVISIBLE);
