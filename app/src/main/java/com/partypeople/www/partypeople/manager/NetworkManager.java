@@ -11,8 +11,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.partypeople.www.partypeople.data.Follow;
-import com.partypeople.www.partypeople.data.Like;
+import com.partypeople.www.partypeople.data.Board;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -32,8 +31,6 @@ import org.apache.http.message.BasicHeader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dongja94 on 2015-10-28.
@@ -93,6 +90,7 @@ public class NetworkManager {
     public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
     public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
     public static final String URL_COMMENT = "http://61.100.5.61:3000/api/v1/comments";
+    public static final String URL_BOARD = "http://61.100.5.61:3000/api/v1/boards";
     public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
     public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
@@ -281,26 +279,41 @@ public class NetworkManager {
 //        });
 //    }
 
-//    public void getFollows(Context context, final OnResultListener<Follow[]> listener) {
-//        RequestParams params = new RequestParams();
-//        Header[] headers = new Header[1];
-//        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-//
-//        client.get(context, URL_FOLLOWS, headers, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-//                listener.onFail(statusCode);
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-//                Log.d("NetworkManager", "get follows Success " + responseString);
-//                Follow[] result = gson.fromJson(responseString, Follow[].class);
-//                listener.onSuccess(result);
-//            }
-//        });
-//    }
+    public void getBoards(Context context, final OnResultListener<Board[]> listener) {
+        client.get(context, URL_BOARD, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get boards Success " + responseString);
+                Board[] result = gson.fromJson(responseString, Board[].class);
+                listener.onSuccess(result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get boards Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+        });
+    }
+
+    public void removeComment(Context context, String commentId, final OnResultListener<String> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+
+        client.delete(context, URL_COMMENT + "/" + commentId, headers, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "remove Comment Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "remove Comment Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+        });
+    }
 
     public void addComment(Context context, String groupId, String comment, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
@@ -312,13 +325,13 @@ public class NetworkManager {
         client.post(context, URL_COMMENT, headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.d("NetworkManager", "add comment Success " + responseString);
+                Log.d("NetworkManager", "add Comment Success " + responseString);
                 listener.onSuccess(responseString);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "add comment Fail: " + statusCode + responseString);
+                Log.d("NetworkManager", "add Comment Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
         });

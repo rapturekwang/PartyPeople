@@ -19,8 +19,10 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
@@ -87,16 +89,37 @@ public class MainTabFragment extends Fragment {
                         return;
                     position--;
                 }
-                Party party = partyList.get(position);
+                final Party party = partyList.get(position);
                 if (party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
                     PasswordDialog passwordDialog = new PasswordDialog(getContext());
                     passwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     passwordDialog.setParty(party);
                     passwordDialog.show();
                 } else {
-                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
-                    i.putExtra("party", party);
-                    startActivity(i);
+//                    final LoadingDialog dialog = new LoadingDialog(getContext());
+//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    dialog.show();
+
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.d("MainTab", "Thread start");
+                            NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                                @Override
+                                public void onSuccess(PartyResult result) {
+                                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                                    i.putExtra("party", result.data);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+//                            dialog.dismiss();
+//                        }
+//                    }).start();
                 }
             }
         });

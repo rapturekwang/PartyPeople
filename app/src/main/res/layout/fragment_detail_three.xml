@@ -60,17 +60,49 @@
                 android:gravity="center" />
         </RelativeLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/linearlayout_reword"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_below="@+id/relativeLayout4"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="35dp"
-        android:divider="@null" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_list_after"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/relativeLayout4"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="35dp"
+            android:divider="@null"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#a4a4a4"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/divider"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="여기부터는 참가전 댓글 입니다"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="9dp"
+            android:id="@+id/text_divider"
+            android:visibility="gone"
+            android:textColor="#787878"
+            android:textSize="13sp" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_list_before"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:divider="@null"
+            android:layout_below="@+id/root_layout"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="30dp" />
 
     </LinearLayout>
 

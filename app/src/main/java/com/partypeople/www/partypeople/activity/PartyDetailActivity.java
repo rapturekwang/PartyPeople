@@ -149,6 +149,9 @@ public class PartyDetailActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PartyDetailActivity.this, LoginActivity.class);
+                    intent.putExtra("startfrom", Constants.START_FROM_MAIN);
+                    startActivity(intent);
                 }
             }
         });
@@ -308,4 +311,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         }
     }
 
+    public Party getParty() {
+        return party;
+    }
+
+    public void setParty(Party data) {
+        party = data;
+    }
 }

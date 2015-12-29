@@ -3,16 +3,9 @@ package com.partypeople.www.partypeople.data;
 import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
-import com.partypeople.www.partypeople.utils.JSONParsing;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,7 +51,7 @@ public class Party implements Serializable{
     public boolean auto_approval;
     public String enrollment_code;
     public boolean featured;
-    public List<comment> comments;
+    public List<Comments> comments;
 
     public String role;
 

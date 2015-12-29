@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,20 +23,20 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
-import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.adapter.MakePartyPagerAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.view.PhotoView;
 import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Tacademy on 2015-10-29.
@@ -53,14 +54,25 @@ public class MakePartyOneFragment extends Fragment {
     private String name;
     File mSavedFile;
     public static final int REQUEST_CODE_CROP = 0;
+
     EditText nameView, locationView, desView, partyPasswordView;
+    ViewPager pager;
     SwitchCompat switchCompat;
-    ImageView partyImage;
+    MakePartyPagerAdapter mPagerAdapter;
+//    ImageView partyImage;
     GridView gridView;
     gridAdapter mAdapter;
-    String year = "2015", month;
-    String eYear = "2015", eMonth;
-    int theme = -1;
+    String year = "2016", month;
+    String eYear = "2016", eMonth;
+    int theme = -1, position;
+    List<ImageView> photoBtn = new ArrayList<ImageView>();
+
+    int imgBtns[] = {
+            R.id.photo0,
+            R.id.photo1,
+            R.id.photo2,
+            R.id.photo3
+    };
 
     public static MakePartyOneFragment newInstance(String name) {
         MakePartyOneFragment fragment = new MakePartyOneFragment();
@@ -94,27 +106,25 @@ public class MakePartyOneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_party_one, container, false);
 
+        pager = (ViewPager)view.findViewById(R.id.pager);
+        mPagerAdapter = new MakePartyPagerAdapter(getContext(), this);
+        pager.setAdapter(mPagerAdapter);
+        addViewOnPagerAdapter();
+
         nameView = (EditText)view.findViewById(R.id.edit_name);
         locationView = (EditText)view.findViewById(R.id.edit_location);
         desView = (EditText)view.findViewById(R.id.edit_description);
 
-        partyImage = (ImageView)view.findViewById(R.id.image_party);
-        partyImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(
-                        Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                photoPickerIntent.setType("image/*");
-                photoPickerIntent.putExtra("crop", "true");
-                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-                photoPickerIntent.putExtra("outputFormat",
-                        Bitmap.CompressFormat.JPEG.toString());
-                photoPickerIntent.putExtra("noFaceDetection",true);
-                photoPickerIntent.putExtra("aspectX", partyImage.getWidth());
-                photoPickerIntent.putExtra("aspectY", partyImage.getHeight());
-                startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
-            }
-        });
+        for(int i=0;i<4;i++) {
+            final int temp = i;
+            photoBtn.add((ImageView)view.findViewById(imgBtns[temp]));
+            photoBtn.get(temp).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pager.setCurrentItem(temp);
+                }
+            });
+        }
 
         Button btn = (Button)view.findViewById(R.id.btn_next);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -193,12 +203,33 @@ public class MakePartyOneFragment extends Fragment {
         return view;
     }
 
+    public void setPhoto(int position) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        photoPickerIntent.setType("image/*");
+        photoPickerIntent.putExtra("crop", "true");
+        photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+        photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        photoPickerIntent.putExtra("noFaceDetection",true);
+        photoPickerIntent.putExtra("aspectX", photoBtn.get(0).getWidth());
+        photoPickerIntent.putExtra("aspectY", photoBtn.get(0).getHeight());
+        startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
+
+        this.position = position;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == getActivity().RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            partyImage.setImageBitmap(bm);
+            photoBtn.get(position).setImageBitmap(bm);
+            ((PhotoView)mPagerAdapter.getView(position)).setItemData(bm, position);
+            if(position==3) {
+                return;
+            } else {
+                addViewOnPagerAdapter();
+                photoBtn.get(position + 1).setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -214,6 +245,18 @@ public class MakePartyOneFragment extends Fragment {
         if (mSavedFile != null) {
             outState.putString("filename", mSavedFile.getAbsolutePath());
         }
+    }
+
+    private void addViewOnPagerAdapter() {
+        PhotoView view = new PhotoView(getContext());
+        ImageView imageBtn = (ImageView)view.findViewById(R.id.img_btn_photo);
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPhoto(mPagerAdapter.getCount()-1);
+            }
+        });
+        mPagerAdapter.addView(view);
     }
 
     private String getStartTime() {

@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
+import android.text.Html;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,6 @@ public class FaqChildItemView extends FrameLayout {
     }
 
     public void setChildItem(String text) {
-        contentView.setText(text);
+        contentView.setText(Html.fromHtml(text));
     }
 }

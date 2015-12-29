@@ -2,14 +2,19 @@ package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Checkable;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.data.PayMethod;
+import com.partypeople.www.partypeople.data.Comments;
+import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.CircleTransform;
+import com.partypeople.www.partypeople.utils.CustomGlideUrl;
+import com.partypeople.www.partypeople.utils.DateUtil;
 
 /**
  * Created by Tacademy on 2015-11-23.
@@ -36,10 +41,32 @@ public class CommentView extends RelativeLayout{
         profileView = (ImageView)findViewById(R.id.img_profile);
     }
 
-    public void setItemData(String test, int num) {
-//        priceView.setText(payMethod.price);
-//        rewordView.setText(payMethod.title);
-//        commentView.setText("다음에 또 파티 열리면 좋겠어요\n주최자가 엄청 친절하고 맛있는 음식도 많아서 좋았어요");
-        commentView.setText(test);
+    public void setItemData(Comments data) {
+        commentView.setText(data.comment);
+        nameView.setText(data.from.name);
+        int diffTime = DateUtil.getInstance().getDiffDay(data.created_at);
+        if(diffTime == 0) {
+            timeView.setText(DateUtil.getInstance().getDiffHour(data.created_at) + "시간 전");
+        } else {
+            timeView.setText(diffTime + "일 전");
+        }
+        GlideUrl glideUrl = null;
+        if (data.from.has_photo) {
+            CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+            glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + data.from.photo);
+        } else if (!data.from.has_photo && data.from.provider.equals("facebook")) {
+            glideUrl = new GlideUrl(data.from.photo);
+        } else {
+            profileView.setImageResource(R.drawable.default_profile);
+        }
+        if(glideUrl!=null) {
+            Glide.with(getContext())
+                    .load(glideUrl)
+                    .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
+                    .transform(new CircleTransform(getContext()))
+                    .into(profileView);
+        }
     }
 }

@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 /**
  * Created by kwang on 15. 12. 22..
@@ -32,9 +34,19 @@ public class PasswordDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if(editText.getText().toString().equals(party.password)) {
-                    Intent i = new Intent(getContext(), PartyDetailActivity.class);
-                    i.putExtra("party", party);
-                    getContext().startActivity(i);
+                    NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                        @Override
+                        public void onSuccess(PartyResult result) {
+                            Intent i = new Intent(getContext(), PartyDetailActivity.class);
+                            i.putExtra("party", result.data);
+                            getContext().startActivity(i);
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(getContext(), "비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show();
                 }

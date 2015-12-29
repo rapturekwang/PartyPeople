@@ -49,6 +49,15 @@ public class DateUtil {
         return mills;
     }
 
+    public boolean compare(String previousDay, String nextDay) {
+        long previous = changeStringToLong(previousDay);
+        long next = changeStringToLong(nextDay);
+        if(previous<next)
+            return true;
+        else
+            return false;
+    }
+
     public int getDiffDay(String firstDay, String secondDay) {
         if(firstDay == null || secondDay == null)
             return 0;
@@ -57,6 +66,26 @@ public class DateUtil {
         long diff = second - first;
         int day = (int)(diff / (24 * 60 * 60 * 1000));
         return day;
+    }
+
+    public int getDiffDay(String day) {
+        int diff = getDiffDay(day, getCurrentDate());
+        return diff;
+    }
+
+    public int getDiffHour(String firstHour, String secondHour) {
+        if(firstHour == null || secondHour == null)
+            return 0;
+        long first = changeStringToLong(firstHour);
+        long second = changeStringToLong(secondHour);
+        long diff = second - first;
+        int hour = (int)(diff / (60 * 60 * 1000));
+        return  hour;
+    }
+
+    public int getDiffHour(String hour) {
+        int diff = getDiffHour(hour, getCurrentDate());
+        return  diff;
     }
 
     public String changeToViewFormat(String start, String end) {

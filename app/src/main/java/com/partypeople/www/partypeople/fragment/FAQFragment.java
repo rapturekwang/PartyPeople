@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.FAQAdapter;
+import com.partypeople.www.partypeople.data.Board;
+import com.partypeople.www.partypeople.manager.NetworkManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +58,26 @@ public class FAQFragment extends Fragment {
         int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         listView.setIndicatorBounds(width-50, width);
 
+        initData();
+
         return view;
+    }
+
+    public void initData() {
+        NetworkManager.getInstance().getBoards(getContext(), new NetworkManager.OnResultListener<Board[]>() {
+            @Override
+            public void onSuccess(Board[] result) {
+                for(int i=0;i<result.length;i++) {
+                    if(result[i].category.equals("FAQ")) {
+                        mAdapter.addFAQ(result[i]);
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(getContext(), "통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
