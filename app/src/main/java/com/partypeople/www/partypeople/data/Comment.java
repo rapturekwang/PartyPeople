@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by kwang on 15. 12. 29..
  */
-public class Comments implements Serializable {
+public class Comment implements Serializable {
     public String group;
     public User from;
     public String comment;

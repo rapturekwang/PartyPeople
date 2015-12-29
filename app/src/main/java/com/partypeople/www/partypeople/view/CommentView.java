@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.data.Comments;
+import com.partypeople.www.partypeople.data.Comment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
@@ -41,7 +41,7 @@ public class CommentView extends RelativeLayout{
         profileView = (ImageView)findViewById(R.id.img_profile);
     }
 
-    public void setItemData(Comments data) {
+    public void setItemData(Comment data) {
         commentView.setText(data.comment);
         nameView.setText(data.from.name);
         int diffTime = DateUtil.getInstance().getDiffDay(data.created_at);

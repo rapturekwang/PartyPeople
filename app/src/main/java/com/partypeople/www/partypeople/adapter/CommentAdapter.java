@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.partypeople.www.partypeople.data.Comments;
+import com.partypeople.www.partypeople.data.Comment;
 import com.partypeople.www.partypeople.view.CommentView;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Tacademy on 2015-11-23.
  */
 public class CommentAdapter extends BaseAdapter{
-    public List<Comments> list = new ArrayList<Comments>();
+    public List<Comment> list = new ArrayList<Comment>();
 
     @Override
     public int getCount() {
@@ -31,7 +31,7 @@ public class CommentAdapter extends BaseAdapter{
         return position;
     }
 
-    public void add(Comments comment) {
+    public void add(Comment comment) {
         list.add(0, comment);
         notifyDataSetChanged();
     }

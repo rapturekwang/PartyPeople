@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.CommentAdapter;
-import com.partypeople.www.partypeople.data.Comments;
+import com.partypeople.www.partypeople.data.Comment;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
@@ -122,8 +122,8 @@ public class DetailThreeFragment extends Fragment {
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (((Comments) mBeforeAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)) {
-                            NetworkManager.getInstance().removeComment(getContext(), ((Comments) mBeforeAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
+                        if (((Comment) mBeforeAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)) {
+                            NetworkManager.getInstance().removeComment(getContext(), ((Comment) mBeforeAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
                                 @Override
                                 public void onSuccess(String result) {
                                     NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
@@ -173,8 +173,8 @@ public class DetailThreeFragment extends Fragment {
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(((Comments)mAfterAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)){
-                            NetworkManager.getInstance().removeComment(getContext(), ((Comments) mAfterAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
+                        if(((Comment)mAfterAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)){
+                            NetworkManager.getInstance().removeComment(getContext(), ((Comment) mAfterAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
                                 @Override
                                 public void onSuccess(String result) {
                                     NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
