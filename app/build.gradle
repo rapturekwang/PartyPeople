@@ -38,4 +38,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile project(':bottomSheet')
+    compile 'com.tsengvn:Typekit:1.0.0'
 }
