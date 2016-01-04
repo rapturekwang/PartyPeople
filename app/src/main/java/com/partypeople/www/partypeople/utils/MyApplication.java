@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.facebook.FacebookSdk;
 import com.partypeople.www.partypeople.manager.FontManager;
+import com.tsengvn.typekit.Typekit;
 
 /**
  * Created by dongja94 on 2015-10-27.
@@ -18,6 +19,9 @@ public class MyApplication extends MultiDexApplication{
         mContext = this;
         FacebookSdk.sdkInitialize(this);
         FontManager.setDefaultFont(this, "DEFAULT", "Roboto-Regular.ttf");
+        Typekit.getInstance()
+                .addNormal(Typekit.createFromAsset(this, "Roboto-Regular.ttf"))
+                .addBold(Typekit.createFromAsset(this, "Roboto-Bold.ttf"));
     }
 
     @Override

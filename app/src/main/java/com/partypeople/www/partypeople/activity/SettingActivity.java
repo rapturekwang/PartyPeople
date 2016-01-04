@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,7 @@ import com.partypeople.www.partypeople.dialog.LeaveDialog;
 import com.partypeople.www.partypeople.dialog.LogoutDialog;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.SettingItemView;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -194,5 +196,10 @@ public class SettingActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         titleView.setText(title);
         onTopFlag = false;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

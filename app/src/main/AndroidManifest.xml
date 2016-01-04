@@ -25,16 +25,18 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoTitle"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCXsjiz9Q-Jn2sOv76SiHNOiWLIBefJKm0"/>
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -135,8 +137,9 @@
             android:name=".activity.UserListActivity"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.NoticeActivity"
-            android:theme="@style/AppTheme.NoTitle">
+        <activity
+            android:name=".activity.NoticeActivity"
+            android:theme="@style/AppTheme.NoTitle" >
         </activity>
     </application>
 

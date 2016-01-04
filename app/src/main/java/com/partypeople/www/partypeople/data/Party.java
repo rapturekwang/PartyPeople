@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,6 +53,9 @@ public class Party implements Serializable{
     public String enrollment_code;
     public boolean featured;
     public List<Comment> comments;
+    public ArrayList<String> photos;
+    public ArrayList<File> imageFiles;
+    public boolean[] has_photos;
 
     public String role;
 

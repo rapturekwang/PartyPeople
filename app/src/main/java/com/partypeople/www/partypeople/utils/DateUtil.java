@@ -25,6 +25,17 @@ public class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(time);
         String date = DateFormat.format("yyyy-MM-dd'T'HH:mm:ss", cal).toString();
+
+        return date;
+    }
+
+    public String getDefaultSettingData(int day) {
+        long time= System.currentTimeMillis();
+        time = time + (day * 24 * 60 * 60 * 1000);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("yyyy:MM:dd:오후:08:00", cal).toString();
+
         return date;
     }
 

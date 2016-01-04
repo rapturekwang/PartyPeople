@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.fragment.MakePartyOneFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyThreeFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyTwoFragment;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 public class MakePartyActivity extends AppCompatActivity {
 
@@ -75,5 +77,10 @@ public class MakePartyActivity extends AppCompatActivity {
         }
         titleView.setText(stringList[currentFragment]);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

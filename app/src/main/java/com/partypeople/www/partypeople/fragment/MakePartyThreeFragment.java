@@ -119,7 +119,22 @@ public class MakePartyThreeFragment extends Fragment {
                             public void onSuccess(PartyResult result) {
                                 if (activity.party.imageFile != null) {
                                     Log.d("MakePartyThree", result.data.id);
-                                    NetworkManager.getInstance().putGroupImage(getContext(), activity.party.imageFile, result.data.id, new NetworkManager.OnResultListener<String>() {
+//                                    NetworkManager.getInstance().putGroupImage(getContext(), activity.party.imageFile, result.data.id, new NetworkManager.OnResultListener<String>() {
+//                                        @Override
+//                                        public void onSuccess(String result) {
+//                                            Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+//                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+//                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                            startActivity(intent);
+//                                        }
+//
+//                                        @Override
+//                                        public void onFail(int code) {
+//                                            Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
+//                                            return;
+//                                        }
+//                                    });
+                                    NetworkManager.getInstance().putGroupImages(getContext(), activity.party.imageFiles, result.data.id, new NetworkManager.OnResultListener<String>() {
                                         @Override
                                         public void onSuccess(String result) {
                                             Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
@@ -130,8 +145,7 @@ public class MakePartyThreeFragment extends Fragment {
 
                                         @Override
                                         public void onFail(int code) {
-                                            Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
-                                            return;
+
                                         }
                                     });
                                 } else {

@@ -12,6 +12,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Board;
+import com.partypeople.www.partypeople.data.GooglePlaceResult;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -31,6 +32,8 @@ import org.apache.http.message.BasicHeader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by dongja94 on 2015-10-28.
@@ -95,6 +98,7 @@ public class NetworkManager {
     public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
     public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
+    private static final String URL_SEARCH_LOCATION = "https://maps.googleapis.com/maps/api/place/autocomplete/json";
 
     public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
         RequestParams params = new RequestParams();
@@ -144,6 +148,34 @@ public class NetworkManager {
                 Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
             }
 
+        });
+    }
+
+    public void searchLocation(Context context, String keyword, final OnResultListener<ArrayList<String>> listener) {
+        RequestParams params = new RequestParams();
+        params.put("input", keyword);
+        params.put("components", "country:kr");
+        params.put("key", "AIzaSyCXsjiz9Q-Jn2sOv76SiHNOiWLIBefJKm0");
+
+        client.get(context, URL_SEARCH_LOCATION, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                GooglePlaceResult result = gson.fromJson(responseString, GooglePlaceResult.class);
+                ArrayList<String> resultList = new ArrayList<String>();
+                for(int i=0;i<result.predictions.size();i++) {
+                    resultList.add(result.predictions.get(i).description);
+                }
+                if(!result.status.equals("OK")) {
+                    Log.d("NetworkManager", "search location Success but not status ok" + responseString);
+                }
+                listener.onSuccess(resultList);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "search location Fail" + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
         });
     }
 
@@ -198,24 +230,24 @@ public class NetworkManager {
         });
     }
 
-    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
-        RequestParams params = new RequestParams();
-
-        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.d("NetworkManager", "get partys Success " + responseString);
-                PartysResult result = gson.fromJson(responseString, PartysResult.class);
-                listener.onSuccess(result);
-            }
-        });
-    }
+//    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
+//        RequestParams params = new RequestParams();
+//
+//        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
+//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+//                listener.onFail(statusCode);
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
+//                Log.d("NetworkManager", "get partys Success " + responseString);
+//                PartysResult result = gson.fromJson(responseString, PartysResult.class);
+//                listener.onSuccess(result);
+//            }
+//        });
+//    }
 
     public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
         RequestParams params = new RequestParams();
@@ -502,6 +534,44 @@ public class NetworkManager {
 
         String url = URL_USERS + "/" + param2 + "/photo";
         Log.d("NetworkManager", url);
+
+        try {
+            client.post(context, url, headers, params,
+                    null, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            listener.onSuccess(responseString);
+                            Log.d("NetworkManager", "put Success");
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            listener.onFail(statusCode);
+                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                        }
+
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putGroupImages(Context context, ArrayList<File> photos, String id, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        String[] keys = {"photo_0", "photo_1", "photo_2", "photo_3"};
+        RequestParams params = new RequestParams();
+        try {
+            if(photos != null) {
+                for(int i=0;i<photos.size();i++) {
+                    params.put(keys[i], photos.get(i));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String url = URL_PARTYS + "/" + id + "/photos";
 
         try {
             client.post(context, url, headers, params,
