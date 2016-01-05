@@ -30,19 +30,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.adapter.AutocompleteAdapter;
 import com.partypeople.www.partypeople.adapter.MakePartyPagerAdapter;
-import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.view.PhotoView;
 import com.partypeople.www.partypeople.view.ThemeItemView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -159,6 +157,13 @@ public class MakePartyOneFragment extends Fragment {
         locationView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String [] str = locationView.getText().toString().split(" ");
+                if(str[0].equals("대한민국")) {
+                    locationView.setText("");
+                    for(int i=1;i<str.length;i++) {
+                        locationView.append(str[i] + " ");
+                    }
+                }
                 hideKeyboard();
                 locationView.clearFocus();
             }
@@ -282,11 +287,33 @@ public class MakePartyOneFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bitmap bm = null;
+
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == getActivity().RESULT_OK) {
             photos.add(mSavedFile);
-            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
+
+            try {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeStream(new FileInputStream(mSavedFile), null, options);
+
+                final int REQUIRED_SIZE = 360;
+                int scale = 1;
+                while(options.outWidth / scale / 2 >= REQUIRED_SIZE) {
+                    scale *= 2;
+                }
+
+                BitmapFactory.Options options2 = new BitmapFactory.Options();
+                options2.inSampleSize = scale;
+                bm = BitmapFactory.decodeStream(new FileInputStream(mSavedFile), null, options2);
+            }catch (Exception e) {
+
+            }
+
+//            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             photoBtn.get(position).setImageBitmap(bm);
+            Log.d("MakePartyOne", "width: " + mPagerAdapter.getView(position).getWidth() + " height: " + mPagerAdapter.getView(position).getHeight());
             ((PhotoView)mPagerAdapter.getView(position)).setItemData(bm, position);
             if(position==3) {
                 return;

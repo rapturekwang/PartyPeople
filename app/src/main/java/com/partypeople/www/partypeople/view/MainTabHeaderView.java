@@ -49,7 +49,7 @@ public class MainTabHeaderView extends LinearLayout {
                 R.drawable.main_theme_5};
 
         locationView.setText(location);
-        if(theme != null) {
+        if(theme != null && theme.length != 0) {
             if(theme[0]==0) {
                 listTheme.get(0).setImageResource(ids[theme[0]]);
                 listTheme.get(1).setVisibility(View.INVISIBLE);
@@ -63,6 +63,10 @@ public class MainTabHeaderView extends LinearLayout {
                 } else {
                     listTheme.get(i).setVisibility(View.INVISIBLE);
                 }
+            }
+        } else {
+            for(int i=0; i<4; i++) {
+                listTheme.get(i).setVisibility(View.INVISIBLE);
             }
         }
     }

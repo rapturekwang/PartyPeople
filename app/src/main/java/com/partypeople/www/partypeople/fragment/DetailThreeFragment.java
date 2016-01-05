@@ -1,7 +1,7 @@
 package com.partypeople.www.partypeople.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,8 +21,8 @@ import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.adapter.CommentAdapter;
 import com.partypeople.www.partypeople.data.Comment;
 import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.dialog.DeleteCommentDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
-import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
 /**
@@ -63,6 +63,7 @@ public class DetailThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_three, container, false);
+        final DetailThreeFragment fragment = this;
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
@@ -117,49 +118,9 @@ public class DetailThreeFragment extends Fragment {
         beforeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("댓글을 지우시겠습니까?");
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (((Comment) mBeforeAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)) {
-                            NetworkManager.getInstance().removeComment(getContext(), ((Comment) mBeforeAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                    NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
-                                        @Override
-                                        public void onSuccess(PartyResult result) {
-                                            activity.setParty(result.data);
-                                            editText.setText("");
-                                            initData();
-                                            activity.setPagerHeight(350 + 300 * activity.party.comments.size());
-                                            changeHeight();
-                                        }
-
-                                        @Override
-                                        public void onFail(int code) {
-                                            Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(), "통신이 월활하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(getContext(), "본인의 댓글이 아닙니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
+                DeleteCommentDialog dialog = new DeleteCommentDialog(getContext(), activity, fragment, (Comment)mBeforeAdapter.getItem(position));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
                 return false;
             }
@@ -168,49 +129,9 @@ public class DetailThreeFragment extends Fragment {
         afterListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("댓글을 지우시겠습니까?");
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(((Comment)mAfterAdapter.getItem(position)).from.id.equals(PropertyManager.getInstance().getUser().id)){
-                            NetworkManager.getInstance().removeComment(getContext(), ((Comment) mAfterAdapter.getItem(position)).id, new NetworkManager.OnResultListener<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                    NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
-                                        @Override
-                                        public void onSuccess(PartyResult result) {
-                                            activity.setParty(result.data);
-                                            editText.setText("");
-                                            initData();
-                                            activity.setPagerHeight(350 + 300 * activity.party.comments.size());
-                                            changeHeight();
-                                        }
-
-                                        @Override
-                                        public void onFail(int code) {
-                                            Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(), "통신이 월활하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(getContext(), "본인의 댓글이 아닙니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
+                DeleteCommentDialog dialog = new DeleteCommentDialog(getContext(), activity, fragment, (Comment)mAfterAdapter.getItem(position));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
                 return false;
             }
@@ -233,11 +154,10 @@ public class DetailThreeFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    public void initData() {
         mBeforeAdapter.removeAll();
         mAfterAdapter.removeAll();
-//        if(DateUtil.getInstance().compare(activity.party.start_at, DateUtil.getInstance().getCurrentDate())) {
-//        }
+
         for(int i=0;i<activity.party.comments.size();i++) {
             if(DateUtil.getInstance().compare(activity.party.comments.get(i).created_at, activity.party.start_at)) {
                 mBeforeAdapter.add(activity.party.comments.get(i));
@@ -249,6 +169,12 @@ public class DetailThreeFragment extends Fragment {
             textDivider.setVisibility(View.VISIBLE);
             divider.setVisibility(View.VISIBLE);
             afterListView.setVisibility(View.VISIBLE);
+        } else if(mAfterAdapter.getCount()>0) {
+            afterListView.setVisibility(View.VISIBLE);
+            beforeListView.setVisibility(View.INVISIBLE);
+        } else if(mBeforeAdapter.getCount()>0) {
+            afterListView.setVisibility(View.INVISIBLE);
+            beforeListView.setVisibility(View.VISIBLE);
         }
     }
 

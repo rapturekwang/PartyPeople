@@ -147,6 +147,8 @@ public class MainTabFragment extends Fragment {
 
         switch (getArguments().getInt(ARG_INDEX)) {
             case 0:
+                keyword = "sort";
+                parameter = "LIKED";
                 break;
             case 1:
                 User user = PropertyManager.getInstance().getUser();

@@ -27,7 +27,6 @@ import java.util.List;
  * Created by Tacademy on 2015-10-15.
  */
 public class MainFragmentAdapter extends BaseAdapter {
-    DateUtil dateUtil = DateUtil.getInstance();
     List<Party> items = new ArrayList<Party>();
     Context mContext;
 
@@ -82,7 +81,7 @@ public class MainFragmentAdapter extends BaseAdapter {
                 bookMarkView.setText("0");
             }
             Glide.with(context)
-                    .load(NetworkManager.getInstance().URL_SERVER + data.photo)
+                    .load(NetworkManager.getInstance().URL_SERVER + data.photos.get(0))
                     .placeholder(R.drawable.profile_img)
                     .error(R.drawable.profile_img)
                     .into(imageParty);

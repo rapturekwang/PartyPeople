@@ -559,12 +559,11 @@ public class NetworkManager {
     public void putGroupImages(Context context, ArrayList<File> photos, String id, final OnResultListener<String> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-        String[] keys = {"photo_0", "photo_1", "photo_2", "photo_3"};
         RequestParams params = new RequestParams();
         try {
             if(photos != null) {
                 for(int i=0;i<photos.size();i++) {
-                    params.put(keys[i], photos.get(i));
+                    params.put("photo", photos.get(i));
                 }
             }
         } catch (FileNotFoundException e) {
