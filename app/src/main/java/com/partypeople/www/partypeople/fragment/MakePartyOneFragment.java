@@ -84,17 +84,20 @@ public class MakePartyOneFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String name;
-    File mSavedFile;
-    public static final int REQUEST_CODE_CROP = 0;
+    File mSavedFile, imageDes;
+    public static final int REQUEST_CODE_CROP_MAIN_IMAGE = 0;
+    public static final int REQUEST_CODE_CROP_DES_IMAGE = 1;
 
     EditText nameView, desView, partyPasswordView;
     AutoCompleteTextView locationView;
+    EditText detailLocationView;
     ViewPager pager;
     SwitchCompat switchCompat;
     MakePartyPagerAdapter mPagerAdapter;
     GridView gridView;
     gridAdapter mAdapter;
     int theme = -1, position;
+    ImageView imgBtn;
     List<ImageView> photoBtn = new ArrayList<ImageView>();
     ArrayList<File> photos = new ArrayList<>();
 
@@ -157,10 +160,10 @@ public class MakePartyOneFragment extends Fragment {
         locationView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String [] str = locationView.getText().toString().split(" ");
-                if(str[0].equals("대한민국")) {
+                String[] str = locationView.getText().toString().split(" ");
+                if (str[0].equals("대한민국")) {
                     locationView.setText("");
-                    for(int i=1;i<str.length;i++) {
+                    for (int i = 1; i < str.length; i++) {
                         locationView.append(str[i] + " ");
                     }
                 }
@@ -177,10 +180,12 @@ public class MakePartyOneFragment extends Fragment {
                 }
             }
         });
+        detailLocationView = (EditText)view.findViewById(R.id.edit_detail_location);
 
         nameView = (EditText)view.findViewById(R.id.edit_name);
         desView = (EditText)view.findViewById(R.id.edit_description);
 
+        photoBtn.clear();
         for(int i=0;i<4;i++) {
             final int temp = i;
             photoBtn.add((ImageView)view.findViewById(imgBtns[temp]));
@@ -190,6 +195,17 @@ public class MakePartyOneFragment extends Fragment {
                     pager.setCurrentItem(temp);
                 }
             });
+        }
+
+        imgBtn = (ImageView) view.findViewById(R.id.img_bottom_photo);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPhoto(-2);
+            }
+        });
+        if(imageDes!=null) {
+            setPhotoOnView(REQUEST_CODE_CROP_DES_IMAGE, imageDes, -1);
         }
 
         Button btn = (Button)view.findViewById(R.id.btn_next);
@@ -202,14 +218,16 @@ public class MakePartyOneFragment extends Fragment {
                 if(locationView.getText().toString().equals("")) warningMessage="장소를 입력해 주세요";
                 if(theme==-1) warningMessage="테마를 지정해 주세요.";
                 if(nameView.getText().toString().equals("")) warningMessage="모임 이름을 입력해 주세요.";
+                if(photos.size()==0) warningMessage="1개 이상의 사진을 첨부해 주세요.";
                 if(warningMessage.equals("")) {
                     activity.party.name = nameView.getText().toString();
                     activity.party.themes = new int[1];
                     activity.party.themes[0] = theme+1;
-                    activity.party.location = locationView.getText().toString();
+                    activity.party.location = locationView.getText().toString() + detailLocationView.getText().toString();
                     activity.party.description = desView.getText().toString();
                     activity.party.privated = switchCompat.isChecked();
-                    activity.party.imageFile = mSavedFile;
+                    activity.party.imageFiles = photos;
+                    activity.party.imageFile = imageDes;
                 } else {
                     Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
                     return;
@@ -220,12 +238,11 @@ public class MakePartyOneFragment extends Fragment {
                 try {
                     activity.party.start_at = getSpinnerTime(Constants.START_TIME_SPINNER);
                     activity.party.end_at = getSpinnerTime(Constants.END_TIME_SPINNER);
-//                    activity.nextFragment();
+                    activity.nextFragment();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
-                activity.party.imageFiles = photos;
-                activity.nextFragment();
+//                activity.nextFragment();
             }
         });
 
@@ -233,7 +250,8 @@ public class MakePartyOneFragment extends Fragment {
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                locationView.showDropDown();
+                if(!locationView.getText().toString().equals(""))
+                    locationView.showDropDown();
             }
         });
 
@@ -268,6 +286,8 @@ public class MakePartyOneFragment extends Fragment {
         setDateSpinner();
         setSpinnerTime(DateUtil.getInstance().getDefaultSettingData(20));
 
+//        restoreImage();
+
         return view;
     }
 
@@ -277,50 +297,61 @@ public class MakePartyOneFragment extends Fragment {
         photoPickerIntent.putExtra("crop", "true");
         photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
         photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        photoPickerIntent.putExtra("noFaceDetection",true);
-        photoPickerIntent.putExtra("aspectX", photoBtn.get(0).getWidth());
-        photoPickerIntent.putExtra("aspectY", photoBtn.get(0).getHeight());
-        startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
+        photoPickerIntent.putExtra("noFaceDetection", true);
+        if(position!=-2) {
+            photoPickerIntent.putExtra("aspectX", photoBtn.get(0).getWidth());
+            photoPickerIntent.putExtra("aspectY", photoBtn.get(0).getHeight());
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP_MAIN_IMAGE);
+        } else {
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP_DES_IMAGE);
+        }
 
         this.position = position;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bitmap bm = null;
-
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CROP && resultCode == getActivity().RESULT_OK) {
-            photos.add(mSavedFile);
+        if (resultCode == getActivity().RESULT_OK) {
+            setPhotoOnView(requestCode, mSavedFile, position);
+        }
+    }
 
-            try {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeStream(new FileInputStream(mSavedFile), null, options);
+    public void setPhotoOnView(int type, File image, int position) {
+        Bitmap bm = null;
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(image), null, options);
 
-                final int REQUIRED_SIZE = 360;
-                int scale = 1;
-                while(options.outWidth / scale / 2 >= REQUIRED_SIZE) {
-                    scale *= 2;
-                }
-
-                BitmapFactory.Options options2 = new BitmapFactory.Options();
-                options2.inSampleSize = scale;
-                bm = BitmapFactory.decodeStream(new FileInputStream(mSavedFile), null, options2);
-            }catch (Exception e) {
-
+            final int REQUIRED_SIZE = 360;
+            int scale = 1;
+            while(options.outWidth / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
             }
 
-//            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
+            BitmapFactory.Options options2 = new BitmapFactory.Options();
+            options2.inSampleSize = scale;
+            bm = BitmapFactory.decodeStream(new FileInputStream(image), null, options2);
+        }catch (Exception e) {
+
+        }
+
+        if(type == REQUEST_CODE_CROP_MAIN_IMAGE) {
+
+            photos.add(image);
             photoBtn.get(position).setImageBitmap(bm);
-            Log.d("MakePartyOne", "width: " + mPagerAdapter.getView(position).getWidth() + " height: " + mPagerAdapter.getView(position).getHeight());
-            ((PhotoView)mPagerAdapter.getView(position)).setItemData(bm, position);
-            if(position==3) {
+            ((PhotoView) mPagerAdapter.getView(position)).setItemData(bm, position);
+            if (position == 3) {
                 return;
             } else {
                 addViewOnPagerAdapter();
                 photoBtn.get(position + 1).setVisibility(View.VISIBLE);
             }
+        } else if(type == REQUEST_CODE_CROP_DES_IMAGE) {
+//                bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
+            imgBtn.setImageBitmap(bm);
+            imageDes = image;
         }
     }
 
@@ -487,5 +518,18 @@ public class MakePartyOneFragment extends Fragment {
     private void showKeyboard(View view){
         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public void restoreImage() {
+        if(photos!=null && photos.size()!=0) {
+            mPagerAdapter.removeAll();
+            for(int i=0;i<photos.size();i++) {
+                addViewOnPagerAdapter();
+                setPhotoOnView(REQUEST_CODE_CROP_MAIN_IMAGE, photos.get(i), i);
+            }
+        }
+        if(imageDes!=null) {
+            setPhotoOnView(REQUEST_CODE_CROP_DES_IMAGE, imageDes, -1);
+        }
     }
 }

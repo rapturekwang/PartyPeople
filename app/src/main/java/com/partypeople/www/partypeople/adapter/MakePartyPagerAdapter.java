@@ -86,4 +86,8 @@ public class MakePartyPagerAdapter extends PagerAdapter {
     public View getView (int position) {
         return views.get(position);
     }
+
+    public void removeAll() {
+        views.clear();
+    }
 }

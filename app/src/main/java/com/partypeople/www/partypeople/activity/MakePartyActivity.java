@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.fragment.MakePartyFourFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyOneFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyThreeFragment;
 import com.partypeople.www.partypeople.fragment.MakePartyTwoFragment;
@@ -22,8 +23,9 @@ public class MakePartyActivity extends AppCompatActivity {
     public Party party = new Party();
     Fragment[] list = {MakePartyOneFragment.newInstance("one"),
             MakePartyTwoFragment.newInstance("two"),
-            MakePartyThreeFragment.newInstance("three")};
-    String[] stringList = {"모임 설명", "모임 모금 방식", "모임 호스트 정보"};
+            MakePartyThreeFragment.newInstance("three"),
+            MakePartyFourFragment.newInstance("four")};
+    String[] stringList = {"모임 설명", "모임 모금 방식", "본인 인증 및 계좌 정보", "서비스 이용약관 확인"};
     int currentFragment;
 
     TextView titleView;

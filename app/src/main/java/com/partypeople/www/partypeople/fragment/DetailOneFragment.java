@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
@@ -105,6 +108,30 @@ public class DetailOneFragment extends Fragment {
         imgHostView = (ImageView)view.findViewById(R.id.image_host);
         followView = (TextView)view.findViewById(R.id.text_follow);
         groupsView = (TextView)view.findViewById(R.id.text_groups);
+
+        ImageView imageDes = (ImageView)view.findViewById(R.id.image_des);
+        if(activity.party.has_photo) {
+            imageDes.setVisibility(View.VISIBLE);
+            Glide.with(getContext())
+                    .load(NetworkManager.getInstance().URL_SERVER + activity.party.photo)
+                    .placeholder(R.drawable.profile_img)
+                    .error(R.drawable.profile_img)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            activity.setPagerHeight(5000);
+                            changeHeight();
+                            return false;
+                        }
+                    })
+                    .into(imageDes);
+        }
+
         imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         for(int i=0;i<ids.length;i++) {
             final int temp = i;

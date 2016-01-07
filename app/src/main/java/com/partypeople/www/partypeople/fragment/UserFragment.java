@@ -67,7 +67,7 @@ public class UserFragment extends Fragment {
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
-        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
+        listView = (ListView)view.findViewById(R.id.listView);
         mAdapter = new UserAdapter();
         listView.setAdapter(mAdapter);
 

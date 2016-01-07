@@ -75,7 +75,7 @@ public class UserPagePartyItemView extends RelativeLayout {
         progressBar.setProgress(progress);
 
         Glide.with(getContext())
-                .load(NetworkManager.getInstance().URL_SERVER + data.photo)
+                .load(NetworkManager.getInstance().URL_SERVER + data.photos.get(0))
                 .placeholder(R.drawable.profile_img)
                 .error(R.drawable.profile_img)
                 .into(partyImgView);

@@ -24,7 +24,9 @@ import android.view.ViewGroup.LayoutParams;
 import com.bumptech.glide.Glide;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.adapter.DetailImagePagerAdapter;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
+import com.partypeople.www.partypeople.adapter.IntroPagerAdapter;
 import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.fragment.DetailOneFragment;
@@ -39,10 +41,10 @@ import com.partypeople.www.partypeople.dialog.LoadingDialog;
 public class PartyDetailActivity extends AppCompatActivity {
 
     TabLayout tabs, fakeTabs;
-    ViewPager pager;
+    ViewPager pager, imagePager;
     TextView titleView, dateView, locationView, priceView, totalPriceView, progressView, duedateView;
     CheckBox chboxView, chboxView2;
-    ImageView imageView, imgPartyView;
+    ImageView imageView;
     ProgressBar progressBar;
     DateUtil dateUtil = DateUtil.getInstance();
     public Party party;
@@ -68,6 +70,10 @@ public class PartyDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
 
+        imagePager = (ViewPager)findViewById(R.id.image_pager);
+        DetailImagePagerAdapter adapter = new DetailImagePagerAdapter(this, party.photos, party.has_photos);
+        imagePager.setAdapter(adapter);
+
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
         pager = (ViewPager)findViewById(R.id.container);
@@ -76,7 +82,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         pager.setOffscreenPageLimit(Constants.NUM_OF_DETAIL_TAB-1);
 
-        setPagerHeight(2800);
+        setPagerHeight(5000);
 
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
@@ -112,7 +118,7 @@ public class PartyDetailActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(2800);
+                        setPagerHeight(5000);
                         ((DetailOneFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 1:
@@ -232,11 +238,6 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        Glide.with(this)
-                .load(NetworkManager.getInstance().URL_SERVER + party.photo)
-                .placeholder(R.drawable.profile_img)
-                .error(R.drawable.profile_img)
-                .into(imgPartyView);
         titleView.setText(party.name);
         titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
@@ -267,7 +268,6 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imgPartyView = (ImageView)findViewById(R.id.img_party);
         titleView = (TextView)findViewById(R.id.text_title);
         dateView = (TextView)findViewById(R.id.text_date);
         locationView = (TextView)findViewById(R.id.text_location);

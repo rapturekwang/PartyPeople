@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="43dp"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:text="이용 약관"-->
+                <!--android:id="@+id/textView19"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_below="@+id/edit_account"-->
+                <!--android:background="#f5f5f5"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:paddingLeft="16dp"-->
+                <!--android:textColor="#000000"-->
+                <!--android:textSize="14sp" />-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/btn_tos"-->
+                <!--android:layout_below="@+id/textView19"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginTop="21dp"-->
+                <!--android:src="@drawable/make_detail" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="모금완료일(24:00)까지 목표금액이 달성되지 않을 경우 모임과 모금된 금액은 모두 자동취소 됩니다.\n목표금액 모금이 성공할 경우 목표금액의 5%(VAT포함)가 플랫폼이용료(카드결제수수료 + 파티피플이용료)로 책정되며, 이를 제외한 금액이 계좌로 송금됩니다.\n입금은 모금마감일(본인 및 계좌정보 인증기준) 이후 은행 영업일 기준 3일 이내에 입금됩니다."
+                android:id="@+id/textView4"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="18dp"
+                android:textSize="14sp"
+                android:textColor="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout"
+                android:layout_below="@+id/textView4"
+                android:layout_marginTop="13dp">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chbox_policy"
+                    android:layout_alignParentStart="true"
+                    android:checked="false"
+                    android:layout_marginLeft="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="위의 사항과 관련 "
+                    android:id="@+id/textView51"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="서비스 이용약관"
+                    android:id="@+id/text_tos"
+                    android:textColor="@color/toolbarColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="에 동의합니다."
+                    android:id="@+id/textView53"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearance"
+                android:text="개설한 모임정보는 이메일 rapturekwang@gmail.com으로 발송됩니다."
+                android:id="@+id/textView17"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="30dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위의 사항에 동의하며 모임을 개설합니다."
+                android:id="@+id/chbox_agree"
+                android:checked="false"
+                android:layout_marginLeft="16dp"
+                android:layout_below="@+id/textView60"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearance"
+                android:text="모임이 개설된 후에는 모임일시, 장소, 목표금액, 모금방식, 참가비를 변경하실 수 없습니다."
+                android:id="@+id/textView60"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@+id/textView17"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/toolbarColor" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="모임 만들기"
+            android:id="@+id/btn_make"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/textView7"
+            android:background="@color/toolbarColor"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+</ScrollView>

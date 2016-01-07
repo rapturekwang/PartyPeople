@@ -270,7 +270,7 @@ public class UserActivity extends AppCompatActivity{
     }
 
     public void changeHeight(int partyCount) {
-        int height = (int)Math.ceil(partyCount * 116 * getResources().getDisplayMetrics().density);
+        int height = (int)Math.ceil((partyCount * 123) * getResources().getDisplayMetrics().density);
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
         int screenHeight = size.y - (int)Math.ceil(285 * getResources().getDisplayMetrics().density);

@@ -14,36 +14,166 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="계좌 정보 (펀딩 성공시 입금 받을 계좌 기입)"
+                android:layout_height="90dp"
+                android:text="모금 성공시, 모금 금액을 입금 받기 위해 본인인증과\n계좌인증을 해주세요\n계좌인증은 본인 명의의 계좌만 가능합니다."
                 android:id="@+id/textView8"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:background="#f5f5f5"
-                android:gravity="fill_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="7dp"
+                android:gravity="center_vertical" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#bababa"
+                android:layout_below="@id/textView8"
+                android:id="@+id/line"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@+id/line"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal"
+                android:id="@+id/radioGroup"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:background="@drawable/rounded_rectangle_nomargin"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="지금 등록하기"
+                    android:id="@+id/radioButton"
+                    android:checked="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_selector"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="다음에 하기"
+                    android:id="@+id/radioButton2"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_selector"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="휴대폰 본인 인증"
+                android:id="@+id/textView12"
+                android:layout_below="@+id/radioGroup"
+                android:layout_alignParentStart="true"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:gravity="center_vertical"
                 android:paddingLeft="16dp"
+                android:background="#f5f5f5" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox2"
+                android:layout_below="@+id/textView12"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="본인 인증과 계좌 확인을 위해 "
+                android:id="@+id/textView34"
+                android:layout_alignTop="@+id/checkBox2"
+                android:layout_toEndOf="@+id/checkBox2"
+                android:includeFontPadding="false"
                 android:textSize="14sp"
                 android:textColor="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="은행"
-                android:id="@+id/textView12"
-                android:layout_below="@+id/textView8"
+                android:text="개인정보 취급방침"
+                android:id="@+id/text_policy"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/toolbarColor"
+                android:includeFontPadding="false"
+                android:layout_toEndOf="@+id/textView34"
+                android:layout_alignTop="@+id/checkBox2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="에"
+                android:id="@+id/textView45"
+                android:layout_alignTop="@+id/checkBox2"
+                android:layout_toEndOf="@+id/text_policy"
+                android:includeFontPadding="false"
+                android:textSize="14sp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동의합니다."
+                android:id="@+id/textView49"
+                android:layout_below="@+id/textView34"
+                android:layout_toEndOf="@+id/checkBox2"
+                android:includeFontPadding="false"
+                android:textSize="14sp"
+                android:textColor="#000000" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_btn_phone"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
+                android:src="@drawable/certi_phone_bf"
+                android:layout_marginTop="17dp"
                 android:layout_marginLeft="16dp"
-                android:textColor="#474747" />
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="22dp"
+                android:layout_below="@+id/textView49" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="본인 계좌 등록"
+                android:id="@+id/textView36"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:background="#f5f5f5"
+                android:layout_below="@+id/img_btn_phone"
+                android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="100dp"
                 android:layout_height="35dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="계좌 번호 (-없이 입력)"
                 android:id="@+id/spinner_bank"
-                android:layout_below="@+id/textView12"
+                android:layout_below="@+id/textView36"
                 android:layout_alignParentStart="true"
                 android:background="@drawable/rounded_rectangle_nomargin"
                 android:popupBackground="@drawable/dropdown"
@@ -56,90 +186,47 @@
                 android:id="@+id/edit_account"
                 android:inputType="number"
                 android:singleLine="true"
-                android:layout_below="@+id/textView4"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="이용 약관"
-                android:id="@+id/textView19"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/edit_account"
-                android:background="#f5f5f5"
-                android:gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:textColor="#000000"
-                android:textSize="14sp" />
+                android:layout_marginLeft="19dp"
+                android:hint="계좌 번호 (-없이 입력)"
+                android:layout_alignTop="@+id/spinner_bank"
+                android:layout_toEndOf="@+id/spinner_bank"
+                android:textSize="14sp"
+                android:minWidth="129dp" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_tos"
-                android:layout_below="@+id/textView19"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="21dp"
-                android:src="@drawable/make_detail" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="이용 약관에 동의합니다"
-                android:id="@+id/chbox_policy"
-                android:layout_below="@+id/btn_tos"
-                android:layout_alignParentStart="true"
-                android:checked="false"
+                android:id="@+id/img_btn_account"
+                android:src="@drawable/certi_account_bf"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginRight="16dp"
+                android:layout_below="@+id/edit_account"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp" />
 
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearance"
-            android:text="모금완료일(24:00)까지 목표금액이 달성되지 못하면, 모임이 자동 취소 처리되며, 참가자들에게 자동환불 됩니다.\n모임이 개설된 후에는 시간, 장소, 참가비, 모금목표금액, 모금방식을 변경할 수 없습니다.\n모금액은 펀딩 종료 후 은행영업일 기준 이틀 안에 호스트 계좌 정보로 입금됩니다.\n모임 사전 정보는 입력한 이메일로 발송됩니다."
-            android:id="@+id/textView17"
-                android:layout_below="@+id/chbox_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="* 계좌인증이 완료된 후에는 설정 > 본인인증 및 계좌 정보에서 변경이 가능합니다."
+                android:id="@+id/textView50"
+                android:layout_below="@+id/img_btn_account"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="위의 사항에 동의합니다"
-                android:id="@+id/chbox_agree"
-                android:layout_below="@+id/textView17"
-                android:layout_alignParentStart="true"
-                android:checked="false"
-                android:layout_marginLeft="16dp"
-                android:layout_marginBottom="21dp"
-                android:layout_marginTop="12dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="계좌 번호(-없이 입력)"
-                android:id="@+id/textView4"
-                android:layout_below="@+id/spinner_bank"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="16dp"
-                android:textSize="14dp"
-                android:textColor="#474747" />
+                android:textColor="#474747"
+                android:textSize="13sp"
+                android:layout_marginTop="11dp"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginBottom="20dp" />
 
         </RelativeLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="모임 만들기"
-            android:id="@+id/btn_make"
+            android:text="다음으로"
+            android:id="@+id/btn_next"
             android:layout_alignParentTop="true"
             android:layout_alignEnd="@+id/textView7"
             android:background="@color/toolbarColor"

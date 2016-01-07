@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.fragment.CertifyFragment;
 import com.partypeople.www.partypeople.fragment.ChangePasswordFragment;
 import com.partypeople.www.partypeople.fragment.FAQFragment;
 import com.partypeople.www.partypeople.fragment.PushAlarmFragment;
@@ -110,6 +111,15 @@ public class SettingActivity extends AppCompatActivity {
         });
         linearLayout3.addView(settingItemView);
 
+        settingItemView = new SettingItemView(this);
+        settingItemView.setItemData("본인인증 및 계좌정보", "");
+        settingItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment("본인인증 및 계좌정보", CertifyFragment.newInstance("인증"));
+            }
+        });
+        linearLayout4.addView(settingItemView);
         settingItemView = new SettingItemView(this);
         settingItemView.setItemData("비밀번호 변경", "");
         settingItemView.setOnClickListener(new View.OnClickListener() {

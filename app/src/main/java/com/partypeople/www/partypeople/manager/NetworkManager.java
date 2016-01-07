@@ -88,15 +88,15 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_SERVER = "http://61.100.5.61:3000";
-    public static final String URL_PARTYS = "http://61.100.5.61:3000/api/v1/groups";
-    public static final String URL_USERS = "http://61.100.5.61:3000/api/v1/users";
-    public static final String URL_FOLLOWS = "http://61.100.5.61:3000/api/v1/follows/";
-    public static final String URL_COMMENT = "http://61.100.5.61:3000/api/v1/comments";
-    public static final String URL_BOARD = "http://61.100.5.61:3000/api/v1/boards";
-    public static final String URL_AUTH = "http://61.100.5.61:3000/api/auth/local";
-    public static final String URL_AUTH_FACEBOOK = "http://partypeople.me:3000/api/auth/facebook/token";
-    public static final String URL_GET_ID = "http://61.100.5.61:3000/api/v1/users/me";
+    public static final String URL_SERVER = "http://partypeople.me:3000";
+    public static final String URL_PARTYS = URL_SERVER + "/api/v1/groups";
+    public static final String URL_USERS = URL_SERVER + "/api/v1/users";
+    public static final String URL_FOLLOWS = URL_SERVER + "/api/v1/follows/";
+    public static final String URL_COMMENT = URL_SERVER + "/api/v1/comments";
+    public static final String URL_BOARD = URL_SERVER + "/api/v1/boards";
+    public static final String URL_AUTH = URL_SERVER + "/api/auth/local";
+    public static final String URL_AUTH_FACEBOOK = URL_SERVER + "/api/auth/facebook/token";
+    public static final String URL_GET_ID = URL_SERVER + "/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
     private static final String URL_SEARCH_LOCATION = "https://maps.googleapis.com/maps/api/place/autocomplete/json";
 
@@ -431,12 +431,12 @@ public class NetworkManager {
         });
     }
 
-    public void takeLike(Context context, String param1, final OnResultListener<String> listener) {
+    public void takeLike(Context context, String groupId, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
-        client.post(context, URL_PARTYS + "/" + param1 + "/likes/vote", headers, params, null, new TextHttpResponseHandler() {
+        client.post(context, URL_PARTYS + "/" + groupId + "/likes/vote", headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "taking like Fail: " + statusCode + responseString);
