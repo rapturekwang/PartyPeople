@@ -1,9 +1,12 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -20,6 +24,8 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
 import com.partypeople.www.partypeople.data.PayMethod;
+import com.partypeople.www.partypeople.dialog.ExampleDialog;
+import com.partypeople.www.partypeople.dialog.LeaveDialog;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
@@ -34,9 +40,26 @@ public class MakePartyTwoFragment extends Fragment {
             MakePartyChildFragment.newInstance(1),
             MakePartyChildFragment.newInstance(2)};
     private static final String ARG_NAME = "name";
-    ArrayAdapter<String> mYearAdapter, mMonthAdapter, mDayAdapter;
-    Spinner mYearSpinner, mMonthSpinner, mDaySpinner;
-    String year = "2015", month;
+
+    ArrayAdapter<String>[] mArrayAdapter = new ArrayAdapter[3];
+    Spinner[] mSpinner = new Spinner[3];
+    int[] spinnerId = {
+            R.id.spinner_year,
+            R.id.spinner_month,
+            R.id.spinner_day,
+    };
+    String[] defaultValue = {
+            "년", "월", "일"
+    };
+    int[] startValue = {
+            2016, 1, 1
+    };
+    int[] maxValue = {
+            Constants.MAX_YEAR,
+            Constants.NUM_OF_MONTH,
+            Constants.MAX_DAY
+    };
+
     EditText expectPayView;
     RadioGroup radioGroup;
 
@@ -133,13 +156,26 @@ public class MakePartyTwoFragment extends Fragment {
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     getChildFragmentManager().beginTransaction().replace(R.id.container, list[2]).commit();
                 }
             }
         });
 
-        setDateSpinner(view);
+        ImageView imageBtn = (ImageView)view.findViewById(R.id.img_btn_example);
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExampleDialog dialog = new ExampleDialog(getContext());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        initSpinnerView(view);
+        setDateSpinner();
+        String start = ((MakePartyActivity)getActivity()).party.start_at;
+        setSpinnerTime(DateUtil.getInstance().getDefaultSettingData(-5, DateUtil.getInstance().changeStringToLong(start)));
 
         return view;
     }
@@ -147,86 +183,57 @@ public class MakePartyTwoFragment extends Fragment {
     private String getDeadlineTime() {
         String time;
 
-        time = mYearSpinner.getSelectedItem().toString() + "-" + mMonthSpinner.getSelectedItem().toString() + "-" + mDaySpinner.getSelectedItem().toString() + "T00:00:00";
+        time = mSpinner[0].getSelectedItem().toString() + "-" + mSpinner[1].getSelectedItem().toString() + "-" + mSpinner[2].getSelectedItem().toString() + "T00:00:00";
 
         return DateUtil.getInstance().changeToPostFormat(time);
     }
 
-    private void setDateSpinner(View view) {
-        mYearSpinner = (Spinner)view.findViewById(R.id.spinner_year);
-        mYearAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
-        mYearAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mYearSpinner.setAdapter(mYearAdapter);
-        mYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    void initSpinnerView(View view) {
+        for(int i=0;i<3;i++) {
+            mSpinner[i] = (Spinner)view.findViewById(spinnerId[i]);
+            mArrayAdapter[i] = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
+            mArrayAdapter[i].setDropDownViewResource(R.layout.spinner_dropdown_item);
+            mSpinner[i].setAdapter(mArrayAdapter[i]);
+        }
+
+        mSpinner[2].setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                year = (String)parent.getItemAtPosition(position);
-                if(year.equals("년")) {
-                    mDayAdapter.clear();
-                    mDayAdapter.add("일");
-                }
-                if(year != null && month != null && !year.equals("년") && !month.equals("월")) {
-                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
-                    int num = 1;
-                    mDayAdapter.clear();
-                    mDayAdapter.add("일");
-                    for (int i = num; i<num+DayOfMonth; i++) {
-                        mDayAdapter.add(""+i);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    String year = mSpinner[0].getSelectedItem().toString();
+                    String month = mSpinner[1].getSelectedItem().toString();
+                    if(year.equals("년") || month.equals("월")) {
+                        mArrayAdapter[2].clear();
+                        mArrayAdapter[2].add("일");
+                    } else {
+                        int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
+                        mArrayAdapter[2].clear();
+                        mArrayAdapter[2].add("일");
+                        for (int i = 1; i < DayOfMonth + 1; i++) {
+                            mArrayAdapter[2].add("" + i);
+                        }
                     }
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                return false;
             }
         });
+    }
 
-        mMonthSpinner = (Spinner)view.findViewById(R.id.spinner_month);
-        mMonthAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
-        mMonthAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mMonthSpinner.setAdapter(mMonthAdapter);
-        mMonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                month = (String)parent.getItemAtPosition(position);
-                if(month.equals("월")) {
-                    mDayAdapter.clear();
-                    mDayAdapter.add("일");
-                }
-                if(year != null && month != null && !year.equals("년") && !month.equals("월")) {
-                    int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
-                    int num = 1;
-                    mDayAdapter.clear();
-                    mDayAdapter.add("일");
-                    for (int i = num; i<num+DayOfMonth; i++) {
-                        mDayAdapter.add(""+i);
-                    }
-                }
+    void setDateSpinner() {
+        startValue[0] = Calendar.getInstance().get(Calendar.YEAR);
+        for(int i=0;i<3;i++) {
+            mArrayAdapter[i].add(defaultValue[i]);
+            for(int j=startValue[i];j<startValue[i] + maxValue[i];j++) {
+                mArrayAdapter[i].add(String.format("%02d", j));
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        mDaySpinner = (Spinner)view.findViewById(R.id.spinner_day);
-        mDayAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
-        mDayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mDaySpinner.setAdapter(mDayAdapter);
-
-        mYearAdapter.add("년");
-        int num = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = num;i<num+ Constants.MAX_YEAR; i++) {
-            mYearAdapter.add(""+i);
         }
-        mMonthAdapter.add("월");
-        num = 1;
-        for (int i = num; i<num+Constants.NUM_OF_MONTH; i++) {
-            mMonthAdapter.add(""+i);
-        }
-        mDayAdapter.add("일");
+    }
 
+    void setSpinnerTime(String date) {
+        String[] str = new String(date).split(":");
+        for(int i=0;i<3;i++) {
+            int position = mArrayAdapter[i].getPosition(str[i]);
+            mSpinner[i].setSelection(position);
+        }
     }
 }

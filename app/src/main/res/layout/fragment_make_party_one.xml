@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="모임 일시"
+            android:text="모임 날짜"
             android:id="@+id/textView13"
             android:layout_alignParentStart="true"
             android:textColor="#000000"
@@ -124,17 +124,6 @@
             android:paddingLeft="16dp"
             android:gravity="center_vertical"
             android:background="#f5f5f5" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="시작 일시"
-            android:id="@+id/textView3"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="20dp"
-            android:textColor="#000000"
-            android:textSize="14sp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -223,112 +212,18 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="마감 일시"
-                android:id="@+id/textView20"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/linearLayout4"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="16dp"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textIsSelectable="false" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@+id/textView20"
-                android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout5"
-                android:layout_marginTop="10dp">
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_year_end"
-                    android:layout_weight="3"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="3dp" />
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_month_end"
-                    android:layout_weight="2"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="2dp" />
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_day_end"
-                    android:layout_weight="2"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="3dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@+id/linearLayout5"
-                android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout6"
-                android:layout_marginTop="9dp">
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_noon_end"
-                    android:layout_weight="3"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="3dp" />
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_hour_end"
-                    android:layout_weight="2"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="2dp" />
-
-                <Spinner
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner_minute_end"
-                    android:layout_weight="2"
-                    android:background="@drawable/rounded_rectangle_nomargin"
-                    android:popupBackground="@drawable/dropdown"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="3dp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="모임 장소"
                 android:id="@+id/textView22"
-                android:layout_below="@+id/linearLayout6"
                 android:layout_alignParentStart="true"
                 android:gravity="center_vertical"
                 android:paddingLeft="16dp"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:background="#f5f5f5"
-                android:layout_marginTop="21dp" />
+                android:layout_marginTop="21dp"
+                android:layout_below="@+id/linearLayout4" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -387,7 +282,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="모임 세부 정보"
+                android:text="모임 설명"
                 android:id="@+id/textView24"
                 android:layout_below="@+id/edit_detail_location"
                 android:layout_alignParentStart="true"
@@ -400,7 +295,7 @@
                 android:layout_marginTop="20dp" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_description"
                 android:layout_below="@+id/textView24"

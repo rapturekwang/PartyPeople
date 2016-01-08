@@ -51,21 +51,15 @@ import java.util.List;
 public class MakePartyOneFragment extends Fragment {
     private static final String ARG_NAME = "name";
 
-    ArrayAdapter<String>[] mArrayAdapter = new ArrayAdapter[12];
-    Spinner[] mSpinner = new Spinner[12];
+    ArrayAdapter<String>[] mArrayAdapter = new ArrayAdapter[6];
+    Spinner[] mSpinner = new Spinner[6];
     int[] spinnerId = {
             R.id.spinner_year,
             R.id.spinner_month,
             R.id.spinner_day,
             R.id.spinner_noon,
             R.id.spinner_hour,
-            R.id.spinner_minute,
-            R.id.spinner_year_end,
-            R.id.spinner_month_end,
-            R.id.spinner_day_end,
-            R.id.spinner_noon_end,
-            R.id.spinner_hour_end,
-            R.id.spinner_minute_end
+            R.id.spinner_minute
     };
     String[] defaultValue = {
             "년", "월", "일", "오전", "시", "분"
@@ -236,8 +230,7 @@ public class MakePartyOneFragment extends Fragment {
                     activity.party.password = partyPasswordView.getText().toString();
                 }
                 try {
-                    activity.party.start_at = getSpinnerTime(Constants.START_TIME_SPINNER);
-                    activity.party.end_at = getSpinnerTime(Constants.END_TIME_SPINNER);
+                    activity.party.start_at = getSpinnerTime();
                     activity.nextFragment();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
@@ -284,7 +277,7 @@ public class MakePartyOneFragment extends Fragment {
 
         initSpinnerView(view);
         setDateSpinner();
-        setSpinnerTime(DateUtil.getInstance().getDefaultSettingData(20));
+        setSpinnerTime(DateUtil.getInstance().getDefaultSettingData(20, System.currentTimeMillis()));
 
 //        restoreImage();
 
@@ -383,34 +376,27 @@ public class MakePartyOneFragment extends Fragment {
 
     private void setSpinnerTime(String date) {
         String[] str = new String(date).split(":");
-        for(int i=0;i<12;i++) {
-            int position = mArrayAdapter[i].getPosition(str[i%6]);
+        for(int i=0;i<6;i++) {
+            int position = mArrayAdapter[i].getPosition(str[i]);
             mSpinner[i].setSelection(position);
         }
     }
 
-    private String getSpinnerTime(int num) {
+    private String getSpinnerTime() {
         String time;
-        int firstSpinner = 0;
 
-        if(num==Constants.START_TIME_SPINNER) {
-            firstSpinner = 0;
-        } else if(num==Constants.END_TIME_SPINNER) {
-            firstSpinner = 6;
-        }
-
-        int hour = Integer.parseInt(mSpinner[firstSpinner+4].getSelectedItem().toString());
-        if(mSpinner[firstSpinner+3].getSelectedItem().toString().equals("오후")) {
+        int hour = Integer.parseInt(mSpinner[4].getSelectedItem().toString());
+        if(mSpinner[3].getSelectedItem().toString().equals("오후")) {
             hour += 12;
         }
-        time = mSpinner[firstSpinner].getSelectedItem().toString() + "-" + mSpinner[firstSpinner+1].getSelectedItem().toString() + "-"
-                + mSpinner[firstSpinner+2].getSelectedItem().toString() + "T" + hour + ":" + mSpinner[firstSpinner+5].getSelectedItem().toString() + ":00";
+        time = mSpinner[0].getSelectedItem().toString() + "-" + mSpinner[1].getSelectedItem().toString() + "-"
+                + mSpinner[2].getSelectedItem().toString() + "T" + hour + ":" + mSpinner[5].getSelectedItem().toString() + ":00";
 
         return DateUtil.getInstance().changeToPostFormat(time);
     }
 
     private void initSpinnerView(View view) {
-        for(int i=0;i<12;i++) {
+        for(int i=0;i<6;i++) {
             mSpinner[i] = (Spinner)view.findViewById(spinnerId[i]);
             mArrayAdapter[i] = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
             mArrayAdapter[i].setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -438,38 +424,16 @@ public class MakePartyOneFragment extends Fragment {
                 return false;
             }
         });
-
-        mSpinner[8].setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    String year = mSpinner[6].getSelectedItem().toString();
-                    String month = mSpinner[7].getSelectedItem().toString();
-                    if(year.equals("년") || month.equals("월")) {
-                        mArrayAdapter[8].clear();
-                        mArrayAdapter[8].add("일");
-                    } else {
-                        int DayOfMonth = DateUtil.getInstance().getDayOfMonth(year, month);
-                        mArrayAdapter[8].clear();
-                        mArrayAdapter[8].add("일");
-                        for (int i = 1; i < DayOfMonth + 1; i++) {
-                            mArrayAdapter[8].add("" + i);
-                        }
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     private void setDateSpinner() {
         startValue[0] = Calendar.getInstance().get(Calendar.YEAR);
-        for(int i=0;i<12;i++) {
-            mArrayAdapter[i].add(defaultValue[i%6]);
-            if(i%6==3) {
+        for(int i=0;i<6;i++) {
+            mArrayAdapter[i].add(defaultValue[i]);
+            if(i==3) {
                 mArrayAdapter[i].add("오후");
             } else {
-                for(int j=startValue[i%6];j<startValue[i%6] + maxValue[i%6];j++) {
+                for(int j=startValue[i];j<startValue[i] + maxValue[i];j++) {
                     mArrayAdapter[i].add(String.format("%02d", j));
                 }
             }

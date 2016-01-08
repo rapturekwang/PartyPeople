@@ -240,7 +240,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     private void initData() {
         titleView.setText(party.name);
         titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
-        dateView.setText(dateUtil.changeToViewFormat(party.start_at, party.end_at));
+        dateView.setText(dateUtil.changeToViewFormat(party.start_at));
         String[] array = party.location.split(" ");
         if(array.length==1)
             locationView.setText(array[0]);

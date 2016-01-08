@@ -37,7 +37,4 @@ public class Constants {
 
     public static final int LOGIN_WITH_LOCAL = 0;
     public static final int LOGIN_WITH_FACEBOOK = 1;
-
-    public static final int START_TIME_SPINNER = 0;
-    public static final int END_TIME_SPINNER = 1;
 }

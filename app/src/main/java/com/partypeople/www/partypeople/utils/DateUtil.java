@@ -29,9 +29,8 @@ public class DateUtil {
         return date;
     }
 
-    public String getDefaultSettingData(int day) {
-        long time= System.currentTimeMillis();
-        time = time + (day * 24 * 60 * 60 * 1000);
+    public String getDefaultSettingData(int day, long today) {
+        long time = today + (day * 24 * 60 * 60 * 1000);
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(time);
         String date = DateFormat.format("yyyy:MM:dd:오후:08:00", cal).toString();
@@ -99,22 +98,13 @@ public class DateUtil {
         return  diff;
     }
 
-    public String changeToViewFormat(String start, String end) {
-        if(start==null || end == null)
+    public String changeToViewFormat(String start) {
+        if(start==null)
             return null;
-        String result;
-        if(getDiffDay(start, end)==0) {
-            long d = changeStringToLong(start);
-            result = DateFormat.format("MM월 dd일 / HH:mm", d).toString();
-            d = changeStringToLong(end);
-            result += DateFormat.format(" - HH:mm", d).toString();
-        } else {
-            long d = changeStringToLong(start);
-            result = DateFormat.format("MM월 dd일", d).toString();
-            d = changeStringToLong(end);
-            result += DateFormat.format(" - MM월 dd일", d).toString();
-        }
-        return result;
+
+        long d = changeStringToLong(start);
+
+        return DateFormat.format("MM월 dd일 / HH:mm", d).toString();
     }
 
     public int getDayOfMonth(String year, String month) {

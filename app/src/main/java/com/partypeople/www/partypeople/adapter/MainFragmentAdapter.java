@@ -54,7 +54,7 @@ public class MainFragmentAdapter extends BaseAdapter {
 
             titleView.setText(data.name);
             titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
-            dateView.setText(dateUtil.changeToViewFormat(data.start_at, data.end_at));
+            dateView.setText(dateUtil.changeToViewFormat(data.start_at));
             dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");
             String[] array = data.location.split(" ");
             if(array.length==1)
