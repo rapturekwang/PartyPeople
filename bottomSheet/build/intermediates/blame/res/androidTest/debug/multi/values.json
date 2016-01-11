@@ -1,0 +1,767 @@
+[
+    {
+        "outputFile": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 100,
+                    "endColumn": 57,
+                    "endOffset": 153
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 100,
+                        "endColumn": 57,
+                        "endOffset": 153
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 158,
+                    "endColumn": 52,
+                    "endOffset": 206
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 158,
+                        "endColumn": 52,
+                        "endOffset": 206
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 1057,
+                    "endColumn": 52,
+                    "endOffset": 1105
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 1057,
+                        "endColumn": 52,
+                        "endOffset": 1105
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 1110,
+                    "endColumn": 50,
+                    "endOffset": 1156
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 1110,
+                        "endColumn": 50,
+                        "endOffset": 1156
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 1161,
+                    "endColumn": 51,
+                    "endOffset": 1208
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 1161,
+                        "endColumn": 51,
+                        "endOffset": 1208
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 1213,
+                    "endColumn": 49,
+                    "endOffset": 1258
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 1213,
+                        "endColumn": 49,
+                        "endOffset": 1258
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 1263,
+                    "endColumn": 47,
+                    "endOffset": 1306
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 1263,
+                        "endColumn": 47,
+                        "endOffset": 1306
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 1311,
+                    "endColumn": 53,
+                    "endOffset": 1360
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 1311,
+                        "endColumn": 53,
+                        "endOffset": 1360
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 1365,
+                    "endColumn": 42,
+                    "endOffset": 1403
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1365,
+                        "endColumn": 42,
+                        "endOffset": 1403
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 1408,
+                    "endColumn": 42,
+                    "endOffset": 1446
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 1408,
+                        "endColumn": 42,
+                        "endOffset": 1446
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 1451,
+                    "endColumn": 36,
+                    "endOffset": 1483
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 1451,
+                        "endColumn": 36,
+                        "endOffset": 1483
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 1488,
+                    "endColumn": 45,
+                    "endOffset": 1529
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 1488,
+                        "endColumn": 45,
+                        "endOffset": 1529
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 1534,
+                    "endColumn": 51,
+                    "endOffset": 1581
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 1534,
+                        "endColumn": 51,
+                        "endOffset": 1581
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 1586,
+                    "endColumn": 51,
+                    "endOffset": 1633
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1586,
+                        "endColumn": 51,
+                        "endOffset": 1633
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 1638,
+                    "endColumn": 40,
+                    "endOffset": 1674
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 1638,
+                        "endColumn": 40,
+                        "endOffset": 1674
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1679,
+                    "endColumn": 40,
+                    "endOffset": 1715
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 1679,
+                        "endColumn": 40,
+                        "endOffset": 1715
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 1720,
+                    "endColumn": 31,
+                    "endOffset": 1747
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1720,
+                        "endColumn": 31,
+                        "endOffset": 1747
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 1752,
+                    "endLine": 23,
+                    "endColumn": 12,
+                    "endOffset": 1961
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1752,
+                        "endLine": 23,
+                        "endColumn": 12,
+                        "endOffset": 1961
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 1966,
+                    "endLine": 53,
+                    "endColumn": 12,
+                    "endOffset": 3883
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 1966,
+                        "endLine": 53,
+                        "endColumn": 12,
+                        "endOffset": 3883
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 3888,
+                    "endLine": 63,
+                    "endColumn": 12,
+                    "endOffset": 4509
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 54,
+                        "startColumn": 4,
+                        "startOffset": 3888,
+                        "endLine": 63,
+                        "endColumn": 12,
+                        "endOffset": 4509
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 64,
+                    "startColumn": 4,
+                    "startOffset": 4514,
+                    "endColumn": 36,
+                    "endOffset": 4546
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 64,
+                        "startColumn": 4,
+                        "startOffset": 4514,
+                        "endColumn": 36,
+                        "endOffset": 4546
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 65,
+                    "startColumn": 4,
+                    "startOffset": 4551,
+                    "endLine": 70,
+                    "endColumn": 12,
+                    "endOffset": 4823
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 65,
+                        "startColumn": 4,
+                        "startOffset": 4551,
+                        "endLine": 70,
+                        "endColumn": 12,
+                        "endOffset": 4823
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 71,
+                    "startColumn": 4,
+                    "startOffset": 4828,
+                    "endLine": 76,
+                    "endColumn": 12,
+                    "endOffset": 5092
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 71,
+                        "startColumn": 4,
+                        "startOffset": 4828,
+                        "endLine": 76,
+                        "endColumn": 12,
+                        "endOffset": 5092
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 77,
+                    "startColumn": 4,
+                    "startOffset": 5097,
+                    "endLine": 81,
+                    "endColumn": 12,
+                    "endOffset": 5333
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 77,
+                        "startColumn": 4,
+                        "startOffset": 5097,
+                        "endLine": 81,
+                        "endColumn": 12,
+                        "endOffset": 5333
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 82,
+                    "startColumn": 4,
+                    "startOffset": 5338,
+                    "endLine": 86,
+                    "endColumn": 12,
+                    "endOffset": 5550
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 82,
+                        "startColumn": 4,
+                        "startOffset": 5338,
+                        "endLine": 86,
+                        "endColumn": 12,
+                        "endOffset": 5550
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 87,
+                    "startColumn": 4,
+                    "startOffset": 5555,
+                    "endLine": 93,
+                    "endColumn": 12,
+                    "endOffset": 5926
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 87,
+                        "startColumn": 4,
+                        "startOffset": 5555,
+                        "endLine": 93,
+                        "endColumn": 12,
+                        "endOffset": 5926
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 94,
+                    "startColumn": 4,
+                    "startOffset": 5931,
+                    "endLine": 96,
+                    "endColumn": 12,
+                    "endOffset": 6061
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 94,
+                        "startColumn": 4,
+                        "startOffset": 5931,
+                        "endLine": 96,
+                        "endColumn": 12,
+                        "endOffset": 6061
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 97,
+                    "startColumn": 4,
+                    "startOffset": 6066,
+                    "endLine": 104,
+                    "endColumn": 12,
+                    "endOffset": 6472
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 97,
+                        "startColumn": 4,
+                        "startOffset": 6066,
+                        "endLine": 104,
+                        "endColumn": 12,
+                        "endOffset": 6472
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 105,
+                    "startColumn": 4,
+                    "startOffset": 6477,
+                    "endLine": 110,
+                    "endColumn": 12,
+                    "endOffset": 6773
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 105,
+                        "startColumn": 4,
+                        "startOffset": 6477,
+                        "endLine": 110,
+                        "endColumn": 12,
+                        "endOffset": 6773
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 111,
+                    "startColumn": 4,
+                    "startOffset": 6778,
+                    "endLine": 116,
+                    "endColumn": 12,
+                    "endOffset": 7059
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 111,
+                        "startColumn": 4,
+                        "startOffset": 6778,
+                        "endLine": 116,
+                        "endColumn": 12,
+                        "endOffset": 7059
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 117,
+                    "startColumn": 4,
+                    "startOffset": 7064,
+                    "endLine": 124,
+                    "endColumn": 12,
+                    "endOffset": 7534
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 117,
+                        "startColumn": 4,
+                        "startOffset": 7064,
+                        "endLine": 124,
+                        "endColumn": 12,
+                        "endOffset": 7534
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 125,
+                    "startColumn": 4,
+                    "startOffset": 7539,
+                    "endLine": 137,
+                    "endColumn": 12,
+                    "endOffset": 8267
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 125,
+                        "startColumn": 4,
+                        "startOffset": 7539,
+                        "endLine": 137,
+                        "endColumn": 12,
+                        "endOffset": 8267
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 138,
+                    "startColumn": 4,
+                    "startOffset": 8272,
+                    "endLine": 143,
+                    "endColumn": 12,
+                    "endOffset": 8561
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 138,
+                        "startColumn": 4,
+                        "startOffset": 8272,
+                        "endLine": 143,
+                        "endColumn": 12,
+                        "endOffset": 8561
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 144,
+                    "startColumn": 4,
+                    "startOffset": 8566,
+                    "endColumn": 24,
+                    "endOffset": 8586
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 144,
+                        "startColumn": 4,
+                        "startOffset": 8566,
+                        "endColumn": 24,
+                        "endOffset": 8586
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 145,
+                    "startColumn": 4,
+                    "startOffset": 8591,
+                    "endLine": 150,
+                    "endColumn": 12,
+                    "endOffset": 8887
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 145,
+                        "startColumn": 4,
+                        "startOffset": 8591,
+                        "endLine": 150,
+                        "endColumn": 12,
+                        "endOffset": 8887
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 151,
+                    "startColumn": 4,
+                    "startOffset": 8892,
+                    "endLine": 156,
+                    "endColumn": 12,
+                    "endOffset": 9186
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 151,
+                        "startColumn": 4,
+                        "startOffset": 8892,
+                        "endLine": 156,
+                        "endColumn": 12,
+                        "endOffset": 9186
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 157,
+                    "startColumn": 4,
+                    "startOffset": 9191,
+                    "endLine": 162,
+                    "endColumn": 12,
+                    "endOffset": 9484
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 157,
+                        "startColumn": 4,
+                        "startOffset": 9191,
+                        "endLine": 162,
+                        "endColumn": 12,
+                        "endOffset": 9484
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 163,
+                    "startColumn": 4,
+                    "startOffset": 9489,
+                    "endLine": 168,
+                    "endColumn": 12,
+                    "endOffset": 9787
+                },
+                "from": {
+                    "file": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 163,
+                        "startColumn": 4,
+                        "startOffset": 9489,
+                        "endLine": 168,
+                        "endColumn": 12,
+                        "endOffset": 9787
+                    }
+                }
+            }
+        ]
+    }
+]

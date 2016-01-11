@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/layout/bs_list_entry.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_list_entry.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/layout/bs_header.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_header.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/layout/bottom_sheet_dialog.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bottom_sheet_dialog.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/layout/bs_grid_entry.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_grid_entry.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/layout/bottom_sheet_dialog.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bottom_sheet_dialog.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/layout/bs_list_divider.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_list_divider.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/layout/bs_header.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_header.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/layout/bs_list_entry.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_list_entry.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/layout/bs_list_divider.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_list_divider.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/layout/bs_grid_entry.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/layout/bs_grid_entry.xml"
+    }
+]

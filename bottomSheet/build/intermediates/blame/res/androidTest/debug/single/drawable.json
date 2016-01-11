@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/drawable/bs_list_dark_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/drawable/bs_list_dark_selector.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/drawable/bs_list_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/drawable/bs_list_selector.xml"
+    }
+]

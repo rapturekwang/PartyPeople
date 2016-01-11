@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/anim/dock_bottom_enter.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/dock_bottom_enter.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/anim/bs_list_layout_anim_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/bs_list_layout_anim_in.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/anim/bs_list_layout_anim_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/bs_list_layout_anim_in.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/anim/dock_bottom_exit.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/dock_bottom_exit.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/anim/dock_bottom_enter.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/dock_bottom_enter.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/anim/bs_list_item_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/bs_list_item_in.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/anim/bs_list_item_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/bs_list_item_in.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/anim/dock_bottom_exit.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/anim/dock_bottom_exit.xml"
+    }
+]

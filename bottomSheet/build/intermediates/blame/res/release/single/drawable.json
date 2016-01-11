@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/drawable/bs_list_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/drawable/bs_list_selector.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/drawable/bs_list_dark_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/drawable/bs_list_dark_selector.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/release/res/drawable/bs_list_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/drawable/bs_list_selector.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/release/drawable/bs_list_dark_selector.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/src/main/res/drawable/bs_list_dark_selector.xml"
+    }
+]

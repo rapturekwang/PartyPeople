@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/anim/bs_list_layout_anim_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/anim/bs_list_layout_anim_in.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/anim/dock_bottom_enter.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/anim/dock_bottom_enter.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/anim/dock_bottom_exit.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/anim/dock_bottom_exit.xml"
+    },
+    {
+        "merged": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/res/merged/androidTest/debug/anim/bs_list_item_in.xml",
+        "source": "/Users/kwang/AndroidStudioProjects/PartyPeople/bottomSheet/build/intermediates/bundles/debug/res/anim/bs_list_item_in.xml"
+    }
+]
