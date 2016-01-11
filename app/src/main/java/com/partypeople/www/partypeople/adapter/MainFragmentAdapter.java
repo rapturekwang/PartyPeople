@@ -82,8 +82,8 @@ public class MainFragmentAdapter extends BaseAdapter {
             }
             Glide.with(context)
                     .load(NetworkManager.getInstance().URL_SERVER + data.photos.get(0))
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.color.defaultImage)
+                    .error(R.color.defaultImage)
                     .into(imageParty);
         }
 

@@ -10,12 +10,15 @@ import android.widget.Button;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.IntroPagerAdapter;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class IntroActivity extends AppCompatActivity {
 
     ViewPager pager;
     IntroPagerAdapter mAdapter;
+    Button btnStart, btnSkip;
     int mStartFrom;
+    CirclePageIndicator mIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,27 +27,65 @@ public class IntroActivity extends AppCompatActivity {
         mAdapter = new IntroPagerAdapter();
         pager.setAdapter(mAdapter);
 
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(pager);
+
         Intent intent = getIntent();
         mStartFrom = intent.getExtras().getInt("startFrom");
 
-        Button btn = (Button)findViewById(R.id.btn_skip);
-        if(mStartFrom == Constants.START_FROM_SPLASH) {
-            btn.setText("건너뛰기");
-        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
-            btn.setText("메인으로");
-        }
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnStart = (Button)findViewById(R.id.btn_start);
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mStartFrom == Constants.START_FROM_SPLASH) {
-                    Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
-                    intent.putExtra("startfrom", Constants.START_FROM_INTRO);
-                    startActivity(intent);
-                    finish();
-                } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
-                    finish();
-                }
+                goToNext();
             }
         });
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == mAdapter.getCount() - 1) {
+                    btnStart.setVisibility(View.VISIBLE);
+                    btnSkip.setVisibility(View.INVISIBLE);
+                } else {
+                    btnStart.setVisibility(View.INVISIBLE);
+                    btnSkip.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        btnSkip = (Button)findViewById(R.id.btn_skip);
+        if(mStartFrom == Constants.START_FROM_SPLASH) {
+            btnSkip.setText("건너뛰기");
+        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
+            btnSkip.setText("메인으로");
+        }
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNext();
+            }
+        });
+    }
+
+    void goToNext() {
+        if (mStartFrom == Constants.START_FROM_SPLASH) {
+            Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
+            intent.putExtra("startfrom", Constants.START_FROM_INTRO);
+            startActivity(intent);
+            finish();
+        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
+            finish();
+        }
     }
 }

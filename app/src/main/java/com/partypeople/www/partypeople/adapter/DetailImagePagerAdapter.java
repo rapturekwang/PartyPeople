@@ -54,8 +54,8 @@ public class DetailImagePagerAdapter extends PagerAdapter {
         Glide.with(mContext)
                 .load(NetworkManager.getInstance().URL_SERVER + photos.get(position))
                 .centerCrop()
-                .placeholder(R.drawable.profile_img)
-                .error(R.drawable.profile_img)
+                .placeholder(R.color.defaultImage)
+                .error(R.color.defaultImage)
                 .into(image);
 
         container.addView(view);

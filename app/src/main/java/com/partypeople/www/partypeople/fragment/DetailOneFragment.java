@@ -114,8 +114,8 @@ public class DetailOneFragment extends Fragment {
             imageDes.setVisibility(View.VISIBLE);
             Glide.with(getContext())
                     .load(NetworkManager.getInstance().URL_SERVER + activity.party.photo)
-                    .placeholder(R.drawable.profile_img)
-                    .error(R.drawable.profile_img)
+                    .placeholder(R.color.defaultImage)
+                    .error(R.color.defaultImage)
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

@@ -3,6 +3,7 @@ package com.partypeople.www.partypeople.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,18 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.bumptech.glide.Glide;
 import com.cocosw.bottomsheet.BottomSheet;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailImagePagerAdapter;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
@@ -38,6 +51,11 @@ import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.dialog.LoadingDialog;
 
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class PartyDetailActivity extends AppCompatActivity {
 
     TabLayout tabs, fakeTabs;
@@ -51,6 +69,8 @@ public class PartyDetailActivity extends AppCompatActivity {
     DetailTabAdapter mAdpater;
     BottomSheet sheet;
     LoadingDialog loadingDialog;
+    ShareDialog shareDialog;
+    CallbackManager callbackManager;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -188,6 +208,25 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         initView();
         initData();
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Log.d("PartyDetailActivity", "success");
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("PartyDetailActivity", "cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("PartyDetailActivity", "onerror");
+            }
+        });
     }
 
     private void changeLike(boolean isChecked) {
@@ -301,6 +340,12 @@ public class PartyDetailActivity extends AppCompatActivity {
         switch (which) {
             case R.id.share_fb:
                 Toast.makeText(PartyDetailActivity.this, "페이스북 공유", Toast.LENGTH_SHORT).show();
+                ShareLinkContent content = new ShareLinkContent.Builder()
+                        .setContentTitle("title")
+                        .setContentDescription("description")
+                        .setImageUrl(Uri.parse("http://developers.facebook.com"))
+                        .build();
+                shareDialog.show(content);
                 break;
             case R.id.share_kko:
                 Toast.makeText(PartyDetailActivity.this, "카톡 공유", Toast.LENGTH_SHORT).show();
@@ -317,5 +362,11 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     public void setParty(Party data) {
         party = data;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

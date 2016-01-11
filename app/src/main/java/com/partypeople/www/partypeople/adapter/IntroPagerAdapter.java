@@ -19,7 +19,8 @@ public class IntroPagerAdapter extends PagerAdapter {
     int[] intro = {
             R.drawable.intro_0,
             R.drawable.intro_1,
-            R.drawable.intro_2
+            R.drawable.intro_2,
+            R.drawable.intro_3
     };
     List<View> scrappedView = new ArrayList<View>();
     @Override
