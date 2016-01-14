@@ -1,2 +1,2 @@
-include ':app', ':async', ':bottomSheet'
+include ':app', ':async', ':bottomSheet', 'pullToRefresh'
 include ':ViewPagerIndicator'
