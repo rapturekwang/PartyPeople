@@ -22,13 +22,19 @@
                 android:layout_alignParentStart="true"
                 android:id="@+id/relativeLayout">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="477dp"
+                    android:id="@+id/image_party"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
                 <android.support.v4.view.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="477dp"
                     android:id="@+id/image_pager"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:scaleType="centerCrop"/>
+                    android:layout_alignParentStart="true" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -57,11 +63,14 @@
                     android:textSize="21sp"
                     android:drawableLeft="@drawable/detail_cocktail"
                     android:drawablePadding="7dp"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="327dp"
+                    android:layout_above="@+id/text_date"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
-                    android:includeFontPadding="false" />
+                    android:layout_marginRight="16dp"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,9 +81,9 @@
                     android:textSize="16dp"
                     android:drawableLeft="@drawable/detail_clock"
                     android:drawablePadding="7dp"
-                    android:layout_below="@+id/text_title"
+                    android:layout_above="@+id/relativeLayout2"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="6dp"
                     android:layout_marginLeft="25dp"
                     android:includeFontPadding="false"/>
 
@@ -96,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="94dp"
                     android:background="#8c000000"
+                    android:id="@+id/relativeLayout2"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true">
 

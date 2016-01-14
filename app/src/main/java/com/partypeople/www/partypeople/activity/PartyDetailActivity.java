@@ -3,7 +3,10 @@ package com.partypeople.www.partypeople.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,23 +26,20 @@ import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.kakao.kakaolink.KakaoLink;
+import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;
+import com.kakao.util.KakaoParameterException;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.DetailImagePagerAdapter;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
-import com.partypeople.www.partypeople.adapter.IntroPagerAdapter;
 import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.fragment.DetailOneFragment;
@@ -50,11 +50,16 @@ import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
 import com.partypeople.www.partypeople.dialog.LoadingDialog;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
-import org.json.JSONObject;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-import java.util.Arrays;
-import java.util.List;
+import io.fabric.sdk.android.Fabric;
+
 
 public class PartyDetailActivity extends AppCompatActivity {
 
@@ -68,9 +73,10 @@ public class PartyDetailActivity extends AppCompatActivity {
     public Party party;
     DetailTabAdapter mAdpater;
     BottomSheet sheet;
-    LoadingDialog loadingDialog;
+//    LoadingDialog loadingDialog;
     ShareDialog shareDialog;
     CallbackManager callbackManager;
+    Bitmap theBitmap = null;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -84,8 +90,8 @@ public class PartyDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_detail);
 
-        loadingDialog = new LoadingDialog(this);
-        loadingDialog.show();
+//        loadingDialog = new LoadingDialog(this);
+//        loadingDialog.show();
 
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
@@ -165,14 +171,16 @@ public class PartyDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PropertyManager.getInstance().isLogin()) {
-                    if (PropertyManager.getInstance().getUser().id.equals(party.owner.id)) {
-                        Toast.makeText(PartyDetailActivity.this, "본인의 모임에는 참여신청을 할수 없습니다", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else {
-                        Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
-                        intent.putExtra("party", party);
-                        startActivity(intent);
+                    for(int i=0;i<party.members.size();i++) {
+                        if (PropertyManager.getInstance().getUser().id.equals(party.members.get(i).id)) {
+                            Toast.makeText(PartyDetailActivity.this, "이미 참여한 모임 입니다", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
+
+                    Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
+                    intent.putExtra("party", party);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PartyDetailActivity.this, LoginActivity.class);
@@ -227,6 +235,9 @@ public class PartyDetailActivity extends AppCompatActivity {
                 Log.d("PartyDetailActivity", "onerror");
             }
         });
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_app_key), getResources().getString(R.string.twitter_secret));
+        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
     }
 
     private void changeLike(boolean isChecked) {
@@ -303,7 +314,13 @@ public class PartyDetailActivity extends AppCompatActivity {
             }
         }
 
-        loadingDialog.dismiss();
+        Glide.with(this)
+                .load(NetworkManager.getInstance().URL_SERVER + party.photos.get(0))
+                .placeholder(Color.TRANSPARENT)
+                .error(Color.TRANSPARENT)
+                .into(imageView);
+
+//        loadingDialog.dismiss();
     }
 
     private void initView() {
@@ -336,22 +353,62 @@ public class PartyDetailActivity extends AppCompatActivity {
         return sheet;
     }
 
+    void shareWithFacebook() {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentTitle(party.name)
+                    .setContentDescription(party.description)
+                    .setContentUrl(Uri.parse("http://partypeople.me:3000"))
+                    .setImageUrl(Uri.parse(NetworkManager.getInstance().URL_SERVER + party.photos.get(0)))
+                    .build();
+            shareDialog.show(content);
+        }
+    }
+
+    void shareWithKakao() {
+        try {
+            KakaoLink kakaoLink = KakaoLink.getKakaoLink(getApplicationContext());
+            KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
+            kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + party.description)
+                    .addImage(NetworkManager.getInstance().URL_SERVER + party.photos.get(0), 300, 200)
+                    .addWebButton("구경하기", "http://partypeople.me:3000");
+            kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(), this);
+        } catch (KakaoParameterException e) {
+            e.getMessage();
+        }
+    }
+
+    void shareWithTwitter() {
+        Bitmap bmp = ((GlideBitmapDrawable) imageView.getDrawable()).getBitmap();
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            File file =  new File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() + ".jpg");
+            file.getParentFile().mkdirs();
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.close();
+            bmpUri = Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            new TweetComposer.Builder(this)
+                    .text("[" + party.name + "]\n" + party.description)
+                    .image(bmpUri)
+                    .show();
+        }
+    }
+
     void onClick(String name, int which) {
         switch (which) {
             case R.id.share_fb:
-                Toast.makeText(PartyDetailActivity.this, "페이스북 공유", Toast.LENGTH_SHORT).show();
-                ShareLinkContent content = new ShareLinkContent.Builder()
-                        .setContentTitle("title")
-                        .setContentDescription("description")
-                        .setImageUrl(Uri.parse("http://developers.facebook.com"))
-                        .build();
-                shareDialog.show(content);
+                shareWithFacebook();
                 break;
             case R.id.share_kko:
-                Toast.makeText(PartyDetailActivity.this, "카톡 공유", Toast.LENGTH_SHORT).show();
+                shareWithKakao();
                 break;
-            case R.id.share_insta:
-                Toast.makeText(PartyDetailActivity.this, "인스타 공유", Toast.LENGTH_SHORT).show();
+            case R.id.share_twitter:
+                shareWithTwitter();
                 break;
         }
     }

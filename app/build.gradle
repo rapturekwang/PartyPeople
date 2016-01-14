@@ -22,7 +22,11 @@ android {
     }
 }
 
-repositories { mavenCentral() }
+repositories {
+    mavenCentral()
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -40,4 +44,9 @@ dependencies {
     compile project(':bottomSheet')
     compile 'com.tsengvn:Typekit:1.0.0'
     compile project(':ViewPagerIndicator')
+    compile 'com.kakao.sdk:kakaolink:1.1.0'
+    compile('com.twitter.sdk.android:tweet-composer:1.0.2@aar') {
+        transitive = true;
+    }
+    compile project(':pullToRefresh')
 }

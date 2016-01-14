@@ -28,8 +28,11 @@
         android:layout_toEndOf="@+id/image_party"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="11dp"
+        android:layout_marginRight="10dp"
         android:includeFontPadding="false"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:ellipsize="end" />
 
     <TextView
         android:layout_width="wrap_content"

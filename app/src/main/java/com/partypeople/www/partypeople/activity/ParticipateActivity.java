@@ -57,6 +57,7 @@ public class ParticipateActivity extends AppCompatActivity {
 
                     }
                 });
+//                startActivity(new Intent(ParticipateActivity.this, PaymentActivity.class));
             }
         });
 

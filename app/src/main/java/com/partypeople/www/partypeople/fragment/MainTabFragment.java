@@ -4,8 +4,10 @@ package com.partypeople.www.partypeople.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
@@ -44,6 +48,7 @@ public class MainTabFragment extends Fragment {
     private int index;
     TextView warningView;
     ListView listView;
+    PullToRefreshListView mListView;
     MainFragmentAdapter mAdapter;
     MainTabHeaderView header;
     String id, queryWord;
@@ -72,11 +77,58 @@ public class MainTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        //((TextView)view.findViewById(R.id.text_name)).setText(mName);
-        listView = (ListView)view.findViewById(R.id.listview);
+        mListView = (PullToRefreshListView)view.findViewById(R.id.listview);
+        mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         mAdapter = new MainFragmentAdapter(getContext());
-        listView.setAdapter(mAdapter);
         warningView = (TextView) view.findViewById(R.id.text_warning);
+
+        mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                String keyword = null;
+                String parameter = null;
+                String label = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+                // Update the LastUpdatedLabel
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
+                switch (getArguments().getInt(ARG_INDEX)) {
+                    case 0:
+                        keyword = "sort";
+                        parameter = "LIKED";
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        keyword = "name";
+                        parameter = queryWord;
+                        break;
+                }
+
+                NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, partyList.size(), new NetworkManager.OnResultListener<PartysResult>() {
+                    @Override
+                    public void onSuccess(PartysResult result) {
+                        for (int i = 0; i < result.data.size(); i++) {
+                            partyList.add(result.data.get(i));
+                            mAdapter.add(result.data.get(i));
+                        }
+                        mListView.onRefreshComplete();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        mListView.onRefreshComplete();
+                    }
+                });
+            }
+        });
+
+        listView = mListView.getRefreshableView();
+        registerForContextMenu(listView);
+        listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,6 +136,7 @@ public class MainTabFragment extends Fragment {
 //                final LoadingDialog dialog = new LoadingDialog(getContext());
 //                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //                dialog.show();
+                position--;
                 if (getArguments().getInt(ARG_INDEX) == 1) {
                     if (position == 0)
                         return;
@@ -178,7 +231,7 @@ public class MainTabFragment extends Fragment {
                 break;
         }
 
-        NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, new NetworkManager.OnResultListener<PartysResult>() {
+        NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, 0, new NetworkManager.OnResultListener<PartysResult>() {
             @Override
             public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {

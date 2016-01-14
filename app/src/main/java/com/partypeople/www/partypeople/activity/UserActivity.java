@@ -70,10 +70,11 @@ public class UserActivity extends AppCompatActivity{
 
         if(user.groups.size()>0) {
             for (int i = 0; i < user.groups.size(); i++) {
-                if (user.groups.get(i).role.equals("OWNER")) {
-                    partys[0]++;
-                } else if (user.groups.get(i).role.equals("MEMBER")) {
-                    partys[1]++;
+                for(int j=0; j<user.groups.get(i).members.size(); j++) {
+                    if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("OWNER"))
+                        partys[0]++;
+                    else if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("MEMBER"))
+                        partys[1]++;
                 }
             }
         }

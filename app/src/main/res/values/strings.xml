@@ -4,6 +4,10 @@
     <string name="drawer_close">Close</string>
     <string name="facebook_app_id">806111302848586</string>
     <string name="kakao_app_key">e447904f2d3ba48c29b888924d85eed2</string>
+    <string name="kakao_scheme">kakaoe447904f2d3ba48c29b888924d85eed2</string>
+    <string name="kakaolink_host">kakaolink</string>
+    <string name="twitter_app_key">TGi5PyGe6QUwG3FSAUA4Tq8UO</string>
+    <string name="twitter_secret">V0rbbw6b5NIgpueqPOVBUw2gGTxhqpAzKphUyVRnCWpBH9nG7H</string>
 
     <string-array name="tab_name">
         <item>인기모임</item>
@@ -40,12 +44,55 @@
     </string-array>
 
     <string-array name="bank_name">
-        <item>신한</item>
-        <item>우리</item>
-        <item>하나</item>
-        <item>농협</item>
+        <item>산업</item>
+        <item>기업</item>
         <item>국민</item>
         <item>외환</item>
+        <item>수협</item>
+        <item>수출입</item>
+        <item>농협</item>
+        <item>우리</item>
+        <item>신한</item>
+        <item>SC제일</item>
+        <item>하나</item>
+        <item>한국씨티</item>
+        <item>대구</item>
+        <item>부산</item>
+        <item>광주</item>
+        <item>제주</item>
+        <item>전북</item>
+        <item>경남</item>
+        <item>새마을금고</item>
+        <item>신협</item>
+        <item>상호저축은행</item>
+        <item>HSBC</item>
+        <item>우체국</item>
+    </string-array>
+
+    <string-array name="bank_code">
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>07</item>
+        <item>08</item>
+        <item>10</item>
+        <item>20</item>
+        <item>21</item>
+        <item>23</item>
+        <item>25</item>
+        <item>27</item>
+        <item>31</item>
+        <item>32</item>
+        <item>34</item>
+        <item>35</item>
+        <item>37</item>
+        <item>39</item>
+        <item>45</item>
+        <item>48</item>
+        <item>50</item>
+        <item>54</item>
+        <item>71</item>
     </string-array>
 
     <string-array name="tos_header">
@@ -330,6 +377,6 @@
 
     <string name="fb">Facebook</string>
     <string name="kko">KakaoTalk</string>
-    <string name="insta">Insta</string>
+    <string name="twitter">Twitter</string>
 
 </resources>

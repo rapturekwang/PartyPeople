@@ -114,12 +114,14 @@ public class UserFragment extends Fragment {
         User user = activity.getUser();
         if(user.groups.size()>0) {
             for (int i = 0; i < user.groups.size(); i++) {
-                if (user.groups.get(i).role.equals("OWNER") && index == 0) {
-                    partyList.add(user.groups.get(i));
-                    mAdapter.add(user.groups.get(i));
-                } else if (user.groups.get(i).role.equals("MEMBER") && index == 1) {
-                    partyList.add(user.groups.get(i));
-                    mAdapter.add(user.groups.get(i));
+                for(int j=0; j<user.groups.get(i).members.size(); j++) {
+                    if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("OWNER") && index == 0) {
+                        partyList.add(user.groups.get(i));
+                        mAdapter.add(user.groups.get(i));
+                    } else if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("MEMBER") && index == 1) {
+                        partyList.add(user.groups.get(i));
+                        mAdapter.add(user.groups.get(i));
+                    }
                 }
             }
         }

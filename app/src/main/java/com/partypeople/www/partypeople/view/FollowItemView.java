@@ -69,10 +69,12 @@ public class FollowItemView extends RelativeLayout {
         int owner = 0, memeber = 0;
         if(user.groups!=null) {
             for (int i = 0; i < user.groups.size(); i++) {
-                if (user.groups.get(i).role.equals("OWNER"))
-                    owner++;
-                else if (user.groups.get(i).role.equals("MEMBER"))
-                    memeber++;
+                for(int j=0; j<user.groups.get(i).members.size(); j++) {
+                    if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("OWNER"))
+                        owner++;
+                    else if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("MEMBER"))
+                        memeber++;
+                }
             }
         }
         partysView.setText("개최 " + owner + " | 참여 " + memeber);

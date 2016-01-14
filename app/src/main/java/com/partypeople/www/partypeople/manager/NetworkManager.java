@@ -207,8 +207,9 @@ public class NetworkManager {
         }
     }
 
-    public void getPartys(Context context, String keyword, String parameter, final OnResultListener<PartysResult> listener) {
+    public void getPartys(Context context, String keyword, String parameter, int skipNum, final OnResultListener<PartysResult> listener) {
         RequestParams params = new RequestParams();
+        params.put("skip", skipNum);
         if(keyword!=null) {
             params.put(keyword, parameter);
         }
