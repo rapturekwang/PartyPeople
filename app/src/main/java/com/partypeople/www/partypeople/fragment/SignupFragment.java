@@ -22,6 +22,7 @@ import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -38,6 +39,7 @@ public class SignupFragment extends Fragment {
     ImageView signup;
     TextView login;
     PropertyManager propertyManager = PropertyManager.getInstance();
+    LoadingDialogFragment dialogFragment;
 
     public static SignupFragment newInstance(String name) {
         SignupFragment fragment = new SignupFragment();
@@ -142,6 +144,8 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().postUser(getContext(), email.getText().toString(), password.getText().toString(), idName.getText().toString(), new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(UserResult result) {
@@ -156,7 +160,7 @@ public class SignupFragment extends Fragment {
 
                     @Override
                     public void onFail(int code) {
-
+                        dialogFragment.dismiss();
                     }
                 });
             }
@@ -179,5 +183,13 @@ public class SignupFragment extends Fragment {
         }
 
         return false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
+        }
     }
 }

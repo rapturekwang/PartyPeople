@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.view.FollowItemView;
 
@@ -25,6 +26,7 @@ public class UserListActivity extends AppCompatActivity {
     private GridView gridView;
     gridAdapter mAdapter;
     List<String> participants = new ArrayList<>();
+    LoadingDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class UserListActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "loading");
                 NetworkManager.getInstance().getUser(UserListActivity.this, mAdapter.list.get(position).id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
@@ -55,6 +59,7 @@ public class UserListActivity extends AppCompatActivity {
                     @Override
                     public void onFail(int code) {
                         Toast.makeText(UserListActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                        dialogFragment.dismiss();
                     }
                 });
             }
@@ -124,6 +129,14 @@ public class UserListActivity extends AppCompatActivity {
             view.setItemData(list.get(position));
 
             return view;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
         }
     }
 }

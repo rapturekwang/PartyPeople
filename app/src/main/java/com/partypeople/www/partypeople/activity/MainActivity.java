@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.fragment.MainTabFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements
     TextView name, email, address;
     RelativeLayout headerBtn;
     View header;
+    LoadingDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,15 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            if(propertyManager.isLogin()) {
-                Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(MainActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
-            }
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "loading");
+                if(propertyManager.isLogin()) {
+                    Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                    dialogFragment.dismiss();
+                }
             }
         });
 
@@ -120,20 +125,9 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 if (propertyManager.isLogin()) {
-                    NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
-                        @Override
-                        public void onSuccess(final User result) {
-                            Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                            intent.putExtra("user", result);
-                            startActivity(intent);
-                            mDrawer.closeDrawer(GravityCompat.START);
-                        }
-
-                        @Override
-                        public void onFail(int code) {
-                            Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    dialogFragment = new LoadingDialogFragment();
+                    dialogFragment.show(getSupportFragmentManager(), "loading");
+                    goToUserActivity();
                 }
             }
         });
@@ -142,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements
         headerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "loading");
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.putExtra("startfrom", Constants.START_FROM_MAIN);
                 startActivity(intent);
@@ -208,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
+        dialogFragment = new LoadingDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "loading");
         switch(menuItem.getItemId()) {
             case R.id.home :
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
@@ -218,20 +216,7 @@ public class MainActivity extends AppCompatActivity implements
                 startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 0);
                 break;
             case R.id.user :
-                NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
-                    @Override
-                    public void onSuccess(final User result) {
-                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                        intent.putExtra("user", result);
-                        startActivity(intent);
-                        mDrawer.closeDrawer(GravityCompat.START);
-                    }
-
-                    @Override
-                    public void onFail(int code) {
-                        Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                goToUserActivity();
                 break;
             case R.id.make_party :
                 startActivity(new Intent(MainActivity.this, MakePartyActivity.class));
@@ -345,6 +330,32 @@ public class MainActivity extends AppCompatActivity implements
             mDrawer.closeDrawer(GravityCompat.START);
             TabLayout.Tab tab = tabs.getTabAt(1);
             tab.select();
+        }
+    }
+
+    void goToUserActivity() {
+        NetworkManager.getInstance().getUser(MainActivity.this, propertyManager.getUser().id, new NetworkManager.OnResultListener<User>() {
+            @Override
+            public void onSuccess(final User result) {
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                intent.putExtra("user", result);
+                startActivity(intent);
+                mDrawer.closeDrawer(GravityCompat.START);
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                dialogFragment.dismiss();
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
         }
     }
 }

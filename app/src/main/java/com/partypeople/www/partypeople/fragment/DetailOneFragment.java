@@ -35,6 +35,7 @@ import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.activity.UserListActivity;
 import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
@@ -149,17 +150,21 @@ public class DetailOneFragment extends Fragment {
                             intent.putStringArrayListExtra("userlist", participants);
                             startActivity(intent);
                         } else {
+                            final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
+                            dialogFragment.show(getFragmentManager(), "loading");
                             NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp).id, new NetworkManager.OnResultListener<User>() {
                                 @Override
                                 public void onSuccess(User result) {
                                     Intent intent = new Intent(getContext(), UserActivity.class);
                                     intent.putExtra("user", result);
                                     startActivity(intent);
+                                    dialogFragment.dismiss();
                                 }
 
                                 @Override
                                 public void onFail(int code) {
                                     Toast.makeText(getContext(), "서버와 통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                    dialogFragment.dismiss();
                                 }
                             });
                         }

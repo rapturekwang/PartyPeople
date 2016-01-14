@@ -16,6 +16,7 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.FollowActivity;
 import com.partypeople.www.partypeople.activity.UserActivity;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.view.FollowItemView;
 
@@ -32,6 +33,7 @@ public class FollowTabFragment extends Fragment {
     private GridView gridView;
     gridAdapter mAdapter;
     String id;
+    LoadingDialogFragment dialogFragment;
 
     public static FollowTabFragment newInstance(int index) {
         FollowTabFragment fragment = new FollowTabFragment();
@@ -61,6 +63,8 @@ public class FollowTabFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().getUser(getContext(), mAdapter.list.get(position).id, new NetworkManager.OnResultListener<User>() {
                     @Override
                     public void onSuccess(final User result) {
@@ -151,6 +155,14 @@ public class FollowTabFragment extends Fragment {
             view.setItemData(list.get(position));
 
             return view;
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
         }
     }
 }

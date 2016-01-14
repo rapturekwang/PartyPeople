@@ -23,6 +23,7 @@ import com.partypeople.www.partypeople.activity.MainActivity;
 import com.partypeople.www.partypeople.data.Data;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -40,6 +41,7 @@ public class LoginFragment extends Fragment {
     Validate validate = Validate.getInstance();
     EditText email, password;
     ImageView login;
+    LoadingDialogFragment dialogFragment;
 
     public static LoginFragment newInstance(String name) {
         LoginFragment fragment = new LoginFragment();
@@ -141,6 +143,8 @@ public class LoginFragment extends Fragment {
                     jsonObject.accumulate("password", password.getText().toString());
                     jsonObject.accumulate("email", email.getText().toString());
                 } catch (Exception e) {}
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(final UserResult result1) {
@@ -189,5 +193,13 @@ public class LoginFragment extends Fragment {
         }
 
         return false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
+        }
     }
 }

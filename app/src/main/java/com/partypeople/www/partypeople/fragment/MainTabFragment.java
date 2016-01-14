@@ -27,6 +27,7 @@ import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.dialog.LoadingDialog;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
@@ -52,6 +53,7 @@ public class MainTabFragment extends Fragment {
     MainFragmentAdapter mAdapter;
     MainTabHeaderView header;
     String id, queryWord;
+    LoadingDialogFragment dialogFragment;
 
     public static MainTabFragment newInstance(int index) {
         MainTabFragment fragment = new MainTabFragment();
@@ -133,9 +135,6 @@ public class MainTabFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                final LoadingDialog dialog = new LoadingDialog(getContext());
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
                 position--;
                 if (getArguments().getInt(ARG_INDEX) == 1) {
                     if (position == 0)
@@ -149,30 +148,22 @@ public class MainTabFragment extends Fragment {
                     passwordDialog.setParty(party);
                     passwordDialog.show();
                 } else {
-//                    final LoadingDialog dialog = new LoadingDialog(getContext());
-//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    dialog.show();
+                    dialogFragment = new LoadingDialogFragment();
+                    dialogFragment.show(getFragmentManager(), "loading");
+                    NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                        @Override
+                        public void onSuccess(PartyResult result) {
+                            Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                            i.putExtra("party", result.data);
+                            startActivity(i);
+                        }
 
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Log.d("MainTab", "Thread start");
-                            NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
-                                @Override
-                                public void onSuccess(PartyResult result) {
-                                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
-                                    i.putExtra("party", result.data);
-                                    startActivity(i);
-                                }
-
-                                @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-//                            dialog.dismiss();
-//                        }
-//                    }).start();
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                            dialogFragment.dismiss();
+                        }
+                    });
                 }
             }
         });
@@ -245,5 +236,13 @@ public class MainTabFragment extends Fragment {
                 Toast.makeText(getContext(), "통신 연결상태가 좋지 않습니다", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
+        }
     }
 }

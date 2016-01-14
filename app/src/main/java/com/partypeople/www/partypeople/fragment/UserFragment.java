@@ -20,6 +20,7 @@ import com.partypeople.www.partypeople.adapter.UserAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 
@@ -38,6 +39,7 @@ public class UserFragment extends Fragment {
     TextView warningView;
     Button btnMake;
     UserAdapter mAdapter;
+    LoadingDialogFragment dialogFragment;
 
     public static UserFragment newInstance(int index) {
         UserFragment fragment = new UserFragment();
@@ -74,6 +76,8 @@ public class UserFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().getParty(getContext(), partyList.get(position).id, new NetworkManager.OnResultListener<PartyResult>() {
                     @Override
                     public void onSuccess(PartyResult result) {
@@ -84,7 +88,7 @@ public class UserFragment extends Fragment {
 
                     @Override
                     public void onFail(int code) {
-
+                        dialogFragment.dismiss();
                     }
                 });
             }
@@ -151,6 +155,14 @@ public class UserFragment extends Fragment {
         } else {
             warningView.setVisibility(View.GONE);
             btnMake.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialogFragment!=null) {
+            dialogFragment.dismiss();
         }
     }
 }

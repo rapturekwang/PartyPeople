@@ -179,7 +179,7 @@ public class NetworkManager {
         });
     }
 
-    public void postJson(final Context context, Party party, final OnResultListener<PartyResult> listener) {
+    public void makeParty(final Context context, Party party, final OnResultListener<PartyResult> listener) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 

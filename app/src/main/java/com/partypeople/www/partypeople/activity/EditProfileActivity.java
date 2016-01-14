@@ -28,6 +28,7 @@ import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
@@ -151,7 +152,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         Bitmap.CompressFormat.JPEG.toString());
                 photoPickerIntent.putExtra("aspectX", imageView.getWidth());
                 photoPickerIntent.putExtra("aspectY", imageView.getHeight());
-                photoPickerIntent.putExtra("noFaceDetection",true);
+                photoPickerIntent.putExtra("noFaceDetection", true);
                 startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
             }
         });
@@ -188,8 +189,6 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
-//            Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-//            imageView.setImageBitmap(bm);
             Glide.with(this)
                     .load(mSavedFile)
                     .placeholder(R.drawable.default_profile)
