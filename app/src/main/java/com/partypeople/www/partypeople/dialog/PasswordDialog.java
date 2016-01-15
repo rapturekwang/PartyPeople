@@ -3,6 +3,9 @@ package com.partypeople.www.partypeople.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,7 +26,7 @@ public class PasswordDialog extends Dialog {
     Party party;
     EditText editText;
 
-    public PasswordDialog(Context context) {
+    public PasswordDialog(Context context, final FragmentManager fragmentManager) {
         super(context);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -34,17 +37,21 @@ public class PasswordDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if(editText.getText().toString().equals(party.password)) {
+                    final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
+                    dialogFragment.show(fragmentManager, "loading");
                     NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
                         @Override
                         public void onSuccess(PartyResult result) {
                             Intent i = new Intent(getContext(), PartyDetailActivity.class);
                             i.putExtra("party", result.data);
                             getContext().startActivity(i);
+                            dialogFragment.dismiss();
                         }
 
                         @Override
                         public void onFail(int code) {
                             Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                            dialogFragment.dismiss();
                         }
                     });
                 } else {
@@ -63,6 +70,9 @@ public class PasswordDialog extends Dialog {
         });
 
         editText = (EditText)findViewById(R.id.edit_password);
+        Drawable wrappedDrawable = DrawableCompat.wrap(editText.getBackground());
+        DrawableCompat.setTint(wrappedDrawable, getContext().getResources().getColor(android.R.color.white));
+        editText.setBackgroundDrawable(wrappedDrawable);
     }
 
     public void setParty(Party party) {

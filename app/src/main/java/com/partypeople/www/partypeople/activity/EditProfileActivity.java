@@ -2,7 +2,6 @@ package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -22,17 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
-import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
-import com.partypeople.www.partypeople.utils.DateUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -91,7 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             if (mSavedFile == null) {
                                 Intent intent = new Intent();
                                 intent.putExtra("updateduser", result.data);
-                                setResult(1, intent);
+                                setResult(UserActivity.RESULT_CODE_EDIT, intent);
                                 finish();
                                 Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
                             }

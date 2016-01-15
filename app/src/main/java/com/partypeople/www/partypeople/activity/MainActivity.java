@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements
 
     public void setNavigation() {
         ImageView imgView = (ImageView)header.findViewById(R.id.img_profile);
-        Log.d("MainActivity", "has photo: " + propertyManager.getUser().has_photo + " provider: " + propertyManager.getUser().provider);
         if(propertyManager.isLogin()) {
             GlideUrl glideUrl = null;
             if (propertyManager.getUser().has_photo) {

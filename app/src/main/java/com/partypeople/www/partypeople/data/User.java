@@ -8,10 +8,14 @@ import java.util.List;
  * Created by Tacademy on 2015-11-11.
  */
 public class User implements Serializable{
-    public String _id;
     public String id;
     public String email;
     public String name;
+    public String realname;
+    public boolean auth;
+    public String bank_name;
+    public double bank_account;
+    public double phone;
     public List<Follow> following;
     public List<Follow> follower;
     public String address;

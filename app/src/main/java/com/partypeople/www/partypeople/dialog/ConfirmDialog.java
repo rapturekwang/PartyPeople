@@ -3,6 +3,7 @@ package com.partypeople.www.partypeople.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
  * Created by kwang on 16. 1. 14..
  */
 public class ConfirmDialog extends Dialog{
-    public ConfirmDialog(final Context context, final Party party) {
+    public ConfirmDialog(final Context context, final Party party, final FragmentManager fragmentManager) {
         super(context);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,6 +33,8 @@ public class ConfirmDialog extends Dialog{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(fragmentManager, "loading");
                 NetworkManager.getInstance().makeParty(getContext(), party, new NetworkManager.OnResultListener<PartyResult>() {
                     @Override
                     public void onSuccess(final PartyResult result) {
@@ -46,12 +49,14 @@ public class ConfirmDialog extends Dialog{
                                             Intent intent = new Intent(getContext(), MainActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             getContext().startActivity(intent);
+                                            dialogFragment.dismiss();
                                         }
 
                                         @Override
                                         public void onFail(int code) {
                                             Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
                                             dismiss();
+                                            dialogFragment.dismiss();
                                             return;
                                         }
                                     });
@@ -67,6 +72,7 @@ public class ConfirmDialog extends Dialog{
                             public void onFail(int code) {
                                 Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
                                 dismiss();
+                                dialogFragment.dismiss();
                                 return;
                             }
                         });
@@ -76,6 +82,7 @@ public class ConfirmDialog extends Dialog{
                     public void onFail(int code) {
                         Toast.makeText(getContext(), "모임 생성이 실패하였습니다", Toast.LENGTH_SHORT).show();
                         dismiss();
+                        dialogFragment.dismiss();
                         return;
                     }
                 });

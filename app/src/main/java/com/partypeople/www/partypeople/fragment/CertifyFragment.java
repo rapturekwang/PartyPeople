@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -19,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.IdentifyActivity;
 import com.partypeople.www.partypeople.activity.NoticeActivity;
 import com.partypeople.www.partypeople.dialog.CertifyDialog;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.utils.Constants;
 
 import java.io.BufferedReader;
@@ -38,7 +41,13 @@ public class CertifyFragment extends Fragment {
     private String name;
     Spinner bankView;
     ArrayAdapter<String> mBankAdapter;
-    EditText accountView;
+    EditText accountView, nameView;
+    LoadingDialogFragment dialogFragment;
+    ImageView accountBtn, phoneBtn;
+    CheckBox chboxPhone;
+
+    public static final int REQUEST_CODE_IDENTIFY = 30;
+    public static final int RESULT_CODE_IDENTIFY = 40;
 
     public static CertifyFragment newInstance(String name) {
         CertifyFragment fragment = new CertifyFragment();
@@ -51,8 +60,6 @@ public class CertifyFragment extends Fragment {
     public CertifyFragment() {
         // Required empty public constructor
     }
-
-    TextView nameView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,8 @@ public class CertifyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_certify, container, false);
 
+        nameView = (EditText)view.findViewById(R.id.editName);
+
         bankView = (Spinner)view.findViewById(R.id.spinner_bank);
         mBankAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
         mBankAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -78,27 +87,29 @@ public class CertifyFragment extends Fragment {
         bankView.setAdapter(mBankAdapter);
         accountView = (EditText)view.findViewById(R.id.edit_account);
 
-        ImageView imgBtn = (ImageView)view.findViewById(R.id.img_btn_phone);
-        imgBtn.setOnClickListener(new View.OnClickListener() {
+        chboxPhone = (CheckBox)view.findViewById(R.id.chboxPhone);
+
+        phoneBtn = (ImageView)view.findViewById(R.id.img_btn_phone);
+        phoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "휴대폰 인증", Toast.LENGTH_SHORT).show();
-                CertifyDialog dialog = new CertifyDialog(getContext(), true);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                if(chboxPhone.isChecked()) {
+                    startActivityForResult(new Intent(getContext(), IdentifyActivity.class), REQUEST_CODE_IDENTIFY);
+                } else {
+                    Toast.makeText(getContext(), "개인정보 취급방침에 동의해야 합니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        imgBtn = (ImageView)view.findViewById(R.id.img_btn_account);
-        imgBtn.setOnClickListener(new View.OnClickListener() {
+        accountBtn = (ImageView)view.findViewById(R.id.img_btn_account);
+        accountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getContext(), "계좌 인증", Toast.LENGTH_SHORT).show();
-//                CertifyDialog dialog = new CertifyDialog(getContext(), false);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
+
                 StartAccountConfirmTask sact = new StartAccountConfirmTask();
-                String[] params = new String[2];
+                String[] params = new String[3];
                 params[0] = accountView.getText().toString();
                 String[] banks = getResources().getStringArray(R.array.bank_name);
                 for (int i = 0; i < banks.length; i++) {
@@ -108,6 +119,8 @@ public class CertifyFragment extends Fragment {
                         break;
                     }
                 }
+                params[2] = nameView.getText().toString();
+
                 sact.execute(params);
             }
         });
@@ -125,6 +138,22 @@ public class CertifyFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE_IDENTIFY && resultCode==RESULT_CODE_IDENTIFY) {
+            boolean result = data.getBooleanExtra("identify", false);
+            CertifyDialog dialog = new CertifyDialog(getContext(), result);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+            if(result) {
+                phoneBtn.setImageResource(R.drawable.certi_phone_af);
+                phoneBtn.setEnabled(false);
+                chboxPhone.setEnabled(false);
+            }
+        }
+    }
+
     private class StartAccountConfirmTask extends AsyncTask<String, Void, String> {      //계좌 확인 타스크
 
         private final String ConfirmUrl = "http://api.partypeople.me/confirm_module/account_confirm/request.php";   //계좌 확인 요청할 url
@@ -132,7 +161,8 @@ public class CertifyFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             String account = params[0];     //계좌번호
-            String bankCode = params[1];         //은행코드
+            String bankCode = params[1];    //은행코드
+            String name = params[2];        //이름
 
             try{
                 /* url 에 http connection해 계좌번호 인증하는 부분 */
@@ -145,15 +175,14 @@ public class CertifyFragment extends Fragment {
 
                 conn.setRequestProperty("content-type", "application/x-www-form-urlencoded");   //form 형식으로 보낸다는 설정
 
-
                 StringBuffer buffer = new StringBuffer();   //요청보낼 데이터 구성한다.
-                buffer.append("service").append("=").append("3").append("&");   //서비스코드(3: 계좌 유효성확인)
-                buffer.append("svcGbn").append("=").append("4").append("&");    //작업코드(4: 계좌 유효성확인)
+                buffer.append("service").append("=").append("2").append("&");   //서비스코드(3: 계좌 유효성확인)
+                buffer.append("svcGbn").append("=").append("2").append("&");    //작업코드(4: 계좌 유효성확인)
                 buffer.append("svc_cls").append("=").append("").append("&");    //내/외국인(빈칸으로 놔둔다)
                 buffer.append("PERSONAL").append("=").append("1").append("&");  //개인or사업자 (개인 : 1, 사업자 : 2)
                 buffer.append("strAccountNo").append("=").append(account).append("&");  //검사 요청할 계좌번호
-                buffer.append("strBankCode").append("=").append(bankCode);              //검사 요청할 은행코드
-
+                buffer.append("strBankCode").append("=").append(bankCode).append("&");  //검사 요청할 은행코드
+                buffer.append("USERNM").append("=").append(name);
 
                 /* 계좌 인증 요청한 결과값을 받아오는 부분 */
                 OutputStreamWriter outStream = new OutputStreamWriter(conn.getOutputStream(), "EUC-KR");
@@ -180,11 +209,21 @@ public class CertifyFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();  //토스트로 결과 표시
-            Log.d("result", result);
-//            resultTv.setText(result);
-            super.onPostExecute(result);
+        protected void onPostExecute(String response) {
+            Log.d("result", response);
+            dialogFragment.dismiss();
+            super.onPostExecute(response);
+
+            String[] code = response.split("/");
+            boolean result = code[1].equals("응답코드:0000");
+            CertifyDialog dialog = new CertifyDialog(getContext(), result);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+            if(result) {
+                accountBtn.setImageResource(R.drawable.certi_account_af);
+                accountBtn.setEnabled(false);
+            }
         }
     }
 }

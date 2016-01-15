@@ -149,7 +149,7 @@ public class SettingActivity extends AppCompatActivity {
         settingItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeaveDialog dialog = new LeaveDialog(SettingActivity.this);
+                LeaveDialog dialog = new LeaveDialog(SettingActivity.this, getSupportFragmentManager());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

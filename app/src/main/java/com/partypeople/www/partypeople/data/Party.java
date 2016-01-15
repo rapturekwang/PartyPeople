@@ -42,9 +42,6 @@ public class Party implements Serializable{
     public String password = "0000";
     public double expect_pay;
     public List<PayMethod> pay_method;
-    public String bank;
-    public double account;
-    public double phone;
     public User owner;
     public List<Like> likes;
     public List<Member> members;
@@ -58,26 +55,4 @@ public class Party implements Serializable{
     public boolean[] has_photos;
 
     public String role;
-
-//    public String getJsonString() {
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.accumulate("name", name);
-//            jsonObject.accumulate("description", description);
-//            jsonObject.accumulate("photo", photo);
-//            jsonObject.accumulate("end_at", end_at);
-////            jsonObject.accumulate("theme", getTheme());
-//            jsonObject.accumulate("location", location);
-//            jsonObject.accumulate("private", privated);
-//            jsonObject.accumulate("password", password);
-//            jsonObject.accumulate("expect_pay", expect_pay);
-//            jsonObject.accumulate("pay_method", pay_method);
-//            jsonObject.accumulate("bank", bank);
-//            jsonObject.accumulate("account", account);
-//            jsonObject.accumulate("phone", phone);
-//        } catch (Exception e) {
-//
-//        }
-//        return jsonObject.toString();
-//    }
 }

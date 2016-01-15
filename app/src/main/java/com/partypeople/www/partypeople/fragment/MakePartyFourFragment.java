@@ -72,7 +72,7 @@ public class MakePartyFourFragment extends Fragment {
                     return;
                 }
 
-                ConfirmDialog dialog = new ConfirmDialog(getContext(), activity.party);
+                ConfirmDialog dialog = new ConfirmDialog(getContext(), activity.party, getFragmentManager());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

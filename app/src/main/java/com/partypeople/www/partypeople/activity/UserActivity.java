@@ -45,6 +45,9 @@ public class UserActivity extends AppCompatActivity{
     UserTabAdapter mAdapter;
     int[] partys = {0, 0, 0};
 
+    public static final int REQUEST_CODE_EDIT = 0;
+    public static final int RESULT_CODE_EDIT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +106,7 @@ public class UserActivity extends AppCompatActivity{
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(UserActivity.this, EditProfileActivity.class), 0);
+                startActivityForResult(new Intent(UserActivity.this, EditProfileActivity.class), REQUEST_CODE_EDIT);
             }
         });
         profileView = (ImageView)findViewById(R.id.image_profile);
@@ -214,7 +217,7 @@ public class UserActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==1) {
+        if(requestCode==REQUEST_CODE_EDIT && resultCode==RESULT_CODE_EDIT) {
             user = (User)data.getSerializableExtra("updateduser");
             initData();
         }

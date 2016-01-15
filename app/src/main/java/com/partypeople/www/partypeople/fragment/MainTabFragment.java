@@ -143,7 +143,7 @@ public class MainTabFragment extends Fragment {
                 }
                 final Party party = partyList.get(position);
                 if (party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
-                    PasswordDialog passwordDialog = new PasswordDialog(getContext());
+                    PasswordDialog passwordDialog = new PasswordDialog(getContext(), getFragmentManager());
                     passwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     passwordDialog.setParty(party);
                     passwordDialog.show();

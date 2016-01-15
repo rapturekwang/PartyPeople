@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="500dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox2"
+            android:id="@+id/chboxPhone"
             android:layout_below="@+id/textView12"
             android:layout_alignParentStart="true"
             android:checked="false"
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:text="본인 인증과 계좌 확인을 위해 "
             android:id="@+id/textView34"
-            android:layout_alignTop="@+id/checkBox2"
-            android:layout_toEndOf="@+id/checkBox2"
+            android:layout_alignTop="@+id/chboxPhone"
+            android:layout_toEndOf="@+id/chboxPhone"
             android:includeFontPadding="false"
             android:textSize="14sp"
             android:textColor="#000000" />
@@ -53,14 +53,14 @@
             android:textColor="@color/toolbarColor"
             android:includeFontPadding="false"
             android:layout_toEndOf="@+id/textView34"
-            android:layout_alignTop="@+id/checkBox2" />
+            android:layout_alignTop="@+id/chboxPhone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="에"
             android:id="@+id/textView45"
-            android:layout_alignTop="@+id/checkBox2"
+            android:layout_alignTop="@+id/chboxPhone"
             android:layout_toEndOf="@+id/text_policy"
             android:includeFontPadding="false"
             android:textSize="14sp"
@@ -72,7 +72,7 @@
             android:text="동의합니다."
             android:id="@+id/textView49"
             android:layout_below="@+id/textView34"
-            android:layout_toEndOf="@+id/checkBox2"
+            android:layout_toEndOf="@+id/chboxPhone"
             android:includeFontPadding="false"
             android:textSize="14sp"
             android:textColor="#000000" />
@@ -137,6 +137,17 @@
             android:layout_below="@+id/edit_account"
             android:layout_alignParentStart="true"
             android:layout_marginTop="16dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editName"
+            android:layout_below="@+id/img_btn_account"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:minWidth="100dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15dp" />
 
     </RelativeLayout>
 
