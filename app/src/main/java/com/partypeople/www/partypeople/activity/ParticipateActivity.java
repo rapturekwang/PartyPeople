@@ -46,18 +46,18 @@ public class ParticipateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.getInstance().participate(ParticipateActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        finish();
-                    }
-
-                    @Override
-                    public void onFail(int code) {
-
-                    }
-                });
-//                startActivity(new Intent(ParticipateActivity.this, PaymentActivity.class));
+//                NetworkManager.getInstance().participate(ParticipateActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        finish();
+//                    }
+//
+//                    @Override
+//                    public void onFail(int code) {
+//
+//                    }
+//                });
+                startActivity(new Intent(ParticipateActivity.this, PaymentActivity.class));
             }
         });
 

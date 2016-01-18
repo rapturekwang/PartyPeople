@@ -2,8 +2,6 @@ package com.partypeople.www.partypeople.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +10,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.dialog.CertifyDialog;
+import com.partypeople.www.partypeople.data.Identity;
 import com.partypeople.www.partypeople.fragment.CertifyFragment;
+import com.partypeople.www.partypeople.utils.Constants;
 
 public class IdentifyActivity extends AppCompatActivity {
 
@@ -73,12 +72,17 @@ public class IdentifyActivity extends AppCompatActivity {
          */
         @JavascriptInterface
         public void getConfirmData(String requestNum, String responseNum, String authType,
-                                   String name, String birth, String gender){
-            Log.d("CONFIRMOK_OK", "CONFIRM_ok: " + requestNum + "," + responseNum + "," + authType + "," + name + "," + birth + "," + gender);
+                                   String name, String birth, String gender, String mobileNum){
+            Log.d("CONFIRMOK_OK", "CONFIRM_ok: " + requestNum + "," + responseNum + "," + authType + "," + name + "," + birth + "," + gender + "," + mobileNum);
 
+            Identity identity = new Identity();
+            identity.name = name;
+            identity.birth = birth;
+            identity.phone = mobileNum;
             Intent intent = new Intent();
-            intent.putExtra("identify", true);
-            setResult(CertifyFragment.RESULT_CODE_IDENTIFY, intent);
+            intent.putExtra("success", true);
+            intent.putExtra("identity", identity);
+            setResult(Constants.RESULT_CODE_IDENTIFY, intent);
             context.finish();
         }
 
@@ -94,8 +98,8 @@ public class IdentifyActivity extends AppCompatActivity {
             Log.d("CONFIRMOK_ERROR", "CONFIRM_error: "+requestNum+","+errorCode+","+authType);
 
             Intent intent = new Intent();
-            intent.putExtra("identify", false);
-            setResult(CertifyFragment.RESULT_CODE_IDENTIFY, intent);
+            intent.putExtra("success", false);
+            setResult(Constants.RESULT_CODE_IDENTIFY, intent);
             context.finish();
         }
     }

@@ -16,7 +16,7 @@ public class IntroActivity extends AppCompatActivity {
 
     ViewPager pager;
     IntroPagerAdapter mAdapter;
-    Button btnStart, btnSkip;
+    Button btnStart;
     int mStartFrom;
     CirclePageIndicator mIndicator;
     @Override
@@ -51,29 +51,14 @@ public class IntroActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if (position == mAdapter.getCount() - 1) {
                     btnStart.setVisibility(View.VISIBLE);
-                    btnSkip.setVisibility(View.INVISIBLE);
                 } else {
                     btnStart.setVisibility(View.INVISIBLE);
-                    btnSkip.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
-            }
-        });
-
-        btnSkip = (Button)findViewById(R.id.btn_skip);
-        if(mStartFrom == Constants.START_FROM_SPLASH) {
-            btnSkip.setText("건너뛰기");
-        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
-            btnSkip.setText("메인으로");
-        }
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToNext();
             }
         });
     }

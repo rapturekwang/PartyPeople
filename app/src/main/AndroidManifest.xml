@@ -169,9 +169,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.IdentifyActivity"
+        <activity
+            android:name=".activity.IdentifyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" >
+        </activity>
+        <activity android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle.FullScreen" >
         </activity>
     </application>
 

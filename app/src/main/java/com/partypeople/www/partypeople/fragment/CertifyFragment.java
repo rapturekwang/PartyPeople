@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.IdentifyActivity;
 import com.partypeople.www.partypeople.activity.NoticeActivity;
+import com.partypeople.www.partypeople.data.Identity;
 import com.partypeople.www.partypeople.dialog.CertifyDialog;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -45,9 +46,7 @@ public class CertifyFragment extends Fragment {
     LoadingDialogFragment dialogFragment;
     ImageView accountBtn, phoneBtn;
     CheckBox chboxPhone;
-
-    public static final int REQUEST_CODE_IDENTIFY = 30;
-    public static final int RESULT_CODE_IDENTIFY = 40;
+    TextView temp;
 
     public static CertifyFragment newInstance(String name) {
         CertifyFragment fragment = new CertifyFragment();
@@ -76,6 +75,7 @@ public class CertifyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_certify, container, false);
 
         nameView = (EditText)view.findViewById(R.id.editName);
+        temp = (TextView)view.findViewById(R.id.temp_view);
 
         bankView = (Spinner)view.findViewById(R.id.spinner_bank);
         mBankAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
@@ -94,7 +94,7 @@ public class CertifyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(chboxPhone.isChecked()) {
-                    startActivityForResult(new Intent(getContext(), IdentifyActivity.class), REQUEST_CODE_IDENTIFY);
+                    startActivityForResult(new Intent(getContext(), IdentifyActivity.class), Constants.REQUEST_CODE_IDENTIFY);
                 } else {
                     Toast.makeText(getContext(), "개인정보 취급방침에 동의해야 합니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -141,12 +141,15 @@ public class CertifyFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_CODE_IDENTIFY && resultCode==RESULT_CODE_IDENTIFY) {
-            boolean result = data.getBooleanExtra("identify", false);
-            CertifyDialog dialog = new CertifyDialog(getContext(), result);
+        if(requestCode==Constants.REQUEST_CODE_IDENTIFY && resultCode==Constants.RESULT_CODE_IDENTIFY) {
+            boolean result = data.getBooleanExtra("success", false);
+            CertifyDialog dialog = new CertifyDialog(getContext(), result, Constants.CERTIFY_IDENTIFY);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
             if(result) {
+                Identity identity = (Identity)data.getSerializableExtra("identity");
+                Toast.makeText(getContext(), "이름 : " + identity.name + "\n생년월일 : " + identity.birth + "\n휴대폰번호 : " + identity.phone, Toast.LENGTH_SHORT).show();
+                temp.setText("이름 : " + identity.name + "\n생년월일 : " + identity.birth + "\n휴대폰번호 : " + identity.phone);
                 phoneBtn.setImageResource(R.drawable.certi_phone_af);
                 phoneBtn.setEnabled(false);
                 chboxPhone.setEnabled(false);
@@ -216,7 +219,7 @@ public class CertifyFragment extends Fragment {
 
             String[] code = response.split("/");
             boolean result = code[1].equals("응답코드:0000");
-            CertifyDialog dialog = new CertifyDialog(getContext(), result);
+            CertifyDialog dialog = new CertifyDialog(getContext(), result, Constants.CERTIFY_ACCOUNT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 

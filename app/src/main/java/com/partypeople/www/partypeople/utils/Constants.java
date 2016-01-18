@@ -25,10 +25,6 @@ public class Constants {
     public static final int CALL_TOS = 0;
     public static final int CALL_POLICY = 1;
 
-    public static final String VERSION = "0.1";
-
-    public static final String[] TAB_IDS = {"tab1", "tab2" , "tab3" };
-
     public static final int MAX_YEAR = 3;
     public static final int NUM_OF_MONTH = 12;
     public static final int MAX_DAY = 31;
@@ -37,4 +33,10 @@ public class Constants {
 
     public static final int LOGIN_WITH_LOCAL = 0;
     public static final int LOGIN_WITH_FACEBOOK = 1;
+
+    public static final int CERTIFY_IDENTIFY = 100;
+    public static final int CERTIFY_ACCOUNT = 101;
+
+    public static final int REQUEST_CODE_IDENTIFY = 30;
+    public static final int RESULT_CODE_IDENTIFY = 40;
 }

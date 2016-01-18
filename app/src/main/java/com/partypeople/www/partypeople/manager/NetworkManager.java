@@ -151,29 +151,54 @@ public class NetworkManager {
         });
     }
 
-    public void searchLocation(Context context, String keyword, final OnResultListener<ArrayList<String>> listener) {
-        RequestParams params = new RequestParams();
-        params.put("input", keyword);
-        params.put("components", "country:kr");
-        params.put("key", "AIzaSyCXsjiz9Q-Jn2sOv76SiHNOiWLIBefJKm0");
+//    public void searchLocation(Context context, String keyword, final OnResultListener<ArrayList<String>> listener) {
+//        RequestParams params = new RequestParams();
+//        params.put("input", keyword);
+//        params.put("components", "country:kr");
+//        params.put("key", "AIzaSyCXsjiz9Q-Jn2sOv76SiHNOiWLIBefJKm0");
+//
+//        client.get(context, URL_SEARCH_LOCATION, params, new TextHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+//                GooglePlaceResult result = gson.fromJson(responseString, GooglePlaceResult.class);
+//                ArrayList<String> resultList = new ArrayList<String>();
+//                for(int i=0;i<result.predictions.size();i++) {
+//                    resultList.add(result.predictions.get(i).description);
+//                }
+//                if(!result.status.equals("OK")) {
+//                    Log.d("NetworkManager", "search location Success but not status ok" + responseString);
+//                }
+//                listener.onSuccess(resultList);
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                Log.d("NetworkManager", "search location Fail" + statusCode + responseString);
+//                listener.onFail(statusCode);
+//            }
+//        });
+//    }
 
-        client.get(context, URL_SEARCH_LOCATION, params, new TextHttpResponseHandler() {
+    public void payment(final Context context, String param, final OnResultListener<String> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+        params.put("title", "test");
+        params.put("amount", Integer.parseInt("1000"));
+        params.put("email", "rapturekwang@gmail.com");
+        params.put("name", "정광희");
+        params.put("tel", Double.parseDouble("01031005883"));
+
+        client.post(context, URL_SERVER + "/pay.html", headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                GooglePlaceResult result = gson.fromJson(responseString, GooglePlaceResult.class);
-                ArrayList<String> resultList = new ArrayList<String>();
-                for(int i=0;i<result.predictions.size();i++) {
-                    resultList.add(result.predictions.get(i).description);
-                }
-                if(!result.status.equals("OK")) {
-                    Log.d("NetworkManager", "search location Success but not status ok" + responseString);
-                }
-                listener.onSuccess(resultList);
+                Log.d("NetworkManager", "payment Success" + responseString);
+                listener.onSuccess(responseString);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "search location Fail" + statusCode + responseString);
+                Log.d("NetworkManager", "payment Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
         });

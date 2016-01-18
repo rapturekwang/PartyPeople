@@ -222,9 +222,7 @@ public class MainActivity extends AppCompatActivity implements
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.guide :
-                intent = new Intent(MainActivity.this, IntroActivity.class);
-                intent.putExtra("startFrom", Constants.START_FROM_NAVIGATION);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, GuideActivity.class));
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.setting :
