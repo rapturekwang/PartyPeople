@@ -1,13 +1,12 @@
 package com.partypeople.www.partypeople.adapter;
 
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
-import com.partypeople.www.partypeople.data.Board;
-import com.partypeople.www.partypeople.view.FaqChildItemView;
-import com.partypeople.www.partypeople.view.FaqGroupItemView;
+import com.partypeople.www.partypeople.data.Report;
+import com.partypeople.www.partypeople.view.ReportChildItemView;
+import com.partypeople.www.partypeople.view.ReportGroupItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,27 +14,30 @@ import java.util.List;
 /**
  * Created by dongja94 on 2015-10-06.
  */
-public class FAQAdapter extends BaseExpandableListAdapter {
-    List<Board> faqs = new ArrayList<Board>();
+public class ReportAdapter extends BaseExpandableListAdapter {
+    List<Report> reports = new ArrayList<Report>();
 
     @Override
     public int getGroupCount() {
-        return faqs.size();
+        return reports.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 1;
+        if(reports.get(groupPosition).answer!=null)
+            return 1;
+        else
+            return 0;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return faqs.get(groupPosition).title;
+        return reports.get(groupPosition).question;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return faqs.get(groupPosition).description;
+        return reports.get(groupPosition).answer;
     }
 
     @Override
@@ -55,25 +57,25 @@ public class FAQAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        FaqGroupItemView v;
+        ReportGroupItemView v;
         if (convertView != null) {
-            v = (FaqGroupItemView)convertView;
+            v = (ReportGroupItemView)convertView;
         } else {
-            v = new FaqGroupItemView(parent.getContext());
+            v = new ReportGroupItemView(parent.getContext());
         }
-        v.setGroupItem(faqs.get(groupPosition).title);
+        v.setGroupItem(reports.get(groupPosition));
         return v;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        FaqChildItemView v;
+        ReportChildItemView v;
         if (convertView != null) {
-            v = (FaqChildItemView)convertView;
+            v = (ReportChildItemView)convertView;
         } else {
-            v = new FaqChildItemView(parent.getContext());
+            v = new ReportChildItemView(parent.getContext());
         }
-        v.setChildItem(faqs.get(groupPosition).description);
+        v.setChildItem(reports.get(groupPosition).answer);
 
         return v;
     }
@@ -83,8 +85,8 @@ public class FAQAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public void addFAQ(Board board) {
-        faqs.add(board);
+    public void addReport(Report report) {
+        reports.add(report);
         notifyDataSetChanged();
     }
 }

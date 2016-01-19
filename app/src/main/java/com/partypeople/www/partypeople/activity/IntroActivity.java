@@ -17,7 +17,6 @@ public class IntroActivity extends AppCompatActivity {
     ViewPager pager;
     IntroPagerAdapter mAdapter;
     Button btnStart;
-    int mStartFrom;
     CirclePageIndicator mIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +28,6 @@ public class IntroActivity extends AppCompatActivity {
 
         mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
         mIndicator.setViewPager(pager);
-
-        Intent intent = getIntent();
-        mStartFrom = intent.getExtras().getInt("startFrom");
 
         btnStart = (Button)findViewById(R.id.btn_start);
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +60,9 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     void goToNext() {
-        if (mStartFrom == Constants.START_FROM_SPLASH) {
-            Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
-            intent.putExtra("startfrom", Constants.START_FROM_INTRO);
-            startActivity(intent);
-            finish();
-        } else if (mStartFrom == Constants.START_FROM_NAVIGATION) {
-            finish();
-        }
+        Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
+        intent.putExtra("startfrom", Constants.START_FROM_INTRO);
+        startActivity(intent);
+        finish();
     }
 }

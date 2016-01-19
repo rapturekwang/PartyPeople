@@ -91,7 +91,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50% 모금됨"
+            android:text="50% 모임"
             android:id="@+id/text_progress"
             android:layout_alignTop="@+id/text_payment"
             android:layout_gravity="center_vertical"

@@ -149,7 +149,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="51% 모금됨"
+                        android:text="51% 모임"
                         android:id="@+id/text_progress"
                         android:textColor="#ffffff"
                         android:textSize="15dp"

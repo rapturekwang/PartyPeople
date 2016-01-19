@@ -11,7 +11,7 @@ import com.partypeople.www.partypeople.view.PushAlarmItemView;
  */
 public class PushAlarmListAdapter extends BaseAdapter {
     public static final String[] SETTING_MENUS = new String[] { "모금종료 알림",
-            "모임 일시 알림 24시간전", "모임 참여자 알림", "관심 테마모임 알림" };
+            "모임 일시 알림 24시간전", "모임 참여자 알림", "관심 테마모임 알림", "신고/문의 알림" };
 
     @Override
     public int getCount() {

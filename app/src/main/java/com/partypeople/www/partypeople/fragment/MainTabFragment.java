@@ -4,7 +4,6 @@ package com.partypeople.www.partypeople.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -13,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,16 +20,18 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.activity.LoginActivity;
+import com.partypeople.www.partypeople.activity.SearchActivity;
 import com.partypeople.www.partypeople.adapter.MainFragmentAdapter;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.User;
-import com.partypeople.www.partypeople.dialog.LoadingDialog;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.MainTabHeaderView;
 import com.partypeople.www.partypeople.dialog.PasswordDialog;
 
@@ -54,6 +56,7 @@ public class MainTabFragment extends Fragment {
     MainTabHeaderView header;
     String id, queryWord;
     LoadingDialogFragment dialogFragment;
+    Button btnSetting;
 
     public static MainTabFragment newInstance(int index) {
         MainTabFragment fragment = new MainTabFragment();
@@ -83,6 +86,20 @@ public class MainTabFragment extends Fragment {
         mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         mAdapter = new MainFragmentAdapter(getContext());
         warningView = (TextView) view.findViewById(R.id.text_warning);
+
+        btnSetting = (Button)view.findViewById(R.id.btn_setting);
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(PropertyManager.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), SearchActivity.class));
+                } else {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.putExtra("startfrom", Constants.START_FROM_MAIN);
+                    startActivity(intent);
+                }
+            }
+        });
 
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -199,6 +216,8 @@ public class MainTabFragment extends Fragment {
                 if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && (user.favorite_address==null || user.favorite_address.equals(""))) {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("맞춤모임 설정이 필요합니다");
+                    btnSetting.setVisibility(View.VISIBLE);
+                    btnSetting.setText("맞춤모임 설정하기");
                     listView.setVisibility(View.INVISIBLE);
                 }
                 else if(PropertyManager.getInstance().isLogin()) {
@@ -207,10 +226,13 @@ public class MainTabFragment extends Fragment {
                     header.setItemData(user.favorite_address, user.themes);
                     listView.addHeaderView(header);
                     warningView.setVisibility(View.GONE);
+                    btnSetting.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                 } else {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("로그인이 필요한 서비스 입니다");
+                    btnSetting.setVisibility(View.VISIBLE);
+                    btnSetting.setText("로그인");
                     listView.setVisibility(View.INVISIBLE);
                 }
                 break;

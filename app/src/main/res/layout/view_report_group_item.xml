@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="결제 취소 요청"
+        android:id="@+id/category"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/report_round_corner"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:padding="4.5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium Text"
+        android:id="@+id/text"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/category"
+        android:drawableLeft="@drawable/setting_q"
+        android:drawablePadding="11dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="8dp"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginRight="30dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/text"
+        android:src="@drawable/setting_arrow_down"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="8dp" />
+
+</RelativeLayout>

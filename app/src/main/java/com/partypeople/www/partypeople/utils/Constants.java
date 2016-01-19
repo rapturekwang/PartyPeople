@@ -17,8 +17,6 @@ public class Constants {
     public static final int STACK_REPLACE = 2;
     public static final int STACK_POP = 3;
 
-    public static final int START_FROM_SPLASH = 1;
-    public static final int START_FROM_NAVIGATION = 2;
     public static final int START_FROM_INTRO = 3;
     public static final int START_FROM_MAIN = 4;
 

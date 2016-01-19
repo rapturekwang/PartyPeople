@@ -211,6 +211,9 @@ public class MainActivity extends AppCompatActivity implements
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
+            case R.id.alarm :
+                startActivity(new Intent(MainActivity.this, AlarmActivity.class));
+                break;
             case R.id.theme :
                 startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 0);
                 break;
@@ -223,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.guide :
                 startActivity(new Intent(MainActivity.this, GuideActivity.class));
-                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.setting :
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));

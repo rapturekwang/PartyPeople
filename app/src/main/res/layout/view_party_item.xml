@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/text_progress"
-                android:text="50% 모금됨"
+                android:text="50% 모임"
                 android:layout_alignTop="@+id/text_payment"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ffffff"

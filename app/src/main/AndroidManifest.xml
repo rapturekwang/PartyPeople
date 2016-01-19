@@ -28,6 +28,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle"
             android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -67,7 +77,8 @@
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoTitle" >
+            android:theme="@style/AppTheme.NoTitle"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activity.SearchActivity"
@@ -82,10 +93,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
-                <data
-                    android:host="@string/kakaolink_host"
-                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -174,9 +181,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" >
         </activity>
-        <activity android:name=".activity.GuideActivity"
+        <activity
+            android:name=".activity.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle.FullScreen" >
+        </activity>
+        <activity android:name=".activity.AlarmActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" >
         </activity>
     </application>
 

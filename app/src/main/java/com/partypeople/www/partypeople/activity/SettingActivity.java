@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.partypeople.www.partypeople.fragment.CertifyFragment;
 import com.partypeople.www.partypeople.fragment.ChangePasswordFragment;
 import com.partypeople.www.partypeople.fragment.FAQFragment;
 import com.partypeople.www.partypeople.fragment.PushAlarmFragment;
+import com.partypeople.www.partypeople.fragment.ReportFragment;
 import com.partypeople.www.partypeople.fragment.TOSFragment;
 import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
 import com.partypeople.www.partypeople.dialog.LeaveDialog;
@@ -101,12 +103,11 @@ public class SettingActivity extends AppCompatActivity {
         });
         linearLayout3.addView(settingItemView);
         settingItemView = new SettingItemView(this);
-        settingItemView.setItemData("문의 하기", "");
+        settingItemView.setItemData("신고 / 문의", "");
         settingItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:rapturekwang@gmail.com"));
-                startActivity(intent);
+                changeFragment("신고 & 문의", ReportFragment.newInstance("report"));
             }
         });
         linearLayout3.addView(settingItemView);
@@ -187,20 +188,28 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(onTopFlag) {
-            super.onBackPressed();
-        } else {
+        super.onBackPressed();
+        if(getSupportFragmentManager().getBackStackEntryCount()==0) {
             this.item.setVisible(true);
             titleView.setText("설정");
             onTopFlag = true;
             actionBar.setDisplayHomeAsUpEnabled(false);
             scrollView.setVisibility(View.VISIBLE);
         }
+//        if(onTopFlag) {
+//            super.onBackPressed();
+//        } else {
+//            this.item.setVisible(true);
+//            titleView.setText("설정");
+//            onTopFlag = true;
+//            actionBar.setDisplayHomeAsUpEnabled(false);
+//            scrollView.setVisibility(View.VISIBLE);
+//        }
     }
 
     private void changeFragment(String title, Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment).commit();
+                .replace(R.id.container, fragment).addToBackStack(null).commit();
         scrollView.setVisibility(View.GONE);
         item.setVisible(false);
         actionBar.setDisplayHomeAsUpEnabled(true);

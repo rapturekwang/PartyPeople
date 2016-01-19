@@ -19,6 +19,7 @@ import com.partypeople.www.partypeople.data.LocalInfoResult;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.PartysResult;
 import com.partypeople.www.partypeople.data.PasswordChange;
+import com.partypeople.www.partypeople.data.Report;
 import com.partypeople.www.partypeople.data.Token;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
@@ -336,6 +337,27 @@ public class NetworkManager {
 //
 //        });
 //    }
+
+    public void getReport(Context context, final OnResultListener<Report[]> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+
+        client.get(context, URL_SERVER, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get report Success " + responseString);
+                Report[] result = gson.fromJson(responseString, Report[].class);
+                listener.onSuccess(result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "get report Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+        });
+    }
 
     public void getBoards(Context context, final OnResultListener<Board[]> listener) {
         client.get(context, URL_BOARD, new TextHttpResponseHandler() {

@@ -298,7 +298,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0] + " " + array[1]);
         priceView.setText(party.pay_method.get(0).price + "원");
         int progress = (int)((party.members.size()*party.pay_method.get(0).price)/party.expect_pay*100);
-        progressView.setText(progress + "% 모금됨");
+        progressView.setText(progress + "% 모임");
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
         totalPriceView.setText((int) party.expect_pay + "원");
