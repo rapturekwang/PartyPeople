@@ -77,7 +77,11 @@ public class RewordItemView extends RelativeLayout implements Checkable {
             rewordView.setText(payMethod.title);
         }
         this.num = num;
-        numView.setImageResource(ids[num]);
+        if(num==-1) {
+            numView.setVisibility(View.GONE);
+        } else {
+            numView.setImageResource(ids[num]);
+        }
     }
 
     private void drawCheck() {

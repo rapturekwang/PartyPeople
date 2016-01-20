@@ -70,7 +70,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(!name.getText().toString().equals("")) {
                     user.name = name.getText().toString();
                 }
-                Log.d("EditProfileActivity", "test: " + tel.getText().toString());
                 if(!tel.getText().toString().equals("")) {
                     user.tel = Double.parseDouble(tel.getText().toString());
                 }
@@ -78,7 +77,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     user.address = location;
                 }
                 if(!name.getText().toString().equals("") || !tel.getText().toString().equals("") || !location.equals("")) {
-                    Log.d("EditProfileActivity", "call putuser");
                     user.has_photo = propertyManager.getUser().has_photo;
                     NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                         @Override

@@ -84,6 +84,7 @@ public class SplashActivity extends AppCompatActivity {
     private void setUpIfNeeded() {
         if (checkPlayServices()) {
             String regId = PropertyManager.getInstance().getRegistrationToken();
+            Log.d("regId", regId);
             if (!regId.equals("")) {
                 doRealStart();
             } else {

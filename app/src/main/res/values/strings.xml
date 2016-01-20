@@ -53,6 +53,7 @@
     </string-array>
 
     <string-array name="bank_name">
+        <item>은행</item>
         <item>산업</item>
         <item>기업</item>
         <item>국민</item>
@@ -79,6 +80,7 @@
     </string-array>
 
     <string-array name="bank_code">
+        <item>00</item>
         <item>02</item>
         <item>03</item>
         <item>04</item>

@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.partypeople.www.partypeople.fragment.MakePartyChildFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_price"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@null"
+        android:textColor="#2d2d2d"
+        android:textSize="20sp"
+        android:hint="20000"
+        android:layout_marginLeft="16dp"
+        android:singleLine="true"
+        android:inputType="number"
+        android:minWidth="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원"
+        android:id="@+id/textView52"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/edit_price"
+        android:textSize="20sp"
+        android:textColor="#2d2d2d" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="금액에 포함된 사항 설명"
+        android:id="@+id/textView61"
+        android:layout_below="@+id/edit_price"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:textColor="#000000" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_contents"
+        android:layout_below="@+id/textView61"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:minHeight="150dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_rectangle_nomargin"
+        android:textSize="15sp"
+        android:textColor="#474747"
+        android:paddingLeft="12dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingRight="12dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="left|top" />
+</RelativeLayout>

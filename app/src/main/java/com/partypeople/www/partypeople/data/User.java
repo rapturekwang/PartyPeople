@@ -15,7 +15,6 @@ public class User implements Serializable{
     public boolean auth;
     public String bank_name;
     public double bank_account;
-    public double phone;
     public List<Follow> following;
     public List<Follow> follower;
     public String address;

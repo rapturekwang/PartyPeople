@@ -31,8 +31,8 @@ import java.util.List;
  * Created by Tacademy on 2015-10-29.
  */
 public class MakePartyTwoFragment extends Fragment {
-    Fragment[] list = {MakePartyChildFragment.newInstance(0),
-            MakePartyChildFragment.newInstance(1),
+    Fragment[] list = {MakePartyChildFragment2.newInstance(0),
+            MakePartyChildFragment2.newInstance(1),
             MakePartyChildFragment.newInstance(2)};
     private static final String ARG_NAME = "name";
 
@@ -56,7 +56,7 @@ public class MakePartyTwoFragment extends Fragment {
     };
 
     EditText expectPayView;
-    RadioGroup radioGroup;
+    RadioButton radioButton1, radioButton2, radioButton3;
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -96,7 +96,7 @@ public class MakePartyTwoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MakePartyActivity activity = (MakePartyActivity)getActivity();
-                MakePartyChildFragment fragment = (MakePartyChildFragment)getChildFragmentManager().getFragments().get(0);
+                Fragment fragment = getChildFragmentManager().getFragments().get(0);
                 String warningMessage="";
                 if(expectPayView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
                 if(warningMessage.equals("")) {
@@ -107,7 +107,11 @@ public class MakePartyTwoFragment extends Fragment {
                 }
                 if(activity.party.pay_method != null)
                     activity.party.pay_method.clear();
-                activity.party.pay_method = fragment.getItem();
+                if(radioButton3.isChecked()) {
+                    activity.party.pay_method = ((MakePartyChildFragment)fragment).getItem();
+                } else {
+                    activity.party.pay_method = ((MakePartyChildFragment2)fragment).getItem();
+                }
                 for(int i=0; i<activity.party.pay_method.size();i++) {
                     if(activity.party.pay_method.get(i).title.equals("")) {
                         Toast.makeText(getContext(), "포함사항 내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
@@ -127,10 +131,8 @@ public class MakePartyTwoFragment extends Fragment {
             }
         });
 
-        radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-
-        RadioButton radioButton = (RadioButton)view.findViewById(R.id.radioButton);
-        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioButton1 = (RadioButton)view.findViewById(R.id.radioButton);
+        radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -138,8 +140,8 @@ public class MakePartyTwoFragment extends Fragment {
                 }
             }
         });
-        radioButton = (RadioButton)view.findViewById(R.id.radioButton2);
-        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioButton2 = (RadioButton)view.findViewById(R.id.radioButton2);
+        radioButton2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -147,8 +149,8 @@ public class MakePartyTwoFragment extends Fragment {
                 }
             }
         });
-        radioButton = (RadioButton)view.findViewById(R.id.radioButton3);
-        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioButton3 = (RadioButton)view.findViewById(R.id.radioButton3);
+        radioButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {

@@ -50,7 +50,11 @@ public class RewordViewAdapter extends BaseAdapter{
         } else {
             view = (RewordItemView)convertView;
         }
-        view.setItemData(list.get(position), position);
+        if(list.size()==1) {
+            view.setItemData(list.get(position), -1);
+        } else {
+            view.setItemData(list.get(position), position);
+        }
 
         return view;
     }

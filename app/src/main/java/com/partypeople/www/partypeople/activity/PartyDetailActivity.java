@@ -49,7 +49,6 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
-import com.partypeople.www.partypeople.dialog.LoadingDialog;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
@@ -73,10 +72,8 @@ public class PartyDetailActivity extends AppCompatActivity {
     public Party party;
     DetailTabAdapter mAdpater;
     BottomSheet sheet;
-//    LoadingDialog loadingDialog;
     ShareDialog shareDialog;
     CallbackManager callbackManager;
-    Bitmap theBitmap = null;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -89,9 +86,6 @@ public class PartyDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_detail);
-
-//        loadingDialog = new LoadingDialog(this);
-//        loadingDialog.show();
 
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
@@ -319,8 +313,6 @@ public class PartyDetailActivity extends AppCompatActivity {
                 .placeholder(Color.TRANSPARENT)
                 .error(Color.TRANSPARENT)
                 .into(imageView);
-
-//        loadingDialog.dismiss();
     }
 
     private void initView() {
