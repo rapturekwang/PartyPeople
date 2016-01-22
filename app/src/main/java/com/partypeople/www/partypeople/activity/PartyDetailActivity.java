@@ -168,7 +168,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (PropertyManager.getInstance().isLogin()) {
                     for(int i=0;i<party.members.size();i++) {
-                        if (PropertyManager.getInstance().getUser().id.equals(party.members.get(i).id)) {
+                        if (party.members.get(i).role.equals("MEMBER") && PropertyManager.getInstance().getUser().id.equals(party.members.get(i).id)) {
                             Toast.makeText(PartyDetailActivity.this, "이미 참여한 모임 입니다", Toast.LENGTH_SHORT).show();
                             return;
                         }

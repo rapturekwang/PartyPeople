@@ -341,7 +341,7 @@ public class NetworkManager {
 //        });
 //    }
 
-    public void sendReport(Context context, Report report, final OnResultListener<String> listener) {
+    public void sendReport(Context context, Report report, final OnResultListener<Report> listener) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         RequestParams params = new RequestParams();
@@ -352,7 +352,8 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "send report Success " + responseString);
-                listener.onSuccess(responseString);
+                Report result = gson.fromJson(responseString, Report.class);
+                listener.onSuccess(result);
             }
 
             @Override
@@ -595,18 +596,49 @@ public class NetworkManager {
         }
     }
 
-    public void putUserImage(Context context, File param1, String param2, final OnResultListener<String> listener ) {
+    public void putReportImage(Context context, File image, String id, final OnResultListener<String> listener) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         RequestParams params = new RequestParams();
         try {
-            params.put("photo", param1);
+            params.put("photo", image);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String url = URL_USERS + "/" + param2 + "/photo";
-        Log.d("NetworkManager", url);
+        String url = URL_REPORT + "/" + id + "/photo";
+
+        try {
+            client.post(context, url, headers, params, null, new TextHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    listener.onSuccess(responseString);
+                    Log.d("NetworkManager", "put report image Success");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    listener.onFail(statusCode);
+                    Log.d("NetworkManager", "put report image Fail: " + statusCode + responseString);
+                }
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putUserImage(Context context, File image, String id, final OnResultListener<String> listener ) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+        try {
+            params.put("photo", image);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String url = URL_USERS + "/" + id + "/photo";
 
         try {
             client.post(context, url, headers, params,

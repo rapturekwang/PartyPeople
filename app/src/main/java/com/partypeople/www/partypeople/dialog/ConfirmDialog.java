@@ -24,9 +24,11 @@ import com.partypeople.www.partypeople.utils.Constants;
  */
 public class ConfirmDialog extends Dialog{
     LoadingDialogFragment dialogFragment;
+    Context context;
 
     public ConfirmDialog(final Context context, final Party party, final FragmentManager fragmentManager) {
         super(context);
+        this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_confirm);
@@ -96,7 +98,7 @@ public class ConfirmDialog extends Dialog{
         intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
         intent.putExtra("party", party);
         getContext().startActivity(intent);
-        ((Activity)getContext()).finish();
+        ((Activity)context).finish();
         dialogFragment.dismiss();
     }
 

@@ -235,7 +235,6 @@ public class MakePartyOneFragment extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
-//                activity.nextFragment();
             }
         });
 

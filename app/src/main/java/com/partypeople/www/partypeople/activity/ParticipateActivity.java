@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class ParticipateActivity extends AppCompatActivity {
     RewordViewAdapter mAdapter;
     TextView textView;
     EditText editName, editTel;
+    CheckBox checkBox;
     int selected = 0;
 
     @Override
@@ -50,8 +52,17 @@ public class ParticipateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editName.getText().toString().equals("")) {
+                if(editName.getText().toString().equals("")) {
                     Toast.makeText(ParticipateActivity.this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(editTel.getText().toString().length() < 8) {
+                    Toast.makeText(ParticipateActivity.this, "전화번호를 제대로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!checkBox.isChecked()) {
+                    Toast.makeText(ParticipateActivity.this, "이용약관에 동의해 주세요.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 Intent intent = new Intent(ParticipateActivity.this, PaymentActivity.class);
                 intent.putExtra("party", party);
@@ -79,6 +90,7 @@ public class ParticipateActivity extends AppCompatActivity {
             }
         });
 
+        checkBox = (CheckBox)findViewById(R.id.checkBox);
         editName = (EditText)findViewById(R.id.edit_name);
         editName.setText(PropertyManager.getInstance().getUser().name);
         editTel = (EditText)findViewById(R.id.edit_tel);

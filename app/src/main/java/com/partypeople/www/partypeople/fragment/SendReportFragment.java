@@ -1,6 +1,13 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +25,10 @@ import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.ReportAdapter;
 import com.partypeople.www.partypeople.data.Report;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +39,11 @@ public class SendReportFragment extends Fragment {
     ReportAdapter mAdapter;
     Spinner reportView;
     ArrayAdapter<String> mReportAdapter;
-    TextView textCancel;
+    TextView textCancel, textImgName;
     EditText questionView;
+    File mSavedFile = null;
+
+    public static final int REQUEST_CODE_CROP_IMAGE = 20;
 
     public static SendReportFragment newInstance(String name) {
         SendReportFragment fragment = new SendReportFragment();
@@ -58,6 +73,7 @@ public class SendReportFragment extends Fragment {
 
         questionView = (EditText)view.findViewById(R.id.edit_report);
         textCancel = (TextView)view.findViewById(R.id.text_cancel);
+        textImgName = (TextView)view.findViewById(R.id.text_imgname);
 
         reportView = (Spinner)view.findViewById(R.id.spinner);
         mReportAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
@@ -91,10 +107,26 @@ public class SendReportFragment extends Fragment {
                 Report report = new Report();
                 report.category = reportView.getSelectedItem().toString();
                 report.question = questionView.getText().toString();
-                NetworkManager.getInstance().sendReport(getContext(), report, new NetworkManager.OnResultListener<String>() {
+                NetworkManager.getInstance().sendReport(getContext(), report, new NetworkManager.OnResultListener<Report>() {
                     @Override
-                    public void onSuccess(String result) {
-                        getActivity().onBackPressed();
+                    public void onSuccess(Report result) {
+                        if(mSavedFile==null) {
+                            Toast.makeText(getContext(), "신고/문의 가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                            getActivity().onBackPressed();
+                        } else {
+                            NetworkManager.getInstance().putReportImage(getContext(), mSavedFile, result.id, new NetworkManager.OnResultListener<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    Toast.makeText(getContext(), "신고/문의 가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    getActivity().onBackPressed();
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "통신상태가 불안정 합니다", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -105,6 +137,43 @@ public class SendReportFragment extends Fragment {
             }
         });
 
+        ImageView imgBtn = (ImageView)view.findViewById(R.id.img_btn);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                photoPickerIntent.setType("image/*");
+                photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                photoPickerIntent.putExtra("noFaceDetection", true);
+                startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP_IMAGE);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE_CROP_IMAGE && resultCode==getActivity().RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getActivity().getContentResolver().query(
+                        selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                mSavedFile = new File(filePath);
+                textImgName.setText(mSavedFile.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

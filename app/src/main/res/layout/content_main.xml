@@ -38,7 +38,7 @@
             app:tabPaddingTop="3dp"
             app:tabIndicatorColor="@null"
             app:tabTextColor="@color/tabUnfocused"
-            app:tabSelectedTextColor="@color/tabFocused"/>
+            app:tabSelectedTextColor="@color/tabFocused" />
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:id="@+id/container"
             android:visibility="gone"/>
