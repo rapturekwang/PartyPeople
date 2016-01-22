@@ -19,6 +19,7 @@ public class Constants {
 
     public static final int START_FROM_INTRO = 3;
     public static final int START_FROM_MAIN = 4;
+    public static final int START_FROM_MAKE_PARTY = 5;
 
     public static final int CALL_TOS = 0;
     public static final int CALL_POLICY = 1;
@@ -37,4 +38,7 @@ public class Constants {
 
     public static final int REQUEST_CODE_IDENTIFY = 30;
     public static final int RESULT_CODE_IDENTIFY = 40;
+
+    public static final int REQUEST_CODE_PAYMENT = 10;
+    public static final int RESULT_CODE_PAYMENT = 11;
 }

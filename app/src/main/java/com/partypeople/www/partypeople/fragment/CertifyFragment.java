@@ -171,7 +171,7 @@ public class CertifyFragment extends Fragment {
 
         if(PropertyManager.getInstance().getUser().auth) {
             phoneBtn.setImageResource(R.drawable.certi_phone_cg);
-            accountBtn.setImageResource(R.drawable.certi_phone_cg);
+            accountBtn.setImageResource(R.drawable.certi_account_cg);
         }
 
         TextView textBtn = (TextView)view.findViewById(R.id.text_policy);

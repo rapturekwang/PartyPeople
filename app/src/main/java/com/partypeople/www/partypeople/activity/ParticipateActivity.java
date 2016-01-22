@@ -11,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 
 import java.util.List;
@@ -27,14 +30,15 @@ public class ParticipateActivity extends AppCompatActivity {
     ListView listView;
     RewordViewAdapter mAdapter;
     TextView textView;
+    EditText editName, editTel;
+    int selected = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participate);
 
-        Intent intent = getIntent();
-        party = (Party)intent.getSerializableExtra("party");
+        party = (Party)getIntent().getSerializableExtra("party");
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
@@ -46,18 +50,15 @@ public class ParticipateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                NetworkManager.getInstance().participate(ParticipateActivity.this, party.id, new NetworkManager.OnResultListener<String>() {
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        finish();
-//                    }
-//
-//                    @Override
-//                    public void onFail(int code) {
-//
-//                    }
-//                });
-                startActivity(new Intent(ParticipateActivity.this, PaymentActivity.class));
+                if (editName.getText().toString().equals("")) {
+                    Toast.makeText(ParticipateActivity.this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                Intent intent = new Intent(ParticipateActivity.this, PaymentActivity.class);
+                intent.putExtra("party", party);
+                intent.putExtra("selected", selected);
+                intent.putExtra("tel", editTel.getText().toString());
+                intent.putExtra("name", editName.getText().toString());
+                startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
             }
         });
 
@@ -68,14 +69,20 @@ public class ParticipateActivity extends AppCompatActivity {
         listView.setItemChecked(0, true);
 
         textView = (TextView)findViewById(R.id.text_payment);
-        textView.setText(party.pay_method.get(0).price + " 원");
+        textView.setText(party.amount_method.get(0).price + " 원");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(party.pay_method.get(position).price + " 원");
+                textView.setText(party.amount_method.get(position).price + " 원");
+                selected = position;
             }
         });
+
+        editName = (EditText)findViewById(R.id.edit_name);
+        editName.setText(PropertyManager.getInstance().getUser().name);
+        editTel = (EditText)findViewById(R.id.edit_tel);
+        editTel.setText(Double.toString(PropertyManager.getInstance().getUser().tel));
 
         TextView textBtn = (TextView)findViewById(R.id.text_btn_tos);
         textBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,13 +107,13 @@ public class ParticipateActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        for(int i=0; i<party.pay_method.size(); i++) {
-            mAdapter.add(party.pay_method.get(i));
+        for(int i=0; i<party.amount_method.size(); i++) {
+            mAdapter.add(party.amount_method.get(i));
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = (int)Math.ceil(75 * party.pay_method.size() * getResources().getDisplayMetrics().density)
-                + (int)Math.ceil(7 * party.pay_method.size()-1 * getResources().getDisplayMetrics().density);
+        params.height = (int)Math.ceil(75 * party.amount_method.size() * getResources().getDisplayMetrics().density)
+                + (int)Math.ceil(7 * party.amount_method.size()-1 * getResources().getDisplayMetrics().density);
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
@@ -117,5 +124,18 @@ public class ParticipateActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==Constants.REQUEST_CODE_PAYMENT && resultCode==Constants.RESULT_CODE_PAYMENT) {
+            boolean result = data.getBooleanExtra("result", false);
+            if(result) {
+                Toast.makeText(ParticipateActivity.this, "결제 성공", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ParticipateActivity.this, "결제 실패", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

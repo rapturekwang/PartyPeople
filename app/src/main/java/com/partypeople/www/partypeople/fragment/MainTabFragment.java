@@ -114,10 +114,10 @@ public class MainTabFragment extends Fragment {
 
                 switch (getArguments().getInt(ARG_INDEX)) {
                     case 0:
-                        keyword = "sort";
-                        parameter = "LIKED";
                         break;
                     case 1:
+                        keyword = "sort";
+                        parameter = "LIKED";
                         break;
                     case 2:
                         break;
@@ -153,7 +153,7 @@ public class MainTabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 position--;
-                if (getArguments().getInt(ARG_INDEX) == 1) {
+                if (getArguments().getInt(ARG_INDEX) == 2) {
                     if (position == 0)
                         return;
                     position--;
@@ -208,10 +208,12 @@ public class MainTabFragment extends Fragment {
 
         switch (getArguments().getInt(ARG_INDEX)) {
             case 0:
+                break;
+            case 1:
                 keyword = "sort";
                 parameter = "LIKED";
                 break;
-            case 1:
+            case 2:
                 User user = PropertyManager.getInstance().getUser();
                 if(PropertyManager.getInstance().isLogin() && user.themes.length==0 && (user.favorite_address==null || user.favorite_address.equals(""))) {
                     warningView.setVisibility(View.VISIBLE);
@@ -235,8 +237,6 @@ public class MainTabFragment extends Fragment {
                     btnSetting.setText("로그인");
                     listView.setVisibility(View.INVISIBLE);
                 }
-                break;
-            case 2:
                 break;
             case 3:
                 keyword = "name";

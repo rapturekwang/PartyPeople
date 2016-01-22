@@ -40,8 +40,11 @@ public class Party implements Serializable{
     @SerializedName("private")
     public boolean privated;
     public String password = "0000";
-    public double expect_pay;
-    public List<PayMethod> pay_method;
+//    public double expect_pay;
+//    public List<PayMethod> pay_method;
+    public double amount_expect;
+    public List<PayMethod> amount_method;
+    public double amount_total;
     public User owner;
     public List<Like> likes;
     public List<Member> members;

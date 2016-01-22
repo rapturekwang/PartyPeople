@@ -6,9 +6,10 @@ package com.partypeople.www.partypeople.data;
 public class Report {
     public String category;
     public String question;
-    public String owner;
+    public User owner;
     public String answer;
     public String created_at;
     public boolean has_photo;
     public String photo;
+    public String id;
 }

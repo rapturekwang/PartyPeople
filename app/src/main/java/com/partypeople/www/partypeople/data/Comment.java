@@ -13,4 +13,5 @@ public class Comment implements Serializable {
     public String photo;
     public String created_at;
     public String id;
+    public boolean participant;
 }

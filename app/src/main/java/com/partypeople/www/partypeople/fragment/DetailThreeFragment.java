@@ -159,6 +159,12 @@ public class DetailThreeFragment extends Fragment {
         mAfterAdapter.removeAll();
 
         for(int i=0;i<activity.party.comments.size();i++) {
+            for(int j=0;j<activity.party.members.size();j++) {
+                if(activity.party.members.get(j).id.equals(activity.party.comments.get(i).from.id)) {
+                    activity.party.comments.get(i).participant = true;
+                    break;
+                }
+            }
             if(DateUtil.getInstance().compare(activity.party.comments.get(i).created_at, activity.party.start_at)) {
                 mBeforeAdapter.add(activity.party.comments.get(i));
             } else {

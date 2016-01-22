@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +13,18 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MainActivity;
+import com.partypeople.www.partypeople.activity.PartyDetailActivity;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.Constants;
 
 /**
  * Created by kwang on 16. 1. 14..
  */
 public class ConfirmDialog extends Dialog{
+    LoadingDialogFragment dialogFragment;
+
     public ConfirmDialog(final Context context, final Party party, final FragmentManager fragmentManager) {
         super(context);
 
@@ -33,7 +38,7 @@ public class ConfirmDialog extends Dialog{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
+                dialogFragment = new LoadingDialogFragment();
                 dialogFragment.show(fragmentManager, "loading");
                 NetworkManager.getInstance().makeParty(getContext(), party, new NetworkManager.OnResultListener<PartyResult>() {
                     @Override
@@ -44,35 +49,24 @@ public class ConfirmDialog extends Dialog{
                                 if (party.imageFile != null) {
                                     NetworkManager.getInstance().putGroupImage(getContext(), party.imageFile, result.data.id, new NetworkManager.OnResultListener<String>() {
                                         @Override
-                                        public void onSuccess(String result) {
-                                            Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getContext(), MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            getContext().startActivity(intent);
-                                            dialogFragment.dismiss();
+                                        public void onSuccess(String result3) {
+                                            successMakeParty(result.data);
                                         }
 
                                         @Override
                                         public void onFail(int code) {
-                                            Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
-                                            dismiss();
-                                            dialogFragment.dismiss();
+                                            failMakeParty("사진 업로드가 실패하였습니다");
                                             return;
                                         }
                                     });
                                 } else {
-                                    Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getContext(), MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    getContext().startActivity(intent);
+                                    successMakeParty(result.data);
                                 }
                             }
 
                             @Override
                             public void onFail(int code) {
-                                Toast.makeText(getContext(), "사진 업로드가 실패하였습니다", Toast.LENGTH_SHORT).show();
-                                dismiss();
-                                dialogFragment.dismiss();
+                                failMakeParty("사진 업로드가 실패하였습니다");
                                 return;
                             }
                         });
@@ -80,9 +74,7 @@ public class ConfirmDialog extends Dialog{
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(getContext(), "모임 생성이 실패하였습니다", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                        dialogFragment.dismiss();
+                        failMakeParty("모임 생성이 실패하였습니다.");
                         return;
                     }
                 });
@@ -96,5 +88,21 @@ public class ConfirmDialog extends Dialog{
                 dismiss();
             }
         });
+    }
+
+    void successMakeParty(Party party) {
+        Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), PartyDetailActivity.class);
+        intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
+        intent.putExtra("party", party);
+        getContext().startActivity(intent);
+        ((Activity)getContext()).finish();
+        dialogFragment.dismiss();
+    }
+
+    void failMakeParty(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        dismiss();
+        dialogFragment.dismiss();
     }
 }

@@ -12,7 +12,7 @@
         android:id="@+id/navi_menu2">
         <item android:id="@+id/alarm"
             android:title="알림"
-            android:icon="@drawable/navi_home"
+            android:icon="@drawable/navi_alarm"
             android:orderInCategory="100" />
     </group>
     <group android:checkableBehavior="none"

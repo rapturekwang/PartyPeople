@@ -51,7 +51,7 @@ public class DateUtil {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = null;
         try {
-            date = (Date)formatter.parse(input);
+            date = formatter.parse(input);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -107,9 +107,29 @@ public class DateUtil {
         return DateFormat.format("MM월 dd일 / HH:mm", d).toString();
     }
 
+    public String getSharingFormat(String partyTime) {
+        long time = changeStringToLong(partyTime);
+        int hour = Integer.parseInt(DateFormat.format("HH", time).toString());
+
+        String result;
+        result = DateFormat.format("yyyy년 MM월 dd일 ", time).toString();
+        if(hour == 12) {
+            result += "오후 " + hour;
+        } else if(hour == 0) {
+            result += "오전 " + 12;
+        } else if(hour > 12) {
+            result += "오후 " + (hour-12);
+        } else {
+            result += "오전 " + hour;
+        }
+        result += DateFormat.format(":mm", time).toString();
+
+        return result;
+    }
+
     public int getDayOfMonth(String year, String month) {
         Date date = new Date();
-//        String yearAndmonth = year + month;
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
         try {
             date = formatter.parse(year + month);
@@ -125,5 +145,16 @@ public class DateUtil {
     public String changeToPostFormat(String date) {
         Long temp = changeStringToLong(date);
         return changeLongToString(temp);
+    }
+
+    public String getDueDate() {
+        long time= System.currentTimeMillis();
+        time += 2 * 24 * 60 * 60 * 1000;
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(time);
+
+        String dueDate = DateFormat.format("yyyyMMdd", cal).toString();
+
+        return String.valueOf(dueDate);
     }
 }

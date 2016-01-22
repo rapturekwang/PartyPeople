@@ -100,24 +100,24 @@ public class MakePartyTwoFragment extends Fragment {
                 String warningMessage="";
                 if(expectPayView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
                 if(warningMessage.equals("")) {
-                    activity.party.expect_pay = Double.parseDouble(expectPayView.getText().toString());
+                    activity.party.amount_expect = Double.parseDouble(expectPayView.getText().toString());
                 } else {
                     Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(activity.party.pay_method != null)
-                    activity.party.pay_method.clear();
+                if(activity.party.amount_method != null)
+                    activity.party.amount_method.clear();
                 if(radioButton3.isChecked()) {
-                    activity.party.pay_method = ((MakePartyChildFragment)fragment).getItem();
+                    activity.party.amount_method = ((MakePartyChildFragment)fragment).getItem();
                 } else {
-                    activity.party.pay_method = ((MakePartyChildFragment2)fragment).getItem();
+                    activity.party.amount_method = ((MakePartyChildFragment2)fragment).getItem();
                 }
-                for(int i=0; i<activity.party.pay_method.size();i++) {
-                    if(activity.party.pay_method.get(i).title.equals("")) {
+                for(int i=0; i<activity.party.amount_method.size();i++) {
+                    if(activity.party.amount_method.get(i).title.equals("")) {
                         Toast.makeText(getContext(), "포함사항 내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(activity.party.pay_method.get(i).price == -1) {
+                    if(activity.party.amount_method.get(i).price == -1) {
                         Toast.makeText(getContext(), "포함사항 금액을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }

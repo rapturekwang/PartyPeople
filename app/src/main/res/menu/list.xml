@@ -3,5 +3,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/share_bg">
     <item android:id="@+id/share_fb" android:icon="@drawable/share_fb" android:title="@string/fb"/>
     <item android:id="@+id/share_kko" android:icon="@drawable/share_kko" android:title="@string/kko"/>
-    <item android:id="@+id/share_twitter" android:icon="@drawable/share_insta" android:title="@string/twitter"/>
+    <item android:id="@+id/share_twitter" android:icon="@drawable/share_twiter" android:title="@string/twitter"/>
 </menu>

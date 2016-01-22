@@ -74,6 +74,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     BottomSheet sheet;
     ShareDialog shareDialog;
     CallbackManager callbackManager;
+    int startFrom;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -89,6 +90,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         party = (Party)intent.getSerializableExtra("party");
+        startFrom = intent.getIntExtra("startFrom", -1);
 
         imagePager = (ViewPager)findViewById(R.id.image_pager);
         DetailImagePagerAdapter adapter = new DetailImagePagerAdapter(this, party.photos, party.has_photos);
@@ -143,7 +145,7 @@ public class PartyDetailActivity extends AppCompatActivity {
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(200 + 230 * party.pay_method.size());
+                        setPagerHeight(200 + 230 * party.amount_method.size());
                         ((DetailTwoFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 2:
@@ -232,6 +234,9 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_app_key), getResources().getString(R.string.twitter_secret));
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
+
+        if(startFrom==Constants.START_FROM_MAKE_PARTY)
+            showDialog(0);
     }
 
     private void changeLike(boolean isChecked) {
@@ -290,12 +295,12 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0]);
         else
             locationView.setText(array[0] + " " + array[1]);
-        priceView.setText(party.pay_method.get(0).price + "원");
-        int progress = (int)((party.members.size()*party.pay_method.get(0).price)/party.expect_pay*100);
+        priceView.setText(party.amount_method.get(0).price + "원");
+        int progress = (int)((party.members.size()*party.amount_method.get(0).price)/party.amount_expect*100);
         progressView.setText(progress + "% 모임");
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
-        totalPriceView.setText((int) party.expect_pay + "원");
+        totalPriceView.setText((int) party.amount_expect + "원");
         if(party.likes!=null) {
             chboxView.setText("" + party.likes.size());
             if (PropertyManager.getInstance().isLogin() && party.likes.size() > 0) {
@@ -336,20 +341,20 @@ public class PartyDetailActivity extends AppCompatActivity {
     @Nullable
     @Override
     protected Dialog onCreateDialog(final int position, Bundle args) {
-        sheet = new BottomSheet.Builder(this, R.style.BottomSheet_CustomizedDialog).grid().title("\n모임이 생성 되었습니다\n친구들과 공유해 보세요\n").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+        sheet = new BottomSheet.Builder(this, R.style.BottomSheet_CustomizedDialog).grid().title("\n친구들과 모임을 공유해 보세요\n").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PartyDetailActivity.this.onClick("", which);
+                PartyDetailActivity.this.onClick(getDescription(), which);
             }
         }).grid().build();
         return sheet;
     }
 
-    void shareWithFacebook() {
+    void shareWithFacebook(String description) {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent content = new ShareLinkContent.Builder()
                     .setContentTitle(party.name)
-                    .setContentDescription(party.description)
+                    .setContentDescription(description)
                     .setContentUrl(Uri.parse("http://partypeople.me:3000"))
                     .setImageUrl(Uri.parse(NetworkManager.getInstance().URL_SERVER + party.photos.get(0)))
                     .build();
@@ -357,20 +362,20 @@ public class PartyDetailActivity extends AppCompatActivity {
         }
     }
 
-    void shareWithKakao() {
+    void shareWithKakao(String description) {
         try {
             KakaoLink kakaoLink = KakaoLink.getKakaoLink(getApplicationContext());
             KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
-            kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + party.description)
+            kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + description)
                     .addImage(NetworkManager.getInstance().URL_SERVER + party.photos.get(0), 300, 200)
-                    .addWebButton("구경하기", "http://partypeople.me:3000");
+                    .addWebButton("Party People 구경하기", "http://partypeople.me:3000");
             kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(), this);
         } catch (KakaoParameterException e) {
             e.getMessage();
         }
     }
 
-    void shareWithTwitter() {
+    void shareWithTwitter(String description) {
         Bitmap bmp = ((GlideBitmapDrawable) imageView.getDrawable()).getBitmap();
         // Store image to default external storage directory
         Uri bmpUri = null;
@@ -385,24 +390,37 @@ public class PartyDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         } finally {
             new TweetComposer.Builder(this)
-                    .text("[" + party.name + "]\n" + party.description)
+                    .text("[" + party.name + "]\n" + description)
                     .image(bmpUri)
                     .show();
         }
     }
 
-    void onClick(String name, int which) {
+    void onClick(String description, int which) {
         switch (which) {
             case R.id.share_fb:
-                shareWithFacebook();
+                shareWithFacebook(description);
                 break;
             case R.id.share_kko:
-                shareWithKakao();
+                shareWithKakao(description);
                 break;
             case R.id.share_twitter:
-                shareWithTwitter();
+                shareWithTwitter(description);
                 break;
         }
+    }
+
+    String getDescription() {
+        String result;
+
+        result = DateUtil.getInstance().getSharingFormat(party.start_at);
+        String[] array = party.location.split(" ");
+        if(array.length==1)
+            result += array[0];
+        else
+            result = result + " " + array[0] + " " + array[1];
+
+        return result;
     }
 
     public Party getParty() {

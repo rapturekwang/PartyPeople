@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1) {
             mDrawer.closeDrawer(GravityCompat.START);
-            TabLayout.Tab tab = tabs.getTabAt(1);
+            TabLayout.Tab tab = tabs.getTabAt(2);
             tab.select();
         }
     }

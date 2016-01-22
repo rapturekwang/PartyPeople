@@ -196,15 +196,6 @@ public class SettingActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(false);
             scrollView.setVisibility(View.VISIBLE);
         }
-//        if(onTopFlag) {
-//            super.onBackPressed();
-//        } else {
-//            this.item.setVisible(true);
-//            titleView.setText("설정");
-//            onTopFlag = true;
-//            actionBar.setDisplayHomeAsUpEnabled(false);
-//            scrollView.setVisibility(View.VISIBLE);
-//        }
     }
 
     private void changeFragment(String title, Fragment fragment) {

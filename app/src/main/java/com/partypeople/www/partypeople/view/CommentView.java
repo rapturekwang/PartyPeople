@@ -50,6 +50,9 @@ public class CommentView extends RelativeLayout{
         } else {
             timeView.setText(diffTime + "일 전");
         }
+        if(data.participant) {
+            nameView.append("   참여자");
+        }
         GlideUrl glideUrl = null;
         if (data.from.has_photo) {
             CustomGlideUrl customGlideUrl = new CustomGlideUrl();

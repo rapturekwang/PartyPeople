@@ -85,10 +85,14 @@ public class RewordItemView extends RelativeLayout implements Checkable {
     }
 
     private void drawCheck() {
-        if (isCheck) {
-            numView.setImageResource(ids_checked[num]);
+        if(num==-1) {
+            return;
         } else {
-            numView.setImageResource(ids[num]);
+            if (isCheck) {
+                numView.setImageResource(ids_checked[num]);
+            } else {
+                numView.setImageResource(ids[num]);
+            }
         }
     }
 }

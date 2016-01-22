@@ -96,7 +96,7 @@
         android:lineSpacingExtra="6dp"
         android:includeFontPadding="false"
         android:textColor="#68018e"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/btn_send"
         android:layout_marginBottom="17dp"
         android:layout_alignParentEnd="true"
         android:visibility="gone" />
@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="등록하기"
-        android:id="@+id/button"
+        android:id="@+id/btn_send"
         android:background="@color/toolbarColor"
         android:textColor="#ffffff"
         android:textSize="20sp"

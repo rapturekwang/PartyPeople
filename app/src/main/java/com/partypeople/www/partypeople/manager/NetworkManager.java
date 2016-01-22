@@ -94,6 +94,7 @@ public class NetworkManager {
     public static final String URL_USERS = URL_SERVER + "/api/v1/users";
     public static final String URL_FOLLOWS = URL_SERVER + "/api/v1/follows/";
     public static final String URL_COMMENT = URL_SERVER + "/api/v1/comments";
+    public static final String URL_REPORT = URL_SERVER + "/api/v1/contacts";
     public static final String URL_BOARD = URL_SERVER + "/api/v1/boards";
     public static final String URL_AUTH = URL_SERVER + "/api/auth/local";
     public static final String URL_AUTH_FACEBOOK = URL_SERVER + "/api/auth/facebook/token";
@@ -131,8 +132,10 @@ public class NetworkManager {
         });
     }
 
-    public void participate(Context context, String param1, final OnResultListener<String> listener) {
+    public void participate(Context context, String param1, String title, int price, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
+        params.put("title", title);
+        params.put("price", price);
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
 
@@ -338,12 +341,34 @@ public class NetworkManager {
 //        });
 //    }
 
-    public void getReport(Context context, final OnResultListener<Report[]> listener) {
+    public void sendReport(Context context, Report report, final OnResultListener<String> listener) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
+        RequestParams params = new RequestParams();
+        params.put("question", report.question);
+        params.put("category", report.category);
+
+        client.post(context, URL_REPORT, headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "send report Success " + responseString);
+                listener.onSuccess(responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("NetworkManager", "send report Fail: " + statusCode + responseString);
+                listener.onFail(statusCode);
+            }
+        });
+    }
+
+    public void getReport(Context context, String id, final OnResultListener<Report[]> listener) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
         RequestParams params = new RequestParams();
 
-        client.get(context, URL_SERVER, headers, params, new TextHttpResponseHandler() {
+        client.get(context, URL_REPORT + "/" + id, headers, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get report Success " + responseString);

@@ -29,6 +29,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MainActivity;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -66,7 +67,9 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        if(PropertyManager.getInstance().isLogin()) {
+            sendNotification(message);
+        }
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -85,7 +88,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("GCM Message")
+                .setContentTitle("Party People")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
