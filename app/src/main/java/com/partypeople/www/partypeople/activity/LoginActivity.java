@@ -20,6 +20,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.partypeople.www.partypeople.R;
+import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.fragment.FindPasswordFragment;
@@ -100,6 +101,21 @@ public class LoginActivity extends AppCompatActivity {
                                 PropertyManager.getInstance().setToken(result1);
                                 PropertyManager.getInstance().setUser(result2.data);
                                 PropertyManager.getInstance().setLoginMethod(Constants.LOGIN_WITH_FACEBOOK);
+
+                                User user = new User();
+                                user.android_id = PropertyManager.getInstance().getRegistrationToken();
+                                user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+                                NetworkManager.getInstance().putUser(LoginActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
+                                    @Override
+                                    public void onSuccess(UserResult result) {
+
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+
+                                    }
+                                });
 
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();

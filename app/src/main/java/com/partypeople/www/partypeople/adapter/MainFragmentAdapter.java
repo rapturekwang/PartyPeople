@@ -55,14 +55,15 @@ public class MainFragmentAdapter extends BaseAdapter {
             titleView.setText(data.name);
             titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
             dateView.setText(dateUtil.changeToViewFormat(data.start_at));
-            dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.pay_end_at) + "일 남음");
+            dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.amount_end_at) + "일 남음");
             String[] array = data.location.split(" ");
             if(array.length==1)
                 locationView.setText(array[0]);
             else
                 locationView.setText(array[0] + " " + array[1]);
             priceView.setText((int)data.amount_expect + "원");
-            int progress = (int)((data.member_count * data.amount_method.get(0).price)/data.amount_expect * 100);
+//            int progress = (int)((data.member_count * data.amount_method.get(0).price)/data.amount_expect * 100);
+            int progress = (int)(data.amount_total/data.amount_expect * 100);
             progressView.setText(progress + "% 모임");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);

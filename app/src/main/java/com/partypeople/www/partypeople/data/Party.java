@@ -33,8 +33,9 @@ public class Party implements Serializable{
     public String created_at;
     public String deleted_at;
     public String start_at;
-    public String end_at;
-    public String pay_end_at;
+//    public String end_at;
+//    public String pay_end_at;
+    public String amount_end_at;
     public int[] themes;
     public String location;
     @SerializedName("private")

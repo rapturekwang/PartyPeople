@@ -6,17 +6,16 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearlayout_reword"
+        android:orientation="vertical"
+        android:id="@+id/linearlayout_pushalarm"
         android:background="#f5f5f5"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="8dp"
         android:layout_alignParentTop="true"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="38dp"
-        android:dividerHeight="14dp"
-        android:divider="#f5f5f5"/>
+        android:layout_marginTop="38dp" />
 
 </RelativeLayout>

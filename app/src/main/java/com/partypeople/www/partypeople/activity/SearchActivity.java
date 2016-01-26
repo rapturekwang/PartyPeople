@@ -153,7 +153,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
-                    location = mCityAdapter.getItem(position);
+                    location = getCityname(mCityAdapter.getItem(position));
                 }
                 Area area;
                 mGuAdapter.clear();
@@ -240,5 +240,34 @@ public class SearchActivity extends AppCompatActivity {
 
             return view;
         }
+    }
+
+    String getCityname(String city) {
+        String changedName = null;
+        switch (city) {
+            case "충북":
+                changedName = "충청북도";
+                break;
+            case "충남":
+                changedName = "충청남도";
+                break;
+            case "전북":
+                changedName = "전라북도";
+                break;
+            case "전남":
+                changedName = "전라남도";
+                break;
+            case "경북":
+                changedName = "경상북도";
+                break;
+            case "경남":
+                changedName = "경상남도";
+                break;
+            default:
+                changedName = city;
+                break;
+        }
+
+        return changedName;
     }
 }

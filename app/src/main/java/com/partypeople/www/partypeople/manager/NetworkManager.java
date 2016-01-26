@@ -236,11 +236,14 @@ public class NetworkManager {
         }
     }
 
-    public void getPartys(Context context, String keyword, String parameter, int skipNum, final OnResultListener<PartysResult> listener) {
+    public void getPartys(Context context, String keyword, String parameter, ArrayList<Integer> parameters, int skipNum, final OnResultListener<PartysResult> listener) {
         RequestParams params = new RequestParams();
         params.put("skip", skipNum);
         if(keyword!=null) {
             params.put(keyword, parameter);
+        }
+        for(int i=0;i<parameters.size();i++) {
+            params.put("themes", parameters.get(i));
         }
         Log.d("NetworkManager", "keyword: " + keyword + "parameter: " + parameter);
 
@@ -802,28 +805,31 @@ public class NetworkManager {
         });
     }
 
-    public void authUser(Context context, String jsonString, final OnResultListener<UserResult> listener ) {
+    public void authUser(Context context, String email, String password, final OnResultListener<UserResult> listener ) {
         Header[] headers = null;
+        RequestParams params = new RequestParams();
+        params.put("email", email);
+        params.put("password", password);
+//        Log.d("reg id", PropertyManager.getInstance().getRegistrationToken());
 
-        try {
-            client.post(context, URL_AUTH, headers, new StringEntity(jsonString), "application/json", new TextHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                    Log.d("NetworkManager", "auth Success" + responseString);
-                    UserResult result = gson.fromJson(responseString, UserResult.class);
-                    listener.onSuccess(result);
-                }
+//        try {
+        client.post(context, URL_AUTH, headers, params, null, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "auth Success" + responseString);
+                UserResult result = gson.fromJson(responseString, UserResult.class);
+                listener.onSuccess(result);
+            }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    listener.onFail(statusCode);
-                    Log.d("NetworkManager", "auth Fail: " + statusCode + responseString);
-                }
-
-            });
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "auth Fail: " + statusCode + responseString);
+            }
+        });
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void getMyId(Context context, String token, final OnResultListener<UserResult> listener ) {

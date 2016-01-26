@@ -26,6 +26,7 @@ import com.partypeople.www.partypeople.data.Area;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
@@ -43,6 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
     File mSavedFile;
     public static final int REQUEST_CODE_CROP = 0;
     String location = "";
+    LoadingDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.makeText(EditProfileActivity.this, "아무런 값도 입력하지 않으셨습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "loading");
                 if(!name.getText().toString().equals("")) {
                     user.name = name.getText().toString();
                 }
@@ -88,6 +92,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 setResult(UserActivity.RESULT_CODE_EDIT, intent);
                                 finish();
                                 Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                dialogFragment.dismiss();
                             }
                         }
 
@@ -112,6 +117,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     setResult(1, intent);
                                     finish();
                                     Toast.makeText(EditProfileActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                                    dialogFragment.dismiss();
                                 }
 
                                 @Override

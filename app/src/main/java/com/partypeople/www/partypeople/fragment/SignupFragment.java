@@ -152,6 +152,21 @@ public class SignupFragment extends Fragment {
                         propertyManager.setToken(result.token);
                         propertyManager.setUser(result.data);
 
+                        User user = new User();
+                        user.android_id = PropertyManager.getInstance().getRegistrationToken();
+                        user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+                        NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
+                            @Override
+                            public void onSuccess(UserResult result) {
+
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

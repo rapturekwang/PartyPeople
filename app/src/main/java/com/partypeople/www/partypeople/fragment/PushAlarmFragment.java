@@ -5,11 +5,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
-import com.partypeople.www.partypeople.adapter.PushAlarmListAdapter;
+import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.data.UserResult;
+import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.view.PushAlarmItemView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,8 +24,8 @@ import com.partypeople.www.partypeople.adapter.PushAlarmListAdapter;
 public class PushAlarmFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private String name;
-    PushAlarmListAdapter mAdapter;
-    ListView listView;
+    LinearLayout linearLayout;
+    User user;
 
     public static PushAlarmFragment newInstance(String name) {
         PushAlarmFragment fragment = new PushAlarmFragment();
@@ -48,20 +55,43 @@ public class PushAlarmFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_push_alarm, container, false);
 
-        listView = (ListView)view.findViewById(R.id.linearlayout_reword);
-        mAdapter = new PushAlarmListAdapter();
-        listView.setAdapter(mAdapter);
+        linearLayout = (LinearLayout)view.findViewById(R.id.linearlayout_pushalarm);
 
-//        Button btn = (Button)view.findViewById(R.id.btn_save);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(), "푸쉬알림이 저장되었습니다.", Toast.LENGTH_SHORT).show();
-//                SettingActivity activity = (SettingActivity)getActivity();
-//                activity.onBackPressed();
-//            }
-//        });
+        String[] pushes = getResources().getStringArray(R.array.pushalarm_list);
+        for (int i = 0; i < pushes.length; i++) {
+            final int temp = i;
+            PushAlarmItemView pushAlarmItemView = new PushAlarmItemView(getContext());
+            pushAlarmItemView.setItemData(pushes[i]);
+            pushAlarmItemView.switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    user.push[temp] = isChecked;
+                    NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
+                        @Override
+                        public void onSuccess(UserResult result) {
+
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
+                }
+            });
+            linearLayout.addView(pushAlarmItemView);
+        }
+
+        initData();
 
         return view;
+    }
+
+    void initData() {
+        user = PropertyManager.getInstance().getUser();
+
+        for(int i=0;i<linearLayout.getChildCount();i++) {
+            ((PushAlarmItemView)linearLayout.getChildAt(i)).switchCompat.setChecked(user.push[i]);
+        }
     }
 }

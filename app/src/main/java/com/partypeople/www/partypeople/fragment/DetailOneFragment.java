@@ -133,17 +133,16 @@ public class DetailOneFragment extends Fragment {
                     .into(imageDes);
         }
 
-        imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         for(int i=0;i<ids.length;i++) {
             final int temp = i;
             parti.add((ImageView)view.findViewById(ids[i]));
-            if(i<activity.party.members.size()) {
+            if(i<activity.party.members.size()-1) {
                 parti.get(i).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(temp==4) {
                             ArrayList<String> participants = new ArrayList<String>();
-                            for(int i=0;i<activity.party.members.size();i++) {
+                            for(int i=1;i<activity.party.members.size();i++) {
                                 participants.add(activity.party.members.get(i).id);
                             }
                             Intent intent = new Intent(getContext(), UserListActivity.class);
@@ -152,7 +151,7 @@ public class DetailOneFragment extends Fragment {
                         } else {
                             final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
                             dialogFragment.show(getFragmentManager(), "loading");
-                            NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp).id, new NetworkManager.OnResultListener<User>() {
+                            NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp+1).id, new NetworkManager.OnResultListener<User>() {
                                 @Override
                                 public void onSuccess(User result) {
                                     Intent intent = new Intent(getContext(), UserActivity.class);
@@ -173,6 +172,7 @@ public class DetailOneFragment extends Fragment {
             }
         }
 
+        imgBtnUserinfo = (ImageView)view.findViewById(R.id.img_btn_userinfo);
         imgBtnUserinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +194,7 @@ public class DetailOneFragment extends Fragment {
 
         mapLocation.setText(activity.party.location);
         descriptionView.setText(activity.party.description);
-        participantView.setText("참여자 " + activity.party.members.size() + "명");
+        participantView.setText("참여자 " + (activity.party.members.size()-1) + "명");
         hostNameView.setText(activity.party.owner.name);
 
         GlideUrl glideUrl = null;
@@ -239,20 +239,27 @@ public class DetailOneFragment extends Fragment {
             }
         });
 
-        for(int i=0;i<activity.party.members.size();i++) {
-            parti.get(i).setVisibility(View.VISIBLE);
+        for(int i=1;i<activity.party.members.size();i++) {
+            parti.get(i-1).setVisibility(View.VISIBLE);
             if(i==4)
                 break;
-            else if(activity.party.members.get(i).has_photo) {
-                CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-                glideUrl = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
-                Glide.with(getContext())
-                        .load(glideUrl)
-                        .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile)
-                        .transform(new CircleTransform(getContext()))
-                        .into(parti.get(i));
+            else if(i<4){
+                GlideUrl glideUrl2 = null;
+                if (activity.party.members.get(i).has_photo) {
+                    CustomGlideUrl customGlideUrl = new CustomGlideUrl();
+                    glideUrl2 = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
+                } else if (!activity.party.members.get(i).has_photo && activity.party.members.get(i).member.provider.equals("facebook")) {
+                    glideUrl2 = new GlideUrl(activity.party.members.get(i).member.photo);
+                }
+                if(glideUrl2!=null) {
+                    Glide.with(getContext())
+                            .load(glideUrl2)
+                            .signature(new StringSignature(DateUtil.getInstance().getCurrentDate()))
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile)
+                            .transform(new CircleTransform(getContext()))
+                            .into(parti.get(i-1));
+                }
             }
         }
 

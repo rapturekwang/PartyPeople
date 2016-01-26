@@ -104,8 +104,8 @@ public class MainTabFragment extends Fragment {
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                String keyword = null;
-                String parameter = null;
+                String keyword = null,parameter = null;
+                ArrayList<Integer> themeList = new ArrayList<Integer>();
                 String label = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(),
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 
@@ -120,6 +120,15 @@ public class MainTabFragment extends Fragment {
                         parameter = "LIKED";
                         break;
                     case 2:
+                        keyword = "location";
+                        String[] temp = PropertyManager.getInstance().getUser().favorite_address.split(" ");
+                        if(temp.length>0)
+                            parameter = temp[temp.length-1];
+                        else
+                            parameter = "";
+                        for(int i=0;i<PropertyManager.getInstance().getUser().themes.length;i++) {
+                            themeList.add(PropertyManager.getInstance().getUser().themes[i]);
+                        }
                         break;
                     case 3:
                         keyword = "name";
@@ -127,7 +136,7 @@ public class MainTabFragment extends Fragment {
                         break;
                 }
 
-                NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, partyList.size(), new NetworkManager.OnResultListener<PartysResult>() {
+                NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, themeList, partyList.size(), new NetworkManager.OnResultListener<PartysResult>() {
                     @Override
                     public void onSuccess(PartysResult result) {
                         for (int i = 0; i < result.data.size(); i++) {
@@ -200,8 +209,8 @@ public class MainTabFragment extends Fragment {
     }
 
     private void initData() {
-        String keyword = null;
-        String parameter = null;
+        String keyword = null, parameter = null;
+        ArrayList<Integer> themeList = new ArrayList<Integer>();
 
         mAdapter.removeAll();
         partyList.clear();
@@ -230,6 +239,15 @@ public class MainTabFragment extends Fragment {
                     warningView.setVisibility(View.GONE);
                     btnSetting.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
+                    keyword = "location";
+                    String[] temp = user.favorite_address.split(" ");
+                    if(temp.length>0)
+                        parameter = temp[temp.length-1];
+                    else
+                        parameter = "";
+                    for(int i=0;i<user.themes.length;i++) {
+                        themeList.add(user.themes[i]);
+                    }
                 } else {
                     warningView.setVisibility(View.VISIBLE);
                     warningView.setText("로그인이 필요한 서비스 입니다");
@@ -244,7 +262,7 @@ public class MainTabFragment extends Fragment {
                 break;
         }
 
-        NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, 0, new NetworkManager.OnResultListener<PartysResult>() {
+        NetworkManager.getInstance().getPartys(getContext(), keyword, parameter, themeList, 0, new NetworkManager.OnResultListener<PartysResult>() {
             @Override
             public void onSuccess(final PartysResult result) {
                 for (int i = 0; i < result.data.size(); i++) {

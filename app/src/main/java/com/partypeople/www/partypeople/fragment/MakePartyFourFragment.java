@@ -68,7 +68,7 @@ public class MakePartyFourFragment extends Fragment {
                 }
                 chbox = (CheckBox)view.findViewById(R.id.chbox_agree);
                 if(!chbox.isChecked()) {
-                    Toast.makeText(getContext(), "모금 사항에 동의하여 주십시오.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "확인사항에 동의하여 주십시오.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

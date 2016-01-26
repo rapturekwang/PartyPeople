@@ -29,4 +29,6 @@ public class User implements Serializable{
     public List<Party> groups;
     public List<Party> likes;
     public String provider;
+    public String android_id;
+    public boolean[] push;
 }

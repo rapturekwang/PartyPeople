@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -49,6 +50,7 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.tsengvn.typekit.TypekitContextWrapper;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
@@ -311,12 +313,13 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0]);
         else
             locationView.setText(array[0] + " " + array[1]);
-        priceView.setText(party.amount_method.get(0).price + "원");
-        int progress = (int)((party.members.size()*party.amount_method.get(0).price)/party.amount_expect*100);
+        priceView.setText("￦" + (int)party.amount_total);
+//        int progress = (int)((party.members.size()*party.amount_method.get(0).price)/party.amount_expect*100);
+        int progress = (int)(party.amount_total/party.amount_expect * 100);
         progressView.setText(progress + "% 모임");
         progressBar.setProgress(progress);
-        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.pay_end_at) + "일 남음");
-        totalPriceView.setText((int) party.amount_expect + "원");
+        duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.amount_end_at) + "일 남음");
+        totalPriceView.setText("￦" + (int)party.amount_expect);
         if(party.likes!=null) {
             chboxView.setText("" + party.likes.size());
             if (PropertyManager.getInstance().isLogin() && party.likes.size() > 0) {
@@ -451,5 +454,10 @@ public class PartyDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

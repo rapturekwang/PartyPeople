@@ -98,7 +98,7 @@ public class MakePartyTwoFragment extends Fragment {
                 MakePartyActivity activity = (MakePartyActivity)getActivity();
                 Fragment fragment = getChildFragmentManager().getFragments().get(0);
                 String warningMessage="";
-                if(expectPayView.getText().toString().equals("")) warningMessage="모임 설명을 입력해 주세요.";
+                if(expectPayView.getText().toString().equals("")) warningMessage="목표 금액을 입력해 주세요.";
                 if(warningMessage.equals("")) {
                     activity.party.amount_expect = Double.parseDouble(expectPayView.getText().toString());
                 } else {
@@ -123,7 +123,7 @@ public class MakePartyTwoFragment extends Fragment {
                     }
                 }
                 try {
-                    activity.party.pay_end_at = getDeadlineTime();
+                    activity.party.amount_end_at = getDeadlineTime();
                     activity.nextFragment();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "날짜를 입력해 주세요.", Toast.LENGTH_SHORT).show();

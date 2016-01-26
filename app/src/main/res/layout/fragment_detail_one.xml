@@ -14,15 +14,16 @@
         <!-- TODO: Update blank fragment layout -->
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="금요일 저녁 한적한 2층집에서 개최되는 파티로 누구든지 환영합니다~! 친구들을 데려오셔도 되고 먹을것 마실것 마음껏 들고 오셔도 되요!!\n시작 시간 보다 조금 일찍오셔두 도빈디ㅏ ;)\n다양한 친구들과 함께 불금을 만들어보아요!!\nDRESS CODE - RED and WHITE"
             android:id="@+id/text_des"
-            android:layout_gravity="center_horizontal"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:paddingTop="10dp" />
+            android:paddingTop="10dp"
+            android:gravity="left"
+            android:textColor="#474747" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:textSize="14dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="#474747" />
 
             <ImageView
                 android:layout_width="43dp"
@@ -135,7 +137,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="26dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="88dp"
@@ -156,7 +160,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="20dp"
-                android:includeFontPadding="false"/>
+                android:includeFontPadding="false"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -215,7 +220,9 @@
                 android:id="@+id/textView2"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="26dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#474747" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -224,7 +231,8 @@
                 android:id="@+id/text_location"
                 android:layout_marginLeft="16dp"
                 android:textSize="14sp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:textColor="#474747" />
 
             <com.skp.Tmap.TMapView
                 android:layout_width="match_parent"

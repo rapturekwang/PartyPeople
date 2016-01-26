@@ -144,6 +144,7 @@ public class UserActivity extends AppCompatActivity{
                         Toast.makeText(UserActivity.this, "팔로우 하였습니다", Toast.LENGTH_SHORT).show();
                         takeFollow.setVisibility(View.INVISIBLE);
                         takeUnfollow.setVisibility(View.VISIBLE);
+                        updateHeader();
                     }
 
                     @Override
@@ -163,6 +164,7 @@ public class UserActivity extends AppCompatActivity{
                         Toast.makeText(UserActivity.this, "팔로우를 취소 하였습니다", Toast.LENGTH_SHORT).show();
                         takeFollow.setVisibility(View.VISIBLE);
                         takeUnfollow.setVisibility(View.INVISIBLE);
+                        updateHeader();
                     }
 
                     @Override
@@ -221,6 +223,21 @@ public class UserActivity extends AppCompatActivity{
             user = (User)data.getSerializableExtra("updateduser");
             initData();
         }
+    }
+
+    void updateHeader() {
+        NetworkManager.getInstance().getUser(getApplicationContext(), user.id, new NetworkManager.OnResultListener<User>() {
+            @Override
+            public void onSuccess(User result) {
+                user = result;
+                initData();
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
     }
 
     private void initData() {

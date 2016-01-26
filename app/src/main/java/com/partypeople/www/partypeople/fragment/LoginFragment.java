@@ -137,15 +137,15 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    Log.d("LoginFragment", email.getText().toString() + ":" + password.getText().toString());
-                    jsonObject.accumulate("password", password.getText().toString());
-                    jsonObject.accumulate("email", email.getText().toString());
-                } catch (Exception e) {}
+//                JSONObject jsonObject = new JSONObject();
+//                try {
+//                    Log.d("LoginFragment", email.getText().toString() + ":" + password.getText().toString());
+//                    jsonObject.accumulate("password", password.getText().toString());
+//                    jsonObject.accumulate("email", email.getText().toString());
+//                } catch (Exception e) {}
                 dialogFragment = new LoadingDialogFragment();
                 dialogFragment.show(getFragmentManager(), "loading");
-                NetworkManager.getInstance().authUser(getContext(), jsonObject.toString(), new NetworkManager.OnResultListener<UserResult>() {
+                NetworkManager.getInstance().authUser(getContext(), email.getText().toString(), password.getText().toString(), new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(final UserResult result1) {
                         NetworkManager.getInstance().getMyId(getContext(), result1.token, new NetworkManager.OnResultListener<UserResult>() {
@@ -154,6 +154,21 @@ public class LoginFragment extends Fragment {
                                 propertyManager.setToken(result1.token);
                                 propertyManager.setUser(result2.data);
                                 propertyManager.setLoginMethod(Constants.LOGIN_WITH_LOCAL);
+
+                                User user = new User();
+                                user.android_id = PropertyManager.getInstance().getRegistrationToken();
+                                user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+                                NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
+                                    @Override
+                                    public void onSuccess(UserResult result) {
+
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+
+                                    }
+                                });
 
                                 Intent intent = new Intent(getContext(), MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

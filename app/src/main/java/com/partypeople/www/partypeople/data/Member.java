@@ -12,6 +12,6 @@ public class Member implements Serializable{
     public String name;
     public boolean has_photo;
     public String photo;
-    public int rating;
+    public User member;
     public String role;
 }
