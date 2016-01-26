@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.User;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
@@ -30,16 +31,20 @@ public class PaymentActivity extends AppCompatActivity {
 
     private WebView mainWebView;
     private WebViewInterface wvi;
-    private final String APP_SCHEME = "iamporttest://";
+    private final String APP_SCHEME = "http://api.partypeople.me/payresult.html";
     Party party;
     int selected;
     String name, tel;
+    LoadingDialogFragment dialogFragment;
 
     @JavascriptInterface
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        dialogFragment = new LoadingDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "loading");
 
         selected = getIntent().getIntExtra("selected", 0);
         party = (Party)getIntent().getSerializableExtra("party");
@@ -112,6 +117,11 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             }
         }
+
+        @JavascriptInterface
+        public void loadingFinish() {
+            dialogFragment.dismiss();
+        }
     }
 
     class InicisWebViewClient extends WebViewClient {
@@ -150,6 +160,7 @@ public class PaymentActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(InicisWebViewClient.this.activity, "(-1)결제가 취소되었습니다..", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }).create();
         }
@@ -157,6 +168,8 @@ public class PaymentActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
             final WebView targetWebView = view;
+
+            Log.d("PaymentActivity", "URL : " + url);
 
             if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
                 Intent intent;
@@ -167,7 +180,13 @@ public class PaymentActivity extends AppCompatActivity {
                     return false;
                 }
 
-                Uri uri = Uri.parse(intent.getDataString());
+                String temp = null;
+                if(url.startsWith("intent://inicis?orderKey=KPAY")) {
+                    temp = intent.getDataString().split("&siteID")[0];
+                } else {
+                    temp = intent.getDataString();
+                }
+                Uri uri = Uri.parse(temp);
                 intent = new Intent(Intent.ACTION_VIEW, uri);
 
                 try {

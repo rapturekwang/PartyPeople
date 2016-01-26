@@ -56,7 +56,10 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
     @Override
     public AutocompletePrediction getItem(int position) {
-        return mResultList.get(position);
+        if(position<mResultList.size())
+            return mResultList.get(position);
+        else
+            return null;
     }
 
     @Override
@@ -71,8 +74,12 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
         TextView textView1 = (TextView) row.findViewById(R.id.text1);
         TextView textView2 = (TextView) row.findViewById(R.id.text2);
-        textView1.setText(item.getPrimaryText(STYLE_BOLD));
-        textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        try {
+            textView1.setText(item.getPrimaryText(STYLE_BOLD));
+            textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
 
         return row;
     }
@@ -87,6 +94,7 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
                 if (constraint != null) {
                     // Query the autocomplete API for the (constraint) search string.
                     mResultList = getAutocomplete(constraint);
+                    notifyDataSetChanged();
                     if (mResultList != null) {
                         // The API successfully returned results.
                         results.values = mResultList;

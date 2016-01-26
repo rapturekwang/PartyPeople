@@ -32,6 +32,7 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginWithFacebook(List<String> permissions) {
-        loginWithFacebook(permissions, true);
+        loginWithFacebook(Arrays.asList("email","basic_info"), true);
     }
 
     private void loginWithFacebook(List<String> permissions, boolean isRead) {

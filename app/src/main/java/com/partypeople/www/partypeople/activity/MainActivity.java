@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements
             navigationView.getMenu().getItem(2).setEnabled(false);
             navigationView.getMenu().getItem(3).setEnabled(false);
             navigationView.getMenu().getItem(5).setEnabled(false);
+//            navigationView.getMenu().getItem(6).setEnabled(false);
             headerBtn.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.GONE);
         } else {
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements
             navigationView.getMenu().getItem(2).setEnabled(true);
             navigationView.getMenu().getItem(3).setEnabled(true);
             navigationView.getMenu().getItem(5).setEnabled(true);
+//            navigationView.getMenu().getItem(6).setEnabled(true);
             headerBtn.setVisibility(View.GONE);
             relativeLayout.setVisibility(View.VISIBLE);
 
@@ -211,9 +213,9 @@ public class MainActivity extends AppCompatActivity implements
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
-            case R.id.alarm :
-                startActivity(new Intent(MainActivity.this, AlarmActivity.class));
-                break;
+//            case R.id.alarm :
+//                startActivity(new Intent(MainActivity.this, AlarmActivity.class));
+//                break;
             case R.id.theme :
                 startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 0);
                 break;

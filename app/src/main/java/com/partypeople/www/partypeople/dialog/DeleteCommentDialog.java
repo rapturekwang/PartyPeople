@@ -38,7 +38,7 @@ public class DeleteCommentDialog extends Dialog{
                                 public void onSuccess(PartyResult result) {
                                     activity.setParty(result.data);
                                     fragment.initData();
-                                    activity.setPagerHeight(350 + 300 * activity.party.comments.size());
+                                    activity.setPagerHeight(1000 + 1000 * activity.party.comments.size());
                                     fragment.changeHeight();
                                     dismiss();
                                 }

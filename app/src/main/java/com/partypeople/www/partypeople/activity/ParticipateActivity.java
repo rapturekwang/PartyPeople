@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ public class ParticipateActivity extends AppCompatActivity {
     TextView textView;
     EditText editName, editTel;
     CheckBox checkBox;
+    LinearLayout layout;
     int selected = 0;
 
     @Override
@@ -73,6 +76,8 @@ public class ParticipateActivity extends AppCompatActivity {
             }
         });
 
+        layout = (LinearLayout)findViewById(R.id.root_layout);
+
         listView = (ListView)findViewById(R.id.listView);
         mAdapter = new RewordViewAdapter();
         listView.setAdapter(mAdapter);
@@ -94,7 +99,7 @@ public class ParticipateActivity extends AppCompatActivity {
         editName = (EditText)findViewById(R.id.edit_name);
         editName.setText(PropertyManager.getInstance().getUser().name);
         editTel = (EditText)findViewById(R.id.edit_tel);
-        editTel.setText(Double.toString(PropertyManager.getInstance().getUser().tel));
+        editTel.setText(String.format("%d", (long)PropertyManager.getInstance().getUser().tel));
 
         TextView textBtn = (TextView)findViewById(R.id.text_btn_tos);
         textBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,11 +128,16 @@ public class ParticipateActivity extends AppCompatActivity {
             mAdapter.add(party.amount_method.get(i));
         }
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = (int)Math.ceil(75 * party.amount_method.size() * getResources().getDisplayMetrics().density)
-                + (int)Math.ceil(7 * party.amount_method.size()-1 * getResources().getDisplayMetrics().density);
-        listView.setLayoutParams(params);
-        listView.requestLayout();
+        setHeight(1000 * party.amount_method.size());
+        ViewTreeObserver vto = listView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int height = listView.getMeasuredHeight();
+                setHeight(height);
+            }
+        });
     }
 
     @Override
@@ -145,9 +155,16 @@ public class ParticipateActivity extends AppCompatActivity {
             boolean result = data.getBooleanExtra("result", false);
             if(result) {
                 Toast.makeText(ParticipateActivity.this, "결제 성공", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 Toast.makeText(ParticipateActivity.this, "결제 실패", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void setHeight(int height) {
+        ViewGroup.LayoutParams params = layout.getLayoutParams();
+        params.height=height;
+        layout.setLayoutParams(params);
     }
 }

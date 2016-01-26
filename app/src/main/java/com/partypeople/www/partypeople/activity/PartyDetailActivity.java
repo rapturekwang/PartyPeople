@@ -104,7 +104,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         pager.setOffscreenPageLimit(Constants.NUM_OF_DETAIL_TAB-1);
 
-        setPagerHeight(5000);
+        setPagerHeight(50000);
 
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
@@ -140,17 +140,17 @@ public class PartyDetailActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(5000);
+                        setPagerHeight(50000);
                         ((DetailOneFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 1:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(200 + 230 * party.amount_method.size());
+                        setPagerHeight(500 + 500 * party.amount_method.size());
                         ((DetailTwoFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 2:
                         Log.d("PartyDetail", position + "selected");
-                        setPagerHeight(350 + 300 * party.comments.size());
+                        setPagerHeight(1000 + 1000 * party.comments.size());
                         ((DetailThreeFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                 }
@@ -185,8 +185,8 @@ public class PartyDetailActivity extends AppCompatActivity {
                 }
             }
         });
-        ImageView img_btn = (ImageView)findViewById(R.id.img_btn_share);
-        img_btn.setOnClickListener(new View.OnClickListener() {
+        ImageView imgBtn = (ImageView)findViewById(R.id.img_btn_share);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(0);
@@ -207,6 +207,22 @@ public class PartyDetailActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 chboxView.setChecked(isChecked);
                 changeLike(isChecked);
+            }
+        });
+
+        imgBtn = (ImageView)findViewById(R.id.arrow_left);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePager.setCurrentItem(imagePager.getCurrentItem()-1);
+            }
+        });
+
+        imgBtn = (ImageView)findViewById(R.id.arrow_right);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePager.setCurrentItem(imagePager.getCurrentItem()+1);
             }
         });
 

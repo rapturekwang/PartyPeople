@@ -61,7 +61,7 @@
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider806111302848586"
+            android:authorities="com.facebook.app.FacebookContentProvider1506787476289329"
             android:exported="true" />
 
         <activity
@@ -175,6 +175,14 @@
             android:name=".activity.PaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="iamporttest" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.IdentifyActivity"

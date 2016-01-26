@@ -43,7 +43,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="false"
-            android:layout_marginRight="60dp" />
+            android:layout_marginRight="60dp"
+            android:visibility="invisible" />
 
         <RelativeLayout
             android:layout_width="58dp"
@@ -51,7 +52,8 @@
             android:id="@+id/relativeLayout"
             android:orientation="vertical"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="wrap_content"

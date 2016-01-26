@@ -44,7 +44,8 @@
                 android:background="@drawable/comment_left"
                 android:hint="후기를 남겨주세요"
                 android:paddingLeft="8dp"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:maxHeight="100dp" />
 
             <TextView
                 android:layout_width="wrap_content"

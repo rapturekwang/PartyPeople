@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class DetailThreeFragment extends Fragment {
     PartyDetailActivity activity;
     TextView textDivider;
     View divider;
+    int lineCount=1;
 
     public static DetailThreeFragment newInstance(String name) {
         DetailThreeFragment fragment = new DetailThreeFragment();
@@ -68,6 +71,26 @@ public class DetailThreeFragment extends Fragment {
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
 
         final EditText editText = (EditText)view.findViewById(R.id.edit_comment);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(editText.getLineCount()!=lineCount) {
+                    lineCount = editText.getLineCount();
+                    activity.setPagerHeight(1000 + 1000 * activity.party.comments.size());
+                    changeHeight();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         TextView imgSendView = (TextView)view.findViewById(R.id.image_btn_send);
         imgSendView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +106,7 @@ public class DetailThreeFragment extends Fragment {
                                         activity.setParty(result.data);
                                         editText.setText("");
                                         initData();
-                                        activity.setPagerHeight(350 + 300 * activity.party.comments.size());
+                                        activity.setPagerHeight(1000 + 1000 * activity.party.comments.size());
                                         changeHeight();
                                         hideKeyboard();
                                     }
@@ -113,7 +136,7 @@ public class DetailThreeFragment extends Fragment {
         afterListView.setAdapter(mAfterAdapter);
 
         textDivider = (TextView)view.findViewById(R.id.text_divider);
-        divider = (View)view.findViewById(R.id.divider);
+        divider = view.findViewById(R.id.divider);
 
         beforeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

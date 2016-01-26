@@ -92,12 +92,26 @@ public class ConfirmDialog extends Dialog{
         });
     }
 
-    void successMakeParty(Party party) {
+    void successMakeParty(final Party party) {
+        NetworkManager.getInstance().getParty(context, party.id, new NetworkManager.OnResultListener<PartyResult>() {
+            @Override
+            public void onSuccess(PartyResult result) {
+                Intent intent = new Intent(getContext(), PartyDetailActivity.class);
+                intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
+                intent.putExtra("party", result.data);
+                getContext().startActivity(intent);
+            }
+
+            @Override
+            public void onFail(int code) {
+                Intent intent = new Intent(getContext(), PartyDetailActivity.class);
+                intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
+                intent.putExtra("party", party);
+                getContext().startActivity(intent);
+            }
+        });
         Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getContext(), PartyDetailActivity.class);
-        intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
-        intent.putExtra("party", party);
-        getContext().startActivity(intent);
+        dismiss();
         ((Activity)context).finish();
         dialogFragment.dismiss();
     }

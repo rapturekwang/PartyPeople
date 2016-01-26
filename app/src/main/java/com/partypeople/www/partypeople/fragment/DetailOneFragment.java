@@ -125,7 +125,7 @@ public class DetailOneFragment extends Fragment {
 
                         @Override
                         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            activity.setPagerHeight(5000);
+                            activity.setPagerHeight(50000);
                             changeHeight();
                             return false;
                         }

@@ -683,13 +683,13 @@ public class NetworkManager {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
                             listener.onSuccess(responseString);
-                            Log.d("NetworkManager", "put Success");
+                            Log.d("NetworkManager", "put group images Success");
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             listener.onFail(statusCode);
-                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                            Log.d("NetworkManager", "put groups images Fail: " + statusCode + responseString);
                         }
 
                     });
@@ -717,13 +717,13 @@ public class NetworkManager {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
                             listener.onSuccess(responseString);
-                            Log.d("NetworkManager", "put Success");
+                            Log.d("NetworkManager", "put group image Success");
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             listener.onFail(statusCode);
-                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
+                            Log.d("NetworkManager", "put group image Fail: " + statusCode + responseString);
                         }
 
                     });
