@@ -19,6 +19,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.data.UserResult;
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginWithFacebook(List<String> permissions) {
-        loginWithFacebook(Arrays.asList("email","basic_info"), true);
+        loginWithFacebook(Arrays.asList("email", "basic_info"), true);
     }
 
     private void loginWithFacebook(List<String> permissions, boolean isRead) {
@@ -103,9 +105,8 @@ public class LoginActivity extends AppCompatActivity {
                                 PropertyManager.getInstance().setLoginMethod(Constants.LOGIN_WITH_FACEBOOK);
 
                                 User user = new User();
-                                user.android_id = PropertyManager.getInstance().getRegistrationToken();
-                                user.has_photo = PropertyManager.getInstance().getUser().has_photo;
-                                NetworkManager.getInstance().putUser(LoginActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
+                                user.android_token = PropertyManager.getInstance().getRegistrationToken();
+                                NetworkManager.getInstance().putUser(LoginActivity.this, user,new NetworkManager.OnResultListener<UserResult>() {
                                     @Override
                                     public void onSuccess(UserResult result) {
 

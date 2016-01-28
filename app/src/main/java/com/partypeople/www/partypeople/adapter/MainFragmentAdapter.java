@@ -62,7 +62,6 @@ public class MainFragmentAdapter extends BaseAdapter {
             else
                 locationView.setText(array[0] + " " + array[1]);
             priceView.setText((int)data.amount_expect + "원");
-//            int progress = (int)((data.member_count * data.amount_method.get(0).price)/data.amount_expect * 100);
             int progress = (int)(data.amount_total/data.amount_expect * 100);
             progressView.setText(progress + "% 모임");
             progressBar.setProgress(progress);
@@ -141,7 +140,6 @@ public class MainFragmentAdapter extends BaseAdapter {
                         return;
                     int getPosition = (Integer) buttonView.getTag();
                     boolean update = false;
-//                    Log.d("MainFragmentAdapter", "position:" + getPosition + "true/flase: " + items.get(getPosition).isBookmark() + ":" + buttonView.isChecked() + ":" + isChecked);
                     if(items.get(getPosition).isBookmark() != buttonView.isChecked()) {
                         update = true;
                     }

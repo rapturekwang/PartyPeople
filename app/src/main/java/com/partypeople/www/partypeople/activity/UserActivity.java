@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 /**
  * Created by kwang on 15. 12. 11..
@@ -40,7 +42,7 @@ public class UserActivity extends AppCompatActivity{
     ViewPager pager;
     public FrameLayout header;
     TextView followView, nameView, addressView, takeFollow, takeUnfollow;
-    RelativeLayout relativeLayout, relativeLayout2;
+    RelativeLayout relativeLayout, relativeLayout2, faketabBack;
     ImageView modify, profileView;
     UserTabAdapter mAdapter;
     int[] partys = {0, 0, 0};
@@ -58,6 +60,7 @@ public class UserActivity extends AppCompatActivity{
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
+        faketabBack = (RelativeLayout)findViewById(R.id.faketab_background);
         pager = (ViewPager)findViewById(R.id.container);
         mAdapter = new UserTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdapter);
@@ -188,10 +191,12 @@ public class UserActivity extends AppCompatActivity{
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if (scrollView.getScrollY() > tabs.getY()) {
+                if (scrollView.getScrollY() + (int)Math.ceil(12 * getResources().getDisplayMetrics().density) > tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
+                    faketabBack.setVisibility(View.VISIBLE);
                 } else {
                     fakeTabs.setVisibility(View.INVISIBLE);
+                    faketabBack.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -303,5 +308,10 @@ public class UserActivity extends AppCompatActivity{
 
     public User getUser() {
         return user;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

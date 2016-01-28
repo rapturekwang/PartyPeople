@@ -79,6 +79,7 @@ public class UserPagePartyItemView extends RelativeLayout {
                 .load(NetworkManager.getInstance().URL_SERVER + data.photos.get(0))
                 .placeholder(R.color.defaultImage)
                 .error(R.color.defaultImage)
+                .centerCrop()
                 .into(partyImgView);
     }
 }

@@ -14,7 +14,7 @@
         android:background="@null"
         android:textColor="#2d2d2d"
         android:textSize="20sp"
-        android:hint="20000"
+        android:hint="금액입력"
         android:layout_marginLeft="16dp"
         android:singleLine="true"
         android:inputType="number"
@@ -28,7 +28,8 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/edit_price"
         android:textSize="20sp"
-        android:textColor="#2d2d2d" />
+        android:textColor="#2d2d2d"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"

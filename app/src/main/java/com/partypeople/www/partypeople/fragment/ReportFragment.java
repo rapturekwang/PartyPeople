@@ -38,7 +38,7 @@ public class ReportFragment extends Fragment {
         // Required empty public constructor
     }
 
-    TextView nameView;
+    TextView nameView, noReportView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,8 @@ public class ReportFragment extends Fragment {
             }
         });
 
+        noReportView = (TextView)view.findViewById(R.id.text_no_report);
+
         initData();
 
         return view;
@@ -81,6 +83,11 @@ public class ReportFragment extends Fragment {
             public void onSuccess(Report[] result) {
                 for (int i = 0; i < result.length; i++) {
                     mAdapter.addReport(result[i]);
+                }
+                if(result.length==0) {
+                    noReportView.setVisibility(View.VISIBLE);
+                } else {
+                    noReportView.setVisibility(View.INVISIBLE);
                 }
             }
 

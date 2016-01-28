@@ -41,4 +41,7 @@ public class Constants {
 
     public static final int REQUEST_CODE_PAYMENT = 10;
     public static final int RESULT_CODE_PAYMENT = 11;
+
+    public static final int REQUEST_CODE_PARTICIPATE = 100;
+    public static final int RESULT_CODE_PARTICIPATE = 101;
 }

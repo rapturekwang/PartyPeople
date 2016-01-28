@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#ffffff">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="모금완료일(24:00)까지 목표금액이 달성되지 않을 경우 모임과 모금된 금액은 모두 자동취소 됩니다.\n목표금액 모금이 성공할 경우 목표금액의 5%(VAT포함)가 플랫폼이용료(카드결제수수료 + 파티피플이용료)로 책정되며, 이를 제외한 금액이 계좌로 송금됩니다.\n입금은 모금마감일(본인 및 계좌정보 인증기준) 이후 은행 영업일 기준 3일 이내에 입금됩니다."
+                android:text="모금마감일(24:00)까지 목표금액이 달성되지 않을 경우 모임과 모금된 금액은 모두 자동취소 됩니다.\n목표금액 모금이 성공할 경우\n목표금액의 5%(VAT포함)가 플랫폼이용료\n(카드결제수수료 + 파티피플이용료)로 책정되며,\n이를 제외한 금액이 계좌로 송금됩니다.\n입금은 모금마감일(본인 및 계좌정보 인증기준) 이후\n은행 영업일 기준 3일 이내에 입금됩니다."
                 android:id="@+id/textView4"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -47,7 +48,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="18dp"
                 android:textSize="14sp"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:lineSpacingExtra="3dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearance"
-                android:text="개설한 모임정보는 이메일 rapturekwang@gmail.com으로 발송됩니다."
+                android:text="모임의 목표금액달성 시에만\n모임의 원활한 진행을 위해 참여자에게\n주최자의 인증전화번호 정보가 제공됩니다.\n(개인정보 취급방침 제3조)"
                 android:id="@+id/textView17"
                 android:layout_below="@+id/linearLayout"
                 android:layout_alignParentStart="true"
@@ -118,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearance"
-                android:text="모임이 개설된 후에는 모임일시, 장소, 목표금액, 모금방식, 참가비를 변경하실 수 없습니다."
+                android:text="모임이 개설된 후에는\n모임일시, 장소, 목표금액, 모금방식, 참가비를\n변경하실 수 없습니다."
                 android:id="@+id/textView60"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"

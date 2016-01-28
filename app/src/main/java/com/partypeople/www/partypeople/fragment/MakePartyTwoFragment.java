@@ -95,20 +95,28 @@ public class MakePartyTwoFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MakePartyActivity activity = (MakePartyActivity)getActivity();
+                MakePartyActivity activity = (MakePartyActivity) getActivity();
                 Fragment fragment = getChildFragmentManager().getFragments().get(0);
-                String warningMessage="";
-                if(expectPayView.getText().toString().equals("")) warningMessage="목표 금액을 입력해 주세요.";
-                if(warningMessage.equals("")) {
+                String warningMessage = "";
+                if (expectPayView.getText().toString().equals(""))
+                    warningMessage = "목표 금액을 입력해 주세요.";
+                if (Integer.parseInt(expectPayView.getText().toString()) < 10000)
+                    warningMessage = "목표 금액은 10000원보다 커야합니다.";
+                if (Integer.parseInt(expectPayView.getText().toString()) > 10000000)
+                    warningMessage = "목표 금액은 1000만원보다 작아야 합니다.";
+                if (warningMessage.equals("")) {
                     activity.party.amount_expect = Double.parseDouble(expectPayView.getText().toString());
                 } else {
                     Toast.makeText(getContext(), warningMessage, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(activity.party.amount_method != null)
+                if (activity.party.amount_method != null)
                     activity.party.amount_method.clear();
-                if(radioButton3.isChecked()) {
-                    activity.party.amount_method = ((MakePartyChildFragment)fragment).getItem();
+                if (radioButton3.isChecked()) {
+                    activity.party.amount_method = ((MakePartyChildFragment) fragment).getItem();
+                } else if (radioButton2.isChecked()) {
+                    activity.party.amount_custom = true;
+                    activity.party.amount_method = ((MakePartyChildFragment2)fragment).getItem();
                 } else {
                     activity.party.amount_method = ((MakePartyChildFragment2)fragment).getItem();
                 }
@@ -120,10 +128,25 @@ public class MakePartyTwoFragment extends Fragment {
                     if(activity.party.amount_method.get(i).price == -1) {
                         Toast.makeText(getContext(), "포함사항 금액을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                         return;
+                    } else if(activity.party.amount_method.get(i).price<1000) {
+                        Toast.makeText(getContext(), "포함사항 금액은 1000원보다 커야 합니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if(activity.party.amount_method.get(i).price>5000000) {
+                        Toast.makeText(getContext(), "포함사항 금액은 500만원보다 작아야 합니다.", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 try {
                     activity.party.amount_end_at = getDeadlineTime();
+                    int diff = DateUtil.getInstance().getDiffDay(getDeadlineTime(), activity.party.start_at);
+                    if(diff<3) {
+                        Toast.makeText(getContext(), "모금마감 날짜는 모임날짜 기준으로 3일 이전만 가능합니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    } diff = DateUtil.getInstance().getDiffDay(DateUtil.getInstance().getCurrentDate(), getDeadlineTime());
+                    if(diff<1) {
+                        Toast.makeText(getContext(), "모금마감 날짜는 내일 이후부터 가능합니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     activity.nextFragment();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "날짜를 입력해 주세요.", Toast.LENGTH_SHORT).show();

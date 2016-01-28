@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ import com.partypeople.www.partypeople.adapter.DetailImagePagerAdapter;
 import com.partypeople.www.partypeople.adapter.DetailTabAdapter;
 import com.partypeople.www.partypeople.data.Like;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.fragment.DetailOneFragment;
 import com.partypeople.www.partypeople.fragment.DetailThreeFragment;
 import com.partypeople.www.partypeople.fragment.DetailTwoFragment;
@@ -77,6 +79,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     ShareDialog shareDialog;
     CallbackManager callbackManager;
     int startFrom;
+    RelativeLayout faketabBack;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -100,6 +103,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
+        faketabBack = (RelativeLayout)findViewById(R.id.faketab_background);
         pager = (ViewPager)findViewById(R.id.container);
         mAdpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdpater);
@@ -123,10 +127,12 @@ public class PartyDetailActivity extends AppCompatActivity {
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if(scrollView.getScrollY()>tabs.getY()) {
+                if(scrollView.getScrollY() + (int)Math.ceil(10 * getResources().getDisplayMetrics().density) > tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
+                    faketabBack.setVisibility(View.VISIBLE);
                 } else {
                     fakeTabs.setVisibility(View.INVISIBLE);
+                    faketabBack.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -178,7 +184,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(PartyDetailActivity.this, ParticipateActivity.class);
                     intent.putExtra("party", party);
-                    startActivity(intent);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_PARTICIPATE);
                 } else {
                     Toast.makeText(PartyDetailActivity.this, "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PartyDetailActivity.this, LoginActivity.class);
@@ -314,7 +320,6 @@ public class PartyDetailActivity extends AppCompatActivity {
         else
             locationView.setText(array[0] + " " + array[1]);
         priceView.setText("￦" + (int)party.amount_total);
-//        int progress = (int)((party.members.size()*party.amount_method.get(0).price)/party.amount_expect*100);
         int progress = (int)(party.amount_total/party.amount_expect * 100);
         progressView.setText(progress + "% 모임");
         progressBar.setProgress(progress);
@@ -454,10 +459,19 @@ public class PartyDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+        if(requestCode==Constants.REQUEST_CODE_PARTICIPATE && resultCode==Constants.RESULT_CODE_PARTICIPATE) {
+            NetworkManager.getInstance().getParty(this, party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                @Override
+                public void onSuccess(PartyResult result) {
+                    party = result.data;
+                    ((DetailOneFragment) mAdpater.getItem(0)).initData();
+                }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
+        }
     }
 }

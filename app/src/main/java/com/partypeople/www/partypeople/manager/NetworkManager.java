@@ -12,7 +12,9 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.Board;
+import com.partypeople.www.partypeople.data.BoardResult;
 import com.partypeople.www.partypeople.data.GooglePlaceResult;
+import com.partypeople.www.partypeople.data.IamportResult;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
 import com.partypeople.www.partypeople.data.LocalInfoResult;
@@ -101,6 +103,8 @@ public class NetworkManager {
     public static final String URL_GET_ID = URL_SERVER + "/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
     private static final String URL_SEARCH_LOCATION = "https://maps.googleapis.com/maps/api/place/autocomplete/json";
+    private static final String URL_GET_IAMPORT_TOKEN = "https://api.iamport.kr/users/getToken";
+    private static final String URL_GET_PAYMENT_RESULT = "https://api.iamport.kr/payments";
 
     public void getLocalInfo(Context context, int param1, String param2, int param3, final OnResultListener<LocalAreaInfo> listener) {
         RequestParams params = new RequestParams();
@@ -128,6 +132,50 @@ public class NetworkManager {
                 Log.d("NetworkManager", "get local info Success" + responseString);
                 LocalInfoResult result = gson.fromJson(responseString, LocalInfoResult.class);
                 listener.onSuccess(result.localAreaInfo);
+            }
+        });
+    }
+
+    public void getIamportToken(Context context, final OnResultListener<IamportResult> listener) {
+        RequestParams params = new RequestParams();
+        params.put("imp_key", "0728738849435849");
+        params.put("imp_secret", "pgC7d4SfP83yqSoSMQcnICkU7abJnWJMclUqqNFfVIOmBceo3qLL36FagRUDNDq0Ykrp76E3OspqFDOJ");
+
+        client.post(context, URL_GET_IAMPORT_TOKEN, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get iamport token Success : " + responseString);
+                IamportResult result = gson.fromJson(responseString, IamportResult.class);
+                listener.onSuccess(result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "get iamport token Fail: " + statusCode + responseString);
+            }
+        });
+    }
+
+    public void getPaymentResult(Context context, String impUid, String token, final OnResultListener<IamportResult> listener) {
+        RequestParams params = new RequestParams();
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("Authorization", token);
+
+        String url = URL_GET_PAYMENT_RESULT + "/" + impUid;
+
+        client.get(context, url, headers, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("NetworkManager", "get payment result Success : " + responseString);
+                IamportResult result = gson.fromJson(responseString, IamportResult.class);
+                listener.onSuccess(result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode);
+                Log.d("NetworkManager", "get payment result Fail: " + statusCode + responseString);
             }
         });
     }
@@ -219,7 +267,6 @@ public class NetworkManager {
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
                     Log.d("NetworkManager", "post Success" + responseString);
                     PartyResult result = gson.fromJson(responseString, PartyResult.class);
-                    Log.d("NetworkManager", "test:" + result.data.id);
                     listener.onSuccess(result);
                 }
 
@@ -242,10 +289,16 @@ public class NetworkManager {
         if(keyword!=null) {
             params.put(keyword, parameter);
         }
-        for(int i=0;i<parameters.size();i++) {
-            params.put("themes", parameters.get(i));
+        if(parameters.size()==1) {
+            params.put("themes", parameters.get(0));
+        } else if(parameters.size()>1){
+            String themes = parameters.get(0)+"";
+            for (int i = 1; i < parameters.size(); i++) {
+                themes += "&themes=" + parameters.get(i);
+            }
+            params.put("themes", themes);
+//            params.put("themes", "1&themes=2");
         }
-        Log.d("NetworkManager", "keyword: " + keyword + "parameter: " + parameter);
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
@@ -290,7 +343,7 @@ public class NetworkManager {
         client.get(context, URL_PARTYS + "/" + param1, headers, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
+                Log.d("NetworkManager", "get party Fail: " + statusCode + responseString);
                 listener.onFail(statusCode);
             }
 
@@ -388,12 +441,15 @@ public class NetworkManager {
         });
     }
 
-    public void getBoards(Context context, final OnResultListener<Board[]> listener) {
-        client.get(context, URL_BOARD, new TextHttpResponseHandler() {
+    public void getBoards(Context context, final OnResultListener<BoardResult> listener) {
+        RequestParams params = new RequestParams();
+        params.put("sort", "CREATED");
+
+        client.get(context, URL_BOARD, params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d("NetworkManager", "get boards Success " + responseString);
-                Board[] result = gson.fromJson(responseString, Board[].class);
+                BoardResult result = gson.fromJson(responseString, BoardResult.class);
                 listener.onSuccess(result);
             }
 
@@ -575,8 +631,11 @@ public class NetworkManager {
     public void putUser(Context context, User user, final OnResultListener<UserResult> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-        UserResult userResult = new UserResult();
-        userResult.data = user;
+//        user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+//        user.auth = PropertyManager.getInstance().getUser().auth;
+//        user.push = PropertyManager.getInstance().getUser().push;
+//        UserResult userResult = new UserResult();
+//        userResult.data = user;
 
         try {
             client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id, headers,
@@ -585,6 +644,7 @@ public class NetworkManager {
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
                             UserResult result = gson.fromJson(responseString, UserResult.class);
                             listener.onSuccess(result);
+                            PropertyManager.getInstance().setUser(result.data);
                             Log.d("NetworkManager", "put Success" + responseString);
                         }
 

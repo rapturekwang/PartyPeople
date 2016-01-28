@@ -30,7 +30,6 @@
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabPaddingTop="3dp"
         app:tabIndicatorColor="@null"
         app:tabTextColor="@color/tabUnfocused"
         app:tabSelectedTextColor="@color/tabFocused"

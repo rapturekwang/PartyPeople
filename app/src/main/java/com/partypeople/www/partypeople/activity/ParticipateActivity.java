@@ -1,10 +1,14 @@
 package com.partypeople.www.partypeople.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,26 +20,29 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.RewordViewAdapter;
 import com.partypeople.www.partypeople.data.Party;
+import com.partypeople.www.partypeople.data.PartyResult;
+import com.partypeople.www.partypeople.dialog.PaymentFailDialog;
+import com.partypeople.www.partypeople.dialog.PaymentResultDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
-
-import java.util.List;
 
 public class ParticipateActivity extends AppCompatActivity {
     Party party;
     ListView listView;
     RewordViewAdapter mAdapter;
-    TextView textView;
-    EditText editName, editTel;
+    TextView textView, textReword;
+    EditText editName, editTel, editPrice;
     CheckBox checkBox;
     LinearLayout layout;
+    RelativeLayout relativeLayout;
     int selected = 0;
 
     @Override
@@ -67,9 +74,18 @@ public class ParticipateActivity extends AppCompatActivity {
                     Toast.makeText(ParticipateActivity.this, "이용약관에 동의해 주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(party.amount_custom && Integer.parseInt(textView.getText().toString())<party.amount_method.get(0).price) {
+                    Toast.makeText(ParticipateActivity.this, "결제 금액은 최소금액보다 커야 합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(Integer.parseInt(textView.getText().toString())>5000000) {
+                    Toast.makeText(ParticipateActivity.this, "결제 금액은 500만원 미만이어야 합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(ParticipateActivity.this, PaymentActivity.class);
                 intent.putExtra("party", party);
                 intent.putExtra("selected", selected);
+                intent.putExtra("price", textView.getText().toString());
                 intent.putExtra("tel", editTel.getText().toString());
                 intent.putExtra("name", editName.getText().toString());
                 startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
@@ -77,6 +93,14 @@ public class ParticipateActivity extends AppCompatActivity {
         });
 
         layout = (LinearLayout)findViewById(R.id.root_layout);
+        TextView payTitle = (TextView)findViewById(R.id.text_pay_title);
+        if(party.amount_method.size()==1 && !party.amount_custom) {
+            payTitle.setText("고정금액");
+        } else if(party.amount_method.size()==1 && party.amount_custom) {
+            payTitle.setText("최소금액");
+        } else if(party.amount_method.size()>1) {
+            payTitle.setText("포함사항별 선택");
+        }
 
         listView = (ListView)findViewById(R.id.listView);
         mAdapter = new RewordViewAdapter();
@@ -85,13 +109,31 @@ public class ParticipateActivity extends AppCompatActivity {
         listView.setItemChecked(0, true);
 
         textView = (TextView)findViewById(R.id.text_payment);
-        textView.setText(party.amount_method.get(0).price + " 원");
+        textView.setText(party.amount_method.get(0).price + "");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(party.amount_method.get(position).price + " 원");
+                textView.setText(party.amount_method.get(position).price + "");
                 selected = position;
+            }
+        });
+
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+        textReword = (TextView)findViewById(R.id.text_reword);
+        editPrice = (EditText)findViewById(R.id.edit_price);
+        editPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                textView.setText(editPrice.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -124,20 +166,41 @@ public class ParticipateActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        for(int i=0; i<party.amount_method.size(); i++) {
-            mAdapter.add(party.amount_method.get(i));
+        if(party.amount_custom) {
+            relativeLayout.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+            editPrice.setText(party.amount_method.get(0).price+"");
+            textReword.setText(party.amount_method.get(0).title);
+        } else {
+            relativeLayout.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+            for (int i = 0; i < party.amount_method.size(); i++) {
+                mAdapter.add(party.amount_method.get(i));
+            }
         }
 
         setHeight(1000 * party.amount_method.size());
-        ViewTreeObserver vto = listView.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                int height = listView.getMeasuredHeight();
-                setHeight(height);
-            }
-        });
+        if(party.amount_custom) {
+            ViewTreeObserver vto = relativeLayout.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    relativeLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    int height = relativeLayout.getMeasuredHeight();
+                    setHeight(height);
+                }
+            });
+        } else {
+            ViewTreeObserver vto = listView.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    int height = listView.getMeasuredHeight();
+                    setHeight(height);
+                }
+            });
+        }
     }
 
     @Override
@@ -153,11 +216,18 @@ public class ParticipateActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==Constants.REQUEST_CODE_PAYMENT && resultCode==Constants.RESULT_CODE_PAYMENT) {
             boolean result = data.getBooleanExtra("result", false);
+            String response = data.getStringExtra("response");
             if(result) {
-                Toast.makeText(ParticipateActivity.this, "결제 성공", Toast.LENGTH_SHORT).show();
-                finish();
+                setResult(Constants.RESULT_CODE_PARTICIPATE);
+                PaymentResultDialog dialog = new PaymentResultDialog(ParticipateActivity.this, response, getSupportFragmentManager());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
             } else {
-                Toast.makeText(ParticipateActivity.this, "결제 실패", Toast.LENGTH_SHORT).show();
+                PaymentFailDialog dialog = new PaymentFailDialog(ParticipateActivity.this, response, getSupportFragmentManager());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
             }
         }
     }

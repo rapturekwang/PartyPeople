@@ -13,7 +13,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#f5f5f5">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -23,18 +24,21 @@
             <android.support.design.widget.TabLayout
                 android:layout_below="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="37dp"
                 android:id="@+id/tabs"
-                android:background="@drawable/userpage_menubar"
+                android:background="@drawable/rounded_rectangle_nomargin"
                 android:layout_gravity="center_vertical"
-                app:tabTextAppearance="@style/TabText"
+                app:tabTextAppearance="@style/UserPageTabText"
                 app:tabMaxWidth="0dp"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
-                app:tabPaddingTop="3dp"
                 app:tabIndicatorColor="@null"
                 app:tabTextColor="@color/tabUnfocused"
-                app:tabSelectedTextColor="@color/tabFocused"/>
+                app:tabSelectedTextColor="@color/tabFocused"
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_margin="12dp"
+                android:layout_marginTop="12dp" />
 
             <android.support.v4.view.ViewPager
                 android:layout_below="@+id/tabs"
@@ -46,19 +50,29 @@
         </RelativeLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:background="#f5f5f5"
+        android:id="@+id/faketab_background"
+        android:visibility="invisible"/>
+
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="37dp"
         android:id="@+id/fake_tabs"
-        android:background="@drawable/userpage_menubar"
+        android:background="@drawable/rounded_rectangle_nomargin"
         android:layout_gravity="center_vertical"
-        app:tabTextAppearance="@style/TabText"
+        app:tabTextAppearance="@style/UserPageTabText"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabPaddingTop="3dp"
         app:tabIndicatorColor="@null"
         app:tabTextColor="@color/tabUnfocused"
         app:tabSelectedTextColor="@color/tabFocused"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_margin="12dp"
+        android:layout_marginTop="12dp" />
 </RelativeLayout>

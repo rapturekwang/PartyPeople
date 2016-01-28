@@ -339,12 +339,9 @@ public class MakePartyThreeFragment extends Fragment {
                 user.bank_name = bankView.getSelectedItem().toString();
                 user.bank_account = Double.parseDouble(accountView.getText().toString());
                 user.auth = true;
-                user.has_photo = PropertyManager.getInstance().getUser().has_photo;
                 NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(UserResult result) {
-                        PropertyManager.getInstance().setUser(result.data);
-
                         CertifyDialog dialog = new CertifyDialog(getContext(), true, Constants.CERTIFY_ACCOUNT);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();

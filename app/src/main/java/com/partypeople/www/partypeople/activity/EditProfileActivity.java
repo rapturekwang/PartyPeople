@@ -76,16 +76,18 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
                 if(!tel.getText().toString().equals("")) {
                     user.tel = Double.parseDouble(tel.getText().toString());
+                    if(user.tel != PropertyManager.getInstance().getUser().tel) {
+                        user.auth = false;
+                    }
                 }
                 if(!location.equals("")) {
                     user.address = location;
                 }
                 if(!name.getText().toString().equals("") || !tel.getText().toString().equals("") || !location.equals("")) {
-                    user.has_photo = propertyManager.getUser().has_photo;
+//                    user.has_photo = propertyManager.getUser().has_photo;
                     NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                         @Override
                         public void onSuccess(UserResult result) {
-                            propertyManager.setUser(result.data);
                             if (mSavedFile == null) {
                                 Intent intent = new Intent();
                                 intent.putExtra("updateduser", result.data);
@@ -99,6 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onFail(int code) {
                             Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                            dialogFragment.dismiss();
                         }
                     });
                 }
@@ -123,6 +126,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onFail(int code) {
                                     Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                    dialogFragment.dismiss();
                                 }
                             });
                         }
@@ -130,6 +134,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onFail(int code) {
                             Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                            dialogFragment.dismiss();
                         }
                     });
                 }

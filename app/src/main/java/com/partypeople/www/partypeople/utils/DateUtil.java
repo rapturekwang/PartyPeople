@@ -157,4 +157,19 @@ public class DateUtil {
 
         return String.valueOf(dueDate);
     }
+
+    public String getPaymentTime(String time) {
+        String array[] = time.split("partypeopl");
+        array[1] = array[1].substring(0, 14);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = null;
+        try {
+            date = formatter.parse(array[1]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long mills = date.getTime();
+        return changeLongToString(mills);
+    }
 }

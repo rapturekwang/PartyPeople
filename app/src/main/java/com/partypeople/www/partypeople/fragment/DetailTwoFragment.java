@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.PartyDetailActivity;
@@ -22,6 +23,7 @@ public class DetailTwoFragment extends Fragment {
     ListView listView;
     RewordViewAdapter mAdapter;
     LinearLayout layout;
+    TextView payTitle;
 
     public static DetailTwoFragment newInstance(String name) {
         DetailTwoFragment fragment = new DetailTwoFragment();
@@ -54,6 +56,8 @@ public class DetailTwoFragment extends Fragment {
         mAdapter = new RewordViewAdapter();
         listView.setAdapter(mAdapter);
 
+        payTitle = (TextView)view.findViewById(R.id.text_pay_title);
+
         initData();
 
         return view;
@@ -63,6 +67,14 @@ public class DetailTwoFragment extends Fragment {
         PartyDetailActivity activity = (PartyDetailActivity)getActivity();
         for(int i=0; i<activity.party.amount_method.size(); i++) {
             mAdapter.add(activity.party.amount_method.get(i));
+        }
+
+        if(activity.party.amount_method.size()==1 && !activity.party.amount_custom) {
+            payTitle.setText("고정금액");
+        } else if(activity.party.amount_method.size()==1 && activity.party.amount_custom) {
+            payTitle.setText("최소금액");
+        } else if(activity.party.amount_method.size()>1) {
+            payTitle.setText("포함사항별 선택");
         }
     }
 

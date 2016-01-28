@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ffffff">
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
@@ -66,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="모임 이름"
+            android:text="모임 제목"
             android:id="@+id/textView9"
             android:paddingLeft="16dp"
             android:gravity="center_vertical"
@@ -81,7 +82,7 @@
             android:id="@+id/edit_name"
             android:singleLine="true"
             android:layout_alignParentStart="true"
-            android:hint="신나는 바베큐 파티 in 양평"
+            android:hint="재미있는 제목으로 입력해주세요"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@null"
@@ -300,7 +301,7 @@
                 android:id="@+id/edit_description"
                 android:layout_below="@+id/textView24"
                 android:layout_alignParentStart="true"
-                android:hint="우리는 술타트업 \n오늘도 달린다... 양평에서 네트워킹 파티!! \n비지니스 시작"
+                android:hint="일정과 내용을 자세히 입력해주세요"
                 android:textSize="14sp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"

@@ -231,6 +231,14 @@ public class MakePartyOneFragment extends Fragment {
                 }
                 try {
                     activity.party.start_at = getSpinnerTime();
+                    int diff = DateUtil.getInstance().getDiffDay(DateUtil.getInstance().getCurrentDate(), getSpinnerTime());
+                    if(diff>30) {
+                        Toast.makeText(getContext(), "모임날짜는 오늘기준으로 최대 30일까지 가능합니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if(diff<7) {
+                        Toast.makeText(getContext(), "모임날짜는 오늘기준 일주일 이후의 날짜여야 합니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     activity.nextFragment();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();

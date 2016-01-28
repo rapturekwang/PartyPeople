@@ -18,10 +18,11 @@ public class MyApplication extends MultiDexApplication{
         super.onCreate();
         mContext = this;
         FacebookSdk.sdkInitialize(this);
-        FontManager.setDefaultFont(this, "DEFAULT", "Roboto-Regular.ttf");
+//        FontManager.setDefaultFont(this, "DEFAULT", "Roboto-Regular.ttf");
+        FontManager.setDefaultFont(this, "DEFAULT", "Spoqa_Han_Sans_Regular.ttf");
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this, "Roboto-Regular.ttf"))
-                .addBold(Typekit.createFromAsset(this, "Roboto-Bold.ttf"));
+                .addNormal(Typekit.createFromAsset(this, "Spoqa_Han_Sans_Regular.ttf"))
+                .addBold(Typekit.createFromAsset(this, "Spoqa_Han_Sans_Bold_win_subset.ttf"));
     }
 
     @Override

@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ffffff">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:text="모금 성공시, 모금 금액을 입금 받기 위해 본인인증과\n계좌인증을 해주세요\n계좌인증은 본인 명의의 계좌만 가능합니다."
+                android:text="모금 성공시, 모금 금액을 입금 받기 위해\n본인인증과 계좌인증을 해주세요.\n계좌인증은 본인 명의의 계좌만 가능합니다."
                 android:id="@+id/textView8"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
@@ -124,30 +125,21 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/toolbarColor"
                     android:includeFontPadding="false"
-                    android:layout_toEndOf="@+id/textView34"
-                    android:layout_alignTop="@+id/chboxPhone" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="에"
-                    android:id="@+id/textView45"
-                    android:layout_alignTop="@+id/chboxPhone"
-                    android:layout_toEndOf="@+id/text_policy"
-                    android:includeFontPadding="false"
-                    android:textSize="14sp"
-                    android:textColor="#000000" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="동의합니다."
-                    android:id="@+id/textView49"
                     android:layout_below="@+id/textView34"
-                    android:layout_toEndOf="@+id/chboxPhone"
+                    android:layout_alignStart="@+id/textView34"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="에 동의합니다."
+                    android:id="@+id/textView49"
                     android:includeFontPadding="false"
                     android:textSize="14sp"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:layout_alignTop="@+id/text_policy"
+                    android:layout_toEndOf="@+id/text_policy"
+                    android:layout_marginLeft="2dp" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -293,7 +285,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*  모금 성공시, 모금마감일 이후 24시간 이내에 본인 인증 정보를 저장하지 않으면 모금이 자동 취소되며 입금되지 않습니다.\n본인 인증 및 계좌정보 저장은 [설정>본인 인증 및 계좌정보]에서 하실 수 있습니다."
+                    android:text="*  모금 성공시, 모금마감일 이후 24시간 이내에\n본인 인증 정보를 저장하지 않으면\n모금이 자동 취소되며 모금금액이 입금되지 않습니다.\n본인 인증 및 계좌정보 저장은\n[설정>본인 인증 및 계좌정보]에서 하실 수 있습니다."
                     android:id="@+id/textView40"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"

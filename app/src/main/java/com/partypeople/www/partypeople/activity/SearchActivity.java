@@ -72,11 +72,9 @@ public class SearchActivity extends AppCompatActivity {
                 User user = new User();
                 user.themes = theme;
                 user.favorite_address = location;
-                user.has_photo = propertyManager.getUser().has_photo;
                 NetworkManager.getInstance().putUser(SearchActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(UserResult result) {
-                        propertyManager.setUser(result.data);
                         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                         setResult(1, intent);
                         finish();

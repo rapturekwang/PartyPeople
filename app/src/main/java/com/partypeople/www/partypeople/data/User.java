@@ -1,5 +1,7 @@
 package com.partypeople.www.partypeople.data;
 
+import com.partypeople.www.partypeople.manager.PropertyManager;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
@@ -29,6 +31,18 @@ public class User implements Serializable{
     public List<Party> groups;
     public List<Party> likes;
     public String provider;
-    public String android_id;
+    public String android_token;
     public boolean[] push;
+
+    public User() {
+        User propertyUser = PropertyManager.getInstance().getUser();
+
+        if(propertyUser!=null) {
+            auth = propertyUser.auth;
+            has_photo = propertyUser.has_photo;
+            push = propertyUser.push;
+            tel = propertyUser.tel;
+            bank_account = propertyUser.bank_account;
+        }
+    }
 }

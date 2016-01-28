@@ -7,16 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:background="#f5f5f5">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pager"
+            android:layout_below="@+id/tabs"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-16dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/container"
+            android:visibility="gone"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="-16dp" />
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
-            android:background="@color/toolbarColor" >
+            android:background="@color/toolbarColor"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -25,34 +44,33 @@
                 android:src="@drawable/title" />
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:id="@+id/tab_background"
+            android:background="#f5f5f5"
+            android:layout_below="@+id/toolbar"/>
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
             android:id="@+id/tabs"
-            android:background="@drawable/rounded_rectangle_bg"
+            android:background="@drawable/rounded_rectangle_nomargin"
             android:layout_gravity="center_vertical"
             app:tabTextAppearance="@style/TabText"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabPaddingTop="3dp"
             app:tabIndicatorColor="@null"
             app:tabTextColor="@color/tabUnfocused"
-            app:tabSelectedTextColor="@color/tabFocused" />
+            app:tabSelectedTextColor="@color/tabFocused"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="11dp" />
 
-        <android.support.v4.view.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/pager"
-            android:layout_gravity="center_horizontal" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/container"
-            android:visibility="gone"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="280dp"

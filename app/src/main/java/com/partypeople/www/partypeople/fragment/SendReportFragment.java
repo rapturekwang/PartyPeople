@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.ReportAdapter;
 import com.partypeople.www.partypeople.data.Report;
+import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class SendReportFragment extends Fragment {
     TextView textCancel, textImgName;
     EditText questionView;
     File mSavedFile = null;
+    LoadingDialogFragment dialogFragment;
 
     public static final int REQUEST_CODE_CROP_IMAGE = 20;
 
@@ -104,6 +106,9 @@ public class SendReportFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
+
                 Report report = new Report();
                 report.category = reportView.getSelectedItem().toString();
                 report.question = questionView.getText().toString();
@@ -113,17 +118,20 @@ public class SendReportFragment extends Fragment {
                         if(mSavedFile==null) {
                             Toast.makeText(getContext(), "신고/문의 가 완료되었습니다", Toast.LENGTH_SHORT).show();
                             getActivity().onBackPressed();
+                            dialogFragment.dismiss();
                         } else {
                             NetworkManager.getInstance().putReportImage(getContext(), mSavedFile, result.id, new NetworkManager.OnResultListener<String>() {
                                 @Override
                                 public void onSuccess(String result) {
                                     Toast.makeText(getContext(), "신고/문의 가 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     getActivity().onBackPressed();
+                                    dialogFragment.dismiss();
                                 }
 
                                 @Override
                                 public void onFail(int code) {
                                     Toast.makeText(getContext(), "통신상태가 불안정 합니다", Toast.LENGTH_SHORT).show();
+                                    dialogFragment.dismiss();
                                 }
                             });
                         }
@@ -132,6 +140,7 @@ public class SendReportFragment extends Fragment {
                     @Override
                     public void onFail(int code) {
                         Toast.makeText(getContext(), "통신상태가 불안정 합니다", Toast.LENGTH_SHORT).show();
+                        dialogFragment.dismiss();
                     }
                 });
             }

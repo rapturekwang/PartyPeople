@@ -88,7 +88,7 @@ public class PushAlarmFragment extends Fragment {
     }
 
     void initData() {
-        user = PropertyManager.getInstance().getUser();
+        user = new User();
 
         for(int i=0;i<linearLayout.getChildCount();i++) {
             ((PushAlarmItemView)linearLayout.getChildAt(i)).switchCompat.setChecked(user.push[i]);

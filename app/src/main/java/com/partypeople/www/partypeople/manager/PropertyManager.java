@@ -100,11 +100,13 @@ public class PropertyManager {
     }
 
     public void logout() {
+        String regId = getRegistrationToken();
         if(getLoginMethod()==Constants.LOGIN_WITH_FACEBOOK) {
             LoginManager.getInstance().logOut();
         }
         mEditor.clear();
         mEditor.commit();
+        setRegistrationToken(regId);
     }
 
     private static final String REG_ID = "regToken";

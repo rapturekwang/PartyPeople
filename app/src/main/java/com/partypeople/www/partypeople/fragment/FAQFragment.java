@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.adapter.FAQAdapter;
 import com.partypeople.www.partypeople.data.Board;
+import com.partypeople.www.partypeople.data.BoardResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 
 /**
@@ -64,12 +65,12 @@ public class FAQFragment extends Fragment {
     }
 
     public void initData() {
-        NetworkManager.getInstance().getBoards(getContext(), new NetworkManager.OnResultListener<Board[]>() {
+        NetworkManager.getInstance().getBoards(getContext(), new NetworkManager.OnResultListener<BoardResult>() {
             @Override
-            public void onSuccess(Board[] result) {
-                for(int i=0;i<result.length;i++) {
-                    if(result[i].category.equals("FAQ")) {
-                        mAdapter.addFAQ(result[i]);
+            public void onSuccess(BoardResult result) {
+                for(int i=0;i<result.data.size();i++) {
+                    if(result.data.get(i).category.equals("FAQ")) {
+                        mAdapter.addFAQ(result.data.get(i));
                     }
                 }
             }

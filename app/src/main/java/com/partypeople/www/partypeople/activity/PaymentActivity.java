@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.Party;
-import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
@@ -34,7 +33,7 @@ public class PaymentActivity extends AppCompatActivity {
     private final String APP_SCHEME = "http://api.partypeople.me/payresult.html";
     Party party;
     int selected;
-    String name, tel;
+    String name, tel, price;
     LoadingDialogFragment dialogFragment;
 
     @JavascriptInterface
@@ -47,6 +46,7 @@ public class PaymentActivity extends AppCompatActivity {
         dialogFragment.show(getSupportFragmentManager(), "loading");
 
         selected = getIntent().getIntExtra("selected", 0);
+        price = getIntent().getStringExtra("price");
         party = (Party)getIntent().getSerializableExtra("party");
         name = getIntent().getStringExtra("name");
         tel = getIntent().getStringExtra("tel");
@@ -91,15 +91,17 @@ public class PaymentActivity extends AppCompatActivity {
                 String array[] = result[i].split("=");
                 try {
                     array[1] = URLDecoder.decode(array[1], "UTF-8");
-                } catch (Exception e) {
+                } catch (Exception e) {}
 
-                }
                 Log.d("Main", array[0] + " : " + array[1]);
                 if(array[0].equals("imp_success")) {
                     if(array[1].equals("true")) {
-                        setResult(Constants.RESULT_CODE_PAYMENT, new Intent().putExtra("result", true));
+                        Intent intent = new Intent();
+                        intent.putExtra("response", response);
+                        intent.putExtra("result", true);
+                        setResult(Constants.RESULT_CODE_PAYMENT, intent);
                         NetworkManager.getInstance().participate(PaymentActivity.this, party.id, party.amount_method.get(selected).title,
-                                party.amount_method.get(selected).price, new NetworkManager.OnResultListener<String>() {
+                                Integer.parseInt(price), new NetworkManager.OnResultListener<String>() {
                             @Override
                             public void onSuccess(String result) {
                                 finish();
@@ -111,7 +113,10 @@ public class PaymentActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        setResult(Constants.RESULT_CODE_PAYMENT, new Intent().putExtra("result", false));
+                        Intent intent = new Intent();
+                        intent.putExtra("response", response);
+                        intent.putExtra("result", false);
+                        setResult(Constants.RESULT_CODE_PAYMENT, intent);
                         finish();
                     }
                 }
@@ -134,10 +139,10 @@ public class PaymentActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-            target.loadUrl("javascript:start('" + party.name + "'," + party.amount_method.get(selected).price + ",'" + PropertyManager.getInstance().getUser().email +
+            target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
                     "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
 
-            Log.d("PaymentActivity", "party name : " + party.name + " price : " + party.amount_method.get(selected).price + " email : " + PropertyManager.getInstance().getUser().email
+            Log.d("PaymentActivity", "party name : " + party.name + " price : " + price + " email : " + PropertyManager.getInstance().getUser().email
                     + " name : " + name + " tel : " + tel + " due date : " + DateUtil.getInstance().getDueDate());
         }
 
@@ -174,19 +179,18 @@ public class PaymentActivity extends AppCompatActivity {
             if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
                 Intent intent;
 
+                if(url.startsWith("intent://inicis?orderKey=KPAY") || url.startsWith("market://details?id=com.inicis.kpay")) {
+                    Toast.makeText(getApplicationContext(), "Kpay결제 지원을 준비중 입니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
                 try {
                     intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
                 } catch (URISyntaxException ex) {
                     return false;
                 }
 
-                String temp = null;
-                if(url.startsWith("intent://inicis?orderKey=KPAY")) {
-                    temp = intent.getDataString().split("&siteID")[0];
-                } else {
-                    temp = intent.getDataString();
-                }
-                Uri uri = Uri.parse(temp);
+                Uri uri = Uri.parse(intent.getDataString());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
 
                 try {

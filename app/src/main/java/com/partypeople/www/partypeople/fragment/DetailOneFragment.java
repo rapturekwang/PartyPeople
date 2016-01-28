@@ -63,6 +63,7 @@ public class DetailOneFragment extends Fragment {
     User user;
     LinearLayout layout;
     ArrayAdapter<POIItem> mAdapter;
+    PartyDetailActivity activity;
     int[] ids = {
             R.id.image_parti1,
             R.id.image_parti2,
@@ -97,7 +98,7 @@ public class DetailOneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_one, container, false);
 
         layout = (LinearLayout)view.findViewById(R.id.root_layout);
-        final PartyDetailActivity activity = (PartyDetailActivity)getActivity();
+        activity = (PartyDetailActivity)getActivity();
 
         mapView = (TMapView)view.findViewById(R.id.view_map);
         mapLocation = (TextView)view.findViewById(R.id.text_location);
@@ -239,15 +240,25 @@ public class DetailOneFragment extends Fragment {
             }
         });
 
+        mLM = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        initData();
+        setMap();
+        changeHeight();
+
+        return view;
+    }
+
+    public void initData() {
         for(int i=1;i<activity.party.members.size();i++) {
             parti.get(i-1).setVisibility(View.VISIBLE);
-            if(i==4)
+            if(i==5)
                 break;
-            else if(i<4){
+            else if(i<5){
                 GlideUrl glideUrl2 = null;
                 if (activity.party.members.get(i).has_photo) {
                     CustomGlideUrl customGlideUrl = new CustomGlideUrl();
-                    glideUrl2 = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).photo);
+                    glideUrl2 = customGlideUrl.getGlideUrl(NetworkManager.getInstance().URL_SERVER + activity.party.members.get(i).member.photo);
                 } else if (!activity.party.members.get(i).has_photo && activity.party.members.get(i).member.provider.equals("facebook")) {
                     glideUrl2 = new GlideUrl(activity.party.members.get(i).member.photo);
                 }
@@ -262,14 +273,6 @@ public class DetailOneFragment extends Fragment {
                 }
             }
         }
-
-        mLM = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        setMap();
-
-        changeHeight();
-
-        return view;
     }
 
     void setMap() {

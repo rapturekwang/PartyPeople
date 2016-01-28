@@ -1,5 +1,6 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -41,6 +42,7 @@ import com.partypeople.www.partypeople.adapter.MainTabAdapter;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements
     FrameLayout layout;
     MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
-    RelativeLayout relativeLayout;
+    RelativeLayout relativeLayout, tabBackground;
     TextView name, email, address;
     RelativeLayout headerBtn;
     View header;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("Main reg id", PropertyManager.getInstance().getRegistrationToken());
+
         layout = (FrameLayout)findViewById(R.id.container);
         user = propertyManager.getUser();
 
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 dialogFragment = new LoadingDialogFragment();
                 dialogFragment.show(getSupportFragmentManager(), "loading");
-                if(propertyManager.isLogin()) {
+                if (propertyManager.isLogin()) {
                     Intent intent = new Intent(MainActivity.this, MakePartyActivity.class);
                     startActivity(intent);
                 } else {
@@ -104,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements
         mDrawer.setDrawerListener(mDrawerToggle);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
+        tabBackground = (RelativeLayout)findViewById(R.id.tab_background);
         pager = (ViewPager)findViewById(R.id.pager);
         MainTabAdapter adpater = new MainTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
@@ -252,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements
                 if(keyCode==KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                     pager.setVisibility(View.GONE);
                     tabs.setVisibility(View.GONE);
+                    tabBackground.setVisibility(View.GONE);
                     layout.setVisibility(View.VISIBLE);
                     fragment.setQueryWord(keywordView.getText().toString());
                     hideKeyboard();
@@ -267,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 pager.setVisibility(View.GONE);
                 tabs.setVisibility(View.GONE);
+                tabBackground.setVisibility(View.GONE);
                 layout.setVisibility(View.VISIBLE);
                 fragment.setQueryWord(keywordView.getText().toString());
                 hideKeyboard();
@@ -286,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 pager.setVisibility(View.VISIBLE);
                 tabs.setVisibility(View.VISIBLE);
+                tabBackground.setVisibility(View.VISIBLE);
                 layout.setVisibility(View.GONE);
                 keywordView.setText("");
 
@@ -358,5 +366,10 @@ public class MainActivity extends AppCompatActivity implements
         if(dialogFragment!=null) {
             dialogFragment.dismiss();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

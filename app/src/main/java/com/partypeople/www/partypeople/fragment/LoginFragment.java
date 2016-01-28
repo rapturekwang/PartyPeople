@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
@@ -85,7 +87,8 @@ public class LoginFragment extends Fragment {
         btnFindPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.goToFragment(3, Constants.STACK_ADD);
+//                activity.goToFragment(3, Constants.STACK_ADD);
+                Toast.makeText(getContext(), "서비스 준비중인 기능입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,12 +140,7 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), "패스워드 길이가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                JSONObject jsonObject = new JSONObject();
-//                try {
-//                    Log.d("LoginFragment", email.getText().toString() + ":" + password.getText().toString());
-//                    jsonObject.accumulate("password", password.getText().toString());
-//                    jsonObject.accumulate("email", email.getText().toString());
-//                } catch (Exception e) {}
+
                 dialogFragment = new LoadingDialogFragment();
                 dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().authUser(getContext(), email.getText().toString(), password.getText().toString(), new NetworkManager.OnResultListener<UserResult>() {
@@ -156,8 +154,7 @@ public class LoginFragment extends Fragment {
                                 propertyManager.setLoginMethod(Constants.LOGIN_WITH_LOCAL);
 
                                 User user = new User();
-                                user.android_id = PropertyManager.getInstance().getRegistrationToken();
-                                user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+                                user.android_token = PropertyManager.getInstance().getRegistrationToken();
                                 NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
                                     @Override
                                     public void onSuccess(UserResult result) {
@@ -179,6 +176,7 @@ public class LoginFragment extends Fragment {
                             @Override
                             public void onFail(int code) {
                                 Toast.makeText(getContext(), "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                                dialogFragment.dismiss();
                             }
                         });
                     }
@@ -186,6 +184,7 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onFail(int code) {
                         Toast.makeText(getContext(), "존재하지 않는 아이디 입니다", Toast.LENGTH_SHORT).show();
+                        dialogFragment.dismiss();
                     }
                 });
             }

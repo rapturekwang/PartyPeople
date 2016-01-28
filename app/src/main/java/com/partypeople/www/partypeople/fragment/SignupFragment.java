@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.LoginActivity;
 import com.partypeople.www.partypeople.activity.MainActivity;
@@ -153,8 +155,7 @@ public class SignupFragment extends Fragment {
                         propertyManager.setUser(result.data);
 
                         User user = new User();
-                        user.android_id = PropertyManager.getInstance().getRegistrationToken();
-                        user.has_photo = PropertyManager.getInstance().getUser().has_photo;
+                        user.android_token = PropertyManager.getInstance().getRegistrationToken();
                         NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
                             @Override
                             public void onSuccess(UserResult result) {

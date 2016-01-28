@@ -57,6 +57,7 @@ public class Party implements Serializable{
     public ArrayList<String> photos;
     public ArrayList<File> imageFiles;
     public boolean[] has_photos;
+    public boolean amount_custom;
 
     public String role;
 }
