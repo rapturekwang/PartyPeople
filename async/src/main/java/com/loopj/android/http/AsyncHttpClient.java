@@ -943,7 +943,13 @@ public class AsyncHttpClient {
         if (params != null) {
             // Construct the query string and trim it, in case it
             // includes any excessive white spaces.
-            String paramString = params.getParamString().trim();
+            String[] array = params.toString().split("=");
+            String paramString = null;
+            if(!array[0].equals("themes")) {
+                paramString = params.getParamString().trim();
+            } else {
+                paramString = params.toString();
+            }
 
             // Only add the query string if it isn't empty and it
             // isn't equal to '?'.
