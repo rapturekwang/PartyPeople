@@ -228,18 +228,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
                 android:layout_below="@+id/container"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:background="@color/mainColor">
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="53dp"
                     android:text="참여하기"
                     android:id="@+id/btn_parti"
                     android:layout_gravity="center"
-                    android:background="@color/mainColor"
                     android:textColor="#ffffff"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:background="@null" />
 
                 <CheckBox
                     android:layout_width="wrap_content"

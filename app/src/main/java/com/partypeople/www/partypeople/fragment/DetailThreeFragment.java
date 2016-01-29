@@ -25,6 +25,7 @@ import com.partypeople.www.partypeople.data.Comment;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.dialog.DeleteCommentDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
 
 /**
@@ -91,24 +92,40 @@ public class DetailThreeFragment extends Fragment {
 
             }
         });
+        if(!PropertyManager.getInstance().isLogin()) {
+            editText.setEnabled(false);
+        } else {
+            editText.setEnabled(true);
+        }
+
         TextView imgSendView = (TextView)view.findViewById(R.id.image_btn_send);
         imgSendView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editText.getText().toString().equals("")) {
-                    NetworkManager.getInstance().addComment(getContext(), activity.party.id, editText.getText().toString(),
-                        new NetworkManager.OnResultListener<String>() {
-                            @Override
-                            public void onSuccess(String result) {
-                                NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                if(!PropertyManager.getInstance().isLogin()) {
+                    Toast.makeText(getContext(), "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!editText.getText().toString().equals("")) {
+                        NetworkManager.getInstance().addComment(getContext(), activity.party.id, editText.getText().toString(),
+                                new NetworkManager.OnResultListener<String>() {
                                     @Override
-                                    public void onSuccess(PartyResult result) {
-                                        activity.setParty(result.data);
-                                        editText.setText("");
-                                        initData();
-                                        activity.setPagerHeight(1000 + 1000 * activity.party.comments.size());
-                                        changeHeight();
-                                        hideKeyboard();
+                                    public void onSuccess(String result) {
+                                        NetworkManager.getInstance().getParty(getContext(), activity.party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                                            @Override
+                                            public void onSuccess(PartyResult result) {
+                                                activity.setParty(result.data);
+                                                editText.setText("");
+                                                initData();
+                                                activity.setPagerHeight(1000 + 1000 * activity.party.comments.size());
+                                                changeHeight();
+                                                hideKeyboard();
+                                            }
+
+                                            @Override
+                                            public void onFail(int code) {
+                                                Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
 
                                     @Override
@@ -116,13 +133,7 @@ public class DetailThreeFragment extends Fragment {
                                         Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }
-
-                            @Override
-                            public void onFail(int code) {
-                                Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    }
                 }
             }
         });
@@ -141,6 +152,8 @@ public class DetailThreeFragment extends Fragment {
         beforeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                if(!PropertyManager.getInstance().isLogin())
+                    return false;
                 DeleteCommentDialog dialog = new DeleteCommentDialog(getContext(), activity, fragment, (Comment)mBeforeAdapter.getItem(position));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -152,6 +165,8 @@ public class DetailThreeFragment extends Fragment {
         afterListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                if(!PropertyManager.getInstance().isLogin())
+                    return false;
                 DeleteCommentDialog dialog = new DeleteCommentDialog(getContext(), activity, fragment, (Comment)mAfterAdapter.getItem(position));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();

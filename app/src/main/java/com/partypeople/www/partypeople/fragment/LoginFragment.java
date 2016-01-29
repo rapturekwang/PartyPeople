@@ -183,7 +183,7 @@ public class LoginFragment extends Fragment {
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(getContext(), "존재하지 않는 아이디 입니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "이메일 혹은 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

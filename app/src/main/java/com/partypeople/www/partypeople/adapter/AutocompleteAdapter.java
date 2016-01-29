@@ -51,6 +51,8 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
     @Override
     public int getCount() {
+        if(mResultList==null)
+            return 0;
         return mResultList.size();
     }
 

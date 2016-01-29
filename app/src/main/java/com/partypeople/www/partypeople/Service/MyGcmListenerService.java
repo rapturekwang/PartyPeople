@@ -34,6 +34,7 @@ import com.partypeople.www.partypeople.manager.PropertyManager;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    static int count = 0;
 
     /**
      * Called when message is received.
@@ -88,6 +89,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.launcher_icon)
+                .setTicker(message)
                 .setContentTitle("Party People")
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -97,6 +99,10 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        count++;
+        if(count==100) {
+            count=0;
+        }
+        notificationManager.notify(count /* ID of notification */, notificationBuilder.build());
     }
 }

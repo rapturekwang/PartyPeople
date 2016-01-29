@@ -1,7 +1,9 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
@@ -9,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -37,6 +40,7 @@ import com.partypeople.www.partypeople.data.Follow;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
@@ -141,32 +145,36 @@ public class DetailOneFragment extends Fragment {
                 parti.get(i).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(temp==4) {
-                            ArrayList<String> participants = new ArrayList<String>();
-                            for(int i=1;i<activity.party.members.size();i++) {
-                                participants.add(activity.party.members.get(i).id);
-                            }
-                            Intent intent = new Intent(getContext(), UserListActivity.class);
-                            intent.putStringArrayListExtra("userlist", participants);
-                            startActivity(intent);
+                        if(!PropertyManager.getInstance().isLogin()) {
+                            Toast.makeText(getContext(), "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
                         } else {
-                            final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
-                            dialogFragment.show(getFragmentManager(), "loading");
-                            NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp+1).id, new NetworkManager.OnResultListener<User>() {
-                                @Override
-                                public void onSuccess(User result) {
-                                    Intent intent = new Intent(getContext(), UserActivity.class);
-                                    intent.putExtra("user", result);
-                                    startActivity(intent);
-                                    dialogFragment.dismiss();
+                            if (temp == 4) {
+                                ArrayList<String> participants = new ArrayList<String>();
+                                for (int i = 1; i < activity.party.members.size(); i++) {
+                                    participants.add(activity.party.members.get(i).id);
                                 }
+                                Intent intent = new Intent(getContext(), UserListActivity.class);
+                                intent.putStringArrayListExtra("userlist", participants);
+                                startActivity(intent);
+                            } else {
+                                final LoadingDialogFragment dialogFragment = new LoadingDialogFragment();
+                                dialogFragment.show(getFragmentManager(), "loading");
+                                NetworkManager.getInstance().getUser(getContext(), activity.party.members.get(temp + 1).id, new NetworkManager.OnResultListener<User>() {
+                                    @Override
+                                    public void onSuccess(User result) {
+                                        Intent intent = new Intent(getContext(), UserActivity.class);
+                                        intent.putExtra("user", result);
+                                        startActivity(intent);
+                                        dialogFragment.dismiss();
+                                    }
 
-                                @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(), "서버와 통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
-                                    dialogFragment.dismiss();
-                                }
-                            });
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "서버와 통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                        dialogFragment.dismiss();
+                                    }
+                                });
+                            }
                         }
                     }
                 });
@@ -177,19 +185,23 @@ public class DetailOneFragment extends Fragment {
         imgBtnUserinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
-                    @Override
-                    public void onSuccess(final User result) {
-                        Intent intent = new Intent(getContext(), UserActivity.class);
-                        intent.putExtra("user", result);
-                        startActivity(intent);
-                    }
+                if(!PropertyManager.getInstance().isLogin()) {
+                    Toast.makeText(getContext(), "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    NetworkManager.getInstance().getUser(getContext(), activity.party.owner.id, new NetworkManager.OnResultListener<User>() {
+                        @Override
+                        public void onSuccess(final User result) {
+                            Intent intent = new Intent(getContext(), UserActivity.class);
+                            intent.putExtra("user", result);
+                            startActivity(intent);
+                        }
 
-                    @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -370,18 +382,6 @@ public class DetailOneFragment extends Fragment {
         Bitmap bm = ((BitmapDrawable)getResources().getDrawable(R.drawable.my_icon)).getBitmap();
         mapView.setIcon(bm);
         mapView.setIconVisibility(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mLM.requestSingleUpdate(LocationManager.GPS_PROVIDER, mListener, null);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mLM.removeUpdates(mListener);
     }
 
     private void setupMap() {

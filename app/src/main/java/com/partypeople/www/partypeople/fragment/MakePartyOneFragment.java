@@ -1,12 +1,15 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SwitchCompat;
@@ -195,7 +198,14 @@ public class MakePartyOneFragment extends Fragment {
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPhoto(-2);
+                if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+                } else {
+                    setPhoto(-2);
+                }
             }
         });
         if(imageDes!=null) {
@@ -286,7 +296,7 @@ public class MakePartyOneFragment extends Fragment {
         setDateSpinner();
         setSpinnerTime(DateUtil.getInstance().getDefaultSettingData(20, System.currentTimeMillis()));
 
-//        restoreImage();
+        restoreImage();
 
         return view;
     }
@@ -339,7 +349,11 @@ public class MakePartyOneFragment extends Fragment {
 
         if(type == REQUEST_CODE_CROP_MAIN_IMAGE) {
 
-            photos.add(image);
+            if(photos.size()==position) {
+                photos.add(image);
+            } else if(photos.size()>position){
+                photos.set(position, image);
+            }
             photoBtn.get(position).setImageBitmap(bm);
             ((PhotoView) mPagerAdapter.getView(position)).setItemData(bm, position);
             if (position == 3) {
@@ -375,10 +389,20 @@ public class MakePartyOneFragment extends Fragment {
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPhoto(mPagerAdapter.getCount()-1);
+                if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+                } else {
+                    setPhoto(mPagerAdapter.getCount() - 1);
+                }
             }
         });
-        mPagerAdapter.addView(view);
+        int position = mPagerAdapter.addView(view);
+        if(position>0) {
+            ((PhotoView) mPagerAdapter.getView(position)).changeBtnImg();
+        }
     }
 
     private void setSpinnerTime(String date) {
@@ -492,15 +516,10 @@ public class MakePartyOneFragment extends Fragment {
     }
 
     public void restoreImage() {
-        if(photos!=null && photos.size()!=0) {
-            mPagerAdapter.removeAll();
+        if(photos.size()>0) {
             for(int i=0;i<photos.size();i++) {
-                addViewOnPagerAdapter();
                 setPhotoOnView(REQUEST_CODE_CROP_MAIN_IMAGE, photos.get(i), i);
             }
-        }
-        if(imageDes!=null) {
-            setPhotoOnView(REQUEST_CODE_CROP_DES_IMAGE, imageDes, -1);
         }
     }
 }

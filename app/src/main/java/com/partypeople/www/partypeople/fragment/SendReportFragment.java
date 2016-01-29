@@ -1,6 +1,8 @@
 package com.partypeople.www.partypeople.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.partypeople.www.partypeople.adapter.ReportAdapter;
 import com.partypeople.www.partypeople.data.Report;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
+import com.partypeople.www.partypeople.utils.Constants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,6 +76,12 @@ public class SendReportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_send_report, container, false);
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestExternalPermission();
+        }
 
         questionView = (EditText)view.findViewById(R.id.edit_report);
         textCancel = (TextView)view.findViewById(R.id.text_cancel);
@@ -150,11 +160,18 @@ public class SendReportFragment extends Fragment {
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                photoPickerIntent.setType("image/*");
-                photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-                photoPickerIntent.putExtra("noFaceDetection", true);
-                startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP_IMAGE);
+                if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+                } else {
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    photoPickerIntent.setType("image/*");
+                    photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                    photoPickerIntent.putExtra("noFaceDetection", true);
+                    startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP_IMAGE);
+                }
             }
         });
 
@@ -183,6 +200,17 @@ public class SendReportFragment extends Fragment {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    private void requestExternalPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
         }
     }
 }

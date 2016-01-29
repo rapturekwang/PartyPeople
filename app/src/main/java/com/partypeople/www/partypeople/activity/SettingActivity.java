@@ -2,6 +2,7 @@ package com.partypeople.www.partypeople.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import com.partypeople.www.partypeople.fragment.UserInfoPolicyFragment;
 import com.partypeople.www.partypeople.dialog.LeaveDialog;
 import com.partypeople.www.partypeople.dialog.LogoutDialog;
 import com.partypeople.www.partypeople.manager.PropertyManager;
+import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.SettingItemView;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
@@ -211,5 +213,17 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == Constants.REQUEST_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Toast.makeText(getApplicationContext(), "권한사용을 동의하셔야 사진등록을 할수 있습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

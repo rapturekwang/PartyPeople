@@ -1,10 +1,13 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.CircleTransform;
+import com.partypeople.www.partypeople.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,6 +54,12 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestExternalPermission();
+        }
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
@@ -148,17 +158,24 @@ public class EditProfileActivity extends AppCompatActivity {
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(
-                        Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                photoPickerIntent.setType("image/*");
-                photoPickerIntent.putExtra("crop", "true");
-                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-                photoPickerIntent.putExtra("outputFormat",
-                        Bitmap.CompressFormat.JPEG.toString());
-                photoPickerIntent.putExtra("aspectX", imageView.getWidth());
-                photoPickerIntent.putExtra("aspectY", imageView.getHeight());
-                photoPickerIntent.putExtra("noFaceDetection", true);
-                startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
+                if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(EditProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+                } else {
+                    Intent photoPickerIntent = new Intent(
+                            Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    photoPickerIntent.setType("image/*");
+                    photoPickerIntent.putExtra("crop", "true");
+                    photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+                    photoPickerIntent.putExtra("outputFormat",
+                            Bitmap.CompressFormat.JPEG.toString());
+                    photoPickerIntent.putExtra("aspectX", imageView.getWidth());
+                    photoPickerIntent.putExtra("aspectY", imageView.getHeight());
+                    photoPickerIntent.putExtra("noFaceDetection", true);
+                    startActivityForResult(photoPickerIntent, REQUEST_CODE_CROP);
+                }
             }
         });
 
@@ -275,5 +292,28 @@ public class EditProfileActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestExternalPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.REQUEST_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == Constants.REQUEST_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Toast.makeText(this, "권한사용을 동의하셔야 사진등록을 할수 있습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

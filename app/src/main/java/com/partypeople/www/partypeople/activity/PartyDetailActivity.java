@@ -1,15 +1,19 @@
 package com.partypeople.www.partypeople.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -174,7 +178,12 @@ public class PartyDetailActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PropertyManager.getInstance().isLogin()) {
+                DateUtil dateUtil = DateUtil.getInstance();
+                if(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.amount_end_at) < 0) {
+                    Toast.makeText(PartyDetailActivity.this, "모금 기한이 지난 모임입니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(PropertyManager.getInstance().isLogin()) {
                     for(int i=0;i<party.members.size();i++) {
                         if (party.members.get(i).role.equals("MEMBER") && PropertyManager.getInstance().getUser().id.equals(party.members.get(i).id)) {
                             Toast.makeText(PartyDetailActivity.this, "이미 참여한 모임 입니다", Toast.LENGTH_SHORT).show();
@@ -207,14 +216,22 @@ public class PartyDetailActivity extends AppCompatActivity {
         chboxView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                chboxView2.setChecked(isChecked);
+                if(!PropertyManager.getInstance().isLogin()) {
+                    Toast.makeText(getApplicationContext(), "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    chboxView2.setChecked(isChecked);
+                }
             }
         });
         chboxView2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                chboxView.setChecked(isChecked);
-                changeLike(isChecked);
+                if(!PropertyManager.getInstance().isLogin()) {
+                    Toast.makeText(getApplicationContext(), "로그인이 필요한 서비스 입니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    chboxView.setChecked(isChecked);
+                    changeLike(isChecked);
+                }
             }
         });
 
@@ -379,7 +396,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             ShareLinkContent content = new ShareLinkContent.Builder()
                     .setContentTitle(party.name)
                     .setContentDescription(description)
-                    .setContentUrl(Uri.parse("http://partypeople.me:3000"))
+                    .setContentUrl(Uri.parse("https://www.facebook.com/partypeopleteam"))
                     .setImageUrl(Uri.parse(NetworkManager.getInstance().URL_SERVER + party.photos.get(0)))
                     .build();
             shareDialog.show(content);
@@ -414,7 +431,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         } finally {
             new TweetComposer.Builder(this)
-                    .text("[" + party.name + "]\n" + description)
+                    .text("[" + party.name + "]\n" + description + "https://www.facebook.com/partypeopleteam")
                     .image(bmpUri)
                     .show();
         }

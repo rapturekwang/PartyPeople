@@ -44,4 +44,6 @@ public class Constants {
 
     public static final int REQUEST_CODE_PARTICIPATE = 100;
     public static final int RESULT_CODE_PARTICIPATE = 101;
+
+    public static final int REQUEST_PERMISSION = 77;
 }

@@ -39,4 +39,8 @@ public class PhotoView extends RelativeLayout{
         imageBtn.setVisibility(INVISIBLE);
         textView.setVisibility(INVISIBLE);
     }
+
+    public void changeBtnImg() {
+        imageBtn.setImageResource(R.drawable.add_photo_btn);
+    }
 }
