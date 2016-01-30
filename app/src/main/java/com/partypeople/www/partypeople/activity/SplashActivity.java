@@ -84,7 +84,7 @@ public class SplashActivity extends AppCompatActivity {
     private void setUpIfNeeded() {
         if (checkPlayServices()) {
             String regId = PropertyManager.getInstance().getRegistrationToken();
-            Log.d("regId", regId);
+//            Log.d("regId", regId);
             if (!regId.equals("")) {
                 doRealStart();
             } else {
@@ -121,12 +121,9 @@ public class SplashActivity extends AppCompatActivity {
                 mTokenTracker = new AccessTokenTracker() {
                     @Override
                     protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                        Log.d("SplashActivity", "Token changed");
                         AccessToken token = AccessToken.getCurrentAccessToken();
                         if (token != null) {
-                            Log.d("SplashActivity", "Token is not null");
                             if (token.getUserId().equals(id)) {
-                                Log.d("SplashActivity", "Token user id is same as before");
                                 NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(), new NetworkManager.OnResultListener<String>() {
                                     @Override
                                     public void onSuccess(String result) {

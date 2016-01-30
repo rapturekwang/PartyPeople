@@ -94,7 +94,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     user.address = location;
                 }
                 if(!name.getText().toString().equals("") || !tel.getText().toString().equals("") || !location.equals("")) {
-//                    user.has_photo = propertyManager.getUser().has_photo;
                     NetworkManager.getInstance().putUser(EditProfileActivity.this, user, new NetworkManager.OnResultListener<UserResult>() {
                         @Override
                         public void onSuccess(UserResult result) {
@@ -117,7 +116,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
 
                 if(mSavedFile!=null) {
-                    Log.d("EditProfileActivity", "call putuserimage");
                     NetworkManager.getInstance().putUserImage(EditProfileActivity.this, mSavedFile, propertyManager.getUser().id, new NetworkManager.OnResultListener<String>() {
                         @Override
                         public void onSuccess(String result) {

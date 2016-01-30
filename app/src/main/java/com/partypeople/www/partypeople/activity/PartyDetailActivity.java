@@ -151,17 +151,14 @@ public class PartyDetailActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        Log.d("PartyDetail", position + "selected");
                         setPagerHeight(50000);
                         ((DetailOneFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 1:
-                        Log.d("PartyDetail", position + "selected");
                         setPagerHeight(500 + 500 * party.amount_method.size());
                         ((DetailTwoFragment) mAdpater.getItem(position)).changeHeight();
                         break;
                     case 2:
-                        Log.d("PartyDetail", position + "selected");
                         setPagerHeight(1000 + 1000 * party.comments.size());
                         ((DetailThreeFragment) mAdpater.getItem(position)).changeHeight();
                         break;
@@ -259,17 +256,17 @@ public class PartyDetailActivity extends AppCompatActivity {
         shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
-                Log.d("PartyDetailActivity", "success");
+
             }
 
             @Override
             public void onCancel() {
-                Log.d("PartyDetailActivity", "cancel");
+
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.d("PartyDetailActivity", "onerror");
+
             }
         });
 
@@ -409,7 +406,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
             kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + description)
                     .addImage(NetworkManager.getInstance().URL_SERVER + party.photos.get(0), 300, 200)
-                    .addWebButton("Party People 구경하기", "http://partypeople.me:3000");
+                    .addWebButton("Party People 구경하기", "https://www.facebook.com/partypeopleteam");
             kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(), this);
         } catch (KakaoParameterException e) {
             e.getMessage();

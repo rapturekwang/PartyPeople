@@ -279,7 +279,7 @@ public class CertifyFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String response) {
-            Log.d("result", response);
+//            Log.d("result", response);
             dialogFragment.dismiss();
             super.onPostExecute(response);
 

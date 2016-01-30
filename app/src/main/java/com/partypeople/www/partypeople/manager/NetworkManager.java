@@ -91,7 +91,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_SERVER = "http://partypeople.me:3000";
+    public static final String URL_SERVER = "http://partypeople.me";
     public static final String URL_PARTYS = URL_SERVER + "/api/v1/groups";
     public static final String URL_USERS = URL_SERVER + "/api/v1/users";
     public static final String URL_FOLLOWS = URL_SERVER + "/api/v1/follows/";
@@ -704,21 +704,20 @@ public class NetworkManager {
         String url = URL_USERS + "/" + id + "/photo";
 
         try {
-            client.post(context, url, headers, params,
-                    null, new TextHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                            listener.onSuccess(responseString);
-                            Log.d("NetworkManager", "put Success");
-                        }
+            client.post(context, url, headers, params, null, new TextHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    Log.d("NetworkManager", "put user image Success : " + responseString);
+                    listener.onSuccess(responseString);
+                }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            listener.onFail(statusCode);
-                            Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
-                        }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.d("NetworkManager", "put user image Fail: " + statusCode + responseString);
+                    listener.onFail(statusCode);
+                }
 
-                    });
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

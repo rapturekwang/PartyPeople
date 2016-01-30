@@ -120,7 +120,6 @@
             android:layout_width="192dp"
             android:layout_height="wrap_content"
             android:id="@+id/edit_name"
-            android:inputType="number"
             android:singleLine="true"
             android:layout_marginLeft="19dp"
             android:hint="이름 or 사업자명"

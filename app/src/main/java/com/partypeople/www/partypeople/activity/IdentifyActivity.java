@@ -73,7 +73,7 @@ public class IdentifyActivity extends AppCompatActivity {
         @JavascriptInterface
         public void getConfirmData(String requestNum, String responseNum, String authType,
                                    String name, String birth, String gender, String mobileNum){
-            Log.d("CONFIRMOK_OK", "CONFIRM_ok: " + requestNum + "," + responseNum + "," + authType + "," + name + "," + birth + "," + gender + "," + mobileNum);
+//            Log.d("CONFIRMOK_OK", "CONFIRM_ok: " + requestNum + "," + responseNum + "," + authType + "," + name + "," + birth + "," + gender + "," + mobileNum);
 
             Identity identity = new Identity();
             identity.name = name;
@@ -95,7 +95,7 @@ public class IdentifyActivity extends AppCompatActivity {
          */
         @JavascriptInterface
         public void getErrorConfirmData(String requestNum, String errorCode, String authType){
-            Log.d("CONFIRMOK_ERROR", "CONFIRM_error: "+requestNum+","+errorCode+","+authType);
+//            Log.d("CONFIRMOK_ERROR", "CONFIRM_error: "+requestNum+","+errorCode+","+authType);
 
             Intent intent = new Intent();
             intent.putExtra("success", false);

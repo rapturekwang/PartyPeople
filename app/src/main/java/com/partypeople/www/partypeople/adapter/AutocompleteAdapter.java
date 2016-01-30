@@ -132,7 +132,7 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
     private ArrayList<AutocompletePrediction> getAutocomplete(CharSequence constraint) {
         if (mGoogleApiClient.isConnected()) {
-            Log.d(TAG, "Starting autocomplete query for: " + constraint.toString());
+//            Log.d(TAG, "Starting autocomplete query for: " + constraint.toString());
 
             // Submit the query to the autocomplete API and retrieve a PendingResult that will
             // contain the results when the query completes.
@@ -151,18 +151,18 @@ public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
             if (!status.isSuccess()) {
                 Toast.makeText(getContext(), "Error contacting API: " + status.toString(),
                         Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Error getting autocomplete prediction API call: " + status.toString());
+//                Log.d(TAG, "Error getting autocomplete prediction API call: " + status.toString());
                 autocompletePredictions.release();
                 return null;
             }
 
-            Log.d(TAG, "Query completed. Received " + autocompletePredictions.getCount()
-                    + " predictions.");
+//            Log.d(TAG, "Query completed. Received " + autocompletePredictions.getCount()
+//                    + " predictions.");
 
             // Freeze the results immutable representation that can be stored safely.
             return DataBufferUtils.freezeAndClose(autocompletePredictions);
         }
-        Log.d(TAG, "Google API client is not connected for autocomplete query.");
+//        Log.d(TAG, "Google API client is not connected for autocomplete query.");
         return null;
     }
 

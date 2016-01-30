@@ -51,7 +51,7 @@ public class RegistrationIntentService extends IntentService {
             // Subscribe to topic channels
             subscribeTopics(token);
         } catch (Exception e) {
-            Log.d(TAG, "Failed to complete token refresh", e);
+//            Log.d(TAG, "Failed to complete token refresh", e);
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
         Intent registrationComplete = new Intent(REGISTRATION_COMPLETE);

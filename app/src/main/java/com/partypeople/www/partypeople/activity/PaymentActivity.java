@@ -93,7 +93,7 @@ public class PaymentActivity extends AppCompatActivity {
                     array[1] = URLDecoder.decode(array[1], "UTF-8");
                 } catch (Exception e) {}
 
-                Log.d("Main", array[0] + " : " + array[1]);
+//                Log.d("Main", array[0] + " : " + array[1]);
                 if(array[0].equals("imp_success")) {
                     if(array[1].equals("true")) {
                         Intent intent = new Intent();
@@ -142,8 +142,8 @@ public class PaymentActivity extends AppCompatActivity {
             target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
                     "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
 
-            Log.d("PaymentActivity", "party name : " + party.name + " price : " + price + " email : " + PropertyManager.getInstance().getUser().email
-                    + " name : " + name + " tel : " + tel + " due date : " + DateUtil.getInstance().getDueDate());
+//            Log.d("PaymentActivity", "party name : " + party.name + " price : " + price + " email : " + PropertyManager.getInstance().getUser().email
+//                    + " name : " + name + " tel : " + tel + " due date : " + DateUtil.getInstance().getDueDate());
         }
 
         public InicisWebViewClient(Activity activity, WebView target) {
@@ -174,7 +174,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             final WebView targetWebView = view;
 
-            Log.d("PaymentActivity", "URL : " + url);
+//            Log.d("PaymentActivity", "URL : " + url);
 
             if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
                 Intent intent;

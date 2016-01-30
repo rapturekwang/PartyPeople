@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("Main reg id", PropertyManager.getInstance().getRegistrationToken());
-
         layout = (FrameLayout)findViewById(R.id.container);
         user = propertyManager.getUser();
 

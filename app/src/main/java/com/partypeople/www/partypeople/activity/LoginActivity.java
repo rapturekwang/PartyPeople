@@ -142,13 +142,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Log.d("LoginActivity", "onCancel");
                 dialogFragment.dismiss();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.d("LoginActivity", "onError");
                 dialogFragment.dismiss();
             }
         });
