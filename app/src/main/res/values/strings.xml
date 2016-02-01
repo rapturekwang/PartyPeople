@@ -110,6 +110,7 @@
         <item>목표금액달성 알림</item>
         <item>모임 참여자 알림</item>
         <item>신고/문의 알림</item>
+        <item>모임 댓글 알림</item>
     </string-array>
 
     <string-array name="tos_header">

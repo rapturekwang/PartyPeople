@@ -43,27 +43,15 @@ public class FontManager {
         }
     }
 
-    Typeface nanum, noto, roboto;
+    Typeface roboto;
 
-    public static final String NANUM = "nanu";
-    public static final String NOTO = "noto";
     public static final String SPOQA = "spoqa";
 
     private FontManager() {
     }
 
     public Typeface getTypeface(Context context, String fontName) {
-        if(NANUM.equals(fontName)) {
-            if(nanum == null) {
-                nanum = Typeface.createFromAsset(context.getAssets(), "nanumgothic.ttf");
-            }
-            return nanum;
-        } else if(NOTO.equals(fontName)) {
-            if(noto == null) {
-                noto = Typeface.createFromAsset(context.getAssets(), "NotoSansKR-Regular.otf");
-            }
-            return noto;
-        } else if(SPOQA.equals(fontName)) {
+        if(SPOQA.equals(fontName)) {
             if (roboto == null) {
                 roboto = Typeface.createFromAsset(context.getAssets(), "Spoqa_Han_Sans_Bold_win_subset.ttf");
             }
