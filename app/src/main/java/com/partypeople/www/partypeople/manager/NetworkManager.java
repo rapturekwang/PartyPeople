@@ -770,11 +770,8 @@ public class NetworkManager {
             e.printStackTrace();
         }
 
-        String url = URL_PARTYS + "/" + param2 + "/photo";
-        Log.d("NetworkManager", url);
-
         try {
-            client.post(context, url, headers, params,
+            client.post(context, URL_PARTYS + "/" + param2 + "/photo", headers, params,
                     null, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
@@ -819,8 +816,6 @@ public class NetworkManager {
         passwordChange.newPassword = newPassword;
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-
-        Log.d("Networkmanager", "token: " + PropertyManager.getInstance().getToken());
 
         try {
             client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id + "/password", headers,

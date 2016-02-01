@@ -129,11 +129,21 @@ public class UserFragment extends Fragment {
                 }
             }
         }
-        if(user.likes!=null && user.likes.size()>0) {
+        if(user.likes.size()>0) {
             for (int i=0; i<user.likes.size(); i++) {
                 if(index == 2) {
-                    partyList.add(user.likes.get(i));
-                    mAdapter.add(user.likes.get(i));
+                    NetworkManager.getInstance().getParty(getContext(), user.likes.get(i).group, new NetworkManager.OnResultListener<PartyResult>() {
+                        @Override
+                        public void onSuccess(PartyResult result) {
+                            partyList.add(result.data);
+                            mAdapter.add(result.data);
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
                 }
             }
         }
@@ -149,6 +159,9 @@ public class UserFragment extends Fragment {
                     warningView.setText("아직 참여한 모임이 없습니다");
                     break;
                 case 2:
+                    if(user.likes.size()>0) {
+                        warningView.setVisibility(View.INVISIBLE);
+                    }
                     warningView.setText("아직 관심모임이 없습니다");
                     break;
             }

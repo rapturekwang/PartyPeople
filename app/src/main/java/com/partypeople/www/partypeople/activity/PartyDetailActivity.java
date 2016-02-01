@@ -406,7 +406,7 @@ public class PartyDetailActivity extends AppCompatActivity {
             KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
             kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + description)
                     .addImage(NetworkManager.getInstance().URL_SERVER + party.photos.get(0), 300, 200)
-                    .addWebButton("Party People 구경하기", "https://www.facebook.com/partypeopleteam");
+                    .addWebButton("Party People 구경하기", "https://play.google.com/store/apps/details?id=com.partypeople.www.partypeople");
             kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(), this);
         } catch (KakaoParameterException e) {
             e.getMessage();
