@@ -57,8 +57,8 @@ public class UserListActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(UserListActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(UserListActivity.this, response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });
@@ -80,8 +80,8 @@ public class UserListActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFail(int code) {
-
+                public void onFail(String response) {
+                    Toast.makeText(UserListActivity.this, response, Toast.LENGTH_SHORT).show();
                 }
             });
         }

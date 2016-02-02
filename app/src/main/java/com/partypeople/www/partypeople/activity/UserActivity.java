@@ -151,8 +151,8 @@ public class UserActivity extends AppCompatActivity{
                     }
 
                     @Override
-                    public void onFail(int code) {
-
+                    public void onFail(String response) {
+                        Toast.makeText(UserActivity.this, response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -171,8 +171,8 @@ public class UserActivity extends AppCompatActivity{
                     }
 
                     @Override
-                    public void onFail(int code) {
-
+                    public void onFail(String response) {
+                        Toast.makeText(UserActivity.this, response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -239,8 +239,8 @@ public class UserActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onFail(int code) {
-
+            public void onFail(String response) {
+                Toast.makeText(UserActivity.this, "유저정보 업데이트 실패\n실패코드 : " + response, Toast.LENGTH_SHORT).show();
             }
         });
     }

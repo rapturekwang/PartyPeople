@@ -56,8 +56,8 @@ public class ConfirmDialog extends Dialog{
                                         }
 
                                         @Override
-                                        public void onFail(int code) {
-                                            failMakeParty("사진 업로드가 실패하였습니다");
+                                        public void onFail(String response) {
+                                            failMakeParty("사진 업로드가 실패하였습니다\n실패코드 : " + response);
                                             return;
                                         }
                                     });
@@ -67,16 +67,16 @@ public class ConfirmDialog extends Dialog{
                             }
 
                             @Override
-                            public void onFail(int code) {
-                                failMakeParty("사진 업로드가 실패하였습니다");
+                            public void onFail(String response) {
+                                failMakeParty("사진 업로드가 실패하였습니다\n실패코드 : " + response);
                                 return;
                             }
                         });
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        failMakeParty("모임 생성이 실패하였습니다.");
+                    public void onFail(String response) {
+                        failMakeParty("모임 생성이 실패하였습니다\n실패코드 : " + response);
                         return;
                     }
                 });
@@ -103,11 +103,8 @@ public class ConfirmDialog extends Dialog{
             }
 
             @Override
-            public void onFail(int code) {
-                Intent intent = new Intent(getContext(), PartyDetailActivity.class);
-                intent.putExtra("startFrom", Constants.START_FROM_MAKE_PARTY);
-                intent.putExtra("party", party);
-                getContext().startActivity(intent);
+            public void onFail(String response) {
+
             }
         });
         Toast.makeText(getContext(), "모임이 생성되었습니다.", Toast.LENGTH_SHORT).show();

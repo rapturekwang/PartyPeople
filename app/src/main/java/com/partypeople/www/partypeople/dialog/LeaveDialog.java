@@ -42,7 +42,8 @@ public class LeaveDialog extends Dialog {
                     }
 
                     @Override
-                    public void onFail(int code) {
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), "회원탈퇴를 실패하였습니다\n실패코드 : " + response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.activity.MakePartyActivity;
@@ -87,7 +88,8 @@ public class UserFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });
@@ -140,8 +142,8 @@ public class UserFragment extends Fragment {
                         }
 
                         @Override
-                        public void onFail(int code) {
-
+                        public void onFail(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -200,7 +200,7 @@ public class CertifyFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==Constants.REQUEST_CODE_IDENTIFY && resultCode==Constants.RESULT_CODE_IDENTIFY) {
             boolean result = data.getBooleanExtra("success", false);
-            CertifyDialog dialog = new CertifyDialog(getContext(), result, Constants.CERTIFY_IDENTIFY);
+            CertifyDialog dialog = new CertifyDialog(getContext(), result, Constants.CERTIFY_IDENTIFY, "");
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
             if(result) {
@@ -279,7 +279,6 @@ public class CertifyFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String response) {
-//            Log.d("result", response);
             dialogFragment.dismiss();
             super.onPostExecute(response);
 
@@ -293,7 +292,7 @@ public class CertifyFragment extends Fragment {
                 NetworkManager.getInstance().putUser(getContext(), user, new NetworkManager.OnResultListener<UserResult>() {
                     @Override
                     public void onSuccess(UserResult result) {
-                        CertifyDialog dialog = new CertifyDialog(getContext(), true, Constants.CERTIFY_ACCOUNT);
+                        CertifyDialog dialog = new CertifyDialog(getContext(), true, Constants.CERTIFY_ACCOUNT, "");
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
 
@@ -303,12 +302,12 @@ public class CertifyFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "네트워크 상황이 좋지 않습니다.", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                CertifyDialog dialog = new CertifyDialog(getContext(), false, Constants.CERTIFY_ACCOUNT);
+                CertifyDialog dialog = new CertifyDialog(getContext(), false, Constants.CERTIFY_ACCOUNT, response);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

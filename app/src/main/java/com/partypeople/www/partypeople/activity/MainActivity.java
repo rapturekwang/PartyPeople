@@ -351,8 +351,8 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void onFail(int code) {
-                Toast.makeText(MainActivity.this, "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+            public void onFail(String response) {
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
                 dialogFragment.dismiss();
             }
         });

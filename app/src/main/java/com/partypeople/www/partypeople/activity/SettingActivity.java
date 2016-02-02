@@ -74,7 +74,11 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout1.addView(settingItemView);
 
         settingItemView = new SettingItemView(this);
-        settingItemView.setItemData("버전정보", "1.0");
+        try {
+            settingItemView.setItemData("버전정보", getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+        } catch (Exception e){
+            settingItemView.setItemData("버전정보", "1.0");
+        }
         linearLayout2.addView(settingItemView);
 
         settingItemView = new SettingItemView(this);

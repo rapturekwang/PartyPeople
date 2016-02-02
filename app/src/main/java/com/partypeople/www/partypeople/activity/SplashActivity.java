@@ -109,8 +109,8 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFail(int code) {
-                    Toast.makeText(SplashActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                public void onFail(String response) {
+                    Toast.makeText(SplashActivity.this, response, Toast.LENGTH_SHORT).show();
                     goLoginActivity();
                 }
             });
@@ -136,8 +136,8 @@ public class SplashActivity extends AppCompatActivity {
                                                 }
 
                                                 @Override
-                                                public void onFail(int code) {
-                                                    Toast.makeText(SplashActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                                                public void onFail(String response) {
+                                                    Toast.makeText(SplashActivity.this, response, Toast.LENGTH_SHORT).show();
                                                     goLoginActivity();
                                                 }
                                             });
@@ -145,8 +145,8 @@ public class SplashActivity extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFail(int code) {
-
+                                    public void onFail(String response) {
+                                        Toast.makeText(SplashActivity.this, response, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } else {
@@ -175,9 +175,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
 
-                Log.d("SplashActivity", "loginWithReadPermissions");
                 mLoginManager.logInWithReadPermissions(this, null);
-
             } else {
                 mHandler.postDelayed(new Runnable() {
                     @Override

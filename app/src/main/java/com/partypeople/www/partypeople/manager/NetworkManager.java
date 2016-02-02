@@ -84,7 +84,7 @@ public class NetworkManager {
 
     public interface OnResultListener<T> {
         public void onSuccess(T result);
-        public void onFail(int code);
+        public void onFail(String response);
     }
 
     public HttpClient getHttpClient() {
@@ -102,7 +102,6 @@ public class NetworkManager {
     public static final String URL_AUTH_FACEBOOK = URL_SERVER + "/api/auth/facebook/token";
     public static final String URL_GET_ID = URL_SERVER + "/api/v1/users/me";
     private static final String LOCATION_INFO = "https://apis.skplanetx.com/tmap/poi/areas";
-    private static final String URL_SEARCH_LOCATION = "https://maps.googleapis.com/maps/api/place/autocomplete/json";
     private static final String URL_GET_IAMPORT_TOKEN = "https://api.iamport.kr/users/getToken";
     private static final String URL_GET_PAYMENT_RESULT = "https://api.iamport.kr/payments";
 
@@ -124,7 +123,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get local info Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -151,7 +150,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "get iamport token Fail: " + statusCode + responseString);
             }
         });
@@ -174,7 +173,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "get payment result Fail: " + statusCode + responseString);
             }
         });
@@ -196,63 +195,10 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
             }
 
-        });
-    }
-
-//    public void searchLocation(Context context, String keyword, final OnResultListener<ArrayList<String>> listener) {
-//        RequestParams params = new RequestParams();
-//        params.put("input", keyword);
-//        params.put("components", "country:kr");
-//        params.put("key", "AIzaSyCXsjiz9Q-Jn2sOv76SiHNOiWLIBefJKm0");
-//
-//        client.get(context, URL_SEARCH_LOCATION, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                GooglePlaceResult result = gson.fromJson(responseString, GooglePlaceResult.class);
-//                ArrayList<String> resultList = new ArrayList<String>();
-//                for(int i=0;i<result.predictions.size();i++) {
-//                    resultList.add(result.predictions.get(i).description);
-//                }
-//                if(!result.status.equals("OK")) {
-//                    Log.d("NetworkManager", "search location Success but not status ok" + responseString);
-//                }
-//                listener.onSuccess(resultList);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("NetworkManager", "search location Fail" + statusCode + responseString);
-//                listener.onFail(statusCode);
-//            }
-//        });
-//    }
-
-    public void payment(final Context context, String param, final OnResultListener<String> listener) {
-        Header[] headers = new Header[1];
-        headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-        RequestParams params = new RequestParams();
-        params.put("title", "test");
-        params.put("amount", Integer.parseInt("1000"));
-        params.put("email", "rapturekwang@gmail.com");
-        params.put("name", "정광희");
-        params.put("tel", Double.parseDouble("01031005883"));
-
-        client.post(context, URL_SERVER + "/pay.html", headers, params, null, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.d("NetworkManager", "payment Success" + responseString);
-                listener.onSuccess(responseString);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("NetworkManager", "payment Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
-            }
         });
     }
 
@@ -273,7 +219,7 @@ public class NetworkManager {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
-                    listener.onFail(statusCode);
+                    listener.onFail(statusCode + ":" + responseString);
                 }
 
             });
@@ -297,14 +243,13 @@ public class NetworkManager {
                 themes += "&themes=" + parameters.get(i);
             }
             params.put("themes", themes);
-//            params.put("themes", "1&themes=2");
         }
 
         client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get partys Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -316,25 +261,6 @@ public class NetworkManager {
         });
     }
 
-//    public void getPartys(Context context, final OnResultListener<PartysResult> listener) {
-//        RequestParams params = new RequestParams();
-//
-//        client.get(context, URL_PARTYS, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-//                listener.onFail(statusCode);
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-//                Log.d("NetworkManager", "get partys Success " + responseString);
-//                PartysResult result = gson.fromJson(responseString, PartysResult.class);
-//                listener.onSuccess(result);
-//            }
-//        });
-//    }
-
     public void getParty(Context context, String param1, final OnResultListener<PartyResult> listener) {
         RequestParams params = new RequestParams();
         Header[] headers = new Header[1];
@@ -344,7 +270,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get party Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -415,7 +341,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "send report Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
         });
     }
@@ -436,7 +362,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get report Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
         });
     }
@@ -456,7 +382,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get boards Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
         });
     }
@@ -475,7 +401,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "remove Comment Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
         });
     }
@@ -497,7 +423,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "add Comment Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
         });
     }
@@ -512,7 +438,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "follow Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -533,7 +459,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "unfollow Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -553,7 +479,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "unlike Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -573,7 +499,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "taking like Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -600,7 +526,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
             }
 
@@ -616,7 +542,7 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 Log.d("NetworkManager", "get Fail: " + statusCode + responseString);
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
             }
 
             @Override
@@ -631,11 +557,6 @@ public class NetworkManager {
     public void putUser(Context context, User user, final OnResultListener<UserResult> listener ) {
         Header[] headers = new Header[1];
         headers[0] = new BasicHeader("authorization", "Bearer " + PropertyManager.getInstance().getToken());
-//        user.has_photo = PropertyManager.getInstance().getUser().has_photo;
-//        user.auth = PropertyManager.getInstance().getUser().auth;
-//        user.push = PropertyManager.getInstance().getUser().push;
-//        UserResult userResult = new UserResult();
-//        userResult.data = user;
 
         try {
             client.put(context, URL_USERS + "/" + PropertyManager.getInstance().getUser().id, headers,
@@ -650,7 +571,7 @@ public class NetworkManager {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            listener.onFail(statusCode);
+                            listener.onFail(statusCode + ":" + responseString);
                             Log.d("NetworkManager", "put Fail: " + statusCode + responseString);
                         }
                     });
@@ -681,7 +602,7 @@ public class NetworkManager {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    listener.onFail(statusCode);
+                    listener.onFail(statusCode + ":" + responseString);
                     Log.d("NetworkManager", "put report image Fail: " + statusCode + responseString);
                 }
 
@@ -714,7 +635,7 @@ public class NetworkManager {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     Log.d("NetworkManager", "put user image Fail: " + statusCode + responseString);
-                    listener.onFail(statusCode);
+                    listener.onFail(statusCode + ":" + responseString);
                 }
 
             });
@@ -750,7 +671,7 @@ public class NetworkManager {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            listener.onFail(statusCode);
+                            listener.onFail(statusCode + ":" + responseString);
                             Log.d("NetworkManager", "put groups images Fail: " + statusCode + responseString);
                         }
 
@@ -781,7 +702,7 @@ public class NetworkManager {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            listener.onFail(statusCode);
+                            listener.onFail(statusCode + ":" + responseString);
                             Log.d("NetworkManager", "put group image Fail: " + statusCode + responseString);
                         }
 
@@ -804,7 +725,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "leave service Fail: " + statusCode + responseString);
             }
         });
@@ -829,7 +750,7 @@ public class NetworkManager {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    listener.onFail(statusCode);
+                    listener.onFail(statusCode + ":" + responseString);
                     Log.d("NetworkManager", "change password Fail: " + statusCode + responseString);
                 }
             });
@@ -853,7 +774,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "facebook auth Fail: " + statusCode + responseString);
             }
         });
@@ -864,9 +785,7 @@ public class NetworkManager {
         RequestParams params = new RequestParams();
         params.put("email", email);
         params.put("password", password);
-//        Log.d("reg id", PropertyManager.getInstance().getRegistrationToken());
 
-//        try {
         client.post(context, URL_AUTH, headers, params, null, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
@@ -877,13 +796,10 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "auth Fail: " + statusCode + responseString);
             }
         });
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void getMyId(Context context, String token, final OnResultListener<UserResult> listener ) {
@@ -901,7 +817,7 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode);
+                listener.onFail(statusCode + ":" + responseString);
                 Log.d("NetworkManager", "get id Fail: " + statusCode + responseString);
             }
 

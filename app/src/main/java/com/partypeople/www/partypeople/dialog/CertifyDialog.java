@@ -14,7 +14,7 @@ import com.partypeople.www.partypeople.utils.Constants;
  * Created by kwang on 16. 1. 7..
  */
 public class CertifyDialog extends Dialog{
-    public CertifyDialog(final Context context, boolean success, int type) {
+    public CertifyDialog(final Context context, boolean success, int type, String error_response) {
         super(context);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -25,7 +25,7 @@ public class CertifyDialog extends Dialog{
             if (success) {
                 result = "계좌 인증이 완료되었습니다.";
             } else {
-                result = "본인의 계좌를 정확히 확인하시고\n다시 입력해주세요.";
+                result = error_response;
             }
         } else if(type==Constants.CERTIFY_IDENTIFY) {
             if (success) {

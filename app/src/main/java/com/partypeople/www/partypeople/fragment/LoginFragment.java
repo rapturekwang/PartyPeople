@@ -162,7 +162,7 @@ public class LoginFragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onFail(int code) {
+                                    public void onFail(String response) {
 
                                     }
                                 });
@@ -174,16 +174,16 @@ public class LoginFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFail(int code) {
-                                Toast.makeText(getContext(), "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                            public void onFail(String response) {
+                                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 dialogFragment.dismiss();
                             }
                         });
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "이메일 혹은 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

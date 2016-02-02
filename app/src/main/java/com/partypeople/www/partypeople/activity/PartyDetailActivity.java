@@ -297,7 +297,7 @@ public class PartyDetailActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFail(int code) {
+                public void onFail(String response) {
 
                 }
             });
@@ -317,7 +317,7 @@ public class PartyDetailActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFail(int code) {
+                public void onFail(String response) {
 
                 }
             });
@@ -406,7 +406,8 @@ public class PartyDetailActivity extends AppCompatActivity {
             KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
             kakaoTalkLinkMessageBuilder.addText("[" + party.name + "]\n" + description)
                     .addImage(NetworkManager.getInstance().URL_SERVER + party.photos.get(0), 300, 200)
-                    .addWebButton("Party People 구경하기", "https://play.google.com/store/apps/details?id=com.partypeople.www.partypeople");
+//                    .addWebButton("Party People 구경하기", "https://play.google.com/store/apps/details?id=com.partypeople.www.partypeople");
+                    .addAppButton("파티피플 구경하기");
             kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(), this);
         } catch (KakaoParameterException e) {
             e.getMessage();
@@ -482,8 +483,8 @@ public class PartyDetailActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFail(int code) {
-
+                public void onFail(String response) {
+                    Toast.makeText(PartyDetailActivity.this, response, Toast.LENGTH_SHORT).show();
                 }
             });
         }

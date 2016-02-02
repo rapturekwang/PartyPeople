@@ -73,7 +73,7 @@ public class PushAlarmFragment extends Fragment {
                         }
 
                         @Override
-                        public void onFail(int code) {
+                        public void onFail(String response) {
 
                         }
                     });

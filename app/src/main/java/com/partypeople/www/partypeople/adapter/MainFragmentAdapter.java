@@ -157,7 +157,7 @@ public class MainFragmentAdapter extends BaseAdapter {
                             }
 
                             @Override
-                            public void onFail(int code) {
+                            public void onFail(String response) {
 
                             }
                         });
@@ -178,7 +178,7 @@ public class MainFragmentAdapter extends BaseAdapter {
                             }
 
                             @Override
-                            public void onFail(int code) {
+                            public void onFail(String response) {
 
                             }
                         });

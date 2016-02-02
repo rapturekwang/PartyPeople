@@ -82,8 +82,8 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(SearchActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(SearchActivity.this, response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -103,7 +103,7 @@ public class SearchActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code) {
+            public void onFail(String response) {
 
             }
         });
@@ -169,7 +169,7 @@ public class SearchActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(int code) {
+                            public void onFail(String response) {
 
                             }
                         });

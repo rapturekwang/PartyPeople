@@ -49,8 +49,8 @@ public class PasswordDialog extends Dialog {
                         }
 
                         @Override
-                        public void onFail(int code) {
-                            Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        public void onFail(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                             dialogFragment.dismiss();
                         }
                     });

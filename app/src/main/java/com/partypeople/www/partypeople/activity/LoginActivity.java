@@ -113,8 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFail(int code) {
-
+                                    public void onFail(String response) {
+                                        Toast.makeText(LoginActivity.this, "유저정보 업데이트 실패", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -125,16 +125,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(int code) {
-                                Toast.makeText(LoginActivity.this, "통신에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                            public void onFail(String response) {
+                                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
                                 dialogFragment.dismiss();
                             }
                         });
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다.\n에러코드:" + response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

@@ -139,8 +139,8 @@ public class SendReportFragment extends Fragment {
                                 }
 
                                 @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(), "통신상태가 불안정 합니다", Toast.LENGTH_SHORT).show();
+                                public void onFail(String response) {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                     dialogFragment.dismiss();
                                 }
                             });
@@ -148,8 +148,8 @@ public class SendReportFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "통신상태가 불안정 합니다", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

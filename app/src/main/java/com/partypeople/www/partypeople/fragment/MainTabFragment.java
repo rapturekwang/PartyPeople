@@ -147,7 +147,7 @@ public class MainTabFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
+                    public void onFail(String response) {
                         mListView.onRefreshComplete();
                     }
                 });
@@ -185,8 +185,8 @@ public class MainTabFragment extends Fragment {
                         }
 
                         @Override
-                        public void onFail(int code) {
-                            Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        public void onFail(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                             dialogFragment.dismiss();
                         }
                     });
@@ -272,8 +272,8 @@ public class MainTabFragment extends Fragment {
             }
 
             @Override
-            public void onFail(int code) {
-                Toast.makeText(getContext(), "통신 연결상태가 좋지 않습니다", Toast.LENGTH_SHORT).show();
+            public void onFail(String response) {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
     }

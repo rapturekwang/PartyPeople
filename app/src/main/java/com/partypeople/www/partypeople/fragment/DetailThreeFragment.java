@@ -122,15 +122,15 @@ public class DetailThreeFragment extends Fragment {
                                             }
 
                                             @Override
-                                            public void onFail(int code) {
-                                                Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                            public void onFail(String response) {
+                                                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
 
                                     @Override
-                                    public void onFail(int code) {
-                                        Toast.makeText(getContext(), "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                    public void onFail(String response) {
+                                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }

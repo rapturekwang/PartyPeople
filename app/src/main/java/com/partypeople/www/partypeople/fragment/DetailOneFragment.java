@@ -169,8 +169,8 @@ public class DetailOneFragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onFail(int code) {
-                                        Toast.makeText(getContext(), "서버와 통신이 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                    public void onFail(String response) {
+                                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                         dialogFragment.dismiss();
                                     }
                                 });
@@ -197,8 +197,8 @@ public class DetailOneFragment extends Fragment {
                         }
 
                         @Override
-                        public void onFail(int code) {
-                            Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                        public void onFail(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -247,8 +247,8 @@ public class DetailOneFragment extends Fragment {
             }
 
             @Override
-            public void onFail(int code) {
-
+            public void onFail(String response) {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
 

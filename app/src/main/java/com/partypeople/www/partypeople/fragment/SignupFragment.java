@@ -163,7 +163,7 @@ public class SignupFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFail(int code) {
+                            public void onFail(String response) {
 
                             }
                         });
@@ -175,8 +175,8 @@ public class SignupFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "가입에 실패 하였습니다.", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), "가입에 실패 하였습니다\n실패코드 : " + response, Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });

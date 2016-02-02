@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.IamportResult;
@@ -59,15 +60,17 @@ public class PaymentFailDialog extends Dialog {
                     }
 
                     @Override
-                    public void onFail(int code) {
+                    public void onFail(String response) {
                         dialogFragment.dismiss();
+                        Toast.makeText(getContext(), "결제정보를 가져오는데 실패하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
-            public void onFail(int code) {
+            public void onFail(String response) {
                 dialogFragment.dismiss();
+                Toast.makeText(getContext(), "결제정보를 가져오는데 실패하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

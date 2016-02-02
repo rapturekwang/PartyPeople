@@ -74,8 +74,8 @@ public class FollowTabFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "네트워크 상태를 체크해 주세요", Toast.LENGTH_SHORT).show();
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -97,8 +97,8 @@ public class FollowTabFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -113,8 +113,8 @@ public class FollowTabFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFail(int code) {
-
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

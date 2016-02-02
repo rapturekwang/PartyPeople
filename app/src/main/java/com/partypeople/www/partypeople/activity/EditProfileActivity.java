@@ -108,8 +108,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFail(int code) {
-                            Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        public void onFail(String response) {
+                            Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_SHORT).show();
                             dialogFragment.dismiss();
                         }
                     });
@@ -132,16 +132,16 @@ public class EditProfileActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                                public void onFail(String response) {
+                                    Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_SHORT).show();
                                     dialogFragment.dismiss();
                                 }
                             });
                         }
 
                         @Override
-                        public void onFail(int code) {
-                            Toast.makeText(EditProfileActivity.this, "통신상태가 원활하지 않습니다", Toast.LENGTH_SHORT).show();
+                        public void onFail(String response) {
+                            Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_SHORT).show();
                             dialogFragment.dismiss();
                         }
                     });
@@ -199,8 +199,8 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code) {
-
+            public void onFail(String response) {
+                Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -250,8 +250,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(int code) {
-
+                            public void onFail(String response) {
+                                Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
