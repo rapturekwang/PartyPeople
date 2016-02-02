@@ -1,6 +1,8 @@
 package com.partypeople.www.partypeople.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.PartyResult;
 import com.partypeople.www.partypeople.data.User;
 import com.partypeople.www.partypeople.dialog.LoadingDialogFragment;
+import com.partypeople.www.partypeople.dialog.PasswordDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 
@@ -77,20 +80,38 @@ public class UserFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dialogFragment = new LoadingDialogFragment();
-                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().getParty(getContext(), partyList.get(position).id, new NetworkManager.OnResultListener<PartyResult>() {
                     @Override
                     public void onSuccess(PartyResult result) {
-                        Intent i = new Intent(getActivity(), PartyDetailActivity.class);
-                        i.putExtra("party", result.data);
-                        startActivity(i);
+                        final Party party = result.data;
+                        if(party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
+                            PasswordDialog passwordDialog = new PasswordDialog(getContext(), getFragmentManager());
+                            passwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            passwordDialog.setParty(party);
+                            passwordDialog.show();
+                        } else {
+                            dialogFragment = new LoadingDialogFragment();
+                            dialogFragment.show(getFragmentManager(), "loading");
+                            NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
+                                @Override
+                                public void onSuccess(PartyResult result) {
+                                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                                    i.putExtra("party", result.data);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void onFail(String response) {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                    dialogFragment.dismiss();
+                                }
+                            });
+                        }
                     }
 
                     @Override
                     public void onFail(String response) {
                         Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                        dialogFragment.dismiss();
                     }
                 });
             }
