@@ -33,6 +33,7 @@ public class UserAdapter extends BaseAdapter{
 
     public void add(Party party) {
         partyList.add(party);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -80,38 +80,29 @@ public class UserFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogFragment = new LoadingDialogFragment();
+                dialogFragment.show(getFragmentManager(), "loading");
                 NetworkManager.getInstance().getParty(getContext(), partyList.get(position).id, new NetworkManager.OnResultListener<PartyResult>() {
                     @Override
                     public void onSuccess(PartyResult result) {
                         final Party party = result.data;
                         if(party.password != null && !party.password.equals("") && !party.password.equals("0000")) {
+                            dialogFragment.dismiss();
                             PasswordDialog passwordDialog = new PasswordDialog(getContext(), getFragmentManager());
                             passwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             passwordDialog.setParty(party);
                             passwordDialog.show();
                         } else {
-                            dialogFragment = new LoadingDialogFragment();
-                            dialogFragment.show(getFragmentManager(), "loading");
-                            NetworkManager.getInstance().getParty(getContext(), party.id, new NetworkManager.OnResultListener<PartyResult>() {
-                                @Override
-                                public void onSuccess(PartyResult result) {
-                                    Intent i = new Intent(getActivity(), PartyDetailActivity.class);
-                                    i.putExtra("party", result.data);
-                                    startActivity(i);
-                                }
-
-                                @Override
-                                public void onFail(String response) {
-                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                                    dialogFragment.dismiss();
-                                }
-                            });
+                            Intent i = new Intent(getActivity(), PartyDetailActivity.class);
+                            i.putExtra("party", result.data);
+                            startActivity(i);
                         }
                     }
 
                     @Override
                     public void onFail(String response) {
                         Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        dialogFragment.dismiss();
                     }
                 });
             }
@@ -152,22 +143,20 @@ public class UserFragment extends Fragment {
                 }
             }
         }
-        if(user.likes.size()>0) {
+        if(index == 2 && user.likes.size()>0) {
             for (int i=0; i<user.likes.size(); i++) {
-                if(index == 2) {
-                    NetworkManager.getInstance().getParty(getContext(), user.likes.get(i).group, new NetworkManager.OnResultListener<PartyResult>() {
-                        @Override
-                        public void onSuccess(PartyResult result) {
-                            partyList.add(result.data);
-                            mAdapter.add(result.data);
-                        }
+                NetworkManager.getInstance().getParty(getContext(), user.likes.get(i).group, new NetworkManager.OnResultListener<PartyResult>() {
+                    @Override
+                    public void onSuccess(PartyResult result) {
+                        partyList.add(result.data);
+                        mAdapter.add(result.data);
+                    }
 
-                        @Override
-                        public void onFail(String response) {
-                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                    @Override
+                    public void onFail(String response) {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
         if(partyList.size()==0) {
