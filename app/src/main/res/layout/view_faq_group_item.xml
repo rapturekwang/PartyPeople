@@ -30,6 +30,6 @@
         android:id="@+id/imageView3"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/setting_arrow_down"
+        android:src="@drawable/spinner_arrow"
         android:layout_marginRight="8dp" />
 </RelativeLayout>

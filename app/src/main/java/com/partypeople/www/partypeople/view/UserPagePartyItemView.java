@@ -1,6 +1,7 @@
 package com.partypeople.www.partypeople.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,7 +62,10 @@ public class UserPagePartyItemView extends RelativeLayout {
         mData = data;
 
         titleView.setText(data.name);
-        titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
+//        titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
+        Drawable img = mContext.getResources().getDrawable(ids[data.themes[0]]);
+        img.setBounds(0, 0, (int)Math.ceil(22 * getResources().getDisplayMetrics().density), (int)Math.ceil(22 * getResources().getDisplayMetrics().density));
+        titleView.setCompoundDrawables(img, null, null, null);
         dateView.setText(dateUtil.changeToViewFormat(data.start_at));
         dueDateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.amount_end_at) + "일 남음");
         String[] array = data.location.split(" ");

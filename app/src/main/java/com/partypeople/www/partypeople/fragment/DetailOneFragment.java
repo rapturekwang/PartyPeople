@@ -379,7 +379,7 @@ public class DetailOneFragment extends Fragment {
 
     private void setMyLocation(double lat, double lng) {
         mapView.setLocationPoint(lng, lat);
-        Bitmap bm = ((BitmapDrawable)getResources().getDrawable(R.drawable.my_icon)).getBitmap();
+        Bitmap bm = ((BitmapDrawable)getResources().getDrawable(R.drawable.mapicon)).getBitmap();
         mapView.setIcon(bm);
         mapView.setIconVisibility(true);
     }

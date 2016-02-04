@@ -91,10 +91,12 @@
             android:layout_alignTop="@+id/img_btn"
             android:layout_alignBottom="@+id/img_btn"
             android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/img_btn"
             android:layout_marginRight="20dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp" />
     </RelativeLayout>
 
     <TextView

@@ -121,7 +121,6 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:layout_gravity="bottom"
-            android:src="@drawable/user_follow"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="16dp"
             android:layout_marginTop="22dp" />
@@ -134,7 +133,6 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:layout_gravity="bottom"
-            android:src="@drawable/unset_bookmark"
             android:visibility="invisible"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="16dp"

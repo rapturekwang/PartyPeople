@@ -9,7 +9,7 @@
         android:textSize="20sp"
         android:id="@+id/text_item_title"
         android:text="Come to house party!"
-        android:drawableLeft="@drawable/img_cocktailicon"
+        android:drawableLeft="@drawable/main_theme_1"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:layout_alignParentTop="true"

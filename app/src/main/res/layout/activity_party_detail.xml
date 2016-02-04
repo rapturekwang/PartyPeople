@@ -36,7 +36,7 @@
                         android:id="@+id/text_title"
                         android:textColor="#ffffff"
                         android:textSize="21sp"
-                        android:drawableLeft="@drawable/detail_cocktail"
+                        android:drawableLeft="@drawable/main_theme_1"
                         android:drawablePadding="7dp"
                         android:layout_alignParentStart="true"
                         android:layout_marginLeft="16dp"
