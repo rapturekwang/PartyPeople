@@ -478,7 +478,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFail(String response) {
-                    Toast.makeText(PartyDetailActivity.this, response, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(PartyDetailActivity.this, response, Toast.LENGTH_SHORT).show();
                 }
             });
         }

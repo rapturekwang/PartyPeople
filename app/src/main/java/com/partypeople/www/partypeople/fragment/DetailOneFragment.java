@@ -242,8 +242,8 @@ public class DetailOneFragment extends Fragment {
 
             @Override
             public void onFail(String response) {
-                if(PropertyManager.getInstance().isLogin())
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+//                if(PropertyManager.getInstance().isLogin())
+//                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
 
