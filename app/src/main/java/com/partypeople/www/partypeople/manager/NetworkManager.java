@@ -90,7 +90,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_SERVER = "http://partypeople.me:3000";
+    public static final String URL_SERVER = "http://partypeople.me";
     public static final String URL_PARTYS = URL_SERVER + "/api/v1/groups";
     public static final String URL_USERS = URL_SERVER + "/api/v1/users";
     public static final String URL_FOLLOWS = URL_SERVER + "/api/v1/follows/";
