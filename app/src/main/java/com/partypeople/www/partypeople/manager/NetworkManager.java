@@ -12,6 +12,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.partypeople.www.partypeople.data.BoardResult;
+import com.partypeople.www.partypeople.data.ErrorMessage;
 import com.partypeople.www.partypeople.data.IamportResult;
 import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.data.LocalAreaInfo;
@@ -89,7 +90,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    public static final String URL_SERVER = "http://partypeople.me";
+    public static final String URL_SERVER = "http://partypeople.me:3000";
     public static final String URL_PARTYS = URL_SERVER + "/api/v1/groups";
     public static final String URL_USERS = URL_SERVER + "/api/v1/users";
     public static final String URL_FOLLOWS = URL_SERVER + "/api/v1/follows/";
@@ -195,14 +196,14 @@ public class NetworkManager {
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
                 if (Constants.LOG_ENABLE)
-                    Log.d("NetworkManager", "post Success : " + responseString);
+                    Log.d("NetworkManager", "participate Success : " + responseString);
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode + ":" + responseString);
                 if (Constants.LOG_ENABLE)
-                    Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+                    Log.d("NetworkManager", "participate Fail: " + statusCode + responseString);
             }
 
         });
@@ -218,7 +219,7 @@ public class NetworkManager {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
                     if (Constants.LOG_ENABLE)
-                        Log.d("NetworkManager", "post Success" + responseString);
+                        Log.d("NetworkManager", "make party Success" + responseString);
                     PartyResult result = gson.fromJson(responseString, PartyResult.class);
                     listener.onSuccess(result);
                 }
@@ -226,7 +227,7 @@ public class NetworkManager {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     if (Constants.LOG_ENABLE)
-                        Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+                        Log.d("NetworkManager", "make party Fail: " + statusCode + responseString);
                     listener.onFail(statusCode + ":" + responseString);
                 }
 
@@ -559,7 +560,7 @@ public class NetworkManager {
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode + ":" + responseString);
                 if (Constants.LOG_ENABLE)
-                    Log.d("NetworkManager", "post Fail: " + statusCode + responseString);
+                    Log.d("NetworkManager", "post user Fail: " + statusCode + responseString);
             }
 
         });
@@ -823,7 +824,8 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode + ":" + responseString);
+                ErrorMessage errorMessage = gson.fromJson(responseString, ErrorMessage.class);
+                listener.onFail(errorMessage.message);
                 if (Constants.LOG_ENABLE)
                     Log.d("NetworkManager", "facebook auth Fail: " + statusCode + responseString);
             }
@@ -847,7 +849,8 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                listener.onFail(statusCode + ":" + responseString);
+                ErrorMessage errorMessage = gson.fromJson(responseString, ErrorMessage.class);
+                listener.onFail(errorMessage.message);
                 if (Constants.LOG_ENABLE)
                     Log.d("NetworkManager", "auth Fail: " + statusCode + responseString);
             }

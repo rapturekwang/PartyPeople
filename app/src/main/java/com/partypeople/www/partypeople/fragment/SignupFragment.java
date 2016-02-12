@@ -176,7 +176,7 @@ public class SignupFragment extends Fragment {
 
                     @Override
                     public void onFail(String response) {
-                        Toast.makeText(getContext(), "가입에 실패 하였습니다\n실패코드 : " + response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "이미 존재하는 아이디 입니다", Toast.LENGTH_SHORT).show();
                         dialogFragment.dismiss();
                     }
                 });
