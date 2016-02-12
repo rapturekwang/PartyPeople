@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.partypeople.www.partypeople.R;
 import com.partypeople.www.partypeople.data.PayMethod;
+import com.partypeople.www.partypeople.utils.NumberUtil;
 
 /**
  * Created by Tacademy on 2015-11-18.
@@ -73,7 +74,7 @@ public class RewordItemView extends RelativeLayout implements Checkable {
 
     public void setItemData(PayMethod payMethod, int num) {
         if(payMethod!=null) {
-            priceView.setText(payMethod.price + "원");
+            priceView.setText(NumberUtil.getInstance().changeToPriceForm(payMethod.price) + "원");
             rewordView.setText(payMethod.title);
         }
         this.num = num;

@@ -50,6 +50,7 @@ import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.utils.NumberUtil;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
@@ -326,12 +327,12 @@ public class PartyDetailActivity extends AppCompatActivity {
             locationView.setText(array[0]);
         else
             locationView.setText(array[0] + " " + array[1]);
-        priceView.setText("￦" + (int)party.amount_total);
+        priceView.setText(NumberUtil.getInstance().changeToPriceForm((int)party.amount_total) + "원");
         int progress = (int)(party.amount_total/party.amount_expect * 100);
         progressView.setText(progress + "% 모임");
         progressBar.setProgress(progress);
         duedateView.setText(dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.amount_end_at) + "일 남음");
-        totalPriceView.setText("￦" + (int)party.amount_expect);
+        totalPriceView.setText(NumberUtil.getInstance().changeToPriceForm((int)party.amount_expect) + "원");
         if(party.likes!=null) {
             chboxView.setText("" + party.likes.size());
             if (PropertyManager.getInstance().isLogin() && party.likes.size() > 0) {

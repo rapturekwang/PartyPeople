@@ -42,8 +42,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
-                        android:ellipsize="end"
+                        android:maxLines="3"
                         android:layout_marginTop="12dp" />
 
                     <TextView

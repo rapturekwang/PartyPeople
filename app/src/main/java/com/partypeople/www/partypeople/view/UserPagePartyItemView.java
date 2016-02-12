@@ -15,6 +15,7 @@ import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.utils.CustomGlideUrl;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.utils.NumberUtil;
 
 /**
  * Created by Tacademy on 2015-11-11.
@@ -73,7 +74,7 @@ public class UserPagePartyItemView extends RelativeLayout {
             locationView.setText(array[0]);
         else
             locationView.setText(array[0] + " " + array[1]);
-        priceView.setText((int)data.amount_expect + "원");
+        priceView.setText(NumberUtil.getInstance().changeToPriceForm((int)data.amount_expect) + "원");
 //        int progress = (int)((data.member_count*data.amount_method.get(0).price)/data.amount_expect*100);
         int progress = (int)(data.amount_total/data.amount_expect * 100);
         progressView.setText(progress + "% 모임");

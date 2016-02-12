@@ -33,6 +33,7 @@ import com.partypeople.www.partypeople.dialog.PaymentResultDialog;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
+import com.partypeople.www.partypeople.utils.NumberUtil;
 
 public class ParticipateActivity extends AppCompatActivity {
     Party party;
@@ -43,6 +44,7 @@ public class ParticipateActivity extends AppCompatActivity {
     CheckBox checkBox;
     LinearLayout layout;
     RelativeLayout relativeLayout;
+    int price;
     int selected = 0;
 
     @Override
@@ -74,18 +76,18 @@ public class ParticipateActivity extends AppCompatActivity {
                     Toast.makeText(ParticipateActivity.this, "이용약관에 동의해 주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(party.amount_custom && Integer.parseInt(textView.getText().toString())<party.amount_method.get(0).price) {
+                if(party.amount_custom && price < party.amount_method.get(0).price) {
                     Toast.makeText(ParticipateActivity.this, "결제 금액은 최소금액보다 커야 합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(Integer.parseInt(textView.getText().toString())>5000000) {
+                if(price > 5000000) {
                     Toast.makeText(ParticipateActivity.this, "결제 금액은 500만원 미만이어야 합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(ParticipateActivity.this, PaymentActivity.class);
                 intent.putExtra("party", party);
                 intent.putExtra("selected", selected);
-                intent.putExtra("price", textView.getText().toString());
+                intent.putExtra("price", String.valueOf(price));
                 intent.putExtra("tel", editTel.getText().toString());
                 intent.putExtra("name", editName.getText().toString());
                 startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
@@ -109,12 +111,14 @@ public class ParticipateActivity extends AppCompatActivity {
         listView.setItemChecked(0, true);
 
         textView = (TextView)findViewById(R.id.text_payment);
-        textView.setText(party.amount_method.get(0).price + "");
+        price = party.amount_method.get(0).price;
+        textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(party.amount_method.get(position).price + "");
+                price = party.amount_method.get(position).price;
+                textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
                 selected = position;
             }
         });
@@ -129,7 +133,8 @@ public class ParticipateActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textView.setText(editPrice.getText().toString());
+                price = Integer.parseInt(editPrice.getText().toString());
+                textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
             }
 
             @Override

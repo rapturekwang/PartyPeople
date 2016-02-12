@@ -19,6 +19,7 @@ import com.partypeople.www.partypeople.data.Party;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.DateUtil;
+import com.partypeople.www.partypeople.utils.NumberUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class MainFragmentAdapter extends BaseAdapter {
                 locationView.setText(array[0]);
             else
                 locationView.setText(array[0] + " " + array[1]);
-            priceView.setText((int)data.amount_expect + "원");
+            priceView.setText(NumberUtil.getInstance().changeToPriceForm((int)data.amount_expect) + "원");
             int progress = (int)(data.amount_total/data.amount_expect * 100);
             progressView.setText(progress + "% 모임");
             progressBar.setProgress(progress);
