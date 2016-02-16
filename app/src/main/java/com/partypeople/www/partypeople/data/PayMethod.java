@@ -1,10 +1,5 @@
 package com.partypeople.www.partypeople.data;
 
-import com.partypeople.www.partypeople.utils.JSONParsing;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 /**

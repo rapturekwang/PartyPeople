@@ -1,19 +1,9 @@
 package com.partypeople.www.partypeople.data;
 
-import com.partypeople.www.partypeople.utils.JSONParsing;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by Tacademy on 2015-11-06.
  */
-public class LocalAreaInfo implements JSONParsing{
+public class LocalAreaInfo {
     public Areas areas;
 
-    @Override
-    public void parsing(JSONObject jobject) throws JSONException {
-        JSONObject jareas = jobject.getJSONObject("areas");
-        areas.parsing(jareas);
-    }
 }
