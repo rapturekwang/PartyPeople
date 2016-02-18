@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
@@ -32,6 +33,13 @@ import com.partypeople.www.partypeople.data.UserResult;
 import com.partypeople.www.partypeople.manager.NetworkManager;
 import com.partypeople.www.partypeople.manager.PropertyManager;
 import com.partypeople.www.partypeople.utils.Constants;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -95,6 +103,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void doRealStart() {
+        new MarketVersion().execute();
         if(PropertyManager.getInstance().isLogin()) {
             NetworkManager.getInstance().getMyId(this, PropertyManager.getInstance().getToken(), new NetworkManager.OnResultListener<UserResult>() {
                 @Override
@@ -227,4 +236,30 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
+    private class MarketVersion extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            // Confirmation of market information in the Google Play Store
+            try {
+                Document doc = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName()).get();
+                Elements Version = doc.select(".content");
+                for (Element mElement : Version) {
+                    if (mElement.attr("itemprop").equals("softwareVersion")) {
+                        PropertyManager.getInstance().setMarketVersion(mElement.text().trim());
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
 }

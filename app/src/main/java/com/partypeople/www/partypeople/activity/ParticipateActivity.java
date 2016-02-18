@@ -133,7 +133,11 @@ public class ParticipateActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                price = Integer.parseInt(editPrice.getText().toString());
+                if(editPrice.getText().toString().equals("")) {
+                    price = 0;
+                } else {
+                    price = Integer.parseInt(editPrice.getText().toString());
+                }
                 textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
             }
 

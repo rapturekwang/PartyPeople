@@ -70,7 +70,6 @@ public class NetworkManager {
         }, 1000);
     }
 
-
     AsyncHttpClient client;
     public static final int NETWORK_TIMEOUT = 30000;
 

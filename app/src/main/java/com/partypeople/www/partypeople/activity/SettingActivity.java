@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,13 @@ import com.partypeople.www.partypeople.utils.Constants;
 import com.partypeople.www.partypeople.view.SettingItemView;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -43,7 +51,7 @@ public class SettingActivity extends AppCompatActivity {
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     ScrollView scrollView;
     MenuItem item;
-    boolean onTopFlag = true;
+    boolean onTopFlag = true, newVersion = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +83,27 @@ public class SettingActivity extends AppCompatActivity {
 
         settingItemView = new SettingItemView(this);
         try {
-            settingItemView.setItemData("버전정보", getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            String currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            String marketVersion = PropertyManager.getInstance().getMarketVersion();
+            if(!currentVersion.equals(marketVersion)) {
+                newVersion = true;
+                currentVersion = "업데이트가 필요합니다     " + currentVersion;
+            }
+            settingItemView.setItemData("버전정보", currentVersion);
         } catch (Exception e){
+            e.printStackTrace();
             settingItemView.setItemData("버전정보", "1.0");
         }
+        settingItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(newVersion) {
+                    Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+                    marketLaunch.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
+                    startActivity(marketLaunch);
+                }
+            }
+        });
         linearLayout2.addView(settingItemView);
 
         settingItemView = new SettingItemView(this);
@@ -230,4 +255,5 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
+
 }

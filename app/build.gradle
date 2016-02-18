@@ -11,9 +11,12 @@ android {
         applicationId "com.partypeople.www.partypeople"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 7
-        versionName "1.06"
+        versionCode 8
+        versionName "1.07"
         multiDexEnabled true
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
     buildTypes {
         release {
@@ -57,4 +60,5 @@ dependencies {
         transitive = true;
     }
     compile project(':pullToRefresh')
+    compile 'org.jsoup:jsoup:1.8.3'
 }

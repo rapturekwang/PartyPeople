@@ -39,6 +39,7 @@ public class PropertyManager {
     private static final String FIELD_TOKEN = "token";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_LOGIN_METHOD = "loginMethod";
+    private static final String FIELD_MARKET_VERSION = "marketVersion";
 
     public void setFacebookId(String id) {
         mEditor.putString(FIELD_FACEBOOK_ID, id);
@@ -76,6 +77,16 @@ public class PropertyManager {
     public String getToken() {
         String token = mPrefs.getString(FIELD_TOKEN, "");
         return token;
+    }
+
+    public void setMarketVersion(String marketVersion) {
+        mEditor.putString(FIELD_MARKET_VERSION, marketVersion);
+        mEditor.commit();
+    }
+
+    public String getMarketVersion() {
+        String marketVersion = mPrefs.getString(FIELD_MARKET_VERSION, "");
+        return marketVersion;
     }
 
     public void setEmail(String email) {
