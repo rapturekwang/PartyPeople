@@ -266,7 +266,8 @@ public class NetworkManager {
                 if (Constants.LOG_ENABLE)
                     Log.d("NetworkManager", "get partys Success " + responseString);
                 PartysResult result = gson.fromJson(responseString, PartysResult.class);
-                listener.onSuccess(result);
+                PartysResult partysResult = setDefaultPartyValue(result);
+                listener.onSuccess(partysResult);
             }
         });
     }
@@ -289,7 +290,8 @@ public class NetworkManager {
                 if (Constants.LOG_ENABLE)
                     Log.d("NetworkManager", "get party Success " + responseString);
                 PartyResult result = gson.fromJson(responseString, PartyResult.class);
-                listener.onSuccess(result);
+                PartyResult partyResult = setDefaultPartyValue(result);
+                listener.onSuccess(partyResult);
             }
         });
     }
@@ -583,6 +585,7 @@ public class NetworkManager {
                 if (Constants.LOG_ENABLE)
                     Log.d("NetworkManager", "get user Success " + responseString);
                 UserResult result = gson.fromJson(responseString, UserResult.class);
+//                User user = setDefaultUserValue(result.data);
                 listener.onSuccess(result.data);
             }
         });
@@ -878,5 +881,43 @@ public class NetworkManager {
             }
 
         });
+    }
+
+    public PartysResult setDefaultPartyValue(PartysResult partysResult) {
+        PartysResult result = new PartysResult();
+        result.data = new ArrayList<>();
+        for(int i=0;i<partysResult.data.size();i++){
+            Party party = partysResult.data.get(i);
+
+            if(party.themes == null || party.themes.length==0) {
+                party.themes = new int[1];
+                party.themes[0] = 1;
+            }
+            if(party.photos==null || party.photos.size()==0) {
+                party.photos = new ArrayList<>();
+                party.photos.add("/images/icon_member.png");
+            }
+
+            result.data.add(party);
+        }
+
+        return result;
+    }
+
+    public PartyResult setDefaultPartyValue(PartyResult partyResult) {
+        Party party = partyResult.data;
+
+        if(party.themes == null || party.themes.length==0) {
+            party.themes = new int[1];
+            party.themes[0] = 1;
+        }
+        if(party.photos==null || party.photos.size()==0) {
+            party.photos = new ArrayList<>();
+            party.photos.add("/images/icon_member.png");
+        }
+
+        partyResult.data = party;
+
+        return partyResult;
     }
 }

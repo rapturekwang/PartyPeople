@@ -322,11 +322,15 @@ public class PartyDetailActivity extends AppCompatActivity {
         titleView.setText(party.name);
         titleView.setCompoundDrawablesWithIntrinsicBounds(ids[party.themes[0]], 0, 0, 0);
         dateView.setText(dateUtil.changeToViewFormat(party.start_at));
-        String[] array = party.location.split(" ");
-        if(array.length==1)
-            locationView.setText(array[0]);
-        else
-            locationView.setText(array[0] + " " + array[1]);
+        if(party.location!=null) {
+            String[] array = party.location.split(" ");
+            if (array.length == 1)
+                locationView.setText(array[0]);
+            else
+                locationView.setText(array[0] + " " + array[1]);
+        } else {
+            locationView.setText("");
+        }
         priceView.setText(NumberUtil.getInstance().changeToPriceForm((int) party.amount_total) + "원");
         int progress = (int)(party.amount_total/party.amount_expect * 100);
         progressView.setText(progress + "% 모임");

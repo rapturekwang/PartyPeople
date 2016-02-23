@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -54,7 +55,9 @@ public class PaymentActivity extends AppCompatActivity {
         mainWebView = (WebView) findViewById(R.id.webView);
         mainWebView.setWebViewClient(new InicisWebViewClient(this, mainWebView));
         WebSettings settings = mainWebView.getSettings();
+        mainWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         settings.setJavaScriptEnabled(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
         wvi = new WebViewInterface(mainWebView, this);
         mainWebView.addJavascriptInterface(wvi, "JavaInterface");
@@ -138,8 +141,26 @@ public class PaymentActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-            target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
-                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
+            String widthAndHeight = "width=\"" + 300 + "\" height=\"" + 600 + "\"";
+
+            String temp = "<object "
+                    + widthAndHeight
+                    + ">"
+                    + "<body style='margin:0;padding:0;'>"
+                    + "<param name='allowFullScreen' value='false'>"
+                    + "</param><param name='allowscriptaccess' value='always'>"
+                    + "</param><embed src='"
+                    + "javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
+                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')"
+                    + "'"
+                    + " type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'"
+                    + widthAndHeight + "></embed></object>";
+
+
+            target.loadData(temp, "text/html", "utf-8");
+
+//            target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
+//                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
         }
 
         public InicisWebViewClient(Activity activity, WebView target) {
@@ -214,5 +235,11 @@ public class PaymentActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mainWebView.destroy();
+        super.onDestroy();
     }
 }

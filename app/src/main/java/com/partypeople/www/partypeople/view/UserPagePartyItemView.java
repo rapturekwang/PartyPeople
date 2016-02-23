@@ -70,11 +70,15 @@ public class UserPagePartyItemView extends RelativeLayout {
         dateView.setText(dateUtil.changeToViewFormat(data.start_at));
         int dueDate = dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.amount_end_at);
         dueDateView.setText(dueDate>=0 ? dueDate + "일 남음" : "모금 종료");
-        String[] array = data.location.split(" ");
-        if(array.length==1)
-            locationView.setText(array[0]);
-        else
-            locationView.setText(array[0] + " " + array[1]);
+        if(data.location!=null) {
+            String[] array = data.location.split(" ");
+            if (array.length == 1)
+                locationView.setText(array[0]);
+            else
+                locationView.setText(array[0] + " " + array[1]);
+        } else {
+            locationView.setText("");
+        }
         priceView.setText(NumberUtil.getInstance().changeToPriceForm((int)data.amount_expect) + "원");
 //        int progress = (int)((data.member_count*data.amount_method.get(0).price)/data.amount_expect*100);
         int progress = (int)(data.amount_total/data.amount_expect * 100);

@@ -54,6 +54,7 @@ public class DateUtil {
             date = formatter.parse(input);
         } catch (ParseException e) {
             e.printStackTrace();
+            return System.currentTimeMillis();
         }
         long mills = date.getTime();
         return mills;
@@ -135,6 +136,7 @@ public class DateUtil {
             date = formatter.parse(year + month);
         } catch (ParseException e) {
             e.printStackTrace();
+            return 30;
         }
 
         Calendar cal = Calendar.getInstance();

@@ -133,6 +133,14 @@ public class UserFragment extends Fragment {
         if(user.groups.size()>0) {
             for (int i = 0; i < user.groups.size(); i++) {
                 for(int j=0; j<user.groups.get(i).members.size(); j++) {
+                    if(user.groups.get(i).themes == null || user.groups.get(i).themes.length==0) {
+                        user.groups.get(i).themes = new int[1];
+                        user.groups.get(i).themes[0] = 1;
+                    }
+                    if(user.groups.get(i).photos==null || user.groups.get(i).photos.size()==0) {
+                        user.groups.get(i).photos = new ArrayList<>();
+                        user.groups.get(i).photos.add("/images/icon_member.png");
+                    }
                     if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("OWNER") && index == 0) {
                         partyList.add(user.groups.get(i));
                         mAdapter.add(user.groups.get(i));

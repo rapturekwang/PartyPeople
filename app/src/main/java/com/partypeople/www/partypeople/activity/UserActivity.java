@@ -74,7 +74,7 @@ public class UserActivity extends AppCompatActivity{
         tabs.setupWithViewPager(pager);
         fakeTabs.setupWithViewPager(pager);
 
-        if(user.groups.size()>0) {
+        if(user.groups != null && user.groups.size()>0) {
             for (int i = 0; i < user.groups.size(); i++) {
                 for(int j=0; j<user.groups.get(i).members.size(); j++) {
                     if (user.id.equals(user.groups.get(i).members.get(j).id) && user.groups.get(i).members.get(j).role.equals("OWNER"))
@@ -273,7 +273,7 @@ public class UserActivity extends AppCompatActivity{
 
         followView.setText("팔로잉 " + user.following.size() + " | 팔로워 " + user.follower.size());
 
-        if(!user.id.equals(PropertyManager.getInstance().getUser().id)) {
+        if(user.id != null && !user.id.equals(PropertyManager.getInstance().getUser().id)) {
             relativeLayout2.setVisibility(View.INVISIBLE);
             if(user.follower.size()>0) {
                 for (int i = 0; i < user.follower.size(); i++) {
