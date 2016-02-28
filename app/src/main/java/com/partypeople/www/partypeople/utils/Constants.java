@@ -10,7 +10,7 @@ public class Constants {
     public static final int NUM_OF_FOLLOW_PAGE_TAB = 2;
     public static final int NUM_OF_MESSAGE_PAGE_TAB = 2;
 
-    public static final boolean LOG_ENABLE = true;
+    public static final boolean LOG_ENABLE = false;
 
     public static final int SPLASH_TIME_OUT = 1000;
 
