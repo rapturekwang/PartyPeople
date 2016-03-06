@@ -42,7 +42,7 @@ public class UserActivity extends AppCompatActivity{
     ViewPager pager;
     public FrameLayout header;
     TextView followView, nameView, addressView, takeFollow, takeUnfollow;
-    RelativeLayout relativeLayout, relativeLayout2, faketabBack;
+    RelativeLayout relativeLayout, relativeLayout2;
     ImageView modify, profileView;
     UserTabAdapter mAdapter;
     int[] partys = {0, 0, 0};
@@ -60,7 +60,6 @@ public class UserActivity extends AppCompatActivity{
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
-        faketabBack = (RelativeLayout)findViewById(R.id.faketab_background);
         pager = (ViewPager)findViewById(R.id.container);
         mAdapter = new UserTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdapter);
@@ -191,12 +190,10 @@ public class UserActivity extends AppCompatActivity{
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if (scrollView.getScrollY() + (int)Math.ceil(12 * getResources().getDisplayMetrics().density) > tabs.getY()) {
+                if (scrollView.getScrollY() > tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
-                    faketabBack.setVisibility(View.VISIBLE);
                 } else {
                     fakeTabs.setVisibility(View.INVISIBLE);
-                    faketabBack.setVisibility(View.INVISIBLE);
                 }
             }
         });

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements
     FrameLayout layout;
     MainTabFragment fragment = MainTabFragment.newInstance(3);
     PropertyManager propertyManager = PropertyManager.getInstance();
-    RelativeLayout relativeLayout, tabBackground;
+    RelativeLayout relativeLayout;
     TextView name, email, address;
     RelativeLayout headerBtn;
     View header;
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements
         mDrawer.setDrawerListener(mDrawerToggle);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
-        tabBackground = (RelativeLayout)findViewById(R.id.tab_background);
         pager = (ViewPager)findViewById(R.id.pager);
         MainTabAdapter adpater = new MainTabAdapter(getSupportFragmentManager());
         pager.setAdapter(adpater);
@@ -255,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements
                 if(keyCode==KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
                     pager.setVisibility(View.GONE);
                     tabs.setVisibility(View.GONE);
-                    tabBackground.setVisibility(View.GONE);
                     layout.setVisibility(View.VISIBLE);
                     fragment.setQueryWord(keywordView.getText().toString());
                     hideKeyboard();
@@ -271,7 +269,6 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 pager.setVisibility(View.GONE);
                 tabs.setVisibility(View.GONE);
-                tabBackground.setVisibility(View.GONE);
                 layout.setVisibility(View.VISIBLE);
                 fragment.setQueryWord(keywordView.getText().toString());
                 hideKeyboard();
@@ -291,7 +288,6 @@ public class MainActivity extends AppCompatActivity implements
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 pager.setVisibility(View.VISIBLE);
                 tabs.setVisibility(View.VISIBLE);
-                tabBackground.setVisibility(View.VISIBLE);
                 layout.setVisibility(View.GONE);
                 keywordView.setText("");
 

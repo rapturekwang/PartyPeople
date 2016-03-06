@@ -77,7 +77,6 @@ public class PartyDetailActivity extends AppCompatActivity {
     ShareDialog shareDialog;
     CallbackManager callbackManager;
     int startFrom;
-    RelativeLayout faketabBack;
 
     int[] ids = {0,
             R.drawable.main_theme_1,
@@ -101,7 +100,6 @@ public class PartyDetailActivity extends AppCompatActivity {
 
         tabs = (TabLayout)findViewById(R.id.tabs);
         fakeTabs = (TabLayout)findViewById(R.id.fake_tabs);
-        faketabBack = (RelativeLayout)findViewById(R.id.faketab_background);
         pager = (ViewPager)findViewById(R.id.container);
         mAdpater = new DetailTabAdapter(getSupportFragmentManager());
         pager.setAdapter(mAdpater);
@@ -125,12 +123,10 @@ public class PartyDetailActivity extends AppCompatActivity {
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if(scrollView.getScrollY() + (int)Math.ceil(10 * getResources().getDisplayMetrics().density) > tabs.getY()) {
+                if(scrollView.getScrollY() > tabs.getY()) {
                     fakeTabs.setVisibility(View.VISIBLE);
-                    faketabBack.setVisibility(View.VISIBLE);
                 } else {
                     fakeTabs.setVisibility(View.INVISIBLE);
-                    faketabBack.setVisibility(View.INVISIBLE);
                 }
             }
         });
