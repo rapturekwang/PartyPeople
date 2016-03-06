@@ -75,6 +75,9 @@ public class DateUtil {
         long first = changeStringToLong(firstDay);
         long second = changeStringToLong(secondDay);
         long diff = second - first;
+        if(diff < 0) {
+            return -1;
+        }
         int day = (int)(diff / (24 * 60 * 60 * 1000));
         return day;
     }

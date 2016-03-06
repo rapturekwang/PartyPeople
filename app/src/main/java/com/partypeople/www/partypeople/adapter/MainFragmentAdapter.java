@@ -57,7 +57,8 @@ public class MainFragmentAdapter extends BaseAdapter {
             titleView.setCompoundDrawablesWithIntrinsicBounds(ids[data.themes[0]], 0, 0, 0);
             dateView.setText(dateUtil.changeToViewFormat(data.start_at));
             int dueDate = dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.amount_end_at);
-            dueDateView.setText(dueDate>=0 ? dueDate + "일 남음" : "모금 종료");
+            int dueHour = dateUtil.getDiffHour(dateUtil.getCurrentDate(), data.amount_end_at);
+            dueDateView.setText(dueDate>=1 ? "남은 시간 " + dueDate + "일" : dueDate==0 ? "남은 시간 " + dueHour + "시간" : "종료");
             if(data.location!=null) {
                 String[] array = data.location.split(" ");
                 if (array.length == 1)
@@ -67,9 +68,9 @@ public class MainFragmentAdapter extends BaseAdapter {
             } else {
                 locationView.setText("");
             }
-            priceView.setText(NumberUtil.getInstance().changeToPriceForm((int)data.amount_expect) + "원");
+            priceView.setText("모인 금액 " + NumberUtil.getInstance().changeToPriceForm((int)data.amount_total) + "원");
             int progress = (int)(data.amount_total/data.amount_expect * 100);
-            progressView.setText(progress + "% 모임");
+            progressView.setText(progress + "%");
             progressBar.setProgress(progress);
             bookMarkView.setChecked(data.bookmark);
             if(data.likes!=null) {
