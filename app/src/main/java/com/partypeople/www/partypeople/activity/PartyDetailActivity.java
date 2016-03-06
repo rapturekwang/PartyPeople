@@ -327,13 +327,14 @@ public class PartyDetailActivity extends AppCompatActivity {
         } else {
             locationView.setText("");
         }
-        priceView.setText(NumberUtil.getInstance().changeToPriceForm((int) party.amount_total) + "원");
+        priceView.setText("목표금액 " + NumberUtil.getInstance().changeToPriceForm((int) party.amount_expect) + "원 중 ");
         int progress = (int)(party.amount_total/party.amount_expect * 100);
-        progressView.setText(progress + "% 모임");
+        progressView.setText(NumberUtil.getInstance().changeToPriceForm((int)party.amount_total) + "원");
         progressBar.setProgress(progress);
         int dueDate = dateUtil.getDiffDay(dateUtil.getCurrentDate(), party.amount_end_at);
-        duedateView.setText(dueDate>=0 ? dueDate + "일 남음" : "모금 종료");
-        totalPriceView.setText(NumberUtil.getInstance().changeToPriceForm((int)party.amount_expect) + "원");
+        int dueHour = dateUtil.getDiffHour(dateUtil.getCurrentDate(), party.amount_end_at);
+        duedateView.setText(dueDate>=1 ? "남은시간 " + dueDate + "일" : dueDate==0 ? "남은시간 " + dueHour + "시간" : "종료");
+        totalPriceView.setText(progress + "% 모임");
         if(party.likes!=null) {
             chboxView.setText("" + party.likes.size());
             if (PropertyManager.getInstance().isLogin() && party.likes.size() > 0) {

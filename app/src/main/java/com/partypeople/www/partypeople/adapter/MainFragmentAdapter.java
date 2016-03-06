@@ -58,7 +58,7 @@ public class MainFragmentAdapter extends BaseAdapter {
             dateView.setText(dateUtil.changeToViewFormat(data.start_at));
             int dueDate = dateUtil.getDiffDay(dateUtil.getCurrentDate(), data.amount_end_at);
             int dueHour = dateUtil.getDiffHour(dateUtil.getCurrentDate(), data.amount_end_at);
-            dueDateView.setText(dueDate>=1 ? "남은 시간 " + dueDate + "일" : dueDate==0 ? "남은 시간 " + dueHour + "시간" : "종료");
+            dueDateView.setText(dueDate>=1 ? "남은시간 " + dueDate + "일" : dueDate==0 ? "남은시간 " + dueHour + "시간" : "종료");
             if(data.location!=null) {
                 String[] array = data.location.split(" ");
                 if (array.length == 1)
