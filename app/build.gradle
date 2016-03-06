@@ -11,8 +11,8 @@ android {
         applicationId "com.partypeople.www.partypeople"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 9
-        versionName "1.08"
+        versionCode 10
+        versionName "1.09"
         multiDexEnabled true
     }
     dexOptions {
