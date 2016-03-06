@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.partypeople.www.partypeople.activity.PartyDetailActivity"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:focusableInTouchMode="true">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -33,7 +35,7 @@
             android:id="@+id/relativeLayout1"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:paddingBottom="33dp">
+            android:paddingBottom="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,6 +76,7 @@
                         android:textSize="21sp"
                         android:layout_marginTop="13dp"
                         android:layout_marginLeft="28dp"
+                        android:gravity="right"
                         android:background="@null"
                         android:textColor="#000000"
                         android:text="10000"
@@ -93,8 +96,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="(더 많이 입력하실 수 있습니다)"
+                        android:id="@+id/textView70"
+                        android:textSize="15dp"
+                        android:textColor="@color/toolbarColor"
+                        android:layout_below="@+id/edit_price"
+                        android:layout_alignStart="@+id/edit_price" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/text_reword"
-                        android:layout_below="@+id/price"
+                        android:layout_below="@+id/textView70"
                         android:layout_alignStart="@+id/edit_price"
                         android:textSize="14sp"
                         android:layout_marginTop="3dp"
@@ -102,55 +115,9 @@
                         android:textColor="#000000"
                         android:layout_marginBottom="15dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(더 많이 입력하실 수 있습니다)"
-                        android:id="@+id/textView70"
-                        android:layout_alignTop="@+id/price"
-                        android:layout_toEndOf="@+id/price"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginLeft="10dp" />
-
                 </RelativeLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="결제 예정 금액"
-                android:id="@+id/textView35"
-                android:layout_below="@+id/root_layout"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="25dp"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:includeFontPadding="false"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/text_payment"
-                android:layout_alignTop="@+id/textView35"
-                android:layout_toLeftOf="@+id/textView6"
-                android:textSize="20sp"
-                android:textColor="@color/toolbarColor"
-                android:includeFontPadding="false"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 원"
-                android:id="@+id/textView6"
-                android:layout_alignTop="@+id/text_payment"
-                android:layout_alignParentEnd="true"
-                android:textSize="20sp"
-                android:textColor="@color/toolbarColor"
-                android:includeFontPadding="false"/>
 
         </RelativeLayout>
 

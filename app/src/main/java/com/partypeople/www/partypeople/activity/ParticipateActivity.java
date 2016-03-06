@@ -39,7 +39,7 @@ public class ParticipateActivity extends AppCompatActivity {
     Party party;
     ListView listView;
     RewordViewAdapter mAdapter;
-    TextView textView, textReword;
+    TextView textReword;
     EditText editName, editTel, editPrice;
     CheckBox checkBox;
     LinearLayout layout;
@@ -110,15 +110,12 @@ public class ParticipateActivity extends AppCompatActivity {
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.setItemChecked(0, true);
 
-        textView = (TextView)findViewById(R.id.text_payment);
         price = party.amount_method.get(0).price;
-        textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 price = party.amount_method.get(position).price;
-                textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
                 selected = position;
             }
         });
@@ -138,7 +135,6 @@ public class ParticipateActivity extends AppCompatActivity {
                 } else {
                     price = Integer.parseInt(editPrice.getText().toString());
                 }
-                textView.setText(NumberUtil.getInstance().changeToPriceForm(price));
             }
 
             @Override
@@ -150,7 +146,11 @@ public class ParticipateActivity extends AppCompatActivity {
         editName = (EditText)findViewById(R.id.edit_name);
         editName.setText(PropertyManager.getInstance().getUser().name);
         editTel = (EditText)findViewById(R.id.edit_tel);
-        editTel.setText(String.format("%d", (long)PropertyManager.getInstance().getUser().tel));
+        if(PropertyManager.getInstance().getUser().tel != 0) {
+            editTel.setText(String.format("0%d", (long) PropertyManager.getInstance().getUser().tel));
+        } else {
+            editTel.setText("");
+        }
 
         TextView textBtn = (TextView)findViewById(R.id.text_btn_tos);
         textBtn.setOnClickListener(new View.OnClickListener() {

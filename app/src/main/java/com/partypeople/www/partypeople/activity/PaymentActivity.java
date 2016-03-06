@@ -141,26 +141,8 @@ public class PaymentActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-            String widthAndHeight = "width=\"" + 300 + "\" height=\"" + 600 + "\"";
-
-            String temp = "<object "
-                    + widthAndHeight
-                    + ">"
-                    + "<body style='margin:0;padding:0;'>"
-                    + "<param name='allowFullScreen' value='false'>"
-                    + "</param><param name='allowscriptaccess' value='always'>"
-                    + "</param><embed src='"
-                    + "javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
-                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')"
-                    + "'"
-                    + " type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'"
-                    + widthAndHeight + "></embed></object>";
-
-
-            target.loadData(temp, "text/html", "utf-8");
-
-//            target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
-//                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
+            target.loadUrl("javascript:start('" + party.name + "'," + price + ",'" + PropertyManager.getInstance().getUser().email +
+                    "','" + name + "','" + tel + "','" + DateUtil.getInstance().getDueDate() + "')");
         }
 
         public InicisWebViewClient(Activity activity, WebView target) {
